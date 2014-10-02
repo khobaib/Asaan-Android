@@ -89,11 +89,10 @@
         android:id="@+id/tvFBOrGPlusLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/LinearLayout2"
         android:layout_below="@+id/btnLogIn"
         android:layout_centerHorizontal="true"
         android:padding="7dp"
-        android:text="Log in with  f  g+"
+        android:text="Log in with"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -134,6 +133,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvFBOrGPlusLogIn"
@@ -142,5 +142,23 @@
         android:padding="5dp"
         android:text="OR"
         android:textColor="@color/khaki_text" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnGPlusLogIn"
+        android:layout_alignBottom="@+id/btnGPlusLogIn"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="f" />
+
+    <Button
+        android:id="@+id/btnGPlusLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFBOrGPlusLogIn"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/button1"
+        android:text="g+" />
 
 </RelativeLayout>
