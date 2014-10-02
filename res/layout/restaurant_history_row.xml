@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText" >
+
+    <ImageView
+        android:id="@+id/ivHistoryRestaurantItem"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_history_item_restaurant"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/btnOrderDetailsRestaurantItem"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_alignBottom="@+id/tvHistoryRestaurantItem"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvHistoryRestaurantItem"
+        android:background="@color/black"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="> Order\nDetails"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvHistoryRestaurantItem"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:layout_alignBottom="@+id/ivHistoryRestaurantItem"
+        android:layout_alignTop="@+id/ivHistoryRestaurantItem"
+        android:layout_toLeftOf="@+id/btnOrderDetailsRestaurantItem"
+        android:layout_toRightOf="@+id/ivHistoryRestaurantItem"
+        android:background="@color/black"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="7dp"
+        android:text="TextView"
+        android:textColor="@color/gray"
+        android:textSize="16sp" />
+
+</RelativeLayout>

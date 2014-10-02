@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="black_semitransparent">#7F000000</color>
+    <color name="black_very_transparent">#3F000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#898989</color>
+    <color name="gray_deep">#333333</color>
+    <color name="khaki">#cb9b2c</color>
+    <color name="khaki_text">#c7912f</color>
+</resources>
