@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     tools:ignore="HardcodedText" >
 
-    <ImageView
+    <com.parse.ParseImageView
         android:id="@+id/ivLogoRestaurantItem"
         android:layout_width="76dp"
         android:layout_height="76dp"

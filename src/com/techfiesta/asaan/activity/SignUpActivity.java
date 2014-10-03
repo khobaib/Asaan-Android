@@ -1,4 +1,4 @@
-package com.techfiesta.asaan;
+package com.techfiesta.asaan.activity;
 
 
 
@@ -7,6 +7,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.R.id;
+import com.techfiesta.asaan.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;

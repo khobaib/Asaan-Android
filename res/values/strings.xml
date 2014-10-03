@@ -3,6 +3,7 @@
 
     <string name="app_name">Asaan</string>
     <string name="fb_asaan_app_id">1460267094262357</string>
+    <string name="map_key_dev">AIzaSyBXY5mlywRlZ-V1SWrwrIIGUZAzg3iTySo</string>
     
 
 </resources>

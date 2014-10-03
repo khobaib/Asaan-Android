@@ -1,94 +1,70 @@
-package com.techfiesta.asaan;
-
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
+package com.techfiesta.asaan.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+
+import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.model.GraphUser;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
-import com.google.android.gms.plus.model.people.Person.Name;
-import com.parse.GetCallback;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.techfiesta.asaan.R;
 
 
-public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
+//public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
+public class AsaanMainActivity extends Activity implements View.OnClickListener{
 	
-	private static final String TAG = "AsaanActivity";
-	boolean isLogin = false;
+	private static final String TAG = AsaanMainActivity.class.getSimpleName();
+	
+	TextView Login,SignUp,Skip;
+	
+	Context mContext;
+	
+	/*boolean isLogin = false;
 	static boolean  isExist =false;
 	Button btnSignup;
 	private SignInButton btngPlusLogin;
-	 /* Request code used to invoke sign in user interactions. */
+	  Request code used to invoke sign in user interactions. 
 	  private static final int RC_SIGN_IN = 0;
 	 
-	  /* Client used to interact with Google APIs. */
+	   Client used to interact with Google APIs. 
 	  private GoogleApiClient mGoogleApiClient;
 
-	  /* A flag indicating that a PendingIntent is in progress and prevents
+	   A flag indicating that a PendingIntent is in progress and prevents
 	   * us from starting further intents.
-	   */
+	   
 	  private boolean mIntentInProgress;
 	  
-	  /* Track whether the sign-in button has been clicked so that we know to resolve
+	   Track whether the sign-in button has been clicked so that we know to resolve
 	   * all issues preventing sign-in without waiting.
-	   */
+	   
 	  private boolean mSignInClicked;
 
-	  /* Store the connection result from onConnectionFailed callbacks so that we can
+	   Store the connection result from onConnectionFailed callbacks so that we can
 	   * resolve them when the user clicks sign-in.
-	   */
+	   
 	  private ConnectionResult mConnectionResult;
-
+*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_asaan_main);
+		setContentView(R.layout.activity_main);
+		mContext = AsaanMainActivity.this;
 		//ParseUser.logOut(); //for testing purpose everytime logging out user data from app. in real context won't call this only when log out button pressed will be called this
 		
-		btnSignup = (Button) findViewById(R.id.btnSignUp);
-		btnSignup.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-
-				Intent i = new Intent(AsaanMainActivity.this, SignUpActivity.class);
-				startActivity(i);
-
-			}
-		});
+	Login =  (TextView) findViewById(R.id.tvLogIn);
+	SignUp = (TextView) findViewById(R.id.tvSignUp);
+	Skip = (TextView) findViewById(R.id.tvSkip);
+	Login.setOnClickListener(this);
+	SignUp.setOnClickListener(this);
+	Skip.setOnClickListener(this);
+	
 		
 
-		 mGoogleApiClient = new GoogleApiClient.Builder(this)
+	/*	 mGoogleApiClient = new GoogleApiClient.Builder(this)
 	        .addConnectionCallbacks(this)
 	        .addOnConnectionFailedListener(this)
 	        .addApi(Plus.API)
@@ -109,13 +85,34 @@ public class AsaanMainActivity extends Activity implements ConnectionCallbacks, 
 					  }
 				
 			}
-		});
+		});*/
 			
 		
 		
 	}
 	
+	private void launchActivity(Class<?> launchingClass) {
+		Intent intent = new Intent(this, launchingClass);
+		startActivity(intent);
+		}
+
 	@Override
+	public void onClick(View v) {
+		Log.e(">>>", "onclick"+v.getId());
+		Class<?> launchingClass = null;
+		if(v.getId() == R.id.tvSignUp){
+			launchingClass = SignUpActivity.class;
+		}else if(v.getId() == R.id.tvSkip){
+			launchingClass = ResturantListActivity.class;
+		}else if(v.getId() == R.id.tvLogIn){
+			launchingClass = AsaanLoginActivity.class;
+		}
+		launchActivity(launchingClass);
+		
+	}
+	
+	
+	/*@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
@@ -152,7 +149,7 @@ public class AsaanMainActivity extends Activity implements ConnectionCallbacks, 
 		}
 	
 
-	/* A helper method to resolve the current ConnectionResult error. */
+	 A helper method to resolve the current ConnectionResult error. 
 	private void resolveSignInError() {
 	  if (mConnectionResult.hasResolution()) {
 	    try {
@@ -387,9 +384,9 @@ public class AsaanMainActivity extends Activity implements ConnectionCallbacks, 
 		setLoginVisibility(isLogin);
 		
 	}
-	/**
+	*//**
 	 * Sign-out from google
-	 * */
+	 * *//*
 	private void signOutFromGplus() {
 		if (mGoogleApiClient.isConnected()) {
 			Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
@@ -485,5 +482,5 @@ public class AsaanMainActivity extends Activity implements ConnectionCallbacks, 
 			findViewById(R.id.btnLogout).setVisibility(View.GONE);
 		}
 		
-	}
+	}*/
 }
