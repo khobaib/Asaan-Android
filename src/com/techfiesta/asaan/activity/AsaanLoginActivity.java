@@ -76,6 +76,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
+		finish();
 		}
 	private void LoginUser(){
 		String name = userName.getText().toString();
@@ -88,6 +89,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 					
 					currentUser = ParseUser.getCurrentUser();
 					Log.d(">>","login success"+ currentUser.getEmail());
+					launchActivity(ResturantListActivity.class);
 				}else{
 					Log.d(">>", "login failed");
 				}
@@ -98,7 +100,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		Log.e(">>>", "onclick"+v.getId());
-		Class<?> launchingClass = null;
+		//Class<?> launchingClass = null;
 		if(v.getId() == R.id.btnLogIn){
 			LoginUser();
 		}else if(v.getId() == R.id.btnFbLogin){
@@ -125,7 +127,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 					setUserDataforFB();
 				}else{
 					//1.call facebook parse session here and get me object data and put to parse user 
-					//2.if doesn't exist already this checking will be done later
+					
 					Log.d("SUCESS", "Already existing user for facebook login" );
 					
 					setUserDataforFB( );
@@ -142,6 +144,11 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 		if(session!=null && session.isOpened()){
 			makeMeRequest();
 			
+		}
+		
+		currentUser = ParseUser.getCurrentUser();
+		if(currentUser!=null){
+			launchActivity(ResturantListActivity.class);
 		}
 		
 	}
@@ -164,13 +171,13 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 								//String mUrl = userObj.getJSONObject("picture").getJSONObject("data").getString("url");
 								
 								// Save the user profile info in a user property
-								 currentUser = ParseUser
+								 ParseUser localcurrentUser = ParseUser
 										.getCurrentUser();
-								currentUser.put("firstName", firstName);
-								currentUser.put("lastName", lastName);
-								currentUser.put("email", email);
-								currentUser.put("profilePhotoUrl", profilePhotoUrl.toString());
-								currentUser.saveInBackground();
+								 localcurrentUser.put("firstName", firstName);
+								 localcurrentUser.put("lastName", lastName);
+								 localcurrentUser.put("email", email);
+								 localcurrentUser.put("profilePhotoUrl", profilePhotoUrl.toString());
+								 localcurrentUser.saveInBackground();
 								Log.d("SUCESS", "Data set success");
 								
 								

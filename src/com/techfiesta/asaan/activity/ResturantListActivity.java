@@ -4,26 +4,34 @@ package com.techfiesta.asaan.activity;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import android.app.LauncherActivity.ListItem;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.CustomAdapter;
+import com.techfiesta.asaan.model.Store;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ResturantListActivity extends FragmentActivity {
@@ -34,6 +42,7 @@ public class ResturantListActivity extends FragmentActivity {
 	boolean isLocation;
 	private ListView resListView;
 	private CustomAdapter adapter;
+	List<Store> stores;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +55,63 @@ public class ResturantListActivity extends FragmentActivity {
 		ResturantListActivity.this.setContentView(viewToLoad);
 		setupMap();
 		//setContentView(R.layout.activity_restaurant_list);
+		stores = new ArrayList<Store>();
+//		adapter = new CustomAdapter(ResturantListActivity.this);
+//		resListView = (ListView) findViewById(R.id.lvRestaurantList);
+//		resListView.setAdapter(adapter);
+//		adapter.loadObjects();
 		
-		adapter = new CustomAdapter(ResturantListActivity.this);
-		resListView = (ListView) findViewById(R.id.lvRestaurantList);
-		resListView.setAdapter(adapter);
-		adapter.loadObjects();
+		fetchStoreinfo();  //it did not work either
 		
 		
 
 
+	}
+	
+	public void getStoreImage(final ParseObject ob){
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("StoreImages");
+        
+		  
+		  query.whereEqualTo("store",ob);
+		  
+		  query.getFirstInBackground(new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject imageObject, ParseException e) {
+				if(e==null){
+					Log.d("SUCESS", "got storeimage object");
+					Store tmpStore = new Store(ob, imageObject.getParseFile("image"));
+					stores.add(tmpStore);
+				}else{
+					Log.e("??", "Couldn't retrive image");
+				}
+				
+			}
+		});
+	}
+	
+	private void fetchStoreinfo(){
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Store");
+		query.findInBackground(new FindCallback<ParseObject>() {
+			
+			@Override
+			public void done(List<ParseObject> storeObjects, ParseException e) {
+				if(e==null){
+					Log.d("SUCCESS", "got store object"+storeObjects.size());
+					for(ListIterator<ParseObject> li = storeObjects.listIterator();li.hasNext();){
+						if(li.next()!=null){
+							Log.e("STORE", li.next().getObjectId());
+							getStoreImage(li.next());
+						}
+					}
+				}else{
+					
+				}
+				
+			}
+		});
+			
+		
 	}
 	
 	private void setupMap(){
