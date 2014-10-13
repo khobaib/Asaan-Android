@@ -61,7 +61,7 @@ public class ResturantListActivity extends FragmentActivity {
 		resListView.setAdapter(adapter);
 		adapter.loadObjects();
 		
-	//	fetchStoreinfo();  //it did not work either
+		fetchStoreinfo();  //it did not work either
 		
 		
 
@@ -79,8 +79,9 @@ public class ResturantListActivity extends FragmentActivity {
 			@Override
 			public void done(ParseObject imageObject, ParseException e) {
 				if(e==null){
-					Log.d("SUCESS", "got storeimage object" +imageObject.getObjectId());
+					
 					Store tmpStore = new Store(ob, imageObject.getParseFile("image"));
+					Log.d("SUCESS", "got storeimage file" +imageObject.getParseFile("image").getName());
 					stores.add(tmpStore);
 				}else{
 					Log.e("??", "Couldn't retrive image");

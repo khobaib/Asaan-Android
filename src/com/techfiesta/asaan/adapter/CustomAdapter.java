@@ -39,7 +39,7 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 		super.getItemView(object, v, parent);
 
 		// Add and download the image
-	ParseImageView todoImage = (ParseImageView) v.findViewById(R.id.ivLogoRestaurantItem);
+	final ParseImageView todoImage = (ParseImageView) v.findViewById(R.id.ivLogoRestaurantItem);
 		/*ParseFile imageFile = object.getParseFile("image");
 		if (imageFile != null) {
 			todoImage.setParseFile(imageFile);
@@ -58,12 +58,12 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 		return v;
 	}
 	
-	private void loadImage(ParseObject pObj,final ParseImageView todoImage){
+	private void loadImage(ParseObject ob, final ParseImageView todoImage){
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("StoreImages");
         
 		  // Restrict to cases where the author is the current user.
-		  query.whereEqualTo("store", pObj.getObjectId());
-		         
+		  //query.include("store");
+		     query.whereEqualTo("store", ob);    
 		  // Run the query 
 		  query.getFirstInBackground(new GetCallback<ParseObject>() {
 			
