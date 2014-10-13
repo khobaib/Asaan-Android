@@ -10,9 +10,13 @@ import com.parse.SignUpCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.R.id;
 import com.techfiesta.asaan.R.layout;
+import com.techfiesta.asaan.adapter.SignupPagerAdapter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,30 +24,38 @@ import android.widget.EditText;
 
 
 
-public class SignUpActivity extends Activity{
-	EditText etFirstname;
-	EditText etLastname;
-	EditText etEmail;
-	EditText etPass;
-	
-	Button btnSigunup;
+public class SignUpActivity extends FragmentActivity{
+//	EditText etFirstname;
+//	EditText etLastname;
+//	EditText etEmail;
+//	EditText etPass;
+//	
+//	Button btnSigunup;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_signup);
+		//setContentView(R.layout.activity_signup);
+		setContentView(R.layout.activity_sign_up_frag_holder);
 		
-		etFirstname = (EditText) findViewById(R.id.etFirstName);
-		etLastname = (EditText) findViewById(R.id.etLastName);
-		etEmail = (EditText) findViewById(R.id.etMail);
-		etPass = (EditText) findViewById(R.id.etPassword);
+		ViewPager pager = (ViewPager) findViewById(R.id.view_pager_SignUp);
+		FragmentPagerAdapter adapter = new SignupPagerAdapter(getSupportFragmentManager());
+		pager.setAdapter(adapter);
 		
-		btnSigunup = (Button) findViewById(R.id.btnSignUp);
+		
+		
+		
+//		etFirstname = (EditText) findViewById(R.id.etFirstName);
+//		etLastname = (EditText) findViewById(R.id.etLastName);
+//		etEmail = (EditText) findViewById(R.id.etMail);
+//		etPass = (EditText) findViewById(R.id.etPassword);
+//		
+//		btnSigunup = (Button) findViewById(R.id.btnSignUp);
 		
 		
 	}
 	
-	public void onClickSignUp(View v){
+	/*public void onClickSignUp(View v){
 		final String firstName = etFirstname.getText().toString().trim();
 		final String lastName = etLastname.getText().toString().trim();
 		final String emailId = etEmail.getText().toString().trim();
@@ -87,6 +99,6 @@ public class SignUpActivity extends Activity{
 		
 		
 		
-	}
+	}*/
 
 }
