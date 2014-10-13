@@ -39,7 +39,7 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 		super.getItemView(object, v, parent);
 
 		// Add and download the image
-	ParseImageView todoImage = (ParseImageView) v.findViewById(R.id.ivRestaurantImageRD);
+	ParseImageView todoImage = (ParseImageView) v.findViewById(R.id.ivLogoRestaurantItem);
 		/*ParseFile imageFile = object.getParseFile("image");
 		if (imageFile != null) {
 			todoImage.setParseFile(imageFile);
@@ -54,7 +54,7 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 		titleTextView.setText(object.getString("name"));
 
 		TextView resTypeTextView = (TextView) v.findViewById(R.id.tvTypeRestaurantItem);
-		resTypeTextView.setText(object.getString("type"));
+		resTypeTextView.setText(object.getString("cuisineType"));
 		return v;
 	}
 	
@@ -73,6 +73,7 @@ public class CustomAdapter extends ParseQueryAdapter<ParseObject> {
 				
 				ParseFile imageFile = storeImageObject.getParseFile("image");
 				if (imageFile != null) {
+					Log.e("IMAGE", imageFile.getName());
 					todoImage.setParseFile(imageFile);
 					todoImage.loadInBackground();
 				}

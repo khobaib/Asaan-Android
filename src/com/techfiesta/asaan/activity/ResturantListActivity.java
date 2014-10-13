@@ -56,12 +56,12 @@ public class ResturantListActivity extends FragmentActivity {
 		setupMap();
 		//setContentView(R.layout.activity_restaurant_list);
 		stores = new ArrayList<Store>();
-//		adapter = new CustomAdapter(ResturantListActivity.this);
-//		resListView = (ListView) findViewById(R.id.lvRestaurantList);
-//		resListView.setAdapter(adapter);
-//		adapter.loadObjects();
+		adapter = new CustomAdapter(ResturantListActivity.this);
+		resListView = (ListView) findViewById(R.id.lvRestaurantList);
+		resListView.setAdapter(adapter);
+		adapter.loadObjects();
 		
-		fetchStoreinfo();  //it did not work either
+	//	fetchStoreinfo();  //it did not work either
 		
 		
 
@@ -79,7 +79,7 @@ public class ResturantListActivity extends FragmentActivity {
 			@Override
 			public void done(ParseObject imageObject, ParseException e) {
 				if(e==null){
-					Log.d("SUCESS", "got storeimage object");
+					Log.d("SUCESS", "got storeimage object" +imageObject.getObjectId());
 					Store tmpStore = new Store(ob, imageObject.getParseFile("image"));
 					stores.add(tmpStore);
 				}else{
@@ -98,12 +98,16 @@ public class ResturantListActivity extends FragmentActivity {
 			public void done(List<ParseObject> storeObjects, ParseException e) {
 				if(e==null){
 					Log.d("SUCCESS", "got store object"+storeObjects.size());
-					for(ListIterator<ParseObject> li = storeObjects.listIterator();li.hasNext();){
+					for(int i=0; i<storeObjects.size(); i++){
+						Log.e("STORE", storeObjects.get(i).getObjectId());
+						getStoreImage(storeObjects.get(i));
+					}
+					/*for(ListIterator<ParseObject> li = storeObjects.listIterator();li.hasNext();){
 						if(li.next()!=null){
 							Log.e("STORE", li.next().getObjectId());
 							getStoreImage(li.next());
 						}
-					}
+					}*/
 				}else{
 					
 				}
