@@ -42,7 +42,17 @@
     <item name="android:listViewWhiteStyle">@style/ListViewAppTheme.White</item>
 
     <item name="android:spinnerItemStyle">@style/SpinnerItemAppTheme</item>
+     <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>
+    
+  
 
   </style>
+  
+    <style name="myCirclePageIndicator" parent="Widget">
+        <item name="fillColor">@color/khaki</item>
+        <item name="centered">true</item>
+        <item name="snap">true</item>
+        <item name="radius">3.5dp</item>
+    </style>
 
 </resources>

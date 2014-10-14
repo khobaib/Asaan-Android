@@ -22,7 +22,10 @@
             android:src="@drawable/logo_asaan"
             tools:ignore="ContentDescription" />
 
+   
+
         <ImageView
+            android:visibility="gone"
             android:id="@+id/ivCircleIndicator"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -31,6 +34,14 @@
             android:paddingRight="55dp"
             android:src="@drawable/ci_1"
             tools:ignore="ContentDescription" />
+        
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            style="@style/myCirclePageIndicator"
+            android:layout_width="154dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:padding="8dp" />
 
         <ImageView
             android:id="@+id/ivForward"

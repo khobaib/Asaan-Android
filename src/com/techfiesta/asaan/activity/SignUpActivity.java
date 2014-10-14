@@ -11,8 +11,11 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.R.id;
 import com.techfiesta.asaan.R.layout;
 import com.techfiesta.asaan.adapter.SignupPagerAdapter;
+import com.techfiesta.asaan.communication.Communicator;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,16 +24,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 
 
-public class SignUpActivity extends FragmentActivity{
+public class SignUpActivity extends FragmentActivity implements Communicator{
 //	EditText etFirstname;
 //	EditText etLastname;
 //	EditText etEmail;
 //	EditText etPass;
 //	
 //	Button btnSigunup;
+	
+	
+	
+	ViewPager pager;
+	private CirclePageIndicator indicator;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,9 +47,15 @@ public class SignUpActivity extends FragmentActivity{
 		//setContentView(R.layout.activity_signup);
 		setContentView(R.layout.activity_sign_up_frag_holder);
 		
-		ViewPager pager = (ViewPager) findViewById(R.id.view_pager_SignUp);
+		
+		pager = (ViewPager) findViewById(R.id.view_pager_SignUp);
+		indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+				
 		FragmentPagerAdapter adapter = new SignupPagerAdapter(getSupportFragmentManager());
 		pager.setAdapter(adapter);
+		indicator.setViewPager(pager);
+		
+		
 		
 		
 		
@@ -54,6 +69,19 @@ public class SignUpActivity extends FragmentActivity{
 		
 		
 	}
+	
+	@Override
+		protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+			// TODO Auto-generated method stub
+			super.onActivityResult(arg0, arg1, arg2);
+		}
+
+@Override
+public void respond(int position) {
+	
+	pager.setCurrentItem(position);
+	
+}
 	
 	/*public void onClickSignUp(View v){
 		final String firstName = etFirstname.getText().toString().trim();
