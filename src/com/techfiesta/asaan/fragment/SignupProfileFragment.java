@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-import com.squareup.picasso.Picasso;
+
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.communication.Communicator;
 import com.techfiesta.asaan.model.UserPicture;
@@ -56,8 +56,7 @@ public class SignupProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;
 
 	private String selectedImagePath;
-	//ADDED
-	private String filemanagerstring;
+
 
 	public SignupProfileFragment() {
 		// TODO Auto-generated constructor stub
