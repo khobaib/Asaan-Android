@@ -30,10 +30,49 @@
 
         <!-- TODO Add stripe view instead of this view here -->
 
-        <View
+        <EditText
+            android:id="@+id/etCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Card Number"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             >
+
+            <Spinner
+                android:id="@+id/spMonth"
+                android:layout_width="146dp"
+                android:layout_height="match_parent"
+                android:prompt="@string/month"
+                 />
+
+            <Spinner
+                android:id="@+id/spYear"
+                android:layout_width="123dp"
+                android:layout_height="50dp" 
+                android:prompt="@string/year"/>
+            
+        </LinearLayout>
+
+        <!-- <View
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/transparent" />
+            android:background="@color/transparent" /> -->
+
+        <EditText
+            android:id="@+id/etCVC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="CVC" />
 
         <Button
             android:id="@+id/btnSaveCardInfoSU"
@@ -81,8 +120,9 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/khaki_text" />
-        <Button
-            android:id="@+id/btnDoneCardInfoSU"
+
+        <Button
+            android:id="@+id/btnSaveTipInfoSu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
