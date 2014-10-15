@@ -86,7 +86,14 @@ public class SignupProfileFragment extends Fragment{
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		if(userPic!=null) savedInstanceState.putSerializable("picture", userPic);
+		
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		if(userPic!=null) outState.putSerializable("picture", userPic);
 	}
 	
 	@Override
