@@ -65,7 +65,7 @@ public class SignupProfileFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.sign_up_frag_1, container , false);
-		if(savedInstanceState!=null){
+		/*if(savedInstanceState!=null){
 			UserPicture userPhoto = (UserPicture) savedInstanceState.getSerializable("picture");
 			
 			try {
@@ -78,7 +78,7 @@ public class SignupProfileFragment extends Fragment{
 				e.printStackTrace();
 			}
 			
-		}
+		}*/
 		return view;
 	}
 	

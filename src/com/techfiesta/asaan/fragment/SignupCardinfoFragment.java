@@ -23,12 +23,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.NothingSelectedSpinnerAdapter;
+import com.techfiesta.asaan.communication.Communicator;
 
 public class SignupCardinfoFragment extends Fragment{
 	
@@ -41,11 +43,12 @@ public class SignupCardinfoFragment extends Fragment{
 	EditText DefaultTip;
 	Button SaveTip;
 	
-	ImageView NEXT;
+	ImageView NEXT2;
 	
 	int expMonth, expYear;
 	String cardNumber;
 	String cardCVC;
+	Communicator comm;
 
 	public SignupCardinfoFragment() {
 		// TODO Auto-generated constructor stub
@@ -68,6 +71,7 @@ public class SignupCardinfoFragment extends Fragment{
 		SaveCard = (Button) mActivity.findViewById(R.id.btnSaveCardInfoSU);
 		DefaultTip = (EditText) mActivity.findViewById(R.id.etDefaultTipSignUp);
 		SaveTip = (Button) mActivity.findViewById(R.id.btnSaveTipInfoSu);
+		comm = (Communicator) getActivity();
 		
 		updateMonth_YearSpinners();
 		
@@ -116,12 +120,22 @@ public class SignupCardinfoFragment extends Fragment{
 				
 			}
 		});
-		NEXT = (ImageView) mActivity.findViewById(R.id.ivForward);
-		NEXT.setOnClickListener(new OnClickListener() {
+		
+		SaveTip.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				String tip = DefaultTip.getText().toString();
+				System.out.println(tip);
+				//save it to respective parse class when this field is added
+			}
+		});
+		NEXT2 = (ImageView) mActivity.findViewById(R.id.ivForward);
+		NEXT2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				comm.respond(2);
 				
 			}
 		});
@@ -185,6 +199,9 @@ public class SignupCardinfoFragment extends Fragment{
 		// strCard.put("name", tokCard.getName());
 		// strCard.put("stripeCustomer", tokCard.get);
 		// strCard.put("cvc_check", tokCard.getCVC());
+		 if(ParseUser.getCurrentUser()!=null){
+			 strCard.put("user", ParseUser.getCurrentUser());
+		 }
 		 
 		 strCard.saveInBackground();
 		 }
