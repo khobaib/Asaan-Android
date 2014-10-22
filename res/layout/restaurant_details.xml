@@ -32,79 +32,78 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp"
+        android:layout_weight="6" >
 
-        <ImageView
-            android:id="@+id/ivRestaurantImageRD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="Restaurant Details"
-            android:src="@drawable/logo_asaan" />
-
-        <TextView
-            android:id="@+id/tvRestaurantNameRD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_very_transparent"
-            android:gravity="bottom|center_horizontal"
-            android:padding="7dp"
-            android:text="Restaurant Name"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnInfoRD"
-            android:layout_width="0dip"
-            android:layout_height="36dp"
-            android:layout_weight="1"
-            android:background="@color/khaki"
-            android:text="Info"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btnHistoryRD"
-            android:layout_width="0dip"
-            android:layout_height="36dp"
-            android:layout_weight="1"
-            android:background="@drawable/tab_inactive"
-            android:text="History"
-            android:textColor="@color/gray" />
-    </LinearLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+        </android.support.v4.view.ViewPager>
+        
+         <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                style="@style/myCirclePageIndicator"
+                android:layout_width="154dp"
+                android:layout_height="25dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:padding="8dp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="0dp"
+        android:layout_weight="6" >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vpSignUp"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/btnTermsAndPrivacyRD"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:maxHeight="128dp" />
+            android:layout_height="36dp"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/btnTermsAndPrivacyRD"
+            <Button
+                android:id="@+id/btn_menu"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/khaki"
+                android:text="Menu"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_info"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_inactive"
+                android:text="Info"
+                android:textColor="@color/gray" />
+            <Button
+                android:id="@+id/btn_reviews"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_inactive"
+                android:text="Reviews"
+                android:textColor="@color/gray" />
+            <Button
+                android:id="@+id/btn_history"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_inactive"
+                android:text="History"
+                android:textColor="@color/gray" />
+        </LinearLayout>
+        <FrameLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black"
-            android:padding="7dp"
-            android:text="Terms of Servies And Privacy Policy"
-            android:textColor="@color/white" />
+            android:layout_height="match_parent">
+            
+        </FrameLayout>
     </RelativeLayout>
-
 </LinearLayout>
