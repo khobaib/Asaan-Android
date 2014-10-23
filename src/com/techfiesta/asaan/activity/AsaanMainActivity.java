@@ -1,16 +1,29 @@
 package com.techfiesta.asaan.activity;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.utility.CloudEndpointUtils;
 
 
 //public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
@@ -21,6 +34,7 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener{
 	TextView Login,SignUp,Skip;
 	
 	Context mContext;
+	
 	
 	/*boolean isLogin = false;
 	static boolean  isExist =false;
@@ -47,12 +61,15 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener{
 	   
 	  private ConnectionResult mConnectionResult;
 */
-
+	public static Storeendpoint mStoreendpoint;
+	public static Userendpoint mUserendpoint;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mContext = AsaanMainActivity.this;
+		buildStoreEndpoint();
+		buildUserEndpoint();
 		//ParseUser.logOut(); //for testing purpose everytime logging out user data from app. in real context won't call this only when log out button pressed will be called this
 		
 	Login =  (TextView) findViewById(R.id.tvLogIn);
@@ -90,7 +107,39 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener{
 		
 		
 	}
-	
+	private void buildStoreEndpoint()
+	{
+		Storeendpoint.Builder storeEndpointBuilder;
+		storeEndpointBuilder = new Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(),
+				new JacksonFactory(), new HttpRequestInitializer()
+		{
+			@Override
+			public void initialize(HttpRequest arg0) throws IOException
+			{
+				// TODO Auto-generated method stub
+
+			}
+		});
+		storeEndpointBuilder.setApplicationName("Asaan");
+		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build();
+	}
+
+	private void buildUserEndpoint()
+	{
+		Userendpoint.Builder userEndpointBuilder;
+		userEndpointBuilder = new Userendpoint.Builder(AndroidHttp.newCompatibleTransport(),
+				new JacksonFactory(), new HttpRequestInitializer()
+		{
+			@Override
+			public void initialize(HttpRequest arg0) throws IOException
+			{
+				// TODO Auto-generated method stub
+
+			}
+		});
+		userEndpointBuilder.setApplicationName("Asaan");
+		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
+	}
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
@@ -110,7 +159,6 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener{
 		launchActivity(launchingClass);
 		
 	}
-	
 	
 	/*@Override
 	protected void onStart() {

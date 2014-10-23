@@ -5,19 +5,24 @@
     android:background="@color/gray_deep"
     android:padding="10dp"
     android:orientation="horizontal" >
-    <LinearLayout 
+    <RelativeLayout 
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginRight="5dp"
         android:background="@color/black"
         android:layout_weight="1">
-    </LinearLayout>
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:src="@drawable/history"/>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"
         android:background="@color/black"
-        android:layout_weight="4">
+        android:layout_weight="3">
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

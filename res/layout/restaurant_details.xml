@@ -43,22 +43,33 @@
             android:layout_height="fill_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" >
+            android:layout_alignParentTop="true" 
+            android:layout_marginBottom="10dp">
         </android.support.v4.view.ViewPager>
         
          <com.viewpagerindicator.CirclePageIndicator
                 android:id="@+id/indicator"
-                style="@style/myCirclePageIndicator"
                 android:layout_width="154dp"
                 android:layout_height="25dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:padding="8dp" />
+                android:padding="5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+         <TextView 
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="25dp"
+           android:textColor="@color/white" 
+           android:textStyle="bold" 
+           
+           android:layout_above="@+id/indicator"
+           android:layout_centerHorizontal="true"
+           android:text="Epic Restaurant"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="6" >
 
         <LinearLayout

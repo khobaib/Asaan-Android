@@ -4,6 +4,7 @@ package com.techfiesta.asaan.activity;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,6 +12,8 @@ import java.util.ListIterator;
 import android.app.LauncherActivity.ListItem;
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -18,6 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -31,10 +37,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.CustomAdapter;
-import com.techfiesta.asaan.model.Store;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ResturantListActivity extends FragmentActivity {
+public class ResturantListActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,GooglePlayServicesClient.OnConnectionFailedListener,LocationListener{
 	private GoogleMap mMap;
 	protected Marker mMarker;
 	Context mContext;
@@ -42,7 +47,7 @@ public class ResturantListActivity extends FragmentActivity {
 	boolean isLocation;
 	private ListView resListView;
 	private CustomAdapter adapter;
-	List<Store> stores;
+	private List<Store> storeList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +55,25 @@ public class ResturantListActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		
 		
-
+		Log.e("stop","oncreate");
 		View viewToLoad = LayoutInflater.from(ResturantListActivity.this).inflate(R.layout.activity_restaurant_list, null);
 		ResturantListActivity.this.setContentView(viewToLoad);
 		setupMap();
 		//setContentView(R.layout.activity_restaurant_list);
-		stores = new ArrayList<Store>();
-		adapter = new CustomAdapter(ResturantListActivity.this);
+		//stores = new ArrayList<Store>();
+		//adapter = new CustomAdapter(ResturantListActivity.this);
 		resListView = (ListView) findViewById(R.id.lvRestaurantList);
-		resListView.setAdapter(adapter);
-		adapter.loadObjects();
+		//resListView.setAdapter(adapter);
+		//adapter.loadObjects();
 		
-		fetchStoreinfo();  //it did not work either
+		//fetchStoreinfo();  //it did not work either
 		
-		
+		new GetStroreInfoFromServer().execute();
 
 
 	}
 	
-	public void getStoreImage(final ParseObject ob){
+	/*public void getStoreImage(final ParseObject ob){
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("StoreImages");
         
 		  
@@ -109,16 +114,38 @@ public class ResturantListActivity extends FragmentActivity {
 							getStoreImage(li.next());
 						}
 					}*/
-				}else{
+			/*	}else{
 					
-				}
+				//}
 				
 			}
 		});
 			
 		
+	}*/
+	private void getStoreInfo()
+	{
+		
 	}
-	
+	private class GetStroreInfoFromServer extends AsyncTask<Void,Void,Void>
+	{
+		
+
+		
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			try {
+				Log.e("stop","here");
+				storeList=AsaanMainActivity.mStoreendpoint.getStores().execute().getItems();
+				Log.e("Size",""+storeList.size());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	}
 	private void setupMap(){
 		
 		if(mMap==null){
@@ -171,6 +198,48 @@ public class ResturantListActivity extends FragmentActivity {
 	
 	public float getDistance(Location storeLocation){
 		return mLocation.distanceTo(storeLocation);
+	}
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
