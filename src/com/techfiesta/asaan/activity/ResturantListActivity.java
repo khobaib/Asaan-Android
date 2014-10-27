@@ -1,16 +1,12 @@
 package com.techfiesta.asaan.activity;
-
-
-
-
-
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.StringWriter;
 import java.util.List;
-import java.util.ListIterator;
 
-import android.app.LauncherActivity.ListItem;
+import lombok.core.Main;
+
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
@@ -19,11 +15,19 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.internal.in;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -37,6 +41,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.CustomAdapter;
+import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ResturantListActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks,GooglePlayServicesClient.OnConnectionFailedListener,LocationListener{
@@ -45,13 +50,15 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 	Context mContext;
 	Location mLocation;
 	boolean isLocation;
-	private ListView resListView;
-	private CustomAdapter adapter;
+	private ListView storeListView;
+	private StoreListAdapter storeListAdapter;
+	private StoreCollection storeCollection;
 	private List<Store> storeList;
+	private int INITIAL_POSITION=0;
+	private int MAX_RESULT=10;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		
@@ -59,20 +66,46 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 		View viewToLoad = LayoutInflater.from(ResturantListActivity.this).inflate(R.layout.activity_restaurant_list, null);
 		ResturantListActivity.this.setContentView(viewToLoad);
 		setupMap();
-		//setContentView(R.layout.activity_restaurant_list);
-		//stores = new ArrayList<Store>();
-		//adapter = new CustomAdapter(ResturantListActivity.this);
-		resListView = (ListView) findViewById(R.id.lvRestaurantList);
-		//resListView.setAdapter(adapter);
-		//adapter.loadObjects();
-		
-		//fetchStoreinfo();  //it did not work either
+		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
+		storeListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int position,
+					long id) {
+				Store store=storeList.get(position);
+				String json=convertModelStoreToJsonStrig(store);
+				Intent intent=new Intent(ResturantListActivity.this,StoreDetailsActivity.class);
+				intent.putExtra("store",json);
+				
+				startActivity(intent);
+				
+			}
+		});
 		
 		new GetStroreInfoFromServer().execute();
 
 
 	}
-	
+	private String convertModelStoreToJsonStrig(Store store)
+	{
+		ObjectMapper objectMapper=new ObjectMapper();
+		//objectMapper.configure(SerializationFeature.INDENT_OUTPUT,true);
+		StringWriter stringWriter=new StringWriter();
+		try {
+			objectMapper.writeValue(stringWriter,store);
+		} catch (JsonGenerationException e) {
+
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		return stringWriter.toString();
+		
+	}
 	/*public void getStoreImage(final ParseObject ob){
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("StoreImages");
         
@@ -135,14 +168,21 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			try {
-				Log.e("stop","here");
-				storeList=AsaanMainActivity.mStoreendpoint.getStores().execute().getItems();
-				Log.e("Size",""+storeList.size());
+				storeCollection=AsaanMainActivity.mStoreendpoint.getStores(INITIAL_POSITION,MAX_RESULT).execute();
+				Log.e("StoreList Size",""+storeCollection.getItems().size());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			//setting list
+			storeList=storeCollection.getItems();
+			storeListAdapter=new StoreListAdapter(ResturantListActivity.this,storeList);
+			storeListView.setAdapter(storeListAdapter);
+			super.onPostExecute(result);
 		}
 		
 	}
