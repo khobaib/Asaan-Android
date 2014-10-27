@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for StoreMenuHierarchyCollection.
+ * Model definition for MenusAndMenuItems.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,13 +29,25 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuHierarchyCollection extends com.google.api.client.json.GenericJson {
+public final class MenusAndMenuItems extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<StoreMenuHierarchy> items;
+  private java.util.List<StoreMenuItem> menuItems;
+
+  static {
+    // hack to force ProGuard to consider StoreMenuItem used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(StoreMenuItem.class);
+  }
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.util.List<StoreMenuHierarchy> menusAndSubmenus;
 
   static {
     // hack to force ProGuard to consider StoreMenuHierarchy used, since otherwise it would be stripped out
@@ -46,26 +58,41 @@ public final class StoreMenuHierarchyCollection extends com.google.api.client.js
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuHierarchy> getItems() {
-    return items;
+  public java.util.List<StoreMenuItem> getMenuItems() {
+    return menuItems;
   }
 
   /**
-   * @param items items or {@code null} for none
+   * @param menuItems menuItems or {@code null} for none
    */
-  public StoreMenuHierarchyCollection setItems(java.util.List<StoreMenuHierarchy> items) {
-    this.items = items;
+  public MenusAndMenuItems setMenuItems(java.util.List<StoreMenuItem> menuItems) {
+    this.menuItems = menuItems;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.util.List<StoreMenuHierarchy> getMenusAndSubmenus() {
+    return menusAndSubmenus;
+  }
+
+  /**
+   * @param menusAndSubmenus menusAndSubmenus or {@code null} for none
+   */
+  public MenusAndMenuItems setMenusAndSubmenus(java.util.List<StoreMenuHierarchy> menusAndSubmenus) {
+    this.menusAndSubmenus = menusAndSubmenus;
     return this;
   }
 
   @Override
-  public StoreMenuHierarchyCollection set(String fieldName, Object value) {
-    return (StoreMenuHierarchyCollection) super.set(fieldName, value);
+  public MenusAndMenuItems set(String fieldName, Object value) {
+    return (MenusAndMenuItems) super.set(fieldName, value);
   }
 
   @Override
-  public StoreMenuHierarchyCollection clone() {
-    return (StoreMenuHierarchyCollection) super.clone();
+  public MenusAndMenuItems clone() {
+    return (MenusAndMenuItems) super.clone();
   }
 
 }

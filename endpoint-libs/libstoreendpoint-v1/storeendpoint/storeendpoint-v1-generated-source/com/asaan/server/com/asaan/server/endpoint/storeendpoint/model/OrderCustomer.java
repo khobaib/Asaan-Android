@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for StoreOwner.
+ * Model definition for OrderCustomer.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,7 +29,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreOwner extends com.google.api.client.json.GenericJson {
+public final class OrderCustomer extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
@@ -53,6 +53,12 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key @com.google.api.client.json.JsonString
+  private java.lang.Long orderId;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
   private java.lang.Long storeId;
 
   /**
@@ -71,7 +77,7 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
   /**
    * @param createdDate createdDate or {@code null} for none
    */
-  public StoreOwner setCreatedDate(java.lang.Long createdDate) {
+  public OrderCustomer setCreatedDate(java.lang.Long createdDate) {
     this.createdDate = createdDate;
     return this;
   }
@@ -86,7 +92,7 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
   /**
    * @param id id or {@code null} for none
    */
-  public StoreOwner setId(java.lang.Long id) {
+  public OrderCustomer setId(java.lang.Long id) {
     this.id = id;
     return this;
   }
@@ -101,8 +107,23 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
   /**
    * @param modifiedDate modifiedDate or {@code null} for none
    */
-  public StoreOwner setModifiedDate(java.lang.Long modifiedDate) {
+  public OrderCustomer setModifiedDate(java.lang.Long modifiedDate) {
     this.modifiedDate = modifiedDate;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.Long getOrderId() {
+    return orderId;
+  }
+
+  /**
+   * @param orderId orderId or {@code null} for none
+   */
+  public OrderCustomer setOrderId(java.lang.Long orderId) {
+    this.orderId = orderId;
     return this;
   }
 
@@ -116,7 +137,7 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
   /**
    * @param storeId storeId or {@code null} for none
    */
-  public StoreOwner setStoreId(java.lang.Long storeId) {
+  public OrderCustomer setStoreId(java.lang.Long storeId) {
     this.storeId = storeId;
     return this;
   }
@@ -131,19 +152,19 @@ public final class StoreOwner extends com.google.api.client.json.GenericJson {
   /**
    * @param userId userId or {@code null} for none
    */
-  public StoreOwner setUserId(java.lang.Long userId) {
+  public OrderCustomer setUserId(java.lang.Long userId) {
     this.userId = userId;
     return this;
   }
 
   @Override
-  public StoreOwner set(String fieldName, Object value) {
-    return (StoreOwner) super.set(fieldName, value);
+  public OrderCustomer set(String fieldName, Object value) {
+    return (OrderCustomer) super.set(fieldName, value);
   }
 
   @Override
-  public StoreOwner clone() {
-    return (StoreOwner) super.clone();
+  public OrderCustomer clone() {
+    return (OrderCustomer) super.clone();
   }
 
 }
