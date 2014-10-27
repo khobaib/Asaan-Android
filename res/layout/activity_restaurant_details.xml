@@ -73,26 +73,27 @@
         android:layout_weight="6" >
 
         <LinearLayout
+            android:id="@+id/ll_btnholder"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/btn_menu"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/khaki"
-                android:text="Menu"
-                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_info"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/tab_inactive"
+                android:background="@color/khaki"
                 android:text="Info"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_menu"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_inactive"
+                android:text="Menu"
                 android:textColor="@color/gray" />
             <Button
                 android:id="@+id/btn_reviews"
@@ -112,8 +113,10 @@
                 android:textColor="@color/gray" />
         </LinearLayout>
         <FrameLayout 
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_btnholder">
             
         </FrameLayout>
     </RelativeLayout>

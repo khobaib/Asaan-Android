@@ -7,6 +7,8 @@ import com.techfiesta.asaan.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +55,7 @@ public class StoreListAdapter  extends ArrayAdapter<Store>{
 		Store store=storeList.get(position);
 		holder.tvName.setText(store.getName());
 		holder.tvDescription.setText(store.getDescription());
+		
 		return convertView;
 	}
 

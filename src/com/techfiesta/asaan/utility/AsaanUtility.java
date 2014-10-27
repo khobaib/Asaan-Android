@@ -2,6 +2,8 @@ package com.techfiesta.asaan.utility;
 
 
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+
 import android.R;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,7 +15,7 @@ import android.net.NetworkInfo;
 public class AsaanUtility {
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
-
+    public static Store selectedStore=null;
 	
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

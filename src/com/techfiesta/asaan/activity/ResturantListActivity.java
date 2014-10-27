@@ -15,9 +15,11 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
@@ -56,6 +58,7 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 	private List<Store> storeList;
 	private int INITIAL_POSITION=0;
 	private int MAX_RESULT=10;
+	private TextView tvBack;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,14 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 		Log.e("stop","oncreate");
 		View viewToLoad = LayoutInflater.from(ResturantListActivity.this).inflate(R.layout.activity_restaurant_list, null);
 		ResturantListActivity.this.setContentView(viewToLoad);
+		tvBack=(TextView)findViewById(R.id.tvBack);
+		tvBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		setupMap();
 		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
 		storeListView.setOnItemClickListener(new OnItemClickListener() {
@@ -73,9 +84,10 @@ public class ResturantListActivity extends FragmentActivity implements GooglePla
 			public void onItemClick(AdapterView<?> parent, View v, int position,
 					long id) {
 				Store store=storeList.get(position);
-				String json=convertModelStoreToJsonStrig(store);
+				//String json=convertModelStoreToJsonStrig(store);
+				AsaanUtility.selectedStore=store;
 				Intent intent=new Intent(ResturantListActivity.this,StoreDetailsActivity.class);
-				intent.putExtra("store",json);
+				//intent.putExtra("store",json);
 				
 				startActivity(intent);
 				
