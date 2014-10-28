@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="transparent">#00000000</color>
     <color name="black">#000000</color>
     <color name="black_semitransparent">#7F000000</color>
@@ -9,4 +10,15 @@
     <color name="gray_deep">#333333</color>
     <color name="khaki">#cb9b2c</color>
     <color name="khaki_text">#c7912f</color>
+    <color name="txtOrange">#f14512</color>
+    <color name="txtGrey">#b1bfc4</color>
+    <color name="txtBlack">#0d120d</color>
+    <color name="txtWhite">#fff</color>
+    <color name="txtBlue">#07076c</color>
+    <color name="txtRed">#CC0000</color>
+    <color name="txtMaroon">#C17E94</color>
+    <color name="txtGreen">#7EC190</color>
+    <color name="txtLightBlue">#005C94</color>
+    <color name="btnBlue">#0099CC</color>
+
 </resources>

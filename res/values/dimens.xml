@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="ScreenMargin">10dp</dimen>
+    <dimen name="tableButtonSize">40dp</dimen>
+    <dimen name="nameTextSize">20dp</dimen>
+    <dimen name="txtViewMarginLeft">16dp</dimen>
+    <dimen name="txtViewMarginTop">40dp</dimen>
+    <dimen name="txtViewMarginLeft2">24dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="txtViewLeftMargin8dp">8dp</dimen>
+
+    <dimen name="profile_image_max_width">60dp</dimen>
+    <dimen name="login_form_linear_layout_padding">5dp</dimen>
+    <dimen name="signup_image_margin">5dp</dimen>
+    <dimen name="profile_camera_size">32dp</dimen>
+    <dimen name="listview_row_padding">6dp</dimen>
+    <dimen name="listview_text_name_size">10dp</dimen>
+    <dimen name="listview_text_button_name_size">6dp</dimen>
+    <dimen name="listview_row_height">160dp</dimen>
+    
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_15dp">15dp</dimen>
+    <dimen name="margin_25dp">25dp</dimen>
+    
+</resources>
