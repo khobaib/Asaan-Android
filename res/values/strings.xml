@@ -4,6 +4,7 @@
     <string name="app_name">Asaan</string>
     <string name="fb_asaan_app_id">1460267094262357</string>
     <string name="map_key_dev">AIzaSyCpNVfgYL-xlar9t3KJ70UIkVHaZ2MrLU0</string>
+    <string name="map_key_dev_khobaib">AIzaSyCIe2Q41ucXLA8HDKyLihSomaIKXcnJ-LM</string>
     <string name = "map_key_dev_rishta_home">AIzaSyBXY5mlywRlZ-V1SWrwrIIGUZAzg3iTySo</string>
      <string name = "map_key_dev_tanzeer">AIzaSyAqfVbNI2saY9-t6OdGy1bczvJyiKP2h-8</string>
     <string name="year">Year</string>

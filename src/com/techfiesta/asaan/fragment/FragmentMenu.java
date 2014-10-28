@@ -1,19 +1,18 @@
 package com.techfiesta.asaan.fragment;
 
-import com.techfiesta.asaan.R;
-
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentMenu  extends Fragment{
+import com.techfiesta.asaan.R;
+
+public class FragmentMenu extends Fragment {
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-		
-		View v=inflater.inflate(R.layout.frag_restaurant_history,container,false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		View v = inflater.inflate(R.layout.frag_restaurant_history, container, false);
 		return v;
 	}
 
