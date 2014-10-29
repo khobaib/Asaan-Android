@@ -1,8 +1,10 @@
 package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
+import java.util.List;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreImage;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreImageCollection;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +30,10 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 	private Store store;
 	private Button btnInfo, btnMenu, btnReviews, btnHistory;
 	private TextView tvBack;
+	private List<StoreImage> storeImageList;
+	private StoreImageCollection storeImageCollection;
+	private int INITIAL_POSITION = 0;
+	private int MAX_RESULT = 10;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 		btnHistory = (Button) findViewById(R.id.btn_history);
 		btnReviews = (Button) findViewById(R.id.btn_reviews);
 		store = AsaanUtility.selectedStore;
+		new GetStoreImages().execute();
 		loadFisrtFragment();
 		btnHistory.setOnClickListener(this);
 		btnInfo.setOnClickListener(this);
@@ -60,6 +69,29 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 
 	}
 
+	private class GetStoreImages extends AsyncTask<Void,Void,Void>
+	{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				Log.e("storeid",""+store.getId());
+				storeImageCollection=AsaanMainActivity.mStoreendpoint.getStoreImages(store.getId(),INITIAL_POSITION,MAX_RESULT).execute();
+				//if(storeImageCollection!=null)
+					//Log.e("storeimage Size",""+storeImageCollection.getItems().size());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			
+			super.onPostExecute(result);
+		}
+		
+	}
 	private void getIntentData() {
 		Intent intent = getIntent();
 		String json = intent.getStringExtra("store");
