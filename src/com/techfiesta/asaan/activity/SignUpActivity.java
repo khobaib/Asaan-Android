@@ -96,7 +96,7 @@ public class SignUpActivity extends FragmentActivity implements Communicator {
 	 */
 
 	public void onClickNext(View v) {
-		startActivity(new Intent(this, ResturantListActivity.class));
+		startActivity(new Intent(this, StoreListActivity.class));
 	}
 
 }

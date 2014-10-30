@@ -69,7 +69,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.techfiesta.asaan.activity.ResturantListActivity"
+            android:name="com.techfiesta.asaan.activity.StoreListActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

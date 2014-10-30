@@ -89,7 +89,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 					
 					currentUser = ParseUser.getCurrentUser();
 					Log.d(">>","login success"+ currentUser.getEmail());
-					launchActivity(ResturantListActivity.class);
+					launchActivity(StoreListActivity.class);
 				}else{
 					Log.d(">>", "login failed");
 				}
@@ -148,7 +148,7 @@ public class AsaanLoginActivity extends Activity implements OnClickListener{
 		
 		currentUser = ParseUser.getCurrentUser();
 		if(currentUser!=null){
-			launchActivity(ResturantListActivity.class);
+			launchActivity(StoreListActivity.class);
 		}
 		
 	}

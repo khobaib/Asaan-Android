@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
@@ -37,7 +38,7 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ResturantListActivity extends FragmentActivity implements LocationListener, OnMarkerClickListener,
+public class StoreListActivity extends FragmentActivity implements LocationListener, OnMarkerClickListener,
 		OnInfoWindowClickListener {
 	private GoogleMap mMap;
 	private LocationManager locationManager;
@@ -65,9 +66,9 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 		getActionBar().hide();
 
 		Log.e("stop", "oncreate");
-		View viewToLoad = LayoutInflater.from(ResturantListActivity.this).inflate(R.layout.activity_restaurant_list,
+		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_restaurant_list,
 				null);
-		ResturantListActivity.this.setContentView(viewToLoad);
+		StoreListActivity.this.setContentView(viewToLoad);
 
 		tvBack = (TextView) findViewById(R.id.tvBack);
 		tvBack.setOnClickListener(new OnClickListener() {
@@ -88,7 +89,7 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 				Store store = storeList.get(position);
 				// String json=convertModelStoreToJsonStrig(store);
 				AsaanUtility.selectedStore = store;
-				Intent intent = new Intent(ResturantListActivity.this, StoreDetailsActivity.class);
+				Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivity.class);
 				// intent.putExtra("store",json);
 
 				startActivity(intent);
@@ -141,7 +142,11 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 		protected void onPostExecute(Void result) {
 			// setting list
 			storeList = storeCollection.getItems();
-			storeListAdapter = new StoreListAdapter(ResturantListActivity.this, storeList);
+			if (mLocation == null) {
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
+			} else {
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
+			}
 			storeListView.setAdapter(storeListAdapter);
 			setupMarker();
 			super.onPostExecute(result);
@@ -199,19 +204,20 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 		}
 	}
 
-	// fetch all resturants info here
-
 	private boolean setUserLocation() {
-		if (AsaanUtility.hasInternet(ResturantListActivity.this)) {
-			AsaanUtility.checkLocationAccess(ResturantListActivity.this);
+		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
+			AsaanUtility.checkLocationAccess(StoreListActivity.this);
 			if (AsaanUtility.getLocation()) {
 				mLocation = AsaanUtility.mLocation;
 				if (mLocation != null) {
 					Log.d(">>>>", "location=" + mLocation.getLatitude());
-					LatLng mlatLong = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-					mMarker = mMap.addMarker(new MarkerOptions().position(mlatLong).title("Hey!"));
-
-					mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatLong, 14));
+					// LatLng mlatLong = new LatLng(mLocation.getLatitude(),
+					// mLocation.getLongitude());
+					// mMarker = mMap.addMarker(new
+					// MarkerOptions().position(mlatLong).title("Hey!"));
+					//
+					// mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatLong,
+					// 14));
 					return true;
 				} else {
 					Log.d(">>>>>", "Couldn't get location");
@@ -219,9 +225,8 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 				}
 			}
 		} else
-			AsaanUtility.simpleAlert(ResturantListActivity.this, "Please check your internet connection");
+			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
 		return false;
-
 	}
 
 	public float getDistance(Location storeLocation) {
@@ -230,6 +235,7 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 
 	@Override
 	public void onLocationChanged(Location location) {
+		Toast.makeText(StoreListActivity.this, "location changed.", Toast.LENGTH_SHORT).show();
 		LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
 		mMap.animateCamera(cameraUpdate);
@@ -238,14 +244,10 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 
 	@Override
 	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -256,32 +258,13 @@ public class ResturantListActivity extends FragmentActivity implements LocationL
 	@Override
 	public void onInfoWindowClick(Marker marker) {
 		AsaanUtility.selectedStore = restaurantMarkerMap.get(marker);
-		Intent intent = new Intent(ResturantListActivity.this, StoreDetailsActivity.class);
+		Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivity.class);
 		startActivity(intent);
 	}
 
 	@Override
 	public boolean onMarkerClick(Marker arg0) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
-	// @Override
-	// public void onConnectionFailed(ConnectionResult result) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void onConnected(Bundle connectionHint) {
-	// // TODO Auto-generated method stub
-	//
-	// }
-	//
-	// @Override
-	// public void onDisconnected() {
-	// // TODO Auto-generated method stub
-	//
-	// }
 
 }
