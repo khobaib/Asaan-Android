@@ -24,6 +24,7 @@ import com.techfiesta.asaan.utility.CloudEndpointUtils;
 public class AsaanMainActivity extends Activity implements View.OnClickListener {
 
 	private static final String TAG = AsaanMainActivity.class.getSimpleName();
+	public static final long STORE_ID = 1L;
 
 	TextView Login, SignUp, Skip;
 

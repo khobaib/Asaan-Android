@@ -2,6 +2,9 @@ package com.techfiesta.asaan.utility;
 
 
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 
 import android.R;
@@ -13,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class AsaanUtility {
+	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
     public static Store selectedStore=null;
@@ -31,7 +35,14 @@ public class AsaanUtility {
 		}
 		return false;
 	}
-	
+	public static String formatCentsToCurrency(long p_value)
+	{
+		BigDecimal v_bigDec = new BigDecimal(p_value);
+		v_bigDec = v_bigDec.setScale(2, BigDecimal.ROUND_HALF_UP);
+		v_bigDec = v_bigDec.movePointLeft(2);
+		return FORMAT_CURRENCY.format(v_bigDec.doubleValue());
+	}
+
 	public static boolean getLocation() {
 		if (mGps == null) {
 			mGps = new GPSTracker(AsaanApplication.getAppContext());

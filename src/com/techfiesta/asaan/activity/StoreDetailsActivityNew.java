@@ -1,0 +1,102 @@
+package com.techfiesta.asaan.activity;
+
+
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.fragment.FragmentMenu;
+import com.techfiesta.asaan.fragment.InfoFragment;
+import com.techfiesta.asaan.fragment.ReviewFragment;
+
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+
+import android.support.v4.app.FragmentActivity;
+import android.view.Window;
+
+public class StoreDetailsActivityNew extends FragmentActivity implements TabListener{
+
+	ActionBar actionBar = null;
+	InfoFragment infoFragment;public StoreDetailsActivityNew() {
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		setContentView(R.layout.activity_store_details);
+		actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		setTabs();
+		//setInitialInfoFragment();
+		
+		infoFragment=new InfoFragment();
+		
+	}
+	private void setTabs()
+	{
+		Tab infoTab=actionBar.newTab();
+		infoTab.setText("Info");
+		infoTab.setTabListener(this);
+		
+		
+		Tab menuab=actionBar.newTab();
+		menuab.setText("Menu");
+		menuab.setTabListener(this);
+		
+		
+		Tab reviewTab=actionBar.newTab();
+		reviewTab.setText("Reviews");
+		reviewTab.setTabListener(this);
+		
+		
+		Tab historyTab=actionBar.newTab();
+		historyTab.setText("History");
+		historyTab.setTabListener(this);
+		
+		actionBar.addTab(infoTab);
+		actionBar.addTab(historyTab);
+		actionBar.addTab(menuab);
+		actionBar.addTab(reviewTab);
+
+		
+	}
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		int position=tab.getPosition();
+		if(position==0)
+		{
+			ft.replace(R.id.content_frame,new InfoFragment());
+			//ft.commit();
+		}
+		else if(position==1)
+		{
+			ft.replace(R.id.content_frame,new FragmentMenu());
+		}
+		else if(position==2)
+		{
+			Intent intent = new Intent(StoreDetailsActivityNew.this, MenuActivity.class);
+			startActivity(intent);
+		}
+		else if(position==3)
+		{
+			ft.replace(R.id.content_frame,new ReviewFragment());
+		}
+		
+	}
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		
+		
+	}
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

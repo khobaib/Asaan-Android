@@ -6,8 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import lombok.Getter;
+import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +23,10 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuI
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
+import com.techfiesta.asaan.activity.PlaceOrderActivity;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 
+@SuppressLint("NewApi")
 public class MenuItemsFragment extends ListFragment {
 	private static final Logger logger = Logger.getLogger(MenuItemsFragment.class.getName());
 
@@ -89,6 +93,7 @@ public class MenuItemsFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		((MenuFragmentAdapter) mListView.getAdapter()).listItemClick(l, v, position, id);
+		
 	}
 
 	public static class MenuFragmentAdapter extends BaseAdapter {
@@ -126,20 +131,20 @@ public class MenuItemsFragment extends ListFragment {
 		public void listItemClick(ListView l, View v, int position, long id) {
 			final StoreMenuItem menuItem = allItems.get(position);
 			if (menuItem != null) {
-				// final Intent intent = new Intent(context,
-				// MenuModGrpActivity.class);
-				// intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID,
-				// menuItem.getMenuItemPOSId());
-				// intent.putExtra(BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,
-				// menuItem.getShortDescription());
-				// intent.putExtra(BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,
-				// menuItem.getLongDescription());
-				// intent.putExtra(BUNDLE_KEY_MENUITEM_PRICE,
-				// menuItem.getPrice());
-				// intent.putExtra(BUNDLE_KEY_MENUITEM_HAS_MODIFIERS,
-				// menuItem.getHasModifiers());
-				// intent.putExtra(BUNDLE_KEY_ORDER_DETAILS_AVAILABLE, false);
-				// context.startActivity(intent);
+				 final Intent intent = new Intent(context,
+				 PlaceOrderActivity.class);
+				 intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID,
+				 menuItem.getMenuItemPOSId());
+				 intent.putExtra(BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,
+				 menuItem.getShortDescription());
+				 intent.putExtra(BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,
+				 menuItem.getLongDescription());
+				 intent.putExtra(BUNDLE_KEY_MENUITEM_PRICE,
+				 menuItem.getPrice());
+				 intent.putExtra(BUNDLE_KEY_MENUITEM_HAS_MODIFIERS,
+				 menuItem.getHasModifiers());
+				 intent.putExtra(BUNDLE_KEY_ORDER_DETAILS_AVAILABLE, false);
+				 context.startActivity(intent);
 			}
 		}
 

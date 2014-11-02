@@ -89,7 +89,7 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 				Store store = storeList.get(position);
 				// String json=convertModelStoreToJsonStrig(store);
 				AsaanUtility.selectedStore = store;
-				Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivity.class);
+				Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivityNew.class);
 				// intent.putExtra("store",json);
 
 				startActivity(intent);

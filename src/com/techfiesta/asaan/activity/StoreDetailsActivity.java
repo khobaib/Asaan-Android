@@ -3,12 +3,12 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,7 +62,7 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 
 	private void loadFisrtFragment() {
 		InfoFragment infoFragment = new InfoFragment();
-		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.add(R.id.content_frame, infoFragment);
 		fragmentTransaction.commit();
