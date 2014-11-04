@@ -27,18 +27,5 @@ public class InfoFragment extends Fragment {
 
 		return v;
 	}
-	@Override
-	public void onDestroyView() {
-		try {
-	        MapFragment fragment = (MapFragment) getActivity()
-	                                          .getFragmentManager().findFragmentById(
-	                                              R.id.map);
-	        if (fragment != null) getFragmentManager().beginTransaction().remove(fragment).commit();
-
-	    } catch (IllegalStateException e) {
-	        //handle this situation because you are necessary will get 
-	        //an exception here :-(
-	    }
-		super.onDestroyView();
-	}
+	
 }
