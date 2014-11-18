@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +28,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import asaan.dao.AddItem;
+import asaan.dao.AddItemDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoSession;
+import asaan.dao.ModItem;
+import asaan.dao.ModItemDao;
+import asaan.dao.DaoMaster.OpenHelper;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier;
@@ -43,6 +52,15 @@ public class PlaceOrderActivity extends Activity
 	String menuItemShortDesc, menuItemLongDesc;
 	MenuModGrpsAdapter mAdapter = null;
 
+
+	private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private AddItemDao addItemDao;
+	private AddItem addItem;
+	private ModItem modItem;
+	private ModItemDao modItemDao;
+	
 	private static final Logger logger = Logger.getLogger(PlaceOrderActivity.class.getName());
 	public static final int SELECTED_MODIFIERS_RESULT_CODE = 9600;
 	public static final String SELECTED_MODIFIERS = "SELECTED_MODIFIERS";
@@ -125,6 +143,15 @@ public class PlaceOrderActivity extends Activity
 		//		}
 	}
 
+	private void initDatabase()
+	{
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		modItemDao=daoSession.getModItemDao();
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
@@ -228,24 +255,39 @@ public class PlaceOrderActivity extends Activity
 				//				oi.specialInstructions =
 				//						txtSpecialInstructions.getText().toString();
 				//				MainActivity.orderedItems.add(oi);
+				//finish();
+				initDatabase();
+				long count=addItemDao.count();
+				int quantity=Integer.parseInt(txtQuantity.getText().toString());
+				int total_cost=quantity*menuItemPrice;
+				addItem=new AddItem(count+1,AsaanUtility.selectedStore.getId().intValue(),total_cost,menuItemShortDesc,quantity,menuItemPOSId,txtSpecialInstructions.getText().toString());
+				addItemDao.insert(addItem);
+				toast("Order saved");
 				finish();
+				//code for adding sub items;
+				
 			}
 		});
 	}
 
+	private void toast(String str)
+	{
+		Toast.makeText(PlaceOrderActivity.this,str,Toast.LENGTH_LONG).show();
+	}
 	public void setDescAndPriceWithChoices()
 	{
-		mAdapter.updatePriceAndDesc();
+		//mAdapter.updatePriceAndDesc();
 
 		TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);
 		TextView txtDesc = (TextView) findViewById(R.id.txt_item_desc);
 		TextView txtQuantity = (TextView) findViewById(R.id.txt_quantity);
 
 		String strQuantity = (String) txtQuantity.getText();
-		long finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
+		//long finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
+		long finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
 
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
-		txtDesc.setText(mAdapter.getFinalDesc());
+		//txtDesc.setText(mAdapter.getFinalDesc());
 	}
 
 	public static class MenuModGrpsAdapter extends BaseAdapter
@@ -404,6 +446,7 @@ public class PlaceOrderActivity extends Activity
 				menuItemModifiersAndGroups = AsaanMainActivity.mStoreendpoint
 						.getStoreMenuItemModifiers(AsaanMainActivity.STORE_ID, menuItemPOSId).execute();
 				logger.log(Level.INFO, "execute elapsed Time = " + (new Date().getTime() - startTime));
+				Log.e("size",""+menuItemModifiersAndGroups.size());
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block

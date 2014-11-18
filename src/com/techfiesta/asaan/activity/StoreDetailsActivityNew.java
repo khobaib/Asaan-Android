@@ -1,6 +1,8 @@
 package com.techfiesta.asaan.activity;
 
 
+import lombok.core.Main;
+
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.FragmentMenu;
 import com.techfiesta.asaan.fragment.InfoFragment;
@@ -14,6 +16,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 
 public class StoreDetailsActivityNew extends FragmentActivity implements TabListener{
@@ -112,7 +116,25 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		isBackButtonPressed=true;
 		super.onBackPressed();
 	}
-	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		return super.onPrepareOptionsMenu(menu);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId()==R.id.my_cart)
+		{
+			Intent intent=new Intent(StoreDetailsActivityNew.this,MyCartActivity.class);
+			startActivity(intent);
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	
 
 }

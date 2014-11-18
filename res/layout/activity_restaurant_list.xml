@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/map"
         android:layout_margin="7dp"
+        android:focusable="true"
         android:divider="@color/transparent"
         android:dividerHeight="5dp" >
     </ListView>
