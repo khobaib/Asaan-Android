@@ -16,8 +16,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreImage;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreImageCollection;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +28,8 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 	private Store store;
 	private Button btnInfo, btnMenu, btnReviews, btnHistory;
 	private TextView tvBack;
-	private List<StoreImage> storeImageList;
-	private StoreImageCollection storeImageCollection;
+	//private List<StoreImage> storeImageList;
+	//private StoreImageCollection storeImageCollection;
 	private int INITIAL_POSITION = 0;
 	private int MAX_RESULT = 10;
 
@@ -52,7 +50,7 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 		btnHistory = (Button) findViewById(R.id.btn_history);
 		btnReviews = (Button) findViewById(R.id.btn_reviews);
 		store = AsaanUtility.selectedStore;
-		new GetStoreImages().execute();
+		//new GetStoreImages().execute();
 		loadFisrtFragment();
 		btnHistory.setOnClickListener(this);
 		btnInfo.setOnClickListener(this);
@@ -69,7 +67,7 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 
 	}
 
-	private class GetStoreImages extends AsyncTask<Void,Void,Void>
+	/*private class GetStoreImages extends AsyncTask<Void,Void,Void>
 	{
 
 		@Override
@@ -91,7 +89,7 @@ public class StoreDetailsActivity extends FragmentActivity implements OnClickLis
 			super.onPostExecute(result);
 		}
 		
-	}
+	}*/
 	private void getIntentData() {
 		Intent intent = getIntent();
 		String json = intent.getStringExtra("store");

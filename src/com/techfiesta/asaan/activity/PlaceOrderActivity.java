@@ -37,7 +37,7 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 public class PlaceOrderActivity extends Activity
 {
 	ListView mListView = null;
-	long menuItemPOSId = 0;
+	int menuItemPOSId = 0;
 	long menuItemPrice = 0;
 	String menuItemShortDesc, menuItemLongDesc;
 	MenuModGrpsAdapter mAdapter = null;
@@ -74,7 +74,7 @@ public class PlaceOrderActivity extends Activity
 		setContentView(R.layout.menu_modifier_group);
 
 		Bundle bundle = this.getIntent().getExtras();
-		menuItemPOSId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
+		menuItemPOSId = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
 		menuItemPrice = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
 		menuItemShortDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
 		menuItemLongDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
