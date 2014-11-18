@@ -17,6 +17,7 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,7 +39,7 @@ public class PlaceOrderActivity extends Activity
 {
 	ListView mListView = null;
 	int menuItemPOSId = 0;
-	long menuItemPrice = 0;
+	int menuItemPrice = 0;
 	String menuItemShortDesc, menuItemLongDesc;
 	MenuModGrpsAdapter mAdapter = null;
 
@@ -75,7 +76,8 @@ public class PlaceOrderActivity extends Activity
 
 		Bundle bundle = this.getIntent().getExtras();
 		menuItemPOSId = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
-		menuItemPrice = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
+		menuItemPrice = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
+		 Log.e("PRICE",""+menuItemPrice+"  "+menuItemPOSId);
 		menuItemShortDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
 		menuItemLongDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
 		boolean menuItemHasModifiers = bundle.getBoolean(MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);

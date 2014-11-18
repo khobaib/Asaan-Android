@@ -19,7 +19,12 @@ import android.view.Window;
 public class StoreDetailsActivityNew extends FragmentActivity implements TabListener{
 
 	ActionBar actionBar = null;
-	InfoFragment infoFragment;public StoreDetailsActivityNew() {
+	InfoFragment infoFragment;
+	ReviewFragment reviewFragment;
+	FragmentMenu fragmentMenu;
+	public static boolean isBackButtonPressed=false;
+	
+	public StoreDetailsActivityNew() {
 		// TODO Auto-generated constructor stub
 	}
 	@Override
@@ -29,10 +34,16 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		setContentView(R.layout.activity_store_details);
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		setTabs();
+		infoFragment=new InfoFragment();
+		reviewFragment=new ReviewFragment();
+		fragmentMenu=new FragmentMenu();
+		
+		isBackButtonPressed=false;
+		
+       setTabs();
 		//setInitialInfoFragment();
 		
-		infoFragment=new InfoFragment();
+
 		
 	}
 	private void setTabs()
@@ -68,12 +79,12 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		int position=tab.getPosition();
 		if(position==0)
 		{
-			ft.replace(R.id.content_frame,new InfoFragment());
+			ft.replace(R.id.content_frame,infoFragment);
 			//ft.commit();
 		}
 		else if(position==1)
 		{
-			ft.replace(R.id.content_frame,new FragmentMenu());
+			ft.replace(R.id.content_frame,fragmentMenu);
 		}
 		else if(position==2)
 		{
@@ -82,7 +93,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		}
 		else if(position==3)
 		{
-			ft.replace(R.id.content_frame,new ReviewFragment());
+			ft.replace(R.id.content_frame,reviewFragment);
 		}
 		
 	}
@@ -95,6 +106,11 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onBackPressed() {
+		isBackButtonPressed=true;
+		super.onBackPressed();
 	}
 	
 	

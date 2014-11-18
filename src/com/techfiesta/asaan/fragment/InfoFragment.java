@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.MapFragment;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.StoreDetailsActivity;
+import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class InfoFragment extends Fragment {
@@ -29,16 +31,19 @@ public class InfoFragment extends Fragment {
 	}
 	@Override
 	public void onDestroyView() {
-		try {
-	        MapFragment fragment = (MapFragment) getActivity()
-	                                          .getFragmentManager().findFragmentById(
-	                                              R.id.map);
-	        if (fragment != null) getFragmentManager().beginTransaction().remove(fragment).commit();
+		if(!StoreDetailsActivityNew.isBackButtonPressed)
+		{
+			try {
+				MapFragment fragment = (MapFragment) getActivity()
+						.getFragmentManager().findFragmentById(
+								R.id.map);
+				if (fragment != null) getFragmentManager().beginTransaction().remove(fragment).commit();
 
-	    } catch (IllegalStateException e) {
-	        //handle this situation because you are necessary will get 
-	        //an exception here :-(
-	    }
+			} catch (IllegalStateException e) {
+				//handle this situation because you are necessary will get 
+				//an exception here :-(
+			}
+		}
 		super.onDestroyView();
 	}
 }
