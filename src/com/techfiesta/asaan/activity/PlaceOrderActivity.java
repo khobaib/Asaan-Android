@@ -12,6 +12,9 @@ import java.util.logging.Logger;
 import lombok.Getter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
@@ -256,6 +259,10 @@ public class PlaceOrderActivity extends Activity
 				//						txtSpecialInstructions.getText().toString();
 				//				MainActivity.orderedItems.add(oi);
 				//finish();
+				int current=AsaanUtility.getCurrentOrderedStoredId(PlaceOrderActivity.this);
+				Log.e("Current",""+current);
+				if(current==AsaanUtility.selectedStore.getId().intValue()|| current==-1)
+				{
 				initDatabase();
 				long count=addItemDao.count();
 				int quantity=Integer.parseInt(txtQuantity.getText().toString());
@@ -263,7 +270,12 @@ public class PlaceOrderActivity extends Activity
 				addItem=new AddItem(count+1,AsaanUtility.selectedStore.getId().intValue(),total_cost,menuItemShortDesc,quantity,menuItemPOSId,txtSpecialInstructions.getText().toString());
 				addItemDao.insert(addItem);
 				toast("Order saved");
+				AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this,AsaanUtility.selectedStore.getId().intValue());
 				finish();
+				}
+				else
+					alert(PlaceOrderActivity.this,"Already have saved order from other restaurant.Delete previous entries?");
+					
 				//code for adding sub items;
 				
 			}
@@ -463,5 +475,38 @@ public class PlaceOrderActivity extends Activity
 			//			mListView.invalidate();
 			super.onPostExecute(result);
 		}
+	}
+	private void alert(final Context context, String message) {
+		AlertDialog.Builder bld = new AlertDialog.Builder(context,
+				AlertDialog.THEME_HOLO_LIGHT);
+		// bld.setTitle(context.getResources().getText(R.string.app_name));
+		bld.setTitle(R.string.app_name);
+		bld.setMessage(message);
+		bld.setCancelable(false);
+		bld.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				deleteDatabase();
+				dialog.dismiss();
+			}
+		});
+		bld.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				
+			}
+		});
+
+		bld.create().show();
+	}
+	private void deleteDatabase()
+	{
+		initDatabase();
+		addItemDao.deleteAll();
+		modItemDao.deleteAll();
+		AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this,-1);
 	}
 }

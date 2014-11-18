@@ -4,6 +4,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import lombok.core.Main;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
@@ -50,6 +57,29 @@ public class MyCartActivity extends Activity {
 		lvMyCart.setAdapter(adapter);
 		
 	}
+	private void ConvertToXml()
+	{
+		DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder documentBuilder=documentBuilderFactory.newDocumentBuilder();
+			Document document=documentBuilder.newDocument();
+			
+			Element root= document.createElement("CHECKREQUESTS");
+			root.setAttribute("ADDCHECK EXTCHECKID", "Nirav");
+			root.setAttribute("READYTIME","4:45PM");
+			root.setAttribute("NOTE","Please make it spicy - no Peanuts Please");
+			root.setAttribute("ORDERMODE","1");
+			document.appendChild(root);
+			
+			
+	
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private void initDatabase()
 	{
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);

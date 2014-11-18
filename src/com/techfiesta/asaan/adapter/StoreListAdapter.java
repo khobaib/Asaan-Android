@@ -3,7 +3,9 @@ package com.techfiesta.asaan.adapter;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
@@ -19,6 +21,8 @@ import android.widget.TextView;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
+import com.techfiesta.asaan.activity.MyCartActivity;
+import com.techfiesta.asaan.activity.PlaceOrderActivity;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class StoreListAdapter extends ArrayAdapter<Store> {
@@ -101,10 +105,56 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			
 			@Override
 			public void onClick(View v) {
+				Store store=getItem(position);
+
+				int current=store.getId().intValue();
+				int savedId=AsaanUtility.getCurrentOrderedStoredId(mContext);
+				Log.e("size",store.getId().intValue()+" saved  "+savedId);
+				if(current==savedId)
+				{
+				AsaanUtility.selectedStore=getItem(position);
+				Intent intent=new Intent(mContext,MyCartActivity.class);
+				mContext.startActivity(intent);
+				}
+				else if(savedId==-1)
+				{
+					
+				}
+				else
+					alert(mContext,"Already have saved order from other restaurant.Go to orders?");
+				
 				
 			}
 		});
 
 		return convertView;
+	}
+	private void alert(final Context context, String message) {
+		AlertDialog.Builder bld = new AlertDialog.Builder(context,
+				AlertDialog.THEME_HOLO_LIGHT);
+		// bld.setTitle(context.getResources().getText(R.string.app_name));
+		bld.setTitle(R.string.app_name);
+		bld.setMessage(message);
+		bld.setCancelable(false);
+		bld.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				Intent intent=new Intent(mContext,MyCartActivity.class);
+				mContext.startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+		bld.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				
+			}
+		});
+
+		bld.create().show();
 	}
 }

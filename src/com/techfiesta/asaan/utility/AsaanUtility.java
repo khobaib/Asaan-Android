@@ -6,17 +6,21 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.techfiesta.asaan.R;
 
-import android.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
+	private static final String CURRENT_ORDERED_STORE_ID="current_ordered_store_id"; 
+	private static final int CURRENT_INVALID_STORE=-1; 
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
     public static Store selectedStore=null;
@@ -96,6 +100,18 @@ public class AsaanUtility {
 			}
 		});
 		bld.create().show();
+	}
+	public static void setCurrentOrderdStoreId(Context context,int id)
+	{
+		SharedPreferences.Editor editor = PreferenceManager
+				.getDefaultSharedPreferences(context).edit();
+		editor.putInt(CURRENT_ORDERED_STORE_ID,id);
+		editor.commit();
+	}
+	public static int getCurrentOrderedStoredId(Context context)
+	{
+		return PreferenceManager.getDefaultSharedPreferences(context)
+				.getInt(CURRENT_ORDERED_STORE_ID,-1);
 	}
 
 
