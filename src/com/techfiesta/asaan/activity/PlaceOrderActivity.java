@@ -280,9 +280,12 @@ public class PlaceOrderActivity extends Activity
 				addItemDao.insert(addItem);
 				//to do
 				ArrayList<ModItem> list=mAdapter.getSelecteedModifiersList((int)count+1);
-				for(int i=0;i<list.size();i++)
+				if(list!=null)
 				{
-					modItemDao.insert(list.get(i));
+					for(int i=0;i<list.size();i++)
+					{
+						modItemDao.insert(list.get(i));
+					}
 				}
 				toast("Order saved");
 				AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this,AsaanUtility.selectedStore.getId().intValue());

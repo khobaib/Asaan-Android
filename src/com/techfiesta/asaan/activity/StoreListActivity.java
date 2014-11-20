@@ -1,11 +1,15 @@
 package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.w3c.dom.ls.LSInput;
+
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +26,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import asaan.dao.AddItem;
+import asaan.dao.AddItemDao;
+import asaan.dao.DStore;
+import asaan.dao.DStoreDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoSession;
+import asaan.dao.ModItem;
+import asaan.dao.ModItemDao;
+import asaan.dao.Trophies;
+import asaan.dao.TrophiesDao;
+import asaan.dao.DaoMaster.OpenHelper;
+
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
@@ -58,13 +74,19 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 	private int INITIAL_POSITION = 0;
 	private int MAX_RESULT = 10;
 	private TextView tvBack;
-
+	
+	private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private DStoreDao dStoreDao;
+	private TrophiesDao trophiesDao;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
-
+     //init database
+		initDatabase();
 		Log.e("stop", "oncreate");
 		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_restaurant_list,
 				null);
@@ -97,10 +119,105 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 			}
 		});
 
+		if(isUpDatedInLast24Hours())
+		{
+			//load from local db
+			Log.e("status","loading from local db");
+			loadStoresFromDatabase();
+			if (mLocation == null) {
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
+			} else {
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
+			}
+			storeListView.setAdapter(storeListAdapter);
+			setupMarker();
+			
+		}
+		else
+		{
+			Log.e("status","loading from from server");
 		new GetStroreInfoFromServer().execute();
+		}
 
 	}
+	private void initDatabase()
+	{
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        dStoreDao = daoSession.getDStoreDao();
+		trophiesDao=daoSession.getTrophiesDao();
+	}
 
+	private boolean isUpDatedInLast24Hours()
+	{
+		long lastTime=AsaanUtility.getlastUpdatedTime(StoreListActivity.this);
+		long diff=System.currentTimeMillis()-lastTime;
+		if(diff>(24*60*60*1000))
+		{
+			return false;
+		}
+		else
+			return true;
+	}
+	private void loadStoresFromDatabase()
+	{
+		List<Store> tempStoreList=new ArrayList<Store>();
+		List<DStore> dstList=dStoreDao.queryBuilder().list();
+		for(int i=0;i<dstList.size();i++)
+		{
+			
+		    DStore dStore=dstList.get(i);
+			Store store=new Store();
+			store.setAddress(dStore.getAddress());
+			store.setBackgroundImageUrl(dStore.getBackgroundImageUrl());
+			store.setBackgroundThumbnailUrl(dStore.getBackgroundThumbnailUrl());
+			store.setBeaconId(dStore.getBeaconId());
+			store.setBssid(dStore.getBssid());
+			store.setCity(dStore.getCity());
+			store.setCreatedDate(dStore.getCreatedDate());
+			store.setDeliveryDistance(dStore.getDeliveryDistance());
+			store.setDescription(dStore.getDescription());
+			store.setFbUrl(dStore.getFbUrl());
+			store.setGplusUrl(dStore.getGplusUrl());
+			store.setHours(dStore.getHours());
+			Log.e("address",dStore.getAddress());
+			store.setId(dStore.getId());
+			store.setIsActive(dStore.getIsActive());
+			store.setLat(dStore.getLat());
+			store.setLng(dStore.getLng());
+			store.setModifiedDate(dStore.getModifiedDate());
+			store.setName(dStore.getName());
+			store.setPhone(dStore.getPhone());
+			store.setPriceRange(dStore.getPriceRange());
+			store.setProvidesCarryout(dStore.getProvidesCarryout());
+			store.setProvidesDelivery(dStore.getProvidesDelivery());
+			store.setRewardsDescription(dStore.getRewardsDescription());
+			store.setRewardsRate(dStore.getRewardsRate());
+			store.setSsid(dStore.getSsid());
+			store.setState(dStore.getState());
+			store.setSubType(dStore.getSubType());
+			store.setTwitterUrl(dStore.getTwitterUrl());
+			store.setType(dStore.getType());
+			store.setWebSiteUrl(dStore.getWebSiteUrl());
+			store.setZip(dStore.getZip());
+			
+			List<Trophies> trophies=dStore.getTrophiesList();
+			List<String> list=new ArrayList<>();
+			if(trophies!=null)
+			{
+				for(int j=0;j<trophies.size();j++)
+					list.add(trophies.get(j).getName());
+					
+			}
+			store.setTrophies(list);
+			tempStoreList.add(store);
+			
+		}
+		storeList=tempStoreList;
+	}
+	
 	// private String convertModelStoreToJsonStrig(Store store) {
 	// ObjectMapper objectMapper = new ObjectMapper();
 	// // objectMapper.configure(SerializationFeature.INDENT_OUTPUT,true);
@@ -148,8 +265,64 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
 			}
 			storeListView.setAdapter(storeListAdapter);
+			saveStoreToDatabase();
 			setupMarker();
 			super.onPostExecute(result);
+		}
+		private void saveStoreToDatabase()
+		{
+			dStoreDao.deleteAll();
+			trophiesDao.deleteAll();
+			for(int i=0;i<storeList.size();i++)
+			{
+				Store store=storeList.get(i);
+				DStore dStore=new DStore();
+				dStore.setAddress(store.getAddress());
+				dStore.setBackgroundImageUrl(store.getBackgroundImageUrl());
+				dStore.setBackgroundThumbnailUrl(store.getBackgroundThumbnailUrl());
+				dStore.setBeaconId(store.getBeaconId());
+				dStore.setBssid(store.getBssid());
+				dStore.setCity(store.getCity());
+				dStore.setCreatedDate(store.getCreatedDate());
+				dStore.setDeliveryDistance(store.getDeliveryDistance());
+				dStore.setDescription(store.getDescription());
+				dStore.setFbUrl(store.getFbUrl());
+				dStore.setGplusUrl(store.getGplusUrl());
+				dStore.setHours(store.getHours());
+				Log.e("address",store.getAddress());
+				dStore.setId(store.getId());
+				dStore.setIsActive(store.getIsActive());
+				dStore.setLat(store.getLat());
+				dStore.setLng(store.getLng());
+				dStore.setModifiedDate(store.getModifiedDate());
+				dStore.setName(store.getName());
+				dStore.setPhone(store.getPhone());
+				dStore.setPriceRange(store.getPriceRange());
+				dStore.setProvidesCarryout(store.getProvidesCarryout());
+				dStore.setProvidesDelivery(store.getProvidesDelivery());
+				dStore.setRewardsDescription(store.getRewardsDescription());
+				dStore.setRewardsRate(store.getRewardsRate());
+				dStore.setSsid(store.getSsid());
+				dStore.setState(store.getState());
+				dStore.setSubType(store.getSubType());
+				dStore.setTwitterUrl(store.getTwitterUrl());
+				dStore.setType(store.getType());
+				dStore.setWebSiteUrl(store.getWebSiteUrl());
+				dStore.setZip(store.getZip());
+
+				dStoreDao.insert(dStore);
+				if(store.getTrophies()!=null)
+				{
+					for(int j=0;j<store.getTrophies().size();j++)
+					{
+						long rownum=trophiesDao.insert(new Trophies(store.getTrophies().get(j),store.getId()));
+						Log.e("status",rownum+"");
+					}
+				}
+			}
+			AsaanUtility.seLastUpDatedTime(StoreListActivity.this,System.currentTimeMillis());
+
+
 		}
 
 	}

@@ -20,6 +20,7 @@ import android.preference.PreferenceManager;
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
 	private static final String CURRENT_ORDERED_STORE_ID="current_ordered_store_id"; 
+	private static final String LAST_UPDATE_TIME_IN_MILLIS="last_update_time_in milis"; 
 	private static final int CURRENT_INVALID_STORE=-1; 
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
@@ -112,6 +113,18 @@ public class AsaanUtility {
 	{
 		return PreferenceManager.getDefaultSharedPreferences(context)
 				.getInt(CURRENT_ORDERED_STORE_ID,-1);
+	}
+	public static void seLastUpDatedTime(Context context,long time)
+	{
+		SharedPreferences.Editor editor = PreferenceManager
+				.getDefaultSharedPreferences(context).edit();
+		editor.putLong(LAST_UPDATE_TIME_IN_MILLIS,time);
+		editor.commit();
+	}
+	public static long getlastUpdatedTime(Context context)
+	{
+		return PreferenceManager.getDefaultSharedPreferences(context)
+				.getLong(LAST_UPDATE_TIME_IN_MILLIS,0);
 	}
 
 
