@@ -279,12 +279,15 @@ public class PlaceOrderActivity extends Activity
 				addItem=new AddItem(count+1,AsaanUtility.selectedStore.getId().intValue(),total_cost,menuItemShortDesc,quantity,menuItemPOSId,txtSpecialInstructions.getText().toString());
 				addItemDao.insert(addItem);
 				//to do
-				ArrayList<ModItem> list=mAdapter.getSelecteedModifiersList((int)count+1);
-				if(list!=null)
+				if(menuItemHasModifiers)
 				{
-					for(int i=0;i<list.size();i++)
+					ArrayList<ModItem> list=mAdapter.getSelecteedModifiersList((int)count+1);
+					if(list!=null)
 					{
-						modItemDao.insert(list.get(i));
+						for(int i=0;i<list.size();i++)
+						{
+							modItemDao.insert(list.get(i));
+						}
 					}
 				}
 				toast("Order saved");

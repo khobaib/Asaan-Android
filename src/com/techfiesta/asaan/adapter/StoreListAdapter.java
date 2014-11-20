@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteAbortException;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import asaan.dao.AddItemDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoMaster.OpenHelper;
+import asaan.dao.DaoSession;
+import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.techfiesta.asaan.R;
@@ -118,10 +125,10 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 				}
 				else if(savedId==-1)
 				{
-					
+					simpleAlert(mContext,"You have no orders.");
 				}
 				else
-					alert(mContext,"Already have saved order from other restaurant.Go to orders?");
+					alert(mContext,"Already have saved order from other restaurant.Delete all orders?");
 				
 				
 			}
@@ -141,8 +148,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				
-				Intent intent=new Intent(mContext,MyCartActivity.class);
-				mContext.startActivity(intent);
+				//deleting all orders
+				OpenHelper helper = new DaoMaster.DevOpenHelper(mContext, "asaan-db", null);
+		        SQLiteDatabase db = helper.getWritableDatabase();
+		        DaoMaster  daoMaster = new DaoMaster(db);
+		        DaoSession daoSession = daoMaster.newSession();
+		        AddItemDao addItemDao = daoSession.getAddItemDao();
+				ModItemDao modItemDao=daoSession.getModItemDao();
+				addItemDao.deleteAll();
+				modItemDao.deleteAll();
+				AsaanUtility.setCurrentOrderdStoreId(mContext,-1);
 				dialog.dismiss();
 			}
 		});
@@ -154,6 +169,17 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 				
 			}
 		});
+
+		bld.create().show();
+	}
+	private void simpleAlert(final Context context, String message) {
+		AlertDialog.Builder bld = new AlertDialog.Builder(context,
+				AlertDialog.THEME_HOLO_LIGHT);
+		// bld.setTitle(context.getResources().getText(R.string.app_name));
+		bld.setTitle(R.string.app_name);
+		bld.setMessage(message);
+		bld.setCancelable(false);
+		bld.setNeutralButton("Ok",null);
 
 		bld.create().show();
 	}
