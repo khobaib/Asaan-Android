@@ -24,7 +24,7 @@ public class MenuActivity extends Activity {
 	public static MenusAndMenuItems menusAndMenuItems;
 
 	private long INITIAL_POSITION = 0;
-	private int MAX_RESULT = 10;
+	private int MAX_RESULT = 20;
 	private long storeId = -1;
 
 	ActionBar actionBar = null;

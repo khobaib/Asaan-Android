@@ -43,6 +43,7 @@ import asaan.dao.DaoMaster.OpenHelper;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup;
+import com.google.android.gms.internal.li;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -63,6 +64,8 @@ public class PlaceOrderActivity extends Activity
 	private AddItem addItem;
 	private ModItem modItem;
 	private ModItemDao modItemDao;
+	
+	private boolean menuItemHasModifiers;
 	
 	private static final Logger logger = Logger.getLogger(PlaceOrderActivity.class.getName());
 	public static final int SELECTED_MODIFIERS_RESULT_CODE = 9600;
@@ -101,7 +104,7 @@ public class PlaceOrderActivity extends Activity
 		 Log.e("PRICE",""+menuItemPrice+"  "+menuItemPOSId);
 		menuItemShortDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
 		menuItemLongDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
-		boolean menuItemHasModifiers = bundle.getBoolean(MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
+		menuItemHasModifiers = bundle.getBoolean(MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
 
 		initUI();
 
@@ -260,15 +263,27 @@ public class PlaceOrderActivity extends Activity
 				//				MainActivity.orderedItems.add(oi);
 				//finish();
 				int current=AsaanUtility.getCurrentOrderedStoredId(PlaceOrderActivity.this);
-				Log.e("Current",""+current);
 				if(current==AsaanUtility.selectedStore.getId().intValue()|| current==-1)
 				{
 				initDatabase();
 				long count=addItemDao.count();
 				int quantity=Integer.parseInt(txtQuantity.getText().toString());
-				int total_cost=quantity*menuItemPrice;
+				int total_cost;
+				if(menuItemHasModifiers)
+				{
+					total_cost = (int)(menuItemPrice + mAdapter.getFinalPrice()) * quantity;
+					Log.e("MSG",""+mAdapter.getFinalPrice());
+				}
+				else
+				  total_cost = (menuItemPrice) * quantity;
 				addItem=new AddItem(count+1,AsaanUtility.selectedStore.getId().intValue(),total_cost,menuItemShortDesc,quantity,menuItemPOSId,txtSpecialInstructions.getText().toString());
 				addItemDao.insert(addItem);
+				//to do
+				ArrayList<ModItem> list=mAdapter.getSelecteedModifiersList((int)count+1);
+				for(int i=0;i<list.size();i++)
+				{
+					modItemDao.insert(list.get(i));
+				}
 				toast("Order saved");
 				AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this,AsaanUtility.selectedStore.getId().intValue());
 				finish();
@@ -288,18 +303,23 @@ public class PlaceOrderActivity extends Activity
 	}
 	public void setDescAndPriceWithChoices()
 	{
-		//mAdapter.updatePriceAndDesc();
+		if(menuItemHasModifiers)
+			mAdapter.updatePriceAndDesc();
 
 		TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);
 		TextView txtDesc = (TextView) findViewById(R.id.txt_item_desc);
 		TextView txtQuantity = (TextView) findViewById(R.id.txt_quantity);
 
 		String strQuantity = (String) txtQuantity.getText();
-		//long finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
-		long finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
+		long finalPrice;
+		if(menuItemHasModifiers)
+			finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
+		else
+		 finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
 
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
-		//txtDesc.setText(mAdapter.getFinalDesc());
+		if(menuItemHasModifiers)
+		   txtDesc.setText(mAdapter.getFinalDesc());
 	}
 
 	public static class MenuModGrpsAdapter extends BaseAdapter
@@ -369,6 +389,21 @@ public class PlaceOrderActivity extends Activity
 					finalDesc += ", " + modifierGroup.selectedModifierDesc;
 			}
 		}
+		private ArrayList<ModItem> getSelecteedModifiersList(int parent_id)
+		{
+			ArrayList<ModItem> modItemList=new ArrayList<ModItem>();
+			for (ModifierGroup modifierGroup : modifierGroups)
+			{
+				if (modifierGroup.selectedModifiers == null)
+					continue;
+				ModItem modItem=new ModItem(-1,(int)modifierGroup.posId,parent_id,modifierGroup.selectedModifierDesc,(int)modifierGroup.selectedModifierPrice);
+				modItemList.add(modItem);
+				
+				
+			}
+			
+			return modItemList;
+		}
 
 		public void setModGroupSelections(ArrayList<Integer> modSelections, String modDesc, long modPrice)
 		{
@@ -380,13 +415,13 @@ public class PlaceOrderActivity extends Activity
 
 		public void listItemClick(int position)
 		{
-			/*listItemClickPosition = position;
+			listItemClickPosition = position;
 			long selectedModGrpId = getItem(position).posId;
 			Intent intent = new Intent(getActivity(), MenuModifierActivity.class);
 			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID, selectedModGrpId);
 			ModifierGroup modifierGroup = modifierGroups.get(listItemClickPosition);
 			intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, modifierGroup.selectedModifiers);
-			getActivity().startActivityForResult(intent, SELECTED_MODIFIERS_RESULT_CODE);*/
+			getActivity().startActivityForResult(intent, SELECTED_MODIFIERS_RESULT_CODE);
 		}
 
 		PlaceOrderActivity getActivity()

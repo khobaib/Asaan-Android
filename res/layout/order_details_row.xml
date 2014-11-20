@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_5dp" >
+
+    <LinearLayout
+	    android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/txt_item_quantity"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="@string/order_quantity" />
+
+    <TextView
+        android:id="@+id/txt_item_name"
+        android:layout_width="0dip"
+        android:layout_weight="8"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:text="@string/food_menu_item_name" />
+
+    <TextView
+        android:id="@+id/txt_item_price"
+         android:layout_width="0dip"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@string/food_menu_item_price" />
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/txt_item_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/LinearLayout1"
+        android:layout_alignStart="@id/LinearLayout1"
+        android:layout_below="@id/LinearLayout1"
+        android:text="@string/additional_option_1"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="italic" />
+    
+    <TextView
+        android:id="@+id/txt_item_instructions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/LinearLayout1"
+        android:layout_alignStart="@id/LinearLayout1"
+        android:layout_below="@id/txt_item_description"
+        android:text="@string/additional_option_1"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="italic" />
+    
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:background="@color/txtGrey" />
+
+</RelativeLayout>

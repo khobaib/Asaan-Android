@@ -81,6 +81,8 @@
         <activity android:name=".activity.StoreDetailsActivityNew"></activity>
         <activity android:name=".activity.PlaceOrderActivity"></activity>
         <activity android:name=".activity.MyCartActivity"></activity>
+        <activity android:name=".activity.MenuModifierActivity"></activity>
+        <activity android:name=".activity.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

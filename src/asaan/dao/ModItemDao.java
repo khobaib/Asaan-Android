@@ -28,10 +28,13 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
     public static class Properties {
         public final static Property Quantity = new Property(0, int.class, "quantity", false, "QUANTITY");
         public final static Property Item_id = new Property(1, int.class, "item_id", false, "ITEM_ID");
-        public final static Property Id = new Property(2, Long.class, "id", true, "_id");
+        public final static Property Parent_item_id = new Property(2, int.class, "parent_item_id", false, "PARENT_ITEM_ID");
+        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
+        public final static Property Price = new Property(4, int.class, "price", false, "PRICE");
+        public final static Property Id = new Property(5, Long.class, "id", true, "_id");
     };
 
-    private Query<ModItem> addItem_ModItemListQuery;
+    private Query<ModItem> addItem_Mod_itemsQuery;
 
     public ModItemDao(DaoConfig config) {
         super(config);
@@ -47,7 +50,10 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
         db.execSQL("CREATE TABLE " + constraint + "'MOD_ITEM' (" + //
                 "'QUANTITY' INTEGER NOT NULL ," + // 0: quantity
                 "'ITEM_ID' INTEGER NOT NULL ," + // 1: item_id
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT );"); // 2: id
+                "'PARENT_ITEM_ID' INTEGER NOT NULL ," + // 2: parent_item_id
+                "'NAME' TEXT NOT NULL ," + // 3: name
+                "'PRICE' INTEGER NOT NULL ," + // 4: price
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT );"); // 5: id
     }
 
     /** Drops the underlying database table. */
@@ -62,6 +68,9 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getQuantity());
         stmt.bindLong(2, entity.getItem_id());
+        stmt.bindLong(3, entity.getParent_item_id());
+        stmt.bindString(4, entity.getName());
+        stmt.bindLong(5, entity.getPrice());
     }
 
     /** @inheritdoc */
@@ -75,7 +84,10 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
     public ModItem readEntity(Cursor cursor, int offset) {
         ModItem entity = new ModItem( //
             cursor.getInt(offset + 0), // quantity
-            cursor.getInt(offset + 1) // item_id
+            cursor.getInt(offset + 1), // item_id
+            cursor.getInt(offset + 2), // parent_item_id
+            cursor.getString(offset + 3), // name
+            cursor.getInt(offset + 4) // price
         );
         return entity;
     }
@@ -85,6 +97,9 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
     public void readEntity(Cursor cursor, ModItem entity, int offset) {
         entity.setQuantity(cursor.getInt(offset + 0));
         entity.setItem_id(cursor.getInt(offset + 1));
+        entity.setParent_item_id(cursor.getInt(offset + 2));
+        entity.setName(cursor.getString(offset + 3));
+        entity.setPrice(cursor.getInt(offset + 4));
      }
     
     /** @inheritdoc */
@@ -106,16 +121,16 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
         return true;
     }
     
-    /** Internal query to resolve the "modItemList" to-many relationship of AddItem. */
-    public List<ModItem> _queryAddItem_ModItemList(Long id) {
+    /** Internal query to resolve the "mod_items" to-many relationship of AddItem. */
+    public List<ModItem> _queryAddItem_Mod_items(Long id) {
         synchronized (this) {
-            if (addItem_ModItemListQuery == null) {
+            if (addItem_Mod_itemsQuery == null) {
                 QueryBuilder<ModItem> queryBuilder = queryBuilder();
                 queryBuilder.where(Properties.Id.eq(null));
-                addItem_ModItemListQuery = queryBuilder.build();
+                addItem_Mod_itemsQuery = queryBuilder.build();
             }
         }
-        Query<ModItem> query = addItem_ModItemListQuery.forCurrentThread();
+        Query<ModItem> query = addItem_Mod_itemsQuery.forCurrentThread();
         query.setParameter(0, id);
         return query.list();
     }

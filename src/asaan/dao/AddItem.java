@@ -26,7 +26,7 @@ public class AddItem {
     /** Used for active entity operations. */
     private transient AddItemDao myDao;
 
-    private List<ModItem> modItemList;
+    private List<ModItem> mod_items;
 
     public AddItem() {
     }
@@ -112,25 +112,25 @@ public class AddItem {
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<ModItem> getModItemList() {
-        if (modItemList == null) {
+    public List<ModItem> getMod_items() {
+        if (mod_items == null) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             ModItemDao targetDao = daoSession.getModItemDao();
-            List<ModItem> modItemListNew = targetDao._queryAddItem_ModItemList(id);
+            List<ModItem> mod_itemsNew = targetDao._queryAddItem_Mod_items(id);
             synchronized (this) {
-                if(modItemList == null) {
-                    modItemList = modItemListNew;
+                if(mod_items == null) {
+                    mod_items = mod_itemsNew;
                 }
             }
         }
-        return modItemList;
+        return mod_items;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetModItemList() {
-        modItemList = null;
+    public synchronized void resetMod_items() {
+        mod_items = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

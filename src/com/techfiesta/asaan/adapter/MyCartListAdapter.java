@@ -49,7 +49,7 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem>{
 		
 		AddItem item=getItem(position);
 		holder.tvH.setText("Store Id:"+ item.getStore_id()+"\nPrice: "+item.getPrice()+"\nName: "+item.getItem_id()+"\n"+"Quantity: "+ item.getQuantity() + "\n comment: "+ item.getOrder_for());
-		List<ModItem> list=item.getModItemList();
+		List<ModItem> list=item.getMod_items();
 		for(int i=0;i<list.size();i++)
 		{
 			holder.tv.setText(list.get(i).getItem_id()+"  "+ list.get(i).getQuantity()+"\n");

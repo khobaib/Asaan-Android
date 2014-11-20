@@ -153,6 +153,7 @@ public class MenuItemsFragment extends ListFragment {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
+			Log.e("ALL ITEMS SIZE",""+allItems.size());
 			return allItems.size();
 		}
 
@@ -241,6 +242,7 @@ public class MenuItemsFragment extends ListFragment {
 			} else {
 				final ViewHolder holder = (ViewHolder) rowView.getTag();
 
+				Log.e("short descriptipn", storeMenuItem.getShortDescription());
 				holder.txtName.setText(storeMenuItem.getShortDescription());
 				holder.txtDesc.setText(storeMenuItem.getLongDescription());
 				holder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
