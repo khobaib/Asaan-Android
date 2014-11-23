@@ -62,16 +62,17 @@ import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class StoreListActivity extends FragmentActivity implements 
-		GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,OnMarkerClickListener,OnInfoWindowClickListener,GooglePlayServicesClient.ConnectionCallbacks{
+		GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,GooglePlayServicesClient.ConnectionCallbacks{
 	private GoogleMap mMap;
 	private LocationManager locationManager;
 	private static final long MIN_TIME = 400;
 	private static final float MIN_DISTANCE = 1000;
 	int test_count=0;
 
-	private HashMap<Marker, Store> restaurantMarkerMap;
 
-	protected Marker mMarker;
+	
+
+	
 	Context mContext;
 	Location mLocation;
 	boolean isLocation;
@@ -111,7 +112,7 @@ public class StoreListActivity extends FragmentActivity implements
 			}
 		});
 
-		setupMap();
+		updateLocation();
 
 		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
 		storeListView.setOnItemClickListener(new OnItemClickListener() {
@@ -140,7 +141,6 @@ public class StoreListActivity extends FragmentActivity implements
 				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
 			}
 			storeListView.setAdapter(storeListAdapter);
-			setupMarker();
 			
 		}
 		else
@@ -246,11 +246,6 @@ public class StoreListActivity extends FragmentActivity implements
 	// }
 	// return stringWriter.toString();
 	// }
-
-	private void getStoreInfo() {
-
-	}
-
 	private class GetStroreInfoFromServer extends AsyncTask<Void, Void, Void> {
 
 		@Override
@@ -276,7 +271,6 @@ public class StoreListActivity extends FragmentActivity implements
 			}
 			storeListView.setAdapter(storeListAdapter);
 			saveStoreToDatabase();
-			setupMarker();
 			super.onPostExecute(result);
 		}
 		private void saveStoreToDatabase()
@@ -337,7 +331,7 @@ public class StoreListActivity extends FragmentActivity implements
 
 	}
  
-	private void setupMap() {
+	private void updateLocation() {
 
 		// if (mMap == null) {
 		// // Try to obtain the map from the SupportMapFragment.
@@ -349,21 +343,6 @@ public class StoreListActivity extends FragmentActivity implements
 		// setUpMap();
 		// }
 		// }
-
-		if (mMap == null) {
-
-			mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-			mMap.getUiSettings().setZoomControlsEnabled(false);
-			mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-			mMap.setMyLocationEnabled(true);
-			mMap.getUiSettings().setZoomControlsEnabled(true);
-
-			//isLocation = setUserLocation();
-
-		}
-
-		mMap.setOnMarkerClickListener(this);
-		mMap.setOnInfoWindowClickListener(this);
 		
 		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -395,7 +374,7 @@ public class StoreListActivity extends FragmentActivity implements
 		alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-				startActivity(intent);
+				startActivityForResult(intent, 1);
 			}
 		});
 
@@ -428,21 +407,12 @@ public class StoreListActivity extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.e("MSG","on resumr");
+		Log.e("MSG","on resume");
 		//setupMap();
 
 	}
 
-	private void setupMarker() {
-		restaurantMarkerMap = new HashMap<Marker, Store>();
-		Log.d(">>>>>>>", "-------- how many RESTAURANTS? = " + storeList.size());
-		for (int i = 0; i < storeList.size(); i++) {
-			Store store = storeList.get(i);
-			LatLng restaurantPosition = new LatLng(store.getLat(), store.getLng());
-			Marker marker = mMap.addMarker(new MarkerOptions().position(restaurantPosition).title(store.getName()));
-			restaurantMarkerMap.put(marker, store);
-		}
-	}
+	
 
 	private boolean setUserLocation() {
 		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
@@ -484,9 +454,6 @@ public class StoreListActivity extends FragmentActivity implements
 		
 		storeListAdapter.notifyDataSetChanged();
 		
-		LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
-		mMap.animateCamera(cameraUpdate);
 
 
 		
@@ -495,16 +462,6 @@ public class StoreListActivity extends FragmentActivity implements
 	public void onConnectionFailed(ConnectionResult result) {
 		// TODO Auto-generated method stub
 		
-	}
-	@Override
-	public void onInfoWindowClick(Marker marker) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public boolean onMarkerClick(Marker marker) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	@Override
 	protected void onDestroy() {
@@ -526,6 +483,15 @@ public class StoreListActivity extends FragmentActivity implements
 	public void onDisconnected() {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		if(requestCode==1)
+		{
+			Log.e("MSG","onactivity result");
+			updateLocation();
+		}
 	}
 
 	
