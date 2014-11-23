@@ -7,13 +7,16 @@ import java.util.List;
 
 import org.w3c.dom.ls.LSInput;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -333,7 +336,7 @@ public class StoreListActivity extends FragmentActivity implements
 		}
 
 	}
-
+ 
 	private void setupMap() {
 
 		// if (mMap == null) {
@@ -361,11 +364,52 @@ public class StoreListActivity extends FragmentActivity implements
 
 		mMap.setOnMarkerClickListener(this);
 		mMap.setOnInfoWindowClickListener(this);
-		startLocationTracking();
+		
+		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
+			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			boolean isNetworkEnabled=locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			if(isNetworkEnabled)
+			startLocationTracking();
+			else
+			{
+				showSettingsAlert();
+			}
+		} else
+			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
+		
 		//locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		//locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 
 	}
+	public void showSettingsAlert() {
+		Log.d(">>>> GPS TRACKER <<<<<<", "in showSettingsAlert method - TRYING TO ACTIVATE LOCATION SETTINGS");
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(StoreListActivity.this);
+
+		// Setting Dialog Title
+		alertDialog.setTitle("Location Settings");
+
+		// Setting Dialog Message
+		alertDialog.setMessage("Google's Location Service is not enabled. Do you want to go to settings menu?");
+
+		// On pressing Settings button
+		alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivity(intent);
+			}
+		});
+
+		// on pressing cancel button
+		alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
+
 	private void startLocationTracking()
 	{
 		locationClient=new LocationClient(this,this, this);
@@ -384,6 +428,8 @@ public class StoreListActivity extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.e("MSG","on resumr");
+		//setupMap();
 
 	}
 
@@ -463,7 +509,12 @@ public class StoreListActivity extends FragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		if(locationClient!=null && locationRequest!=null)
+		{
+			Log.e("MSG","on destroy cond");
 			locationClient.removeLocationUpdates(this);
+			if(locationClient.isConnected())
+				locationClient.disconnect();
+		}
 		super.onDestroy();
 	}
 	@Override
