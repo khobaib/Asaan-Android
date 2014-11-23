@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +40,11 @@ import asaan.dao.DaoMaster.OpenHelper;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,12 +58,13 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class StoreListActivity extends FragmentActivity implements LocationListener, OnMarkerClickListener,
-		OnInfoWindowClickListener {
+public class StoreListActivity extends FragmentActivity implements 
+		GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,OnMarkerClickListener,OnInfoWindowClickListener,GooglePlayServicesClient.ConnectionCallbacks{
 	private GoogleMap mMap;
 	private LocationManager locationManager;
 	private static final long MIN_TIME = 400;
 	private static final float MIN_DISTANCE = 1000;
+	int test_count=0;
 
 	private HashMap<Marker, Store> restaurantMarkerMap;
 
@@ -80,6 +85,8 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 	private DaoSession daoSession;
 	private DStoreDao dStoreDao;
 	private TrophiesDao trophiesDao;
+	private LocationClient locationClient;
+	private LocationRequest locationRequest;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -348,16 +355,30 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 			mMap.setMyLocationEnabled(true);
 			mMap.getUiSettings().setZoomControlsEnabled(true);
 
-			isLocation = setUserLocation();
+			//isLocation = setUserLocation();
 
 		}
 
 		mMap.setOnMarkerClickListener(this);
 		mMap.setOnInfoWindowClickListener(this);
+		startLocationTracking();
+		//locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		//locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
 
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
-
+	}
+	private void startLocationTracking()
+	{
+		locationClient=new LocationClient(this,this, this);
+		locationRequest=LocationRequest.create();
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		// Set the update interval to 10 seconds
+		locationRequest.setInterval(10000);
+		// Set the fastest update interval to 3 second
+		locationRequest.setFastestInterval(3000);
+		//locationRequest.setSmallestDisplacement(MIN_DISTANCE);
+		locationClient.connect();
+		
+		
 	}
 
 	@Override
@@ -405,39 +426,56 @@ public class StoreListActivity extends FragmentActivity implements LocationListe
 	public float getDistance(Location storeLocation) {
 		return mLocation.distanceTo(storeLocation);
 	}
-
 	@Override
 	public void onLocationChanged(Location location) {
+		
+		test_count=test_count+1;
 		Toast.makeText(StoreListActivity.this, "location changed.", Toast.LENGTH_SHORT).show();
+		AsaanUtility.mLocation=location;
+		
+		mLocation=location;
+		storeListAdapter.setLocation(mLocation);
+		
+		storeListAdapter.notifyDataSetChanged();
+		
 		LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
 		mMap.animateCamera(cameraUpdate);
-		locationManager.removeUpdates(this);
-	}
 
+
+		
+	}
 	@Override
-	public void onProviderDisabled(String arg0) {
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		
 	}
-
-	@Override
-	public void onProviderEnabled(String arg0) {
-	}
-
-	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-
-	}
-
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		AsaanUtility.selectedStore = restaurantMarkerMap.get(marker);
-		Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivity.class);
-		startActivity(intent);
+		// TODO Auto-generated method stub
+		
 	}
-
 	@Override
-	public boolean onMarkerClick(Marker arg0) {
+	public boolean onMarkerClick(Marker marker) {
+		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	protected void onDestroy() {
+		if(locationClient!=null && locationRequest!=null)
+			locationClient.removeLocationUpdates(this);
+		super.onDestroy();
+	}
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		locationClient.requestLocationUpdates(locationRequest,this);
+		
+	}
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
 
+	
 }

@@ -44,7 +44,10 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		this.storeList = stores;
 		this.mLocation = null;
 	}
-
+   public void setLocation(Location location)
+   {
+	   this.mLocation=location;
+   }
 	public StoreListAdapter(Context context, List<Store> stores, Location location) {
 		super(context, R.layout.restaurant_item_row, stores);
 		this.mContext = context;
