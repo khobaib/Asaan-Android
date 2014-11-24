@@ -11,83 +11,82 @@
         android:id="@+id/ivLogInHead"
         android:layout_width="wrap_content"
         android:layout_height="242dp"
-        android:layout_above="@+id/LinearLayout1"
         android:layout_alignParentTop="true"
         android:background="@drawable/entry_screen_head"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/tvSkip"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
-        android:padding="10dp"
-        android:text="Skip"
-        android:textColor="@color/khaki_text"
-        android:textStyle="bold" />
+        android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/LinearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvSkip"
-        android:layout_alignParentLeft="true"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        <LinearLayout
+            android:id="@+id/ll_1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/com_facebook_blue"
+            android:layout_marginBottom="2dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Sign Up"
-            android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/tv_fb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect with facebook"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+   
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:text="|"
-            android:textColor="@color/khaki_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvLogIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Log In"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/LinearLayout2"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnFBSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/su_fb" />
-
-        <Button
-            android:id="@+id/btnGplusSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/su_gplus" />
-    </LinearLayout>
+	    <LinearLayout
+	        android:id="@+id/ll_2"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:layout_marginBottom="2dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="5dp"
+	        android:background="@color/khaki"
+	        android:gravity="center"
+	        android:orientation="vertical" >
+	
+	        <TextView
+	            android:id="@+id/tv_login"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Login"
+	            android:textSize="20dp"
+	            android:textStyle="bold" />
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:id="@+id/ll_3"
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:layout_below="@+id/ll_2"
+	        android:layout_marginBottom="2dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="5dp"
+	        android:background="@color/txtRed"
+	        android:gravity="center"
+	        android:orientation="vertical" >
+	
+	        <TextView
+	            android:id="@+id/tv_signup"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Sign Up"
+	            android:textSize="20dp"
+	            android:textStyle="bold" />
+	    </LinearLayout>
+	</LinearLayout>
+    
 
 </RelativeLayout>

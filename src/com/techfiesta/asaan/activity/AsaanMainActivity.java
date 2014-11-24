@@ -26,7 +26,7 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 	private static final String TAG = AsaanMainActivity.class.getSimpleName();
 	public static final long STORE_ID = 1L;
 
-	TextView Login, SignUp, Skip;
+	TextView Login, SignUp;
 
 	Context mContext;
 
@@ -70,12 +70,10 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 		// data from app. in real context won't call this only when log out
 		// button pressed will be called this
 
-		Login = (TextView) findViewById(R.id.tvLogIn);
-		SignUp = (TextView) findViewById(R.id.tvSignUp);
-		Skip = (TextView) findViewById(R.id.tvSkip);
+		Login = (TextView) findViewById(R.id.tv_login);
+		SignUp = (TextView) findViewById(R.id.tv_signup);
 		Login.setOnClickListener(this);
 		SignUp.setOnClickListener(this);
-		Skip.setOnClickListener(this);
 
 		/*
 		 * mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -132,11 +130,9 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 	public void onClick(View v) {
 		Log.e(">>>", "onclick" + v.getId());
 		Class<?> launchingClass = null;
-		if (v.getId() == R.id.tvSignUp) {
+		if (v.getId() == R.id.tv_signup) {
 			launchingClass = SignUpActivity.class;
-		} else if (v.getId() == R.id.tvSkip) {
-			launchingClass = StoreListActivity.class;
-		} else if (v.getId() == R.id.tvLogIn) {
+		} else if (v.getId() == R.id.tv_login) {
 			launchingClass = AsaanLoginActivity.class;
 		}
 		launchActivity(launchingClass);
