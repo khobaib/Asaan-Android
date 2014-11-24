@@ -169,7 +169,7 @@ public class SignupCardinfoFragment extends Fragment {
 	}
 
 	private void saveToken(Token token) {
-		System.out.println(token.getCard().getFingerprint());
+		System.out.println("finger print: "+token.getCard().getFingerprint());
 		Card tokCard = token.getCard();
 		if (tokCard != null) {
 			ParseObject strCard = new ParseObject("UserStripeCard");
