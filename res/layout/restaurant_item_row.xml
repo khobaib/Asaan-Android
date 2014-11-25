@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tvNameRestaurantItem"
+            android:layout_toLeftOf="@+id/b_menu"
             android:layout_below="@+id/tvNameRestaurantItem"
             android:ellipsize="end"
             android:maxLines="2"
@@ -57,6 +58,16 @@
             android:paddingLeft="5dp"
             android:text="> 1 mile"
             android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/b_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:layout_below="@+id/tvDistanceRestaurantItem"
+            android:text="Menu" />
+
     </RelativeLayout>
 
 </RelativeLayout>

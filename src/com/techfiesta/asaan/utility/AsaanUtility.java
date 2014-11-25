@@ -1,13 +1,8 @@
 package com.techfiesta.asaan.utility;
 
-
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
-
-import android.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,12 +10,14 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
-    public static Store selectedStore=null;
-	
+	public static Store selectedStore = null;
+
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity != null) {
@@ -35,8 +32,8 @@ public class AsaanUtility {
 		}
 		return false;
 	}
-	public static String formatCentsToCurrency(long p_value)
-	{
+
+	public static String formatCentsToCurrency(long p_value) {
 		BigDecimal v_bigDec = new BigDecimal(p_value);
 		v_bigDec = v_bigDec.setScale(2, BigDecimal.ROUND_HALF_UP);
 		v_bigDec = v_bigDec.movePointLeft(2);
@@ -82,7 +79,7 @@ public class AsaanUtility {
 		if (mGps != null && mGps.isGPSEnabled)
 			mGps.stopUsingGPS();
 	}
-	
+
 	public static void simpleAlert(Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
 		bld.setTitle("Asaan");
@@ -97,6 +94,5 @@ public class AsaanUtility {
 		});
 		bld.create().show();
 	}
-
 
 }
