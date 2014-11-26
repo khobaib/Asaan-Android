@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.google.gson.JsonObject;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.stripe.android.Stripe;
@@ -149,7 +151,8 @@ public class SignupCardinfoFragment extends Fragment {
 				public void onSuccess(Token token) {
 
 					System.out.println("" + token.getId());
-					saveToken(token);
+					saveTokenInGAE(token);
+					//saveToken(token);
 				}
 
 				public void onError(Exception error) {
@@ -196,7 +199,19 @@ public class SignupCardinfoFragment extends Fragment {
 			strCard.saveInBackground();
 		}
 	}
-
+private void  saveTokenInGAE(Token token)
+{
+	Card card=token.getCard();
+	JsonObject cardObj=new JsonObject();
+	cardObj.addProperty("accessToken", "FROM PARSE USER");
+	cardObj.addProperty("address",card.getAddressLine1());	
+	cardObj.addProperty("brand",card.getType());
+    cardObj.addProperty("city", card.getAddressCity());
+     cardObj.addProperty("country", card.getCountry());
+     
+	
+	
+}
 	private void updateMonth_YearSpinners() {
 		ArrayList<String> monthList = new ArrayList<String>();
 		for (int i = 1; i <= 12; i++) {

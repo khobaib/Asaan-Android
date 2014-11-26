@@ -133,7 +133,7 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 		if (v.getId() == R.id.tv_signup) {
 			launchingClass = SignUpActivity.class;
 		} else if (v.getId() == R.id.tv_login) {
-			launchingClass = AsaanLoginActivity.class;
+			launchingClass = PaymentInfoActivity.class;
 		}
 		launchActivity(launchingClass);
 
