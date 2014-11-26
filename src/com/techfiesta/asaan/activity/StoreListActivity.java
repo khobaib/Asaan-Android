@@ -112,7 +112,7 @@ public class StoreListActivity extends FragmentActivity implements
 			}
 		});
 
-		updateLocation();
+		
 
 		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
 		storeListView.setOnItemClickListener(new OnItemClickListener() {
@@ -148,6 +148,7 @@ public class StoreListActivity extends FragmentActivity implements
 			Log.e("status","loading from from server");
 		new GetStroreInfoFromServer().execute();
 		}
+		updateLocation();
 
 	}
 	private void initDatabase()
@@ -450,9 +451,12 @@ public class StoreListActivity extends FragmentActivity implements
 		AsaanUtility.mLocation=location;
 		
 		mLocation=location;
+		if(storeListAdapter!=null)
+		{
 		storeListAdapter.setLocation(mLocation);
 		
 		storeListAdapter.notifyDataSetChanged();
+		}
 		
 
 
