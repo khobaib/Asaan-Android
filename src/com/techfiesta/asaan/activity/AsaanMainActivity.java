@@ -6,10 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
@@ -21,12 +19,12 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.CloudEndpointUtils;
 
 //public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
-public class AsaanMainActivity extends Activity implements View.OnClickListener {
+public class AsaanMainActivity extends Activity {
 
 	private static final String TAG = AsaanMainActivity.class.getSimpleName();
 	public static final long STORE_ID = 1L;
 
-	TextView Login, SignUp;
+	// TextView Login, SignUp;
 
 	Context mContext;
 
@@ -70,10 +68,10 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 		// data from app. in real context won't call this only when log out
 		// button pressed will be called this
 
-		Login = (TextView) findViewById(R.id.tv_login);
-		SignUp = (TextView) findViewById(R.id.tv_signup);
-		Login.setOnClickListener(this);
-		SignUp.setOnClickListener(this);
+		// Login = (TextView) findViewById(R.id.tv_login);
+		// SignUp = (TextView) findViewById(R.id.tv_signup);
+		// Login.setOnClickListener(this);
+		// SignUp.setOnClickListener(this);
 
 		/*
 		 * mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -124,19 +122,34 @@ public class AsaanMainActivity extends Activity implements View.OnClickListener 
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	}
 
-	@Override
-	public void onClick(View v) {
-		Log.e(">>>", "onclick" + v.getId());
-		Class<?> launchingClass = null;
-		if (v.getId() == R.id.tv_signup) {
-			launchingClass = SignUpActivity.class;
-		} else if (v.getId() == R.id.tv_login) {
-			launchingClass = AsaanLoginActivity.class;
-		}
-		launchActivity(launchingClass);
+	// @Override
+	// public void onClick(View v) {
+	// Log.e(">>>", "onclick" + v.getId());
+	// Class<?> launchingClass = null;
+	// if (v.getId() == R.id.tv_signup) {
+	// launchingClass = SignUpActivity.class;
+	// } else if (v.getId() == R.id.tv_login) {
+	// launchingClass = AsaanLoginActivity.class;
+	// }
+	// launchActivity(launchingClass);
+	//
+	// }
 
+	public void onClickSignup(View v) {
+		Class<?> launchingClass = SignUpActivity.class;
+		launchActivity(launchingClass);
+	}
+
+	public void onClickLogin(View v) {
+		Class<?> launchingClass = AsaanLoginActivity.class;
+		launchActivity(launchingClass);
+	}
+
+	public void onClickFBLogin(View v) {
+		// code for facebook login
 	}
 
 	/*

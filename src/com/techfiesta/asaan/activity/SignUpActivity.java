@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.techfiesta.asaan.R;
@@ -97,6 +98,16 @@ public class SignUpActivity extends FragmentActivity implements Communicator {
 
 	public void onClickNext(View v) {
 		startActivity(new Intent(this, StoreListActivity.class));
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

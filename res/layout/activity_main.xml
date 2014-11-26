@@ -16,77 +16,55 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/ll_1"
+        <Button
+            android:id="@+id/b_fb_login"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/com_facebook_blue"
-            android:layout_marginBottom="2dp"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/fb_login_bg_color"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:padding="15dp"
+            android:text="Connect with facebook"
+            android:onClick="onClickFBLogin"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_fb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Connect with facebook"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-   
+        <Button
+            android:id="@+id/b_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@color/login_bg_color"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Login"
+            android:onClick="onClickLogin"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-	    <LinearLayout
-	        android:id="@+id/ll_2"
-	        android:layout_width="match_parent"
-	        android:layout_height="50dp"
-	        android:layout_marginBottom="2dp"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:layout_marginTop="5dp"
-	        android:background="@color/khaki"
-	        android:gravity="center"
-	        android:orientation="vertical" >
-	
-	        <TextView
-	            android:id="@+id/tv_login"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Login"
-	            android:textSize="20dp"
-	            android:textStyle="bold" />
-	    </LinearLayout>
-	
-	    <LinearLayout
-	        android:id="@+id/ll_3"
-	        android:layout_width="match_parent"
-	        android:layout_height="50dp"
-	        android:layout_below="@+id/ll_2"
-	        android:layout_marginBottom="2dp"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:layout_marginTop="5dp"
-	        android:background="@color/txtRed"
-	        android:gravity="center"
-	        android:orientation="vertical" >
-	
-	        <TextView
-	            android:id="@+id/tv_signup"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Sign Up"
-	            android:textSize="20dp"
-	            android:textStyle="bold" />
-	    </LinearLayout>
-	</LinearLayout>
-    
+        <Button
+            android:id="@+id/b_signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:background="@color/signup_bg_color"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Signup"
+            android:onClick="onClickSignup"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>
