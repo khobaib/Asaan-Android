@@ -127,6 +127,7 @@ public class PaymentInfoActivity  extends Activity{
 							{
 								cardNumber = CardNumber.getText().toString();
 								cardCVC = CVC.getText().toString();
+								saveCreditCard();
 							}
 						}
 					});
@@ -136,6 +137,7 @@ public class PaymentInfoActivity  extends Activity{
 					Log.e("MSG","SIGNED UP"+ParseUser.getCurrentUser().getString("authToken"));
 				cardNumber = CardNumber.getText().toString();
 				cardCVC = CVC.getText().toString();
+				saveCreditCard();
 				}
 				//saveCreditCard();
 
@@ -271,6 +273,7 @@ public class PaymentInfoActivity  extends Activity{
 				HttpHeaders httpHeaders=saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME,ParseUser.getCurrentUser().getString("authToken"));
 				saveUserCard.execute();
+				Log.e("MSG","Posting");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
