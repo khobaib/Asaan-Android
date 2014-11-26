@@ -252,7 +252,7 @@ public class StoreListActivity extends FragmentActivity implements
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			try {
-				storeCollection = AsaanMainActivity.mStoreendpoint.getStores(INITIAL_POSITION, MAX_RESULT).execute();
+				storeCollection = AsaanSplashActivity.mStoreendpoint.getStores(INITIAL_POSITION, MAX_RESULT).execute();
 				Log.e("StoreList Size", "" + storeCollection.getItems().size());
 			} catch (IOException e) {
 

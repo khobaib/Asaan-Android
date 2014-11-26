@@ -463,8 +463,8 @@ public class PlaceOrderActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			long startTime = new Date().getTime();
 			try {
-				menuItemModifiersAndGroups = AsaanMainActivity.mStoreendpoint.getStoreMenuItemModifiers(
-						AsaanMainActivity.STORE_ID, menuItemPOSId).execute();
+				menuItemModifiersAndGroups = AsaanSplashActivity.mStoreendpoint.getStoreMenuItemModifiers(
+						AsaanSplashActivity.STORE_ID, menuItemPOSId).execute();
 				logger.log(Level.INFO, "execute elapsed Time = " + (new Date().getTime() - startTime));
 				Log.e("size", "" + menuItemModifiersAndGroups.size());
 			} catch (IOException e) {

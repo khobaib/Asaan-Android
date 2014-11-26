@@ -23,7 +23,7 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/b_fb_login"
+            android:id="@+id/btn_fb_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
