@@ -9,6 +9,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.techfiesta.asaan.R;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.view.WindowManager.BadTokenException;
 
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
@@ -125,6 +127,18 @@ public class AsaanUtility {
 	{
 		return PreferenceManager.getDefaultSharedPreferences(context)
 				.getLong(LAST_UPDATE_TIME_IN_MILLIS,0);
+	}
+	public static ProgressDialog createProgressDialog(Context mContext) {
+		ProgressDialog dialog = new ProgressDialog(mContext);
+		try {
+			dialog.show();
+		} catch (BadTokenException e) {
+
+		}
+		dialog.setCancelable(false);
+		dialog.setContentView(R.layout.progress_dialog);
+		// dialog.setMessage(Message);
+		return dialog;
 	}
 
 

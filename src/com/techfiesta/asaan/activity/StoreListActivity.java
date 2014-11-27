@@ -82,7 +82,7 @@ public class StoreListActivity extends FragmentActivity implements
 	private List<Store> storeList;
 	private int INITIAL_POSITION = 0;
 	private int MAX_RESULT = 10;
-	private TextView tvBack;
+	
 	
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
@@ -102,15 +102,6 @@ public class StoreListActivity extends FragmentActivity implements
 		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_restaurant_list,
 				null);
 		StoreListActivity.this.setContentView(viewToLoad);
-
-		tvBack = (TextView) findViewById(R.id.tvBack);
-		tvBack.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
 
 		
 

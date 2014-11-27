@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,9 +22,11 @@ import android.widget.Spinner;
 
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.SaveUserCard;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
+import com.google.android.gms.internal.dt;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
@@ -31,6 +35,7 @@ import com.stripe.android.model.Token;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.NothingSelectedSpinnerAdapter;
 import com.techfiesta.asaan.fragment.ErrorDialogFragment;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class PaymentInfoActivity extends Activity {
 
@@ -38,113 +43,99 @@ public class PaymentInfoActivity extends Activity {
 	public static final String PUBLISHABLE_KEY = "pk_test_hlpADPUOWaxn6uN0aATgLivW";
 	EditText CardNumber;
 	EditText CVC;
-	Spinner Month;
-	Spinner Year;
+	EditText Zip;
 	Button SaveCard;
-	EditText DefaultTip;
-	Button SaveTip;
+	EditText etMonth;
+	//Button SaveTip;
+	Spinner defaultTipSpinner;
+	EditText etYear;
 
 	ImageView NEXT2;
 
 	int expMonth, expYear;
 	String cardNumber;
 	String cardCVC;
+	String zip;
+	int month;
+	int year;
+	int tips;
+	
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.sign_up_frag_2);
+		setContentView(R.layout.activity_payment_info);
 
-		CardNumber = (EditText) findViewById(R.id.etCardNumber);
-		CVC = (EditText) findViewById(R.id.etCVC);
-		Year = (Spinner) findViewById(R.id.spYear);
-		Month = (Spinner) findViewById(R.id.spMonth);
-		SaveCard = (Button) findViewById(R.id.btnSaveCardInfoSU);
-		DefaultTip = (EditText) findViewById(R.id.etDefaultTipSignUp);
-		SaveTip = (Button) findViewById(R.id.btnSaveTipInfoSu);
+		CardNumber = (EditText) findViewById(R.id.et_card_number);
+		CVC = (EditText) findViewById(R.id.et_cvc);
+		Zip=(EditText)findViewById(R.id.et_zip);
+		etMonth=(EditText)findViewById(R.id.et_month);
+		etYear=(EditText)findViewById(R.id.et_year);
+		
+		SaveCard = (Button) findViewById(R.id.btn_save);
+		defaultTipSpinner=(Spinner)findViewById(R.id.spinner1);
+		createDefaultTipSpinner();
+		
+		
 
-		updateMonth_YearSpinners();
+		//updateMonth_YearSpinners();
 
-		Month.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				if (position > 1) {
-					expMonth = Integer.parseInt(parent.getSelectedItem().toString());
-				}
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		Year.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				if (position > 1) {
-					expYear = Integer.parseInt(parent.getSelectedItem().toString());
-				}
-
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		
 
 		SaveCard.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-				if (ParseUser.getCurrentUser() == null) {
-					Log.e("MSG", "NOT SIGNED UP");
-					ParseUser user = new ParseUser();
-					user.setUsername("Tanzeer");
-					user.setEmail("hossaintanzeer@gmail.com");
-					user.setPassword("123");
-					user.put("phone", "01674740627");
-					user.signUpInBackground(new SignUpCallback() {
-
-						@Override
-						public void done(ParseException e) {
-
-							if (e == null) {
-								cardNumber = CardNumber.getText().toString();
-								cardCVC = CVC.getText().toString();
-								saveCreditCard();
-							}
-						}
-					});
-				} else {
+				if (ParseUser.getCurrentUser() != null) {
+					 
 					Log.e("MSG", "SIGNED UP" + ParseUser.getCurrentUser().getString("authToken"));
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
+					zip=Zip.getText().toString();
+					month=Integer.parseInt(etMonth.getText().toString());
+					year=Integer.parseInt(etYear.getText().toString());
+					tips=Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
 					saveCreditCard();
 				}
-				// saveCreditCard();
+				else
+				{
+					AsaanUtility.simpleAlert(PaymentInfoActivity.this,"User not logged in.");
+				}
+				
 
 			}
 		});
 
-		SaveTip.setOnClickListener(new OnClickListener() {
+		
 
+	}
+	private void saveDefaultTips()
+	{
+		ParseUser user=ParseUser.getCurrentUser();
+		user.put("defaultTips",tips);
+		user.saveInBackground(new SaveCallback() {
+			
 			@Override
-			public void onClick(View v) {
-				String tip = DefaultTip.getText().toString();
-				System.out.println(tip);
-				// save it to respective parse class when this field is added
+			public void done(ParseException e) {
+				if(e==null)
+				{
+					Log.e("MSG","Default Tips Updated");
+				}
+				
 			}
 		});
-
+	}
+	private void createDefaultTipSpinner()
+	{
+		ArrayList<Integer> list=new ArrayList<>();
+		for(int i=1;i<21;i++)
+		{
+			list.add(i*5);
+		}
+		ArrayAdapter<Integer> adapter=new ArrayAdapter<>(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item,list);
+		defaultTipSpinner.setAdapter(adapter);
 	}
 
 	public void saveCreditCard() {
@@ -219,34 +210,6 @@ public class PaymentInfoActivity extends Activity {
 		new PostCardInfo().execute();
 
 	}
-
-	private void updateMonth_YearSpinners() {
-		ArrayList<String> monthList = new ArrayList<String>();
-		for (int i = 1; i <= 12; i++) {
-			monthList.add("" + i);
-		}
-		ArrayAdapter<String> sMonthAdapter = new ArrayAdapter<String>(PaymentInfoActivity.this,
-				R.layout.spinner_textview, monthList);
-		Month.setAdapter(new NothingSelectedSpinnerAdapter(sMonthAdapter, R.layout.row_spinner_nothing_selected,
-				PaymentInfoActivity.this));
-		sMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		ArrayList<String> yearList = new ArrayList<String>();
-		int thisYear = 2014; // here we will take current time year and replace
-								// with it
-		for (int i = 1; i <= 30; i++) {
-
-			yearList.add("" + thisYear);
-			thisYear++;
-		}
-		ArrayAdapter<String> sYearAdapter = new ArrayAdapter<String>(PaymentInfoActivity.this,
-				R.layout.spinner_textview, yearList);
-		Year.setAdapter(new NothingSelectedSpinnerAdapter(sYearAdapter, R.layout.row_spinner_nothing_selected,
-				PaymentInfoActivity.this));
-		sYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-	}
-
 	private void handleError(String error) {
 		DialogFragment fragment = ErrorDialogFragment.newInstance(R.string.validationErrors, error);
 		// fragment.show(getFragmentManager(), "error");
@@ -262,8 +225,8 @@ public class PaymentInfoActivity extends Activity {
 				saveUserCard = AsaanSplashActivity.mUserendpoint.saveUserCard(userCard);
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
-				saveUserCard.execute();
-				Log.e("MSG", "Posting");
+				UserCard uc=saveUserCard.execute();
+				Log.e("MSG", "Posting"+uc.getCreatedDate()+"moddate"+ uc.getModifiedDate());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

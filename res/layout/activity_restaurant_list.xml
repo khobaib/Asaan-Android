@@ -4,38 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_deep"
-    tools:ignore="HardcodedText" >
-
-    <RelativeLayout
-        android:id="@+id/rl_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black" >
-
-        <TextView
-            android:id="@+id/tvBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="&lt;"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/khaki_text" />
-
-        <TextView
-            android:id="@+id/tvHeadRestaurantDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Restaurant List"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white" />
-    </RelativeLayout>
-
+    tools:ignore="HardcodedText" >  
     <ListView
         android:id="@+id/lvRestaurantList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header"
+        android:layout_height="wrap_content"  
+        android:background="@color/app_bg_color"
         android:layout_margin="7dp"
         android:focusable="true"
         android:divider="@color/transparent"

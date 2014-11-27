@@ -19,16 +19,16 @@ import android.widget.EditText;
 public class SignUpActivityNew extends Activity{
 	private EditText edtEmail;
 	private EditText edtPass;
-	private Button btnSignUp;
+	private Button btnSave;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_signup_new);
-		edtEmail=(EditText)findViewById(R.id.edt_email);
-		edtPass=(EditText)findViewById(R.id.edt_pass);
-		btnSignUp=(Button)findViewById(R.id.btn_signup);
+		setContentView(R.layout.activity_signup);
+		edtEmail=(EditText)findViewById(R.id.et_email);
+		edtPass=(EditText)findViewById(R.id.et_pass);
+		btnSave=(Button)findViewById(R.id.btn_save);
 		
-		btnSignUp.setOnClickListener(new OnClickListener() {
+		btnSave.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -72,6 +72,9 @@ public class SignUpActivityNew extends Activity{
 				else
 				{
 					alert("Error in sign up!");
+					//for testing
+					Intent intent=new Intent(SignUpActivityNew.this,ProfileActivity.class);
+					startActivity(intent);
 				}
 			}
 		});

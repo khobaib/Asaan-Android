@@ -1,6 +1,12 @@
 package com.techfiesta.asaan.adapter;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+import javax.crypto.spec.IvParameterSpec;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +15,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteAbortException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +34,12 @@ import asaan.dao.DaoSession;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MyCartActivity;
@@ -56,10 +70,10 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	}
 
 	private class ViewHolder {
-		ImageView ivPhoto;
+		ParseImageView ivPhoto;
 		TextView tvName;
-		TextView tvDescription;
-		TextView tvDistance;
+		TextView tvThrophy;
+		TextView tvSubType;
 		Button btnCall;
 		Button btnReserve;
 		Button btnMenu;
@@ -69,37 +83,34 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		 ViewHolder holder = null;
 		LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.restaurant_item_row, null);
+			convertView = mInflater.inflate(R.layout.row_restaurant_list, null);
 			holder = new ViewHolder();
-			holder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivLogoRestaurantItem);
-			holder.tvName = (TextView) convertView.findViewById(R.id.tvNameRestaurantItem);
-			holder.tvDescription = (TextView) convertView.findViewById(R.id.tvTypeRestaurantItem);
-			holder.tvDistance = (TextView) convertView.findViewById(R.id.tvDistanceRestaurantItem);
-			holder.btnCall=(Button)convertView.findViewById(R.id.btn_call);
-			holder.btnReserve=(Button)convertView.findViewById(R.id.btn_reserve);
-			holder.btnMenu=(Button)convertView.findViewById(R.id.btn_menu);
-			holder.btnorder=(Button)convertView.findViewById(R.id.btn_order);
+			holder.ivPhoto = (ParseImageView) convertView.findViewById(R.id.restaurant_bg_image);
+			holder.tvName = (TextView) convertView.findViewById(R.id.tv_restaurant_name);
+			holder.tvThrophy = (TextView) convertView.findViewById(R.id.tv_first_trophy);
+			holder.tvSubType = (TextView) convertView.findViewById(R.id.tv_subtype);
+			holder.btnCall=(Button)convertView.findViewById(R.id.b_call);
+			holder.btnReserve=(Button)convertView.findViewById(R.id.b_reserve);
+			holder.btnMenu=(Button)convertView.findViewById(R.id.b_menu);
+			holder.btnorder=(Button)convertView.findViewById(R.id.b_online_order);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		Store store = storeList.get(position);
+		downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
+		Log.e("url",store.getBackgroundImageUrl());
 		holder.tvName.setText(store.getName());
-		holder.tvDescription.setText(store.getDescription());
-
-		if (mLocation != null) {
-			Location shopLoc = new Location("Shop Location");
-			shopLoc.setLatitude(store.getLat());
-			shopLoc.setLongitude(store.getLng());
-			final double distInMeter = shopLoc.distanceTo(this.mLocation);
-			Log.d(">>>>>>", "dist in meter =" + distInMeter);
-			long distInMile = (long) (distInMeter / 1609.344);
-			holder.tvDistance.setText(distInMile + "mile");
+		holder.tvSubType.setText(store.getSubType());
+		if(store.getTrophies()!=null && store.getTrophies().size()>0)
+		{
+			holder.tvThrophy.setText(store.getTrophies().get(0));
 		}
+			
 		holder.btnMenu.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -138,6 +149,26 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		});
 
 		return convertView;
+	}
+	private void downLoadBgImageFromPrase(final ParseImageView iv,String objectId)
+	{
+		ParseQuery<ParseObject> query=ParseQuery.getQuery("PictureFiles");
+		query.whereEqualTo("objectId",objectId);
+		query.findInBackground(new FindCallback<ParseObject>() {
+			
+			@Override
+			public void done(List<ParseObject> list, ParseException e) {
+				if(e==null){
+					ParseObject obj=list.get(0);
+				 ParseFile file=obj.getParseFile("picture_file");
+				iv.setParseFile(file);
+				iv.loadInBackground();
+				
+				}
+				
+			}
+		});
+		
 	}
 	private void alert(final Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context,

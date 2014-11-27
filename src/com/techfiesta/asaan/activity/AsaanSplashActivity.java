@@ -40,8 +40,8 @@ protected void onCreate(Bundle savedInstanceState) {
 	mContext = AsaanSplashActivity.this;
 	buildStoreEndpoint();
 	buildUserEndpoint();
-	deleteCurrentUser();
-	//trytoLoadMainScreen(mContext);
+	//deleteCurrentUser();
+	trytoLoadMainScreen(mContext);
 	
 	
 }
@@ -78,7 +78,7 @@ public class LoadMainScreen extends AsyncTask<Void, Void, Boolean>{
 			if(currentUser==null){
 				i =  new Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
 			}else{
-				i = new Intent(AsaanSplashActivity.this, StoreListActivity.class);
+				i = new Intent(AsaanSplashActivity.this, PaymentInfoActivity.class);
 			}
 			 
 			startActivity(i);
@@ -123,7 +123,7 @@ private void deleteCurrentUser()
 {
 	//for sign up flow deleting user
 	ParseUser user=ParseUser.getCurrentUser();
-	if(user!=null)
+	/*if(user!=null)
 	{
 		user.deleteInBackground(new DeleteCallback() {
 			
@@ -138,7 +138,7 @@ private void deleteCurrentUser()
 			}
 		});
 	}
-	else
+	else */
 	{
 		Intent i=  new Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
 		startActivity(i);
