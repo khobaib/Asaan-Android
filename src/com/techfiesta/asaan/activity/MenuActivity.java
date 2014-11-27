@@ -47,7 +47,7 @@ public class MenuActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				menusAndMenuItems = AsaanMainActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(storeId,
+				menusAndMenuItems = AsaanSplashActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(storeId,
 						Constants.MENU_TYPE_DINE_IN, MAX_RESULT).execute();
 				Log.e("menu_size", "" + menusAndMenuItems.size());
 			} catch (IOException e) {
