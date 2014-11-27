@@ -4,4 +4,6 @@
     <color name="fb_login_bg_color">#3B5998</color>
     <color name="login_bg_color">#5D570B</color>
     <color name="signup_bg_color">#996633</color>
+    <color name="text_golden_color">#cb9832</color>
+    <color name="app_bg_color">#170000</color>
 </resources>

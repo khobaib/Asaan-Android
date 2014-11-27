@@ -69,14 +69,67 @@
                 android:layout_alignLeft="@+id/tv_restaurant_name"
                 android:layout_alignRight="@+id/tv_restaurant_name"
                 android:layout_below="@+id/tv_first_trophy"
-                android:ellipsize="end"
                 android:layout_marginTop="10dp"
+                android:ellipsize="end"
                 android:singleLine="true"
                 android:text="Subtype"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </RelativeLayout>
+    </LinearLayout>
+    
+       <LinearLayout
+        android:id="@+id/ll_event_handlers"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/restaurant_bg_image"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/b_call"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Call"
+            android:textStyle="bold"
+            android:textColor="@color/text_golden_color" />
+
+        <Button
+            android:id="@+id/b_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Menu"
+            android:textStyle="bold"
+            android:textColor="@color/text_golden_color" />
+
+        <Button
+            android:id="@+id/b_online_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Online Order"
+            android:textStyle="bold"
+            android:textColor="@color/text_golden_color" />
+
+        <Button
+            android:id="@+id/b_reserve"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Reserve"
+            android:textStyle="bold"
+            android:textColor="@color/text_golden_color" />
     </LinearLayout>
 
 </RelativeLayout>
