@@ -1,75 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <EditText
-        android:id="@+id/etFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="92dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/etLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etFirstName"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/etFirstName"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName" />
-
-    <EditText
-        android:id="@+id/etMail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etLastName"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/etLastName"
-        android:ems="10"
-        android:hint="E-Mail"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/etMail"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/etMail"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+    android:layout_height="match_parent"
+    android:background="@color/background" >
 
     <Button
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:onClick="onClickSignUp"
-        android:text="Sign Up" />
+        android:layout_alignParentTop="true"
+        android:background="@color/signup_button"
+        android:gravity="left|center"
+        android:text="Save" />
 
-    <ImageButton
-        android:id="@+id/im_button_profile"
+    <RelativeLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp" >
+
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Welcome to Asaan! Let&apos;s start by setting up your account"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+        android:id="@+id/ll_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       
+        android:layout_below="@+id/tv_welcome"
+        android:layout_marginTop="30dp" >
+
+            
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:layout_weight=".5"/>
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="name@example.com" 
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext">
+			
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+    
+        
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/apptheme_activated_background_holo_light" />
+        android:layout_alignLeft="@+id/layout_container"
+        android:layout_alignRight="@+id/layout_container"
+        android:layout_below="@+id/layout_container"
+        android:layout_marginTop="11dp" >
+
+        <TextView
+            android:id="@+id/tv_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passoword"
+            android:layout_weight=".5"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/et_pass"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Min 8 Characters" 
+            android:inputType="textPassword"
+            android:imeOptions="actionGo"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

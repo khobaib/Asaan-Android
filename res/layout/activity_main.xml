@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@color/fb_login_bg_color"
+            
             android:gravity="center"
             android:padding="15dp"
             android:text="Connect with facebook"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:background="@color/login_bg_color"
+           
             android:gravity="center"
             android:padding="15dp"
             android:text="Login"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:background="@color/signup_bg_color"
+           
             android:gravity="center"
             android:padding="15dp"
             android:text="Signup"
