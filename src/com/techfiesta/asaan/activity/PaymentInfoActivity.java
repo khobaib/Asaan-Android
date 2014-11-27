@@ -150,6 +150,7 @@ public class PaymentInfoActivity extends Activity {
 	public void saveCreditCard() {
 
 		Card card = new Card(cardNumber, expMonth, expYear, cardCVC);
+		
 
 		boolean validation = card.validateCard();
 		if (validation) {

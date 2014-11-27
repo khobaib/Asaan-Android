@@ -125,7 +125,7 @@ public class AsaanMainActivity extends Activity {
 	}
 
 	public void onClickSignup(View v) {
-		Class<?> launchingClass = SignUpActivity.class;
+		Class<?> launchingClass = SignUpActivityNew.class;
 		launchActivity(launchingClass);
 	}
 

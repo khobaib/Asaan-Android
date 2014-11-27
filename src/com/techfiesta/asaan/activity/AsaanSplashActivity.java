@@ -8,6 +8,8 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.parse.DeleteCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -38,7 +40,8 @@ protected void onCreate(Bundle savedInstanceState) {
 	mContext = AsaanSplashActivity.this;
 	buildStoreEndpoint();
 	buildUserEndpoint();
-	trytoLoadMainScreen(mContext);
+	deleteCurrentUser();
+	//trytoLoadMainScreen(mContext);
 	
 	
 }
@@ -61,6 +64,9 @@ public class LoadMainScreen extends AsyncTask<Void, Void, Boolean>{
 	protected Boolean doInBackground(Void... params) {
 	
 		currentUser = ParseUser.getCurrentUser();
+		//for testing
+		
+		
 		return true;
 	}
 	@Override
@@ -112,6 +118,35 @@ private void buildUserEndpoint() {
 			});
 	userEndpointBuilder.setApplicationName("Asaan");
 	mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
+}
+private void deleteCurrentUser()
+{
+	//for sign up flow deleting user
+	ParseUser user=ParseUser.getCurrentUser();
+	if(user!=null)
+	{
+		user.deleteInBackground(new DeleteCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				Intent i=  new Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
+				startActivity(i);
+				// close this activity
+				finish();
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				
+			}
+		});
+	}
+	else
+	{
+		Intent i=  new Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
+		startActivity(i);
+		// close this activity
+		finish();
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+	}
+		
 }
 
 private void internetAvailabilityAlert(Context context, String message) {
