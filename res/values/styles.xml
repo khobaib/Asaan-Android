@@ -6,10 +6,9 @@
   <style name="AppTheme" parent="@style/_AppTheme"/>
 
   <style name="_AppTheme" parent="@android:style/Theme.Holo">
+  <item name="android:editTextStyle">@style/EditTextAppTheme</item>
 
-    <item name="android:editTextStyle">@style/EditTextAppTheme</item>
-
-    <item name="android:textColorHighlight">#9933b5e5</item>
+    <item name="android:textColorHighlight">#99cb9832</item>
 
     <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppTheme</item>
 
@@ -42,6 +41,7 @@
     <item name="android:listViewWhiteStyle">@style/ListViewAppTheme.White</item>
 
     <item name="android:spinnerItemStyle">@style/SpinnerItemAppTheme</item>
+
      <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>
     
   

@@ -51,7 +51,7 @@
              android:textColor="@color/white"
              android:layout_alignParentTop="true"
              android:layout_alignParentRight="true"
-             android:background="@color/signup_bg_color"
+             
              android:textSize="20dp"/>
     
 

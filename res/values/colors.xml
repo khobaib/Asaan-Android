@@ -20,5 +20,7 @@
     <color name="txtGreen">#7EC190</color>
     <color name="txtLightBlue">#005C94</color>
     <color name="btnBlue">#0099CC</color>
+    <color name="background">#170000</color>
+    <color name="signup_button">#996633</color>
 
 </resources>
