@@ -1,6 +1,5 @@
 package com.techfiesta.asaan.activity;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -12,30 +11,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
-import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
 import com.facebook.Request;
-import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.utility.CloudEndpointUtils;
 
 //public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
 public class AsaanMainActivity extends Activity {
 
 	private static final String TAG = AsaanMainActivity.class.getSimpleName();
-	
 
 	// TextView Login, SignUp;
 
@@ -65,8 +54,8 @@ public class AsaanMainActivity extends Activity {
 	 * 
 	 * private ConnectionResult mConnectionResult;
 	 */
-	//public static Storeendpoint mStoreendpoint;
-	//public static Userendpoint mUserendpoint;
+	// public static Storeendpoint mStoreendpoint;
+	// public static Userendpoint mUserendpoint;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +65,9 @@ public class AsaanMainActivity extends Activity {
 
 		setContentView(R.layout.activity_main);
 		mContext = AsaanMainActivity.this;
-	//	buildStoreEndpoint();
-	//	buildUserEndpoint();
-		
+		// buildStoreEndpoint();
+		// buildUserEndpoint();
+
 		// ParseUser.logOut(); //for testing purpose everytime logging out user
 		// data from app. in real context won't call this only when log out
 		// button pressed will be called this
@@ -106,52 +95,34 @@ public class AsaanMainActivity extends Activity {
 
 	}
 
-	/*private void buildStoreEndpoint() {
-		Storeendpoint.Builder storeEndpointBuilder;
-		storeEndpointBuilder = new Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				new HttpRequestInitializer() {
-					@Override
-					public void initialize(HttpRequest arg0) throws IOException {
-						// TODO Auto-generated method stub
-
-					}
-				});
-		storeEndpointBuilder.setApplicationName("Asaan");
-		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build();
-	}
-
-	private void buildUserEndpoint() {
-		Userendpoint.Builder userEndpointBuilder;
-		userEndpointBuilder = new Userendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				new HttpRequestInitializer() {
-					@Override
-					public void initialize(HttpRequest arg0) throws IOException {
-						// TODO Auto-generated method stub
-
-					}
-				});
-		userEndpointBuilder.setApplicationName("Asaan");
-		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
-	}
-*/
+	/*
+	 * private void buildStoreEndpoint() { Storeendpoint.Builder
+	 * storeEndpointBuilder; storeEndpointBuilder = new
+	 * Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new
+	 * JacksonFactory(), new HttpRequestInitializer() {
+	 * 
+	 * @Override public void initialize(HttpRequest arg0) throws IOException {
+	 * // TODO Auto-generated method stub
+	 * 
+	 * } }); storeEndpointBuilder.setApplicationName("Asaan"); mStoreendpoint =
+	 * CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build(); }
+	 * 
+	 * private void buildUserEndpoint() { Userendpoint.Builder
+	 * userEndpointBuilder; userEndpointBuilder = new
+	 * Userendpoint.Builder(AndroidHttp.newCompatibleTransport(), new
+	 * JacksonFactory(), new HttpRequestInitializer() {
+	 * 
+	 * @Override public void initialize(HttpRequest arg0) throws IOException {
+	 * // TODO Auto-generated method stub
+	 * 
+	 * } }); userEndpointBuilder.setApplicationName("Asaan"); mUserendpoint =
+	 * CloudEndpointUtils.updateBuilder(userEndpointBuilder).build(); }
+	 */
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
 		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	}
-
-	// @Override
-	// public void onClick(View v) {
-	// Log.e(">>>", "onclick" + v.getId());
-	// Class<?> launchingClass = null;
-	// if (v.getId() == R.id.tv_signup) {
-	// launchingClass = SignUpActivity.class;
-	// } else if (v.getId() == R.id.tv_login) {
-	// launchingClass = AsaanLoginActivity.class;
-	// }
-	// launchActivity(launchingClass);
-	//
-	// }
 
 	public void onClickSignup(View v) {
 		Class<?> launchingClass = SignUpActivity.class;
@@ -170,7 +141,7 @@ public class AsaanMainActivity extends Activity {
 			ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
 		}
 	}
-	
+
 	public void onClickFBLogin(View v) {
 		Log.e(">>>>>>>>>>", "On fb login click");
 		List<String> permissions = Arrays.asList("public_profile", "email");
@@ -184,7 +155,7 @@ public class AsaanMainActivity extends Activity {
 					// call facebook parse session here and get me object data
 					// and put to parse user
 					Log.d("SUCEESS", "New Facebook logged in user");
-					
+
 					setUserDataforFB();
 				} else {
 					// 1.call facebook parse session here and get me object data
@@ -192,7 +163,7 @@ public class AsaanMainActivity extends Activity {
 
 					Log.d("SUCESS", "Already existing user for facebook login");
 
-					//setUserDataforFB();
+					// setUserDataforFB();
 					currentUser = ParseUser.getCurrentUser();
 					if (currentUser != null) {
 						launchActivity(StoreListActivity.class);
@@ -208,7 +179,7 @@ public class AsaanMainActivity extends Activity {
 	private void setUserDataforFB() {
 		Session session = ParseFacebookUtils.getSession();
 		if (session != null && session.isOpened()) {
-			
+
 			makeMeRequest();
 
 		}
@@ -224,7 +195,7 @@ public class AsaanMainActivity extends Activity {
 		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
 
 			@Override
-			public void onCompleted(GraphUser user, Response response) {
+			public void onCompleted(GraphUser user, com.facebook.Response response) {
 				if (user != null) {
 					// JSONObject userObj = user.getInnerJSONObject();
 					try {
@@ -265,6 +236,7 @@ public class AsaanMainActivity extends Activity {
 				}
 
 			}
+
 		});
 		request.executeAsync();
 
