@@ -29,6 +29,7 @@
             android:text="Your Name and Photo will help the"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:textColor="@color/signup_bg_color"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 

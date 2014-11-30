@@ -52,7 +52,7 @@ public class ProfileActivity extends Activity{
 		FirstName = (EditText)findViewById(R.id.et_first_name);
 		LastName = (EditText) findViewById(R.id.et_last_name);
 		Phone = (EditText)findViewById(R.id.et_phone);
-		ProfilePicture = (ImageView) findViewById(R.id.ivProfilePicAdd);
+		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
 		btnSave=(Button)findViewById(R.id.btn_save);
 		btnSave.setOnClickListener(new OnClickListener() {
 			

@@ -20,6 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Add Payment Info"
+        android:textColor="@color/signup_bg_color"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <RelativeLayout
