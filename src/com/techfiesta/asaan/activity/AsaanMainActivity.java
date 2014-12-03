@@ -7,10 +7,12 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Session;
@@ -65,6 +67,10 @@ public class AsaanMainActivity extends Activity {
 
 		setContentView(R.layout.activity_main);
 		mContext = AsaanMainActivity.this;
+
+		Typeface tf = Typeface.createFromAsset(getAssets(), "font/helvetica_neue_thn.ttf");
+		TextView Title = (TextView) findViewById(R.id.tv_title);
+		Title.setTypeface(tf);
 		// buildStoreEndpoint();
 		// buildUserEndpoint();
 
@@ -126,6 +132,7 @@ public class AsaanMainActivity extends Activity {
 
 	public void onClickSignup(View v) {
 		Class<?> launchingClass = SignUpActivityNew.class;
+		// Class<?> launchingClass = ProfileActivity.class;
 		launchActivity(launchingClass);
 	}
 

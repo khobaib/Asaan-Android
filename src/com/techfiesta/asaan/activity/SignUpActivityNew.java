@@ -1,60 +1,61 @@
 package com.techfiesta.asaan.activity;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
-import com.techfiesta.asaan.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class SignUpActivityNew extends Activity{
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+import com.techfiesta.asaan.R;
+
+public class SignUpActivityNew extends Activity {
 	private EditText edtEmail;
 	private EditText edtPass;
 	private Button btnSave;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().hide();
+
 		setContentView(R.layout.activity_signup);
-		edtEmail=(EditText)findViewById(R.id.et_email);
-		edtPass=(EditText)findViewById(R.id.et_pass);
-		btnSave=(Button)findViewById(R.id.btn_save);
-		
+		edtEmail = (EditText) findViewById(R.id.et_email);
+		edtPass = (EditText) findViewById(R.id.et_pass);
+		btnSave = (Button) findViewById(R.id.btn_save);
+
 		btnSave.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				
-				Log.e("MSG","on click sign up");
-				String email=edtEmail.getText().toString();
-				String pass=edtPass.getText().toString();
-				if(email.equals(""))
-				{
+
+				Log.e("MSG", "on click sign up");
+				String email = edtEmail.getText().toString();
+				String pass = edtPass.getText().toString();
+				if (email.equals("")) {
 					alert("Please enter email");
-				}
-				else if(pass.equals(""))
-				{
+				} else if (pass.equals("")) {
 					alert("Please enter password");
-				}
-				else{
+				} else {
 					signUpInparse(email, pass);
-				 }
-				
+				}
+
 			}
 		});
-		
+
 	}
-	private void signUpInparse(String email,String pass)
-	{
-		ParseUser user=new ParseUser();
+
+	private void signUpInparse(String email, String pass) {
+		ParseUser user = new ParseUser();
 		user.setEmail(email);
 		user.setPassword(pass);
 		user.setUsername(email);
@@ -62,28 +63,33 @@ public class SignUpActivityNew extends Activity{
 
 			@Override
 			public void done(ParseException e) {
-				
-				if(e==null)
-				{
-					//go to profile activity
-					Intent intent=new Intent(SignUpActivityNew.this,ProfileActivity.class);
+
+				if (e == null) {
+					// go to profile activity
+					Intent intent = new Intent(SignUpActivityNew.this, ProfileActivity.class);
 					startActivity(intent);
-				}
-				else
-				{
+				} else {
 					alert("Error in sign up!");
-					//for testing
-					Intent intent=new Intent(SignUpActivityNew.this,ProfileActivity.class);
+					// for testing
+					Intent intent = new Intent(SignUpActivityNew.this, ProfileActivity.class);
 					startActivity(intent);
 				}
 			}
 		});
-		
+
 	}
-	
-	private void alert(String msg)
-	{
-		
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void alert(String msg) {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivityNew.this);
 
 		// Setting Dialog Title
@@ -91,7 +97,7 @@ public class SignUpActivityNew extends Activity{
 
 		// Setting Dialog Message
 		alertDialog.setMessage(msg);
-		alertDialog.setNeutralButton("Ok",null);
+		alertDialog.setNeutralButton("Ok", null);
 		alertDialog.create().show();
 	}
 

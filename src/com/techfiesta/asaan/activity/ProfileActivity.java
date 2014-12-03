@@ -4,17 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.model.UserPicture;
-import com.techfiesta.asaan.utility.AsaanUtility;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -22,47 +12,59 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class ProfileActivity extends Activity{
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.model.UserPicture;
+import com.techfiesta.asaan.utility.AsaanUtility;
+
+public class ProfileActivity extends Activity {
 	private ImageView ProfilePicture;
 	private EditText FirstName;
 	private EditText LastName;
 	private EditText Phone;
 	private Button btnSave;
-	
+
 	String profilePhotoUrl;
 	String firstName;
 	String lastName;
 	String phoneNumber;
 	String passWord;
 	Bitmap picture;
-	
+
 	UserPicture userPic;
-	
+
 	private static final int SELECT_PICTURE = 1;
 
 	private String selectedImagePath;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().hide();
+
 		setContentView(R.layout.activity_profile);
-		FirstName = (EditText)findViewById(R.id.et_first_name);
+		FirstName = (EditText) findViewById(R.id.et_first_name);
 		LastName = (EditText) findViewById(R.id.et_last_name);
-		Phone = (EditText)findViewById(R.id.et_phone);
+		Phone = (EditText) findViewById(R.id.et_phone);
 		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
-		btnSave=(Button)findViewById(R.id.btn_save);
+		btnSave = (Button) findViewById(R.id.btn_save);
 		btnSave.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				firstName = FirstName.getText().toString();
 				lastName = LastName.getText().toString();
-				
+
 				phoneNumber = Phone.getText().toString();
-				
 
 				if (firstName == null || firstName.length() == 0) {
 					// alert
@@ -73,13 +75,10 @@ public class ProfileActivity extends Activity{
 				} else if (phoneNumber == null || validatePhoneNumber(phoneNumber) == false) {
 					// alert
 					AsaanUtility.simpleAlert(ProfileActivity.this, "Please provide valid phone Number");
-				} 
-				else {
+				} else {
 					saveUserData();
 				}
 
-		
-				
 			}
 		});
 		ProfilePicture.setOnClickListener(new OnClickListener() {
@@ -95,16 +94,15 @@ public class ProfileActivity extends Activity{
 		});
 
 	}
-	private void saveUserData()
-	{
-		ParseUser user=ParseUser.getCurrentUser();
-		user.put("firstName",firstName);
-		user.put("lastName",lastName);
+
+	private void saveUserData() {
+		ParseUser user = ParseUser.getCurrentUser();
+		user.put("firstName", firstName);
+		user.put("lastName", lastName);
 		user.put("phone", phoneNumber);
 		//
-		if(selectedImagePath!=null)
-		{
-			File picFile=new File(selectedImagePath);
+		if (selectedImagePath != null) {
+			File picFile = new File(selectedImagePath);
 			byte[] data = new byte[(int) picFile.length()];
 			FileInputStream fileInputStream;
 			try {
@@ -120,26 +118,23 @@ public class ProfileActivity extends Activity{
 			}
 		}
 		user.saveInBackground(new SaveCallback() {
-			
+
 			@Override
 			public void done(ParseException e) {
-				if(e==null)
-				{
+				if (e == null) {
 					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
-					Intent intent=new Intent(ProfileActivity.this,PaymentInfoActivity.class);
+					Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
 					startActivity(intent);
-				}
-				else
-				{
-					Log.e("error","updating user failed"+e.toString());
+				} else {
+					Log.e("error", "updating user failed" + e.toString());
 					AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
 				}
-				
+
 			}
 		});
-	
+
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
@@ -163,7 +158,7 @@ public class ProfileActivity extends Activity{
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
 	private static boolean validatePhoneNumber(String phoneNo) {
 
 		/*
@@ -191,5 +186,5 @@ public class ProfileActivity extends Activity{
 			return false;
 
 	}
-	
+
 }

@@ -2,96 +2,79 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background" >
+    android:background="@color/app_bg_color" >
 
-   <Button
+    <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:gravity="left|center_vertical"
-        android:text="Save" />
+        android:background="@android:color/transparent"
+        android:text="Save"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/text_golden_color"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/layout_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" >
+        android:layout_margin="20dp" >
 
         <TextView
-            android:id="@+id/tv_welcome"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:text="Welcome to Asaan! Let&apos;s start by setting up your account"
-            android:textColor="@color/signup_bg_color"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        <LinearLayout
-        android:id="@+id/ll_mail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       
-        android:layout_below="@+id/tv_welcome"
-        android:layout_marginTop="30dp" >
-
-            
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/signup_title"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_golden_color" />
 
         <TextView
             android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="10dp"
             android:text="Email"
-            android:textAppearance="?android:attr/textAppearanceMedium" 
-            android:layout_weight=".5"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/et_email"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="name@example.com" 
+            android:layout_alignBottom="@+id/tv_email"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/tv_email"
+            android:hint="name@example.com"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
-            android:imeOptions="actionNext">
-			
-            <requestFocus />
+            android:textAppearance="?android:attr/textAppearanceSmall" >
         </EditText>
-
-    </LinearLayout>
-    
-        
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/layout_container"
-        android:layout_alignRight="@+id/layout_container"
-        android:layout_below="@+id/layout_container"
-        android:layout_marginTop="11dp" >
 
         <TextView
             android:id="@+id/tv_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_email"
+            android:layout_marginTop="10dp"
             android:text="Passoword"
-            android:layout_weight=".5"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/et_pass"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Min 8 Characters" 
+            android:layout_alignBottom="@+id/tv_pass"
+            android:layout_alignLeft="@+id/et_email"
+            android:layout_alignRight="@+id/et_email"
+            android:hint="Min 8 characters"
+            android:imeOptions="actionGo"
             android:inputType="textPassword"
-            android:imeOptions="actionGo"/>
-
-    </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
 
 </RelativeLayout>

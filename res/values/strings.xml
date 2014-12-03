@@ -11,6 +11,12 @@
     <string name="month">Month</string>
     <string name="validationErrors">Validation Errors</string>
     
+    <string name="frontpage_tagline">Discover and share great places with friends.</string>
+    <string name="signup_title">Welcome to Asaan! Let\'s start by setting up your account.</string>  
+    <string name="profile_page_title">Your name and photo will help the.</string> 
+    <string name="phone_number_warning">Your number to call or text you regarding your account information.</string> 
+    
+    
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_store_menu_list">StoreMenuListActivity</string>
