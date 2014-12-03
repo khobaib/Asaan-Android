@@ -82,6 +82,7 @@ public class StoreListActivity extends FragmentActivity implements
 	private List<Store> storeList;
 	private int INITIAL_POSITION = 0;
 	private int MAX_RESULT = 10;
+	private int ONE_DAY_DELAY=24*60*60*1000;
 	
 	
 	private SQLiteDatabase db;
@@ -156,7 +157,7 @@ public class StoreListActivity extends FragmentActivity implements
 	{
 		long lastTime=AsaanUtility.getlastUpdatedTime(StoreListActivity.this);
 		long diff=System.currentTimeMillis()-lastTime;
-		if(diff>(24*60*60*1000))
+		if(diff>ONE_DAY_DELAY)
 		{
 			return false;
 		}

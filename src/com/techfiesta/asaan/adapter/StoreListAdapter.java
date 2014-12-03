@@ -158,7 +158,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			
 			@Override
 			public void done(List<ParseObject> list, ParseException e) {
-				if(e==null){
+				if(e==null && list.size()>0){
 					ParseObject obj=list.get(0);
 				 ParseFile file=obj.getParseFile("picture_file");
 				iv.setParseFile(file);

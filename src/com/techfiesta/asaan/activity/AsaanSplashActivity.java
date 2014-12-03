@@ -78,7 +78,7 @@ public class LoadMainScreen extends AsyncTask<Void, Void, Boolean>{
 			if(currentUser==null){
 				i =  new Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
 			}else{
-				i = new Intent(AsaanSplashActivity.this, PaymentInfoActivity.class);
+				i = new Intent(AsaanSplashActivity.this,StoreListActivity.class);
 			}
 			 
 			startActivity(i);
