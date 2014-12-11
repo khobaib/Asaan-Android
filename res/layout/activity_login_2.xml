@@ -28,9 +28,9 @@
              android:id="@+id/tv_login_title" 
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="Welcome Back!Let's get started."
+             android:text="Welcome Back! Let's get started."
              android:gravity="center_horizontal"
-             android:layout_margin="10dp"
+             android:layout_margin="8dp"
              android:textAppearance="?android:attr/textAppearanceMedium"
              android:textColor="@color/text_golden_color"/>
          <TextView android:id="@+id/tv_email"
@@ -94,7 +94,9 @@
             android:padding="15dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Forgotten your password?"
-            android:textColor="@color/blueberry_blue"/>
+            android:textColor="@color/blueberry_blue"
+            
+            />
          
     </RelativeLayout>
     
