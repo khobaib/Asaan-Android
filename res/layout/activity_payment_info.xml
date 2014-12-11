@@ -9,22 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
-        android:text="Save" />
+        android:background="@android:color/transparent"
+        android:text="Save"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/text_golden_color"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Add Payment Info"
-        android:textColor="@color/signup_bg_color"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/signup_bg_color" />
 
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/rl_card_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -34,12 +35,13 @@
         android:layout_marginTop="46dp" >
 
         <TextView
-            android:id="@+id/tv_card_header"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Use Asaan to easily pay the check inside resturants or for order"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Use Asaan to easily pay the check inside resturants or for "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/text_golden_color" />
 
@@ -48,32 +50,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tv_card_header"
+            android:layout_below="@+id/tv_title"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:hint="Card Number" >
+            android:hint="Card Number"
+            android:textAppearance="?android:attr/textAppearanceSmall" >
 
             <requestFocus />
         </EditText>
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/ll_card_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/RelativeLayout1"
-            android:orientation="horizontal"
-            android:layout_below="@+id/et_card_number" >
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/et_card_number"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
 
             <EditText
                 android:id="@+id/et_month"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="MM"
                 android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="number" />
+                android:hint="MM"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -87,10 +90,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="YY"
                 android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="number" />
+                android:hint="YY"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <EditText
                 android:id="@+id/et_cvc"
@@ -98,42 +101,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:hint="CVC"
                 android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="number" />
-         
+                android:hint="CVC"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
             <EditText
                 android:id="@+id/et_zip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="2"
-                android:hint="Zip"
                 android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="number" />
+                android:hint="Zip"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/ll_tip_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/relativeLayout1"
-        android:layout_alignRight="@+id/RelativeLayout1"
+        android:layout_alignLeft="@+id/rl_card_info"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/relativeLayout1"
+        android:layout_alignRight="@+id/rl_card_info"
+        android:layout_below="@+id/rl_card_info"
         android:layout_marginTop="15dp" >
 
         <ImageView
-            android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/money" />
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -141,10 +142,9 @@
             android:text="Default tip: " />
 
         <Spinner
-            android:id="@+id/spinner1"
+            android:id="@+id/s_tip_selector"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 
 </RelativeLayout>
