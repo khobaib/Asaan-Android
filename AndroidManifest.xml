@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.techfiesta.asaan.activity.AsaanLoginActivity"
+            android:name="com.techfiesta.asaan.activity.LoginActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".activity.StoreDetailsActivity"></activity>
