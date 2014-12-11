@@ -44,6 +44,7 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MyCartActivity;
 import com.techfiesta.asaan.activity.PlaceOrderActivity;
+import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class StoreListAdapter extends ArrayAdapter<Store> {
@@ -51,12 +52,14 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	private Context mContext;
 	private List<Store> storeList;
 	private Location mLocation;
+	private ImageLoader imageLoader;
 
 	public StoreListAdapter(Context context, List<Store> stores) {
 		super(context, R.layout.restaurant_item_row, stores);
 		this.mContext = context;
 		this.storeList = stores;
 		this.mLocation = null;
+		imageLoader = new ImageLoader((Activity) context);
 	}
    public void setLocation(Location location)
    {
@@ -70,7 +73,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	}
 
 	private class ViewHolder {
-		ParseImageView ivPhoto;
+		//ParseImageView ivPhoto;
+		ImageView ivPhoto;
 		TextView tvName;
 		TextView tvThrophy;
 		TextView tvSubType;
@@ -89,7 +93,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.row_restaurant_list, null);
 			holder = new ViewHolder();
-			holder.ivPhoto = (ParseImageView) convertView.findViewById(R.id.restaurant_bg_image);
+			holder.ivPhoto = (ImageView) convertView.findViewById(R.id.restaurant_bg_image);
 			holder.tvName = (TextView) convertView.findViewById(R.id.tv_restaurant_name);
 			holder.tvThrophy = (TextView) convertView.findViewById(R.id.tv_first_trophy);
 			holder.tvSubType = (TextView) convertView.findViewById(R.id.tv_subtype);
@@ -102,8 +106,10 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		Store store = storeList.get(position);
-		downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
 		Log.e("url",store.getBackgroundImageUrl());
+		imageLoader.DisplayImage(store.getBackgroundImageUrl(), holder.ivPhoto);
+		//downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
+		
 		holder.tvName.setText(store.getName());
 		holder.tvSubType.setText(store.getSubType());
 		if(store.getTrophies()!=null && store.getTrophies().size()>0)
@@ -150,7 +156,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 
 		return convertView;
 	}
-	private void downLoadBgImageFromPrase(final ParseImageView iv,String objectId)
+/*	private void downLoadBgImageFromPrase(final ParseImageView iv,String objectId)
 	{
 		ParseQuery<ParseObject> query=ParseQuery.getQuery("PictureFiles");
 		query.whereEqualTo("objectId",objectId);
@@ -169,7 +175,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			}
 		});
 		
-	}
+	}*/
 	private void alert(final Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context,
 				AlertDialog.THEME_HOLO_LIGHT);
