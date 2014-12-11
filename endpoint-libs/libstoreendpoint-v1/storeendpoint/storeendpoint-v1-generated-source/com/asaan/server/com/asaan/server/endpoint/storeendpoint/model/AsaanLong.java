@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for StoreMenuItemCollection.
+ * Model definition for AsaanLong.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,43 +29,37 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuItemCollection extends com.google.api.client.json.GenericJson {
+public final class AsaanLong extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItem> items;
-
-  static {
-    // hack to force ProGuard to consider StoreMenuItem used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(StoreMenuItem.class);
-  }
+  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
+  private java.lang.Long longValue;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuItem> getItems() {
-    return items;
+  public java.lang.Long getLongValue() {
+    return longValue;
   }
 
   /**
-   * @param items items or {@code null} for none
+   * @param longValue longValue or {@code null} for none
    */
-  public StoreMenuItemCollection setItems(java.util.List<StoreMenuItem> items) {
-    this.items = items;
+  public AsaanLong setLongValue(java.lang.Long longValue) {
+    this.longValue = longValue;
     return this;
   }
 
   @Override
-  public StoreMenuItemCollection set(String fieldName, Object value) {
-    return (StoreMenuItemCollection) super.set(fieldName, value);
+  public AsaanLong set(String fieldName, Object value) {
+    return (AsaanLong) super.set(fieldName, value);
   }
 
   @Override
-  public StoreMenuItemCollection clone() {
-    return (StoreMenuItemCollection) super.clone();
+  public AsaanLong clone() {
+    return (AsaanLong) super.clone();
   }
 
 }

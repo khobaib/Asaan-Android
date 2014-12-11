@@ -352,8 +352,8 @@ public class PlaceOrderActivity extends Activity {
 					modifierGroup.selectedModifiers = new ArrayList<Integer>();
 					for (StoreMenuItemModifier modifier : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
 						if (modifier.getModifierGroupPOSId() == modifierGroup.posId) {
-							modifierGroup.posShortDesc = modifier.getModifierGroupShortDescription();
-							modifierGroup.posLongDesc = modifier.getModifierGroupLongDescription();
+							modifierGroup.posShortDesc = modifier.getShortDescription();
+							modifierGroup.posLongDesc = modifier.getLongDescription();
 							break;
 						}
 					}

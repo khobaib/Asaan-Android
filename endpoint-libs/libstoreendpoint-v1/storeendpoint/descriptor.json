@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/storeendpoint/v1/20141119222028/java/1.18.0-rc/server.asaan.com-storeendpoint-v1-20141119222028-java-1.18.0-rc-sources.jar", 
-      "path": "server.asaan.com-storeendpoint-v1-20141119222028-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/storeendpoint/v1/20141211005033/java/1.18.0-rc/server.asaan.com-storeendpoint-v1-20141211005033-java-1.18.0-rc-sources.jar", 
+      "path": "server.asaan.com-storeendpoint-v1-20141211005033-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-11-19 22:20"
+      "timestamp": "2014-12-11 00:50"
     }, 
     {
-      "path": "server.asaan.com-storeendpoint-v1-20141119222028-java-1.18.0-rc.jar.properties", 
+      "path": "server.asaan.com-storeendpoint-v1-20141211005033-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "com.asaan.server.endpoint", 
   "language_version": "1.18.0-rc", 
   "id": "storeendpoint:v1", 
-  "revision": 20141119222028
+  "revision": 20141211005033
 }

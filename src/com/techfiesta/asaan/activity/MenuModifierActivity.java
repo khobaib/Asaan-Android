@@ -16,43 +16,44 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 @SuppressLint("UseSparseArrays")
-public class MenuModifierActivity extends ListActivity
-{
+public class MenuModifierActivity extends ListActivity {
 	long selectedModGrpId, selectedModGrpMax, selectedModGrpMin;
 
 	List<ModifierWithSelection> modifiersWithSelection;
 
-	private static class ModifierWithSelection
-	{
+	private static class ModifierWithSelection {
 		StoreMenuItemModifier m;
 		String title;
 		boolean isSelected;
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.menu_modifier);
 		Button btnSave = (Button) this.findViewById(R.id.btn_save);
 
 		Bundle bundle = this.getIntent().getExtras();
 		selectedModGrpId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
-		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS);
+		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(
+				PlaceOrderActivity.SELECTED_MODIFIERS);
 
 		modifiersWithSelection = new ArrayList<ModifierWithSelection>();
 		ArrayList<String> modTitles = new ArrayList<String>();
-		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers())
-		{
-			if (m.getModifierGroupPOSId().longValue() == selectedModGrpId)
-			{
-				selectedModGrpMax = m.getModifierGroupMaximum();
-				selectedModGrpMin = m.getModifierGroupMinimum();
+		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups().get(
+				(int) selectedModGrpId);
+		selectedModGrpMax = mg.getModifierGroupMaximum();
+		selectedModGrpMin = mg.getModifierGroupMinimum();
+		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
+			if (m.getModifierGroupPOSId().longValue() == selectedModGrpId) {
+				// selectedModGrpMax = m.getModifierGroupMaximum();
+				// selectedModGrpMin = m.getModifierGroupMinimum();
 
 				ModifierWithSelection modifierWithSelection = new ModifierWithSelection();
 				modifierWithSelection.m = m;
@@ -65,8 +66,7 @@ public class MenuModifierActivity extends ListActivity
 				if (modOrigSelections == null)
 					continue;
 				for (Integer selectedModPOSId : modOrigSelections)
-					if (selectedModPOSId.longValue() == m.getModifierPOSId().longValue())
-					{
+					if (selectedModPOSId.longValue() == m.getModifierPOSId().longValue()) {
 						modifierWithSelection.isSelected = true;
 						break;
 					}
@@ -83,29 +83,25 @@ public class MenuModifierActivity extends ListActivity
 		else
 			listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, modTitles);
+		ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked,
+				modTitles);
 		setListAdapter(myAdapter);
 
 		int i = 0;
-		for (ModifierWithSelection modifierWithSelection : modifiersWithSelection)
-		{
+		for (ModifierWithSelection modifierWithSelection : modifiersWithSelection) {
 			if (modifierWithSelection.isSelected == true)
 				listView.setItemChecked(i, true);
 			i++;
 		}
 
-
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				if (listView.getChoiceMode() == ListView.CHOICE_MODE_SINGLE)
-				{
+				if (listView.getChoiceMode() == ListView.CHOICE_MODE_SINGLE) {
 					int i = 0;
-					for (ModifierWithSelection modifierWithSelection : modifiersWithSelection)
-					{
+					for (ModifierWithSelection modifierWithSelection : modifiersWithSelection) {
 						if (i != position && modifierWithSelection.isSelected == true)
 							modifierWithSelection.isSelected = false;
 						if (i == position && modifierWithSelection.isSelected == true)
@@ -114,9 +110,7 @@ public class MenuModifierActivity extends ListActivity
 							modifierWithSelection.isSelected = true;
 						i++;
 					}
-				}
-				else
-				{
+				} else {
 					CheckedTextView ctv = (CheckedTextView) view;
 					ModifierWithSelection modifierWithSelection = modifiersWithSelection.get(position);
 					if (ctv.isChecked() == true)
@@ -127,24 +121,22 @@ public class MenuModifierActivity extends ListActivity
 			}
 		});
 
-		btnSave.setOnClickListener(new View.OnClickListener()
-		{
+		btnSave.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
+			public void onClick(View v) {
 				long selCnt = 0;
 				for (ModifierWithSelection modifierWithSelection : modifiersWithSelection)
 					if (modifierWithSelection.isSelected == true)
 						selCnt++;
-				if (selectedModGrpMax > 0 && selectedModGrpMax < selCnt)
-				{
-					Toast.makeText(getApplication(), "Please select only " + selectedModGrpMax + " options", Toast.LENGTH_SHORT).show();
+				if (selectedModGrpMax > 0 && selectedModGrpMax < selCnt) {
+					Toast.makeText(getApplication(), "Please select only " + selectedModGrpMax + " options",
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
-				if (selectedModGrpMin > 0 && selectedModGrpMin > selCnt)
-				{
-					Toast.makeText(getApplication(), "Please select at least " + selectedModGrpMin + " options", Toast.LENGTH_SHORT).show();
+				if (selectedModGrpMin > 0 && selectedModGrpMin > selCnt) {
+					Toast.makeText(getApplication(), "Please select at least " + selectedModGrpMin + " options",
+							Toast.LENGTH_SHORT).show();
 					return;
 				}
 
@@ -152,23 +144,21 @@ public class MenuModifierActivity extends ListActivity
 				long price = 0;
 
 				ArrayList<Integer> finalSelections = new ArrayList<Integer>();
-				for (ModifierWithSelection modifierWithSelection : modifiersWithSelection)
-				{
+				for (ModifierWithSelection modifierWithSelection : modifiersWithSelection) {
 					if (modifierWithSelection.isSelected == false)
 						continue;
 					StoreMenuItemModifier m = modifierWithSelection.m;
 					finalSelections.add(m.getModifierPOSId().intValue());
-					if (m.getPrice() > 0)
-					{
+					if (m.getPrice() > 0) {
 						price += m.getPrice();
 						if (strDesc.contentEquals(" "))
-							strDesc = m.getLongDescription() + " (" + AsaanUtility.formatCentsToCurrency(m.getPrice()) + ")";
+							strDesc = m.getLongDescription() + " (" + AsaanUtility.formatCentsToCurrency(m.getPrice())
+									+ ")";
 						else
-							strDesc += ", " + m.getLongDescription() + " (" + AsaanUtility.formatCentsToCurrency(m.getPrice()) + ")";
+							strDesc += ", " + m.getLongDescription() + " ("
+									+ AsaanUtility.formatCentsToCurrency(m.getPrice()) + ")";
 
-					}
-					else
-					{
+					} else {
 						if (strDesc.contentEquals(" "))
 							strDesc = m.getLongDescription();
 						else
