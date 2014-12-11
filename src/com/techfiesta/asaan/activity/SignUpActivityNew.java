@@ -2,6 +2,7 @@ package com.techfiesta.asaan.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class SignUpActivityNew extends Activity {
 	private EditText edtEmail;
 	private EditText edtPass;
 	private Button btnSave;
+	private ProgressDialog pdialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,10 @@ public class SignUpActivityNew extends Activity {
 		setContentView(R.layout.activity_signup);
 		edtEmail = (EditText) findViewById(R.id.et_email);
 		edtPass = (EditText) findViewById(R.id.et_pass);
-		btnSave = (Button) findViewById(R.id.btn_save);
+		btnSave = (Button) findViewById(R.id.b_save);
+
+		pdialog = new ProgressDialog(SignUpActivityNew.this);
+		pdialog.setMessage("Loading...");
 
 		btnSave.setOnClickListener(new OnClickListener() {
 
@@ -41,10 +46,10 @@ public class SignUpActivityNew extends Activity {
 				Log.e("MSG", "on click sign up");
 				String email = edtEmail.getText().toString();
 				String pass = edtPass.getText().toString();
-				if (email.equals("")) {
-					alert("Please enter email");
-				} else if (pass.equals("")) {
-					alert("Please enter password");
+				if (email == null || email.equals("") || !email.endsWith(".com")) {
+					alert("Please enter email address.");
+				} else if (pass == null || pass.length() < 8) {
+					alert("Password muct be atleast 8 characters.");
 				} else {
 					signUpInparse(email, pass);
 				}
@@ -59,6 +64,8 @@ public class SignUpActivityNew extends Activity {
 		user.setEmail(email);
 		user.setPassword(pass);
 		user.setUsername(email);
+
+		pdialog.show();
 		user.signUpInBackground(new SignUpCallback() {
 
 			@Override
@@ -71,8 +78,12 @@ public class SignUpActivityNew extends Activity {
 				} else {
 					alert("Error in sign up!");
 					// for testing
-					Intent intent = new Intent(SignUpActivityNew.this, ProfileActivity.class);
-					startActivity(intent);
+					// Intent intent = new Intent(SignUpActivityNew.this,
+					// ProfileActivity.class);
+					// startActivity(intent);
+				}
+				if (pdialog.isShowing()) {
+					pdialog.dismiss();
 				}
 			}
 		});
