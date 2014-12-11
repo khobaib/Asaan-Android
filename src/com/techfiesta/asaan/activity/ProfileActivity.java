@@ -56,7 +56,7 @@ public class ProfileActivity extends Activity {
 		LastName = (EditText) findViewById(R.id.et_last_name);
 		Phone = (EditText) findViewById(R.id.et_phone);
 		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
-		btnSave = (Button) findViewById(R.id.btn_save);
+		btnSave = (Button) findViewById(R.id.b_save);
 		btnSave.setOnClickListener(new OnClickListener() {
 
 			@Override

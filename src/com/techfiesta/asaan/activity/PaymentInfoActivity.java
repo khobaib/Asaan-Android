@@ -73,7 +73,7 @@ public class PaymentInfoActivity extends Activity {
 		etMonth=(EditText)findViewById(R.id.et_month);
 		etYear=(EditText)findViewById(R.id.et_year);
 		
-		SaveCard = (Button) findViewById(R.id.btn_save);
+		SaveCard = (Button) findViewById(R.id.b_save);
 		defaultTipSpinner=(Spinner)findViewById(R.id.s_tip_selector);
 		createDefaultTipSpinner();
 		
