@@ -1,6 +1,7 @@
 package com.techfiesta.asaan.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class LoginActivity extends Activity{
 	EditText passWord;
 	Button Login;
 	ParseUser currentUser;
+	private ProgressDialog pDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -32,6 +34,10 @@ public class LoginActivity extends Activity{
 		userEmail = (EditText) findViewById(R.id.et_email);
 		passWord = (EditText) findViewById(R.id.et_pass);
 		Login = (Button) findViewById(R.id.b_login);
+		
+		pDialog = new ProgressDialog(LoginActivity.this);
+		pDialog.setMessage("Logging in...");
+		
 		Login.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -51,10 +57,12 @@ public class LoginActivity extends Activity{
 	private void LoginUser() {
 		String name = userEmail.getText().toString();
 		String password = passWord.getText().toString();
+		pDialog.show();
 		ParseUser.logInInBackground(name, password, new LogInCallback() {
 
 			@Override
 			public void done(ParseUser user, ParseException e) {
+				if(pDialog.isShowing()) pDialog.dismiss();
 				if (user != null) {
 
 					currentUser = ParseUser.getCurrentUser();
