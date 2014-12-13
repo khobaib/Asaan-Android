@@ -222,7 +222,7 @@ public class PaymentInfoActivity extends Activity {
 
 			SaveUserCard saveUserCard;
 			try {
-				saveUserCard = AsaanSplashActivity.mUserendpoint.saveUserCard(userCard);
+				saveUserCard = SplashActivity.mUserendpoint.saveUserCard(userCard);
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
 				UserCard uc=saveUserCard.execute();

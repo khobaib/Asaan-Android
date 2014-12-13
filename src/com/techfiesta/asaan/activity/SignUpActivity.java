@@ -1,103 +1,93 @@
 package com.techfiesta.asaan.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.adapter.SignupPagerAdapter;
-import com.techfiesta.asaan.communication.Communicator;
-import com.viewpagerindicator.CirclePageIndicator;
 
-public class SignUpActivity extends FragmentActivity implements Communicator {
-	// EditText etFirstname;
-	// EditText etLastname;
-	// EditText etEmail;
-	// EditText etPass;
-	//
-	// Button btnSigunup;
-
-	ViewPager pager;
-	private CirclePageIndicator indicator;
+public class SignUpActivity extends Activity {
+	private EditText edtEmail;
+	private EditText edtPass;
+	private Button btnSave;
+	private ProgressDialog pdialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// setContentView(R.layout.activity_signup);
-		setContentView(R.layout.activity_sign_up_frag_holder);
+		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		getActionBar().hide();
 
-		pager = (ViewPager) findViewById(R.id.view_pager_SignUp);
-		indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		setContentView(R.layout.activity_signup);
+		edtEmail = (EditText) findViewById(R.id.et_email);
+		edtPass = (EditText) findViewById(R.id.et_pass);
+		btnSave = (Button) findViewById(R.id.b_save);
 
-		FragmentPagerAdapter adapter = new SignupPagerAdapter(getSupportFragmentManager());
-		pager.setAdapter(adapter);
-		indicator.setViewPager(pager);
+		pdialog = new ProgressDialog(SignUpActivity.this);
+		pdialog.setMessage("Loading...");
 
-		// etFirstname = (EditText) findViewById(R.id.etFirstName);
-		// etLastname = (EditText) findViewById(R.id.etLastName);
-		// etEmail = (EditText) findViewById(R.id.etMail);
-		// etPass = (EditText) findViewById(R.id.etPassword);
-		//
-		// btnSigunup = (Button) findViewById(R.id.btnSignUp);
+		btnSave.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				Log.e("MSG", "on click sign up");
+				String email = edtEmail.getText().toString();
+				String pass = edtPass.getText().toString();
+				if (email == null || email.equals("") || !email.endsWith(".com")) {
+					alert("Please enter email address.");
+				} else if (pass == null || pass.length() < 8) {
+					alert("Password muct be atleast 8 characters.");
+				} else {
+					signUpInparse(email, pass);
+				}
+
+			}
+		});
 
 	}
 
-	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(arg0, arg1, arg2);
-	}
+	private void signUpInparse(String email, String pass) {
+		ParseUser user = new ParseUser();
+		user.setEmail(email);
+		user.setPassword(pass);
+		user.setUsername(email);
 
-	@Override
-	public void respond(int position) {
+		pdialog.show();
+		user.signUpInBackground(new SignUpCallback() {
 
-		pager.setCurrentItem(position);
+			@Override
+			public void done(ParseException e) {
 
-	}
+				if (e == null) {
+					// go to profile activity
+					Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
+					startActivity(intent);
+				} else {
+					alert("Error in sign up!");
+					// for testing
+					// Intent intent = new Intent(SignUpActivityNew.this,
+					// ProfileActivity.class);
+					// startActivity(intent);
+				}
+				if (pdialog.isShowing()) {
+					pdialog.dismiss();
+				}
+			}
+		});
 
-	/*
-	 * public void onClickSignUp(View v){ final String firstName =
-	 * etFirstname.getText().toString().trim(); final String lastName =
-	 * etLastname.getText().toString().trim(); final String emailId =
-	 * etEmail.getText().toString().trim(); final String passWord =
-	 * etPass.getText().toString().trim();
-	 * 
-	 * ParseQuery<ParseUser> query = ParseUser.getQuery();
-	 * query.whereEqualTo("email", emailId); query.getFirstInBackground(new
-	 * GetCallback<ParseUser>() {
-	 * 
-	 * @Override public void done(ParseUser object, ParseException e) {
-	 * if(object==null){ Log.d(">>>", "Doesn't exist email "); ParseUser pUser =
-	 * new ParseUser(); pUser.setUsername(emailId); pUser.setEmail(emailId);
-	 * pUser.setPassword(passWord); pUser.put("firstName", firstName);
-	 * pUser.put("lastName", lastName);
-	 * 
-	 * pUser.signUpInBackground(new SignUpCallback() {
-	 * 
-	 * @Override public void done(ParseException e) { if(e==null){
-	 * Log.d("SUCCESS", "Successfull signup"); }else{ Log.d("FAIL",
-	 * "Failed to Sign up this user"); }
-	 * 
-	 * } });
-	 * 
-	 * }else{ Log.d(">>>", "Already existing email =");
-	 * 
-	 * }
-	 * 
-	 * } });
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
-
-	public void onClickNext(View v) {
-		startActivity(new Intent(this, StoreListActivity.class));
 	}
 
 	@Override
@@ -108,6 +98,18 @@ public class SignUpActivity extends FragmentActivity implements Communicator {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	private void alert(String msg) {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this);
+
+		// Setting Dialog Title
+		alertDialog.setTitle("Asaan");
+
+		// Setting Dialog Message
+		alertDialog.setMessage(msg);
+		alertDialog.setNeutralButton("Ok", null);
+		alertDialog.create().show();
 	}
 
 }

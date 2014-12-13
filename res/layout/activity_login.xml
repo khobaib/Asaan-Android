@@ -4,161 +4,108 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/app_bg_color"
     android:orientation="vertical"
     tools:ignore="HardcodedText" >
-
-    <ImageView
-        android:id="@+id/ivLogInHead"
-        android:layout_width="match_parent"
-        android:layout_height="212dp"
-        android:background="@drawable/log_in_head"
-        tools:ignore="ContentDescription" />
-
-    <EditText
-        android:id="@+id/etEmailLogIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivLogInHead"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/transparent"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:textColor="@color/white"
-        android:textSize="16sp" >
-
-        <requestFocus />
-    </EditText>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignLeft="@+id/etEmailLogIn"
-        android:layout_alignRight="@+id/etEmailLogIn"
-        android:layout_below="@+id/etEmailLogIn"
-        android:background="@color/khaki_text" />
-
-    <EditText
-        android:id="@+id/etPasswordLogIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etEmailLogIn"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/transparent"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:textColor="@color/white"
-        android:textSize="16sp" >
-
-        <requestFocus />
-    </EditText>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignLeft="@+id/etPasswordLogIn"
-        android:layout_alignRight="@+id/etPasswordLogIn"
-        android:layout_below="@+id/etPasswordLogIn"
-        android:background="@color/khaki_text" />
-
-    <Button
-        android:id="@+id/btnLogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_below="@+id/etPasswordLogIn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/khaki"
-        android:text="Log In"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
+    
     <TextView
-        android:id="@+id/tvFBOrGPlusLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogIn"
         android:layout_centerHorizontal="true"
-        android:padding="7dp"
-        android:text="Log in with"
-        android:textColor="@color/white"
-        android:textSize="14sp"
+        android:text="Login"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/text_golden_color"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/LinearLayout2"
+    <RelativeLayout
+        android:id="@+id/rl_login_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp" >
 
         <TextView
-            android:id="@+id/tvForgetPasswordLogIn"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_login_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Forget Password"
-            android:textColor="@color/white" />
+            android:layout_margin="8dp"
+            android:gravity="center_horizontal"
+            android:text="Welcome Back! Let&apos;s get started."
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_golden_color" />
 
         <TextView
+            android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:text="|"
-            android:textColor="@color/khaki_text"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_login_title"
+            android:layout_marginTop="10dp"
+            android:paddingRight="40dp"
+            android:text="Email"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_email"
+            android:layout_toRightOf="@+id/tv_email"
+            android:hint="name@example.com"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
-            android:id="@+id/tvSignUpLogIn"
+            android:id="@+id/tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Sign Up"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            android:layout_alignLeft="@+id/tv_email"
+            android:layout_below="@+id/tv_email"
+            android:layout_marginTop="15dp"
+            android:text="Password"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tvFBOrGPlusLogIn"
-        android:layout_below="@+id/btnLogIn"
-        android:layout_toLeftOf="@+id/tvFBOrGPlusLogIn"
-        android:padding="5dp"
-        android:text="OR"
-        android:textColor="@color/khaki_text" />
+        <EditText
+            android:id="@+id/et_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_password"
+            android:layout_alignLeft="@+id/et_email"
+            android:layout_alignStart="@+id/et_email"
+            android:hint="Min 8 Characters"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button 
-        android:id="@+id/btnFbLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnGPlusLogIn"
-        android:layout_alignBottom="@+id/btnGPlusLogIn"
-        android:layout_alignLeft="@+id/textView1"
-        android:text="f" />
+        <Button
+            android:id="@+id/b_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_password"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@color/login_bg_color"
+            android:gravity="center"
+            android:onClick="onClickLogin"
+            android:padding="10dp"
+            android:text="Login"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textStyle="normal" />
 
-    <Button
-        android:id="@+id/btnGPlusLogIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvFBOrGPlusLogIn"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/button1"
-        android:text="g+" />
+        <TextView
+            android:id="@+id/tv_forget_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/b_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Forgotten your password?"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/blueberry_blue" />
+    </RelativeLayout>
 
 </RelativeLayout>

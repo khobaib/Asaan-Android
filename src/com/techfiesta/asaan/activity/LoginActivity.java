@@ -29,7 +29,7 @@ public class LoginActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
-		setContentView(R.layout.activity_login_2);
+		setContentView(R.layout.activity_login);
 		
 		userEmail = (EditText) findViewById(R.id.et_email);
 		passWord = (EditText) findViewById(R.id.et_pass);

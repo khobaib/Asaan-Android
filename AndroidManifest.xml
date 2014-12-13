@@ -47,7 +47,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.techfiesta.asaan.activity.AsaanSplashActivity"
+            android:name="com.techfiesta.asaan.activity.SplashActivity"
             android:screenOrientation="portrait"
              >
             <intent-filter>
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.techfiesta.asaan.activity.AsaanMainActivity"
+            android:name="com.techfiesta.asaan.activity.LoginChooserActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity

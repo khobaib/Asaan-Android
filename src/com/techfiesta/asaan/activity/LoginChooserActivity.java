@@ -23,41 +23,12 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 
-//public class AsaanMainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
-public class AsaanMainActivity extends Activity {
+public class LoginChooserActivity extends Activity {
 
-	private static final String TAG = AsaanMainActivity.class.getSimpleName();
-
-	// TextView Login, SignUp;
+	private static final String TAG = LoginChooserActivity.class.getSimpleName();
 
 	Context mContext;
 	ParseUser currentUser;
-
-	/*
-	 * boolean isLogin = false; static boolean isExist =false; Button btnSignup;
-	 * private SignInButton btngPlusLogin; Request code used to invoke sign in
-	 * user interactions. private static final int RC_SIGN_IN = 0;
-	 * 
-	 * Client used to interact with Google APIs. private GoogleApiClient
-	 * mGoogleApiClient;
-	 * 
-	 * A flag indicating that a PendingIntent is in progress and prevents us
-	 * from starting further intents.
-	 * 
-	 * private boolean mIntentInProgress;
-	 * 
-	 * Track whether the sign-in button has been clicked so that we know to
-	 * resolve all issues preventing sign-in without waiting.
-	 * 
-	 * private boolean mSignInClicked;
-	 * 
-	 * Store the connection result from onConnectionFailed callbacks so that we
-	 * can resolve them when the user clicks sign-in.
-	 * 
-	 * private ConnectionResult mConnectionResult;
-	 */
-	// public static Storeendpoint mStoreendpoint;
-	// public static Userendpoint mUserendpoint;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +36,8 @@ public class AsaanMainActivity extends Activity {
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		getActionBar().hide();
 
-		setContentView(R.layout.activity_main);
-		mContext = AsaanMainActivity.this;
+		setContentView(R.layout.activity_login_chooser);
+		mContext = LoginChooserActivity.this;
 
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font/helvetica_neue_thn.ttf");
 		TextView Title = (TextView) findViewById(R.id.tv_title);
@@ -131,7 +102,7 @@ public class AsaanMainActivity extends Activity {
 	}
 
 	public void onClickSignup(View v) {
-		Class<?> launchingClass = SignUpActivityNew.class;
+		Class<?> launchingClass = SignUpActivity.class;
 		// Class<?> launchingClass = ProfileActivity.class;
 		launchActivity(launchingClass);
 	}

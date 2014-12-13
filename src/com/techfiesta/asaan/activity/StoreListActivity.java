@@ -100,7 +100,7 @@ public class StoreListActivity extends FragmentActivity implements
      //init database
 		initDatabase();
 		Log.e("stop", "oncreate");
-		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_restaurant_list,
+		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_store_list,
 				null);
 		StoreListActivity.this.setContentView(viewToLoad);
 
@@ -244,7 +244,7 @@ public class StoreListActivity extends FragmentActivity implements
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			try {
-				storeCollection = AsaanSplashActivity.mStoreendpoint.getStores(INITIAL_POSITION, MAX_RESULT).execute();
+				storeCollection = SplashActivity.mStoreendpoint.getStores(INITIAL_POSITION, MAX_RESULT).execute();
 				Log.e("StoreList Size", "" + storeCollection.getItems().size());
 			} catch (IOException e) {
 

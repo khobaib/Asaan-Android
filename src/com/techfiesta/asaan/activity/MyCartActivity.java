@@ -107,7 +107,7 @@ public class MyCartActivity extends Activity {
 			PlaceOrder PlaceOrderReq;
 			try
 			{
-				PlaceOrderReq = AsaanSplashActivity.mStoreendpoint.placeOrder((long)1,1, strOrder);
+				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long)1,1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
 				headers.put(USER_AUTH_TOKEN_HEADER_NAME, params[0]);
 				StoreOrder order = PlaceOrderReq.execute();
