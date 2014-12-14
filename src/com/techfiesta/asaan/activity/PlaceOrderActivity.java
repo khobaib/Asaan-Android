@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -72,14 +73,16 @@ public class PlaceOrderActivity extends Activity {
 
 	public static MenuItemModifiersAndGroups menuItemModifiersAndGroups;
 
-	ImageView imgFood = null;
+	// ImageView imgFood = null;
 	TextView txtName = null;
 	TextView txtPrice = null;
-	TextView txtDesc = null;
+	// TextView txtDesc = null;
 	TextView txtPlus = null;
 	TextView txtMinus = null;
 	TextView txtQuantity = null;
-	TextView txtSpecialInstructions = null;
+	TextView Title;
+	// TextView txtSpecialInstructions = null;
+	EditText txtSpecialInstructions;
 	Button btnPlaceOrder = null;
 
 	@Override
@@ -91,7 +94,7 @@ public class PlaceOrderActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu_modifier_group);
+		setContentView(R.layout.menu_modifier_group2);
 
 		Bundle bundle = this.getIntent().getExtras();
 		menuItemPOSId = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
@@ -175,17 +178,23 @@ public class PlaceOrderActivity extends Activity {
 	}
 
 	private void initUI() {
-		imgFood = (ImageView) findViewById(R.id.image_food_item);
+		Title = (TextView) findViewById(R.id.tv_menu_modifier_title);
+		// imgFood = (ImageView) findViewById(R.id.image_food_item);
 		txtName = (TextView) findViewById(R.id.txt_item_name);
 		txtPrice = (TextView) findViewById(R.id.txt_item_price);
-		txtDesc = (TextView) findViewById(R.id.txt_item_desc);
+		// txtDesc = (TextView) findViewById(R.id.txt_item_desc);
 
 		txtPlus = (TextView) findViewById(R.id.txt_plus);
 		txtMinus = (TextView) findViewById(R.id.txt_minus);
 		txtQuantity = (TextView) findViewById(R.id.txt_quantity);
-		txtSpecialInstructions = (TextView) findViewById(R.id.txt_special_instructions);
+		// txtSpecialInstructions = (TextView)
+		// findViewById(R.id.txt_special_instructions);
+		txtSpecialInstructions = (EditText) findViewById(R.id.et_special_instructions);
 		mListView = (ListView) findViewById(R.id.list_menu_options);
 		btnPlaceOrder = (Button) findViewById(R.id.btn_place_order);
+
+		Title.setText(Title.getText() + " " + menuItemShortDesc);
+		btnPlaceOrder.setText(btnPlaceOrder.getText() + " " + AsaanUtility.formatCentsToCurrency(menuItemPrice));
 
 		txtPlus.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -220,8 +229,8 @@ public class PlaceOrderActivity extends Activity {
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(menuItemPrice));
 		String strQuantity = String.format(Locale.US, "%d", 1);
 		txtQuantity.setText(strQuantity);
-		txtDesc.setText("");
-		txtSpecialInstructions.setText("");
+		// txtDesc.setText("");
+		// txtSpecialInstructions.setText("");
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -302,7 +311,7 @@ public class PlaceOrderActivity extends Activity {
 			mAdapter.updatePriceAndDesc();
 
 		TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);
-		TextView txtDesc = (TextView) findViewById(R.id.txt_item_desc);
+		// TextView txtDesc = (TextView) findViewById(R.id.txt_item_desc);
 		TextView txtQuantity = (TextView) findViewById(R.id.txt_quantity);
 
 		String strQuantity = (String) txtQuantity.getText();
@@ -313,8 +322,9 @@ public class PlaceOrderActivity extends Activity {
 			finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
 
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
-		if (menuItemHasModifiers)
-			txtDesc.setText(mAdapter.getFinalDesc());
+		btnPlaceOrder.setText("Add to Order " + AsaanUtility.formatCentsToCurrency(finalPrice));
+		// if (menuItemHasModifiers)
+		// txtDesc.setText(mAdapter.getFinalDesc());
 	}
 
 	public static class MenuModGrpsAdapter extends BaseAdapter {

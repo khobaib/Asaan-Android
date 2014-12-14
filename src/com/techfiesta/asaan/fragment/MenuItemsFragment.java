@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import lombok.Getter;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +22,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
-import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.PlaceOrderActivity;
+import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 
 @SuppressLint("NewApi")
@@ -45,7 +47,8 @@ public class MenuItemsFragment extends ListFragment {
 	// protected boolean pauseOnScroll = false;
 	// protected boolean pauseOnFling = false;
 	static ListView mListView;
-	protected static ImageLoader imageLoader = ImageLoader.getInstance();
+
+	// protected static ImageLoader imageLoader = ImageLoader.getInstance();
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -104,6 +107,7 @@ public class MenuItemsFragment extends ListFragment {
 		private static final int ROWDATA_TYPE_MENU_ITEM = 2;
 
 		private List<StoreMenuItem> allItems = null;
+		ImageLoader imageLoader;
 
 		@Getter
 		private Context context = null;
@@ -113,22 +117,23 @@ public class MenuItemsFragment extends ListFragment {
 			public TextView txtName;
 			public TextView txtPrice;
 			public TextView txtDesc;
-			public TextView txtLike;
-			public TextView txtOrderedToday;
-			public ImageView imgLike;
+			// public TextView txtLike;
+			// public TextView txtOrderedToday;
+			// public ImageView imgLike;
 			public ImageView imgVegetarian;
 			public ImageView imgSpicy;
 			public ImageView imgGlutenFree;
 		}
 
 		static class ViewHolder2 {
-			public ImageView imgGroup;
+			// public ImageView imgGroup;
 			public TextView txtGroupName;
 		}
 
 		public MenuFragmentAdapter(final Context context, List<StoreMenuItem> allItems) {
 			this.allItems = allItems;
 			this.context = context;
+			imageLoader = new ImageLoader((Activity) context);
 		}
 
 		public void listItemClick(ListView l, View v, int position, long id) {
@@ -172,23 +177,27 @@ public class MenuItemsFragment extends ListFragment {
 			if (rowView == null
 					|| ((Integer) rowView.getTag(R.id.menu_category_title)).intValue() != storeMenuItem.getLevel())
 				if (storeMenuItem.getLevel() == ROWDATA_TYPE_SUBMENU) {
-					rowView = View.inflate(getContext(), R.layout.menu_item_group, null);
+					rowView = View.inflate(getContext(), R.layout.menu_item_group2, null);
 					final ViewHolder2 viewHolder2 = new ViewHolder2();
-					viewHolder2.imgGroup = (ImageView) rowView.findViewById(R.id.img_menu_category_finder);
+					// viewHolder2.imgGroup = (ImageView)
+					// rowView.findViewById(R.id.img_menu_category_finder);
 					viewHolder2.txtGroupName = (TextView) rowView.findViewById(R.id.menu_category_title);
 
 					rowView.setTag(viewHolder2);
 					rowView.setTag(R.id.menu_category_title, ROWDATA_TYPE_SUBMENU);
 				} else {
-					rowView = View.inflate(getContext(), R.layout.menu_item, null);
+					rowView = View.inflate(getContext(), R.layout.menu_item2, null);
 					final ViewHolder viewHolder = new ViewHolder();
 					viewHolder.imgFood = (ImageView) rowView.findViewById(R.id.image_food_item);
 					viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
 					viewHolder.txtPrice = (TextView) rowView.findViewById(R.id.txt_item_price);
 					viewHolder.txtDesc = (TextView) rowView.findViewById(R.id.txt_item_desc);
-					viewHolder.txtLike = (TextView) rowView.findViewById(R.id.txt_item_ranking);
-					viewHolder.txtOrderedToday = (TextView) rowView.findViewById(R.id.txt_item_ordered_today);
-					viewHolder.imgLike = (ImageView) rowView.findViewById(R.id.image_like);
+					// viewHolder.txtLike = (TextView)
+					// rowView.findViewById(R.id.txt_item_ranking);
+					// viewHolder.txtOrderedToday = (TextView)
+					// rowView.findViewById(R.id.txt_item_ordered_today);
+					// viewHolder.imgLike = (ImageView)
+					// rowView.findViewById(R.id.image_like);
 					viewHolder.imgVegetarian = (ImageView) rowView.findViewById(R.id.image_vegetarian);
 					viewHolder.imgSpicy = (ImageView) rowView.findViewById(R.id.image_spicy);
 					viewHolder.imgGlutenFree = (ImageView) rowView.findViewById(R.id.image_glutenfree);
@@ -201,42 +210,32 @@ public class MenuItemsFragment extends ListFragment {
 
 				holder2.txtGroupName.setText(storeMenuItem.getShortDescription()); // Submenu
 																					// name
-				holder2.imgGroup.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// final List<String> allHierarchyTitles = new
-						// ArrayList<String>();
-						// for (final RowData i : allItems)
-						// if (i.type == ROWDATA_TYPE_SUBMENU)
-						// allHierarchyTitles.add(((MenuHierarchy.SubMenu)
-						// i.obj).getDescription());
-						//
-						// final AlertDialog.Builder builder = new
-						// AlertDialog.Builder(getActivity()).setTitle(R.string.menu_category).setItems(
-						// allHierarchyTitles.toArray(new
-						// String[allHierarchyTitles.size()]), new
-						// DialogInterface.OnClickListener()
-						// {
-						// @Override
-						// public void onClick(DialogInterface dialog, int
-						// which)
-						// {
-						// final String selectedHierarchyName =
-						// allHierarchyTitles.get(which);
-						// for (final RowData i : allItems)
-						// if (i.type == ROWDATA_TYPE_SUBMENU
-						// && TextUtils.equals(selectedHierarchyName,
-						// ((MenuHierarchy.SubMenu) i.obj).getDescription()) ==
-						// true)
-						// {
-						// final int selectedRowPos = allItems.indexOf(i);
-						// mListView.setSelection(selectedRowPos);
-						// }
-						// }
-						// });
-						// builder.create().show();
-					}
-				});
+				/*
+				 * holder2.imgGroup.setOnClickListener(new
+				 * View.OnClickListener() {
+				 * 
+				 * @Override public void onClick(View v) { // final List<String>
+				 * allHierarchyTitles = new // ArrayList<String>(); // for
+				 * (final RowData i : allItems) // if (i.type ==
+				 * ROWDATA_TYPE_SUBMENU) //
+				 * allHierarchyTitles.add(((MenuHierarchy.SubMenu) //
+				 * i.obj).getDescription()); // // final AlertDialog.Builder
+				 * builder = new //
+				 * AlertDialog.Builder(getActivity()).setTitle(R
+				 * .string.menu_category).setItems( //
+				 * allHierarchyTitles.toArray(new //
+				 * String[allHierarchyTitles.size()]), new //
+				 * DialogInterface.OnClickListener() // { // @Override // public
+				 * void onClick(DialogInterface dialog, int // which) // { //
+				 * final String selectedHierarchyName = //
+				 * allHierarchyTitles.get(which); // for (final RowData i :
+				 * allItems) // if (i.type == ROWDATA_TYPE_SUBMENU // &&
+				 * TextUtils.equals(selectedHierarchyName, //
+				 * ((MenuHierarchy.SubMenu) i.obj).getDescription()) == // true)
+				 * // { // final int selectedRowPos = allItems.indexOf(i); //
+				 * mListView.setSelection(selectedRowPos); // } // } // }); //
+				 * builder.create().show(); } });
+				 */
 			} else {
 				final ViewHolder holder = (ViewHolder) rowView.getTag();
 
@@ -244,7 +243,8 @@ public class MenuItemsFragment extends ListFragment {
 				holder.txtName.setText(storeMenuItem.getShortDescription());
 				holder.txtDesc.setText(storeMenuItem.getLongDescription());
 				holder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
-				holder.imgFood.setVisibility(View.GONE);
+				imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), holder.imgFood);
+				// holder.imgFood.setVisibility(View.GONE);
 			}
 
 			return rowView;
