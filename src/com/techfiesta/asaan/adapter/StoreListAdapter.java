@@ -99,12 +99,11 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		Store store = storeList.get(position);
-		Log.e("url",
-				"image url for id "
-						+ store.getId()
-						+ " = "
-						+ ((store.getBackgroundImageUrl() == null) ? "null"
-								: store.getBackgroundImageUrl()));
+
+		// Log.e("url", "image url for id " + store.getId() + " = "
+		// + ((store.getBackgroundImageUrl() == null) ? "null" :
+		// store.getBackgroundImageUrl()));
+
 		imageLoader.DisplayImage(store.getBackgroundImageUrl(), holder.ivPhoto);
 		// downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
 

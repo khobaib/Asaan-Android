@@ -41,6 +41,7 @@ public class MenuItemsFragment extends ListFragment {
 	public static final String BUNDLE_KEY_ORDER_DETAILS_POSITION = "BUNDLE_KEY_ORDER_DETAILS_POSITION";
 	public static final String BUNDLE_KEY_ORDER_DETAILS_AVAILABLE = "BUNDLE_KEY_ORDER_DETAILS_AVAILABLE";
 	public static final String BUNDLE_KEY_MODIFIERGRP_ID = "BUNDLE_KEY_MODIFIERGRP_ID";
+	public static final String BUNDLE_KEY_MODIFIERGRP_INDEX = "BUNDLE_KEY_MODIFIERGRP_INDEX";
 
 	// protected boolean pauseOnScroll = false;
 	// protected boolean pauseOnFling = false;
@@ -95,8 +96,10 @@ public class MenuItemsFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+
 		((MenuFragmentAdapter) mListView.getAdapter()).listItemClick(l, v,
 				position, id);
+
 
 	}
 
@@ -136,6 +139,7 @@ public class MenuItemsFragment extends ListFragment {
 		public void listItemClick(ListView l, View v, int position, long id) {
 			final StoreMenuItem menuItem = allItems.get(position);
 			if (menuItem != null) {
+
 				final Intent intent = new Intent(context,
 						PlaceOrderActivity.class);
 				intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID,
@@ -148,6 +152,7 @@ public class MenuItemsFragment extends ListFragment {
 				Log.e("PRICE", "" + menuItem.getPrice());
 				intent.putExtra(BUNDLE_KEY_MENUITEM_HAS_MODIFIERS,
 						menuItem.getHasModifiers());
+
 				intent.putExtra(BUNDLE_KEY_ORDER_DETAILS_AVAILABLE, false);
 				context.startActivity(intent);
 			}
