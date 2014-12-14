@@ -48,8 +48,8 @@ public class ProfileActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		getActionBar().hide();
+		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		// getActionBar().hide();
 
 		setContentView(R.layout.activity_profile);
 		FirstName = (EditText) findViewById(R.id.et_first_name);
@@ -68,13 +68,17 @@ public class ProfileActivity extends Activity {
 
 				if (firstName == null || firstName.length() == 0) {
 					// alert
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Please provide First Name");
+					AsaanUtility.simpleAlert(ProfileActivity.this,
+							"Please provide First Name");
 				} else if (lastName == null || lastName.length() == 0) {
 					// alert
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Please provide Last Name");
-				} else if (phoneNumber == null || validatePhoneNumber(phoneNumber) == false) {
+					AsaanUtility.simpleAlert(ProfileActivity.this,
+							"Please provide Last Name");
+				} else if (phoneNumber == null
+						|| validatePhoneNumber(phoneNumber) == false) {
 					// alert
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Please provide valid phone Number");
+					AsaanUtility.simpleAlert(ProfileActivity.this,
+							"Please provide valid phone Number");
 				} else {
 					saveUserData();
 				}
@@ -88,7 +92,9 @@ public class ProfileActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+				startActivityForResult(
+						Intent.createChooser(intent, "Select Picture"),
+						SELECT_PICTURE);
 
 			}
 		});
@@ -122,12 +128,15 @@ public class ProfileActivity extends Activity {
 			@Override
 			public void done(ParseException e) {
 				if (e == null) {
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
-					Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
+					AsaanUtility.simpleAlert(ProfileActivity.this,
+							"Profile Updated");
+					Intent intent = new Intent(ProfileActivity.this,
+							PaymentInfoActivity.class);
 					startActivity(intent);
 				} else {
 					Log.e("error", "updating user failed" + e.toString());
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
+					AsaanUtility.simpleAlert(ProfileActivity.this,
+							"Error In Updating profile");
 				}
 
 			}
@@ -140,7 +149,8 @@ public class ProfileActivity extends Activity {
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
-				userPic = new UserPicture(selectedImageUri, getContentResolver());
+				userPic = new UserPicture(selectedImageUri,
+						getContentResolver());
 				try {
 					picture = userPic.getBitmap();
 					if (picture != null)

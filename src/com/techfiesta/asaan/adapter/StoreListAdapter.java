@@ -50,7 +50,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		this.mLocation = location;
 	}
 
-	public StoreListAdapter(Context context, List<Store> stores, Location location) {
+	public StoreListAdapter(Context context, List<Store> stores,
+			Location location) {
 		super(context, R.layout.row_restaurant_list, stores);
 		this.mContext = context;
 		this.storeList = stores;
@@ -73,26 +74,37 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater mInflater = (LayoutInflater) mContext
+				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.row_restaurant_list, null);
 			holder = new ViewHolder();
-			holder.ivPhoto = (ImageView) convertView.findViewById(R.id.restaurant_bg_image);
-			holder.tvName = (TextView) convertView.findViewById(R.id.tv_restaurant_name);
-			holder.tvThrophy = (TextView) convertView.findViewById(R.id.tv_first_trophy);
-			holder.tvSubType = (TextView) convertView.findViewById(R.id.tv_subtype);
+			holder.ivPhoto = (ImageView) convertView
+					.findViewById(R.id.restaurant_bg_image);
+			holder.tvName = (TextView) convertView
+					.findViewById(R.id.tv_restaurant_name);
+			holder.tvThrophy = (TextView) convertView
+					.findViewById(R.id.tv_first_trophy);
+			holder.tvSubType = (TextView) convertView
+					.findViewById(R.id.tv_subtype);
 			holder.btnCall = (Button) convertView.findViewById(R.id.b_call);
-			holder.btnReserve = (Button) convertView.findViewById(R.id.b_reserve);
+			holder.btnReserve = (Button) convertView
+					.findViewById(R.id.b_reserve);
 			holder.btnMenu = (Button) convertView.findViewById(R.id.b_menu);
-			holder.btnorder = (Button) convertView.findViewById(R.id.b_online_order);
+			holder.btnorder = (Button) convertView
+					.findViewById(R.id.b_online_order);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		Store store = storeList.get(position);
-		Log.e("url", "image url for id " + store.getId() + " = "
-				+ ((store.getBackgroundImageUrl() == null) ? "null" : store.getBackgroundImageUrl()));
+		Log.e("url",
+				"image url for id "
+						+ store.getId()
+						+ " = "
+						+ ((store.getBackgroundImageUrl() == null) ? "null"
+								: store.getBackgroundImageUrl()));
 		imageLoader.DisplayImage(store.getBackgroundImageUrl(), holder.ivPhoto);
 		// downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
 
@@ -129,7 +141,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 				} else if (savedId == -1) {
 					simpleAlert(mContext, "You have no orders.");
 				} else
-					alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
+					alert(mContext,
+							"Already have saved order from other restaurant.Delete all orders?");
 
 			}
 		});
@@ -156,7 +169,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	 * }
 	 */
 	private void alert(final Context context, String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder bld = new AlertDialog.Builder(context,
+				AlertDialog.THEME_HOLO_LIGHT);
 		// bld.setTitle(context.getResources().getText(R.string.app_name));
 		bld.setTitle(R.string.app_name);
 		bld.setMessage(message);
@@ -167,7 +181,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			public void onClick(DialogInterface dialog, int which) {
 
 				// deleting all orders
-				OpenHelper helper = new DaoMaster.DevOpenHelper(mContext, "asaan-db", null);
+				OpenHelper helper = new DaoMaster.DevOpenHelper(mContext,
+						"asaan-db", null);
 				SQLiteDatabase db = helper.getWritableDatabase();
 				DaoMaster daoMaster = new DaoMaster(db);
 				DaoSession daoSession = daoMaster.newSession();
@@ -192,7 +207,8 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	}
 
 	private void simpleAlert(final Context context, String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder bld = new AlertDialog.Builder(context,
+				AlertDialog.THEME_HOLO_LIGHT);
 		// bld.setTitle(context.getResources().getText(R.string.app_name));
 		bld.setTitle(R.string.app_name);
 		bld.setMessage(message);

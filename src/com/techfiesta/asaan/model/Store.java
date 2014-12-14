@@ -6,13 +6,13 @@ import com.parse.ParseObject;
 public class Store {
 	ParseObject storeObject;
 	ParseFile storeImage;
-	
+
 	public Store(ParseObject storeObject, ParseFile storeImage) {
 		super();
 		this.storeObject = storeObject;
 		this.storeImage = storeImage;
 	}
-	
+
 	public ParseObject getStoreObject() {
 		return storeObject;
 	}
@@ -28,9 +28,5 @@ public class Store {
 	public void setStoreImage(ParseFile storeImage) {
 		this.storeImage = storeImage;
 	}
-
-	
-	
-	
 
 }

@@ -25,20 +25,21 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  */
 public class StoreendpointScopes {
 
-  /** View your email address. */
-  public static final String USERINFO_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
+	/** View your email address. */
+	public static final String USERINFO_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
 
-  /**
-   * Returns an unmodifiable set that contains all scopes declared by this class.
-   *
-   * @since 1.16
-   */
-  public static java.util.Set<String> all() {
-    java.util.Set<String> set = new java.util.HashSet<String>();
-    set.add(USERINFO_EMAIL);
-    return java.util.Collections.unmodifiableSet(set);
-  }
+	/**
+	 * Returns an unmodifiable set that contains all scopes declared by this
+	 * class.
+	 *
+	 * @since 1.16
+	 */
+	public static java.util.Set<String> all() {
+		java.util.Set<String> set = new java.util.HashSet<String>();
+		set.add(USERINFO_EMAIL);
+		return java.util.Collections.unmodifiableSet(set);
+	}
 
-  private StoreendpointScopes() {
-  }
+	private StoreendpointScopes() {
+	}
 }

@@ -47,8 +47,10 @@ public class MenuActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				menusAndMenuItems = SplashActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(storeId,
-						Constants.MENU_TYPE_DINE_IN, MAX_RESULT).execute();
+				menusAndMenuItems = SplashActivity.mStoreendpoint
+						.getStoreMenuHierarchyAndItems(storeId,
+								Constants.MENU_TYPE_DINE_IN, MAX_RESULT)
+						.execute();
 				Log.e("menu_size", "" + menusAndMenuItems.size());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -59,14 +61,18 @@ public class MenuActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			for (StoreMenuHierarchy smh : menusAndMenuItems.getMenusAndSubmenus()) {
+			for (StoreMenuHierarchy smh : menusAndMenuItems
+					.getMenusAndSubmenus()) {
 				if (smh.getLevel() == 0) // Menu Level
 				{
 					Bundle bundle = new Bundle();
-					bundle.putLong(Constants.BUNDLE_KEY_MENU_ID, smh.getMenuPOSId());
+					bundle.putLong(Constants.BUNDLE_KEY_MENU_ID,
+							smh.getMenuPOSId());
 					MyTabListener<MenuItemsFragment> tabListener = new MyTabListener<MenuItemsFragment>(
-							MenuActivity.this, TAG_TAB_PREFIX + smh.getName(), MenuItemsFragment.class, bundle);
-					Tab tab = actionBar.newTab().setText(smh.getName()).setTabListener(tabListener);
+							MenuActivity.this, TAG_TAB_PREFIX + smh.getName(),
+							MenuItemsFragment.class, bundle);
+					Tab tab = actionBar.newTab().setText(smh.getName())
+							.setTabListener(tabListener);
 					actionBar.addTab(tab);
 				}
 			}

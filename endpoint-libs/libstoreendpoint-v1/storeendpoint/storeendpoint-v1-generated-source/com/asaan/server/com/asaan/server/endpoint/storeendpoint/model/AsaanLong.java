@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for AsaanLong.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,35 +34,37 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 @SuppressWarnings("javadoc")
 public final class AsaanLong extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long longValue;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long longValue;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getLongValue() {
-    return longValue;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getLongValue() {
+		return longValue;
+	}
 
-  /**
-   * @param longValue longValue or {@code null} for none
-   */
-  public AsaanLong setLongValue(java.lang.Long longValue) {
-    this.longValue = longValue;
-    return this;
-  }
+	/**
+	 * @param longValue
+	 *            longValue or {@code null} for none
+	 */
+	public AsaanLong setLongValue(java.lang.Long longValue) {
+		this.longValue = longValue;
+		return this;
+	}
 
-  @Override
-  public AsaanLong set(String fieldName, Object value) {
-    return (AsaanLong) super.set(fieldName, value);
-  }
+	@Override
+	public AsaanLong set(String fieldName, Object value) {
+		return (AsaanLong) super.set(fieldName, value);
+	}
 
-  @Override
-  public AsaanLong clone() {
-    return (AsaanLong) super.clone();
-  }
+	@Override
+	public AsaanLong clone() {
+		return (AsaanLong) super.clone();
+	}
 
 }

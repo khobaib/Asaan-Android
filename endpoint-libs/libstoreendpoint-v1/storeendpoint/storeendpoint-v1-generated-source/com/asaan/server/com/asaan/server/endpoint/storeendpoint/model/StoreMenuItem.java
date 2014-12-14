@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StoreMenuItem.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,560 +34,590 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 @SuppressWarnings("javadoc")
 public final class StoreMenuItem extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean active;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String allergyInfo;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer calories;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long createdDate;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean glutenFree;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean halal;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean hasModifiers;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer heatIndex;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long id;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String imageUrl;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean kosher;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer level;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String longDescription;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer menuItemPOSId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer menuItemPosition;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String menuName;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer menuPOSId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long modifiedDate;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer price;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String shortDescription;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long storeId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer subMenuPOSId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer tax;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String thumbnailUrl;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean vegan;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Boolean vegetarian;
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getActive() {
-    return active;
-  }
-
-  /**
-   * @param active active or {@code null} for none
-   */
-  public StoreMenuItem setActive(java.lang.Boolean active) {
-    this.active = active;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getAllergyInfo() {
-    return allergyInfo;
-  }
-
-  /**
-   * @param allergyInfo allergyInfo or {@code null} for none
-   */
-  public StoreMenuItem setAllergyInfo(java.lang.String allergyInfo) {
-    this.allergyInfo = allergyInfo;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getCalories() {
-    return calories;
-  }
-
-  /**
-   * @param calories calories or {@code null} for none
-   */
-  public StoreMenuItem setCalories(java.lang.Integer calories) {
-    this.calories = calories;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getCreatedDate() {
-    return createdDate;
-  }
-
-  /**
-   * @param createdDate createdDate or {@code null} for none
-   */
-  public StoreMenuItem setCreatedDate(java.lang.Long createdDate) {
-    this.createdDate = createdDate;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getGlutenFree() {
-    return glutenFree;
-  }
-
-  /**
-   * @param glutenFree glutenFree or {@code null} for none
-   */
-  public StoreMenuItem setGlutenFree(java.lang.Boolean glutenFree) {
-    this.glutenFree = glutenFree;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getHalal() {
-    return halal;
-  }
-
-  /**
-   * @param halal halal or {@code null} for none
-   */
-  public StoreMenuItem setHalal(java.lang.Boolean halal) {
-    this.halal = halal;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getHasModifiers() {
-    return hasModifiers;
-  }
-
-  /**
-   * @param hasModifiers hasModifiers or {@code null} for none
-   */
-  public StoreMenuItem setHasModifiers(java.lang.Boolean hasModifiers) {
-    this.hasModifiers = hasModifiers;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getHeatIndex() {
-    return heatIndex;
-  }
-
-  /**
-   * @param heatIndex heatIndex or {@code null} for none
-   */
-  public StoreMenuItem setHeatIndex(java.lang.Integer heatIndex) {
-    this.heatIndex = heatIndex;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getId() {
-    return id;
-  }
-
-  /**
-   * @param id id or {@code null} for none
-   */
-  public StoreMenuItem setId(java.lang.Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getImageUrl() {
-    return imageUrl;
-  }
-
-  /**
-   * @param imageUrl imageUrl or {@code null} for none
-   */
-  public StoreMenuItem setImageUrl(java.lang.String imageUrl) {
-    this.imageUrl = imageUrl;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getKosher() {
-    return kosher;
-  }
-
-  /**
-   * @param kosher kosher or {@code null} for none
-   */
-  public StoreMenuItem setKosher(java.lang.Boolean kosher) {
-    this.kosher = kosher;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getLevel() {
-    return level;
-  }
-
-  /**
-   * @param level level or {@code null} for none
-   */
-  public StoreMenuItem setLevel(java.lang.Integer level) {
-    this.level = level;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getLongDescription() {
-    return longDescription;
-  }
-
-  /**
-   * @param longDescription longDescription or {@code null} for none
-   */
-  public StoreMenuItem setLongDescription(java.lang.String longDescription) {
-    this.longDescription = longDescription;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getMenuItemPOSId() {
-    return menuItemPOSId;
-  }
-
-  /**
-   * @param menuItemPOSId menuItemPOSId or {@code null} for none
-   */
-  public StoreMenuItem setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
-    this.menuItemPOSId = menuItemPOSId;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getMenuItemPosition() {
-    return menuItemPosition;
-  }
-
-  /**
-   * @param menuItemPosition menuItemPosition or {@code null} for none
-   */
-  public StoreMenuItem setMenuItemPosition(java.lang.Integer menuItemPosition) {
-    this.menuItemPosition = menuItemPosition;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getMenuName() {
-    return menuName;
-  }
-
-  /**
-   * @param menuName menuName or {@code null} for none
-   */
-  public StoreMenuItem setMenuName(java.lang.String menuName) {
-    this.menuName = menuName;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getMenuPOSId() {
-    return menuPOSId;
-  }
-
-  /**
-   * @param menuPOSId menuPOSId or {@code null} for none
-   */
-  public StoreMenuItem setMenuPOSId(java.lang.Integer menuPOSId) {
-    this.menuPOSId = menuPOSId;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getModifiedDate() {
-    return modifiedDate;
-  }
-
-  /**
-   * @param modifiedDate modifiedDate or {@code null} for none
-   */
-  public StoreMenuItem setModifiedDate(java.lang.Long modifiedDate) {
-    this.modifiedDate = modifiedDate;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getPrice() {
-    return price;
-  }
-
-  /**
-   * @param price price or {@code null} for none
-   */
-  public StoreMenuItem setPrice(java.lang.Integer price) {
-    this.price = price;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getShortDescription() {
-    return shortDescription;
-  }
-
-  /**
-   * @param shortDescription shortDescription or {@code null} for none
-   */
-  public StoreMenuItem setShortDescription(java.lang.String shortDescription) {
-    this.shortDescription = shortDescription;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getStoreId() {
-    return storeId;
-  }
-
-  /**
-   * @param storeId storeId or {@code null} for none
-   */
-  public StoreMenuItem setStoreId(java.lang.Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getSubMenuPOSId() {
-    return subMenuPOSId;
-  }
-
-  /**
-   * @param subMenuPOSId subMenuPOSId or {@code null} for none
-   */
-  public StoreMenuItem setSubMenuPOSId(java.lang.Integer subMenuPOSId) {
-    this.subMenuPOSId = subMenuPOSId;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getTax() {
-    return tax;
-  }
-
-  /**
-   * @param tax tax or {@code null} for none
-   */
-  public StoreMenuItem setTax(java.lang.Integer tax) {
-    this.tax = tax;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getThumbnailUrl() {
-    return thumbnailUrl;
-  }
-
-  /**
-   * @param thumbnailUrl thumbnailUrl or {@code null} for none
-   */
-  public StoreMenuItem setThumbnailUrl(java.lang.String thumbnailUrl) {
-    this.thumbnailUrl = thumbnailUrl;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getVegan() {
-    return vegan;
-  }
-
-  /**
-   * @param vegan vegan or {@code null} for none
-   */
-  public StoreMenuItem setVegan(java.lang.Boolean vegan) {
-    this.vegan = vegan;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Boolean getVegetarian() {
-    return vegetarian;
-  }
-
-  /**
-   * @param vegetarian vegetarian or {@code null} for none
-   */
-  public StoreMenuItem setVegetarian(java.lang.Boolean vegetarian) {
-    this.vegetarian = vegetarian;
-    return this;
-  }
-
-  @Override
-  public StoreMenuItem set(String fieldName, Object value) {
-    return (StoreMenuItem) super.set(fieldName, value);
-  }
-
-  @Override
-  public StoreMenuItem clone() {
-    return (StoreMenuItem) super.clone();
-  }
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean active;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String allergyInfo;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer calories;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long createdDate;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean glutenFree;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean halal;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean hasModifiers;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer heatIndex;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long id;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String imageUrl;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean kosher;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer level;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String longDescription;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer menuItemPOSId;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer menuItemPosition;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String menuName;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer menuPOSId;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long modifiedDate;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer price;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String shortDescription;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long storeId;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer subMenuPOSId;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer tax;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String thumbnailUrl;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean vegan;
+
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Boolean vegetarian;
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getActive() {
+		return active;
+	}
+
+	/**
+	 * @param active
+	 *            active or {@code null} for none
+	 */
+	public StoreMenuItem setActive(java.lang.Boolean active) {
+		this.active = active;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getAllergyInfo() {
+		return allergyInfo;
+	}
+
+	/**
+	 * @param allergyInfo
+	 *            allergyInfo or {@code null} for none
+	 */
+	public StoreMenuItem setAllergyInfo(java.lang.String allergyInfo) {
+		this.allergyInfo = allergyInfo;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getCalories() {
+		return calories;
+	}
+
+	/**
+	 * @param calories
+	 *            calories or {@code null} for none
+	 */
+	public StoreMenuItem setCalories(java.lang.Integer calories) {
+		this.calories = calories;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            createdDate or {@code null} for none
+	 */
+	public StoreMenuItem setCreatedDate(java.lang.Long createdDate) {
+		this.createdDate = createdDate;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getGlutenFree() {
+		return glutenFree;
+	}
+
+	/**
+	 * @param glutenFree
+	 *            glutenFree or {@code null} for none
+	 */
+	public StoreMenuItem setGlutenFree(java.lang.Boolean glutenFree) {
+		this.glutenFree = glutenFree;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getHalal() {
+		return halal;
+	}
+
+	/**
+	 * @param halal
+	 *            halal or {@code null} for none
+	 */
+	public StoreMenuItem setHalal(java.lang.Boolean halal) {
+		this.halal = halal;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getHasModifiers() {
+		return hasModifiers;
+	}
+
+	/**
+	 * @param hasModifiers
+	 *            hasModifiers or {@code null} for none
+	 */
+	public StoreMenuItem setHasModifiers(java.lang.Boolean hasModifiers) {
+		this.hasModifiers = hasModifiers;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getHeatIndex() {
+		return heatIndex;
+	}
+
+	/**
+	 * @param heatIndex
+	 *            heatIndex or {@code null} for none
+	 */
+	public StoreMenuItem setHeatIndex(java.lang.Integer heatIndex) {
+		this.heatIndex = heatIndex;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            id or {@code null} for none
+	 */
+	public StoreMenuItem setId(java.lang.Long id) {
+		this.id = id;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl
+	 *            imageUrl or {@code null} for none
+	 */
+	public StoreMenuItem setImageUrl(java.lang.String imageUrl) {
+		this.imageUrl = imageUrl;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getKosher() {
+		return kosher;
+	}
+
+	/**
+	 * @param kosher
+	 *            kosher or {@code null} for none
+	 */
+	public StoreMenuItem setKosher(java.lang.Boolean kosher) {
+		this.kosher = kosher;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getLevel() {
+		return level;
+	}
+
+	/**
+	 * @param level
+	 *            level or {@code null} for none
+	 */
+	public StoreMenuItem setLevel(java.lang.Integer level) {
+		this.level = level;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getLongDescription() {
+		return longDescription;
+	}
+
+	/**
+	 * @param longDescription
+	 *            longDescription or {@code null} for none
+	 */
+	public StoreMenuItem setLongDescription(java.lang.String longDescription) {
+		this.longDescription = longDescription;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getMenuItemPOSId() {
+		return menuItemPOSId;
+	}
+
+	/**
+	 * @param menuItemPOSId
+	 *            menuItemPOSId or {@code null} for none
+	 */
+	public StoreMenuItem setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
+		this.menuItemPOSId = menuItemPOSId;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getMenuItemPosition() {
+		return menuItemPosition;
+	}
+
+	/**
+	 * @param menuItemPosition
+	 *            menuItemPosition or {@code null} for none
+	 */
+	public StoreMenuItem setMenuItemPosition(java.lang.Integer menuItemPosition) {
+		this.menuItemPosition = menuItemPosition;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getMenuName() {
+		return menuName;
+	}
+
+	/**
+	 * @param menuName
+	 *            menuName or {@code null} for none
+	 */
+	public StoreMenuItem setMenuName(java.lang.String menuName) {
+		this.menuName = menuName;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getMenuPOSId() {
+		return menuPOSId;
+	}
+
+	/**
+	 * @param menuPOSId
+	 *            menuPOSId or {@code null} for none
+	 */
+	public StoreMenuItem setMenuPOSId(java.lang.Integer menuPOSId) {
+		this.menuPOSId = menuPOSId;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getModifiedDate() {
+		return modifiedDate;
+	}
+
+	/**
+	 * @param modifiedDate
+	 *            modifiedDate or {@code null} for none
+	 */
+	public StoreMenuItem setModifiedDate(java.lang.Long modifiedDate) {
+		this.modifiedDate = modifiedDate;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getPrice() {
+		return price;
+	}
+
+	/**
+	 * @param price
+	 *            price or {@code null} for none
+	 */
+	public StoreMenuItem setPrice(java.lang.Integer price) {
+		this.price = price;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getShortDescription() {
+		return shortDescription;
+	}
+
+	/**
+	 * @param shortDescription
+	 *            shortDescription or {@code null} for none
+	 */
+	public StoreMenuItem setShortDescription(java.lang.String shortDescription) {
+		this.shortDescription = shortDescription;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getStoreId() {
+		return storeId;
+	}
+
+	/**
+	 * @param storeId
+	 *            storeId or {@code null} for none
+	 */
+	public StoreMenuItem setStoreId(java.lang.Long storeId) {
+		this.storeId = storeId;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getSubMenuPOSId() {
+		return subMenuPOSId;
+	}
+
+	/**
+	 * @param subMenuPOSId
+	 *            subMenuPOSId or {@code null} for none
+	 */
+	public StoreMenuItem setSubMenuPOSId(java.lang.Integer subMenuPOSId) {
+		this.subMenuPOSId = subMenuPOSId;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getTax() {
+		return tax;
+	}
+
+	/**
+	 * @param tax
+	 *            tax or {@code null} for none
+	 */
+	public StoreMenuItem setTax(java.lang.Integer tax) {
+		this.tax = tax;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+
+	/**
+	 * @param thumbnailUrl
+	 *            thumbnailUrl or {@code null} for none
+	 */
+	public StoreMenuItem setThumbnailUrl(java.lang.String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getVegan() {
+		return vegan;
+	}
+
+	/**
+	 * @param vegan
+	 *            vegan or {@code null} for none
+	 */
+	public StoreMenuItem setVegan(java.lang.Boolean vegan) {
+		this.vegan = vegan;
+		return this;
+	}
+
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Boolean getVegetarian() {
+		return vegetarian;
+	}
+
+	/**
+	 * @param vegetarian
+	 *            vegetarian or {@code null} for none
+	 */
+	public StoreMenuItem setVegetarian(java.lang.Boolean vegetarian) {
+		this.vegetarian = vegetarian;
+		return this;
+	}
+
+	@Override
+	public StoreMenuItem set(String fieldName, Object value) {
+		return (StoreMenuItem) super.set(fieldName, value);
+	}
+
+	@Override
+	public StoreMenuItem clone() {
+		return (StoreMenuItem) super.clone();
+	}
 
 }

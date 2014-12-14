@@ -7,8 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-public class MyTabListener<T extends Fragment> implements TabListener
-{
+public class MyTabListener<T extends Fragment> implements TabListener {
 	private final Activity mActivity;
 	private final String mTag;
 	private final Class<T> mClass; // Fragment class
@@ -17,8 +16,7 @@ public class MyTabListener<T extends Fragment> implements TabListener
 	private Fragment mFragment; // current fragment
 
 	public MyTabListener(Activity activity, String tag, Class<T> clz,
-			Bundle bundle) 
-	{
+			Bundle bundle) {
 		mActivity = activity;
 		mTag = tag;
 		mClass = clz;
@@ -26,12 +24,10 @@ public class MyTabListener<T extends Fragment> implements TabListener
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft)
-	{
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		final Fragment preInitializedFragment = mActivity.getFragmentManager()
 				.findFragmentByTag(mTag);
-		if (preInitializedFragment == null)
-		{
+		if (preInitializedFragment == null) {
 			mFragment = Fragment.instantiate(mActivity, mClass.getName(),
 					mBundle);
 			ft.add(android.R.id.content, mFragment, mTag);
@@ -40,8 +36,7 @@ public class MyTabListener<T extends Fragment> implements TabListener
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft)
-	{
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		final Fragment preInitializedFragment = mActivity.getFragmentManager()
 				.findFragmentByTag(mTag);
 
@@ -52,8 +47,7 @@ public class MyTabListener<T extends Fragment> implements TabListener
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft)
-	{
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// User selected the already selected tab. Usually do nothing.
 	}
 }

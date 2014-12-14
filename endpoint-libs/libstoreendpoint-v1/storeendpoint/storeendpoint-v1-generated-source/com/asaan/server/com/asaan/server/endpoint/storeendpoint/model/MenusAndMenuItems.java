@@ -21,72 +21,82 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for MenusAndMenuItems.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenusAndMenuItems extends com.google.api.client.json.GenericJson {
+public final class MenusAndMenuItems extends
+		com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItem> menuItems;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<StoreMenuItem> menuItems;
 
-  static {
-    // hack to force ProGuard to consider StoreMenuItem used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(StoreMenuItem.class);
-  }
+	static {
+		// hack to force ProGuard to consider StoreMenuItem used, since
+		// otherwise it would be stripped out
+		// see
+		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
+		com.google.api.client.util.Data.nullOf(StoreMenuItem.class);
+	}
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuHierarchy> menusAndSubmenus;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<StoreMenuHierarchy> menusAndSubmenus;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<StoreMenuItem> getMenuItems() {
-    return menuItems;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<StoreMenuItem> getMenuItems() {
+		return menuItems;
+	}
 
-  /**
-   * @param menuItems menuItems or {@code null} for none
-   */
-  public MenusAndMenuItems setMenuItems(java.util.List<StoreMenuItem> menuItems) {
-    this.menuItems = menuItems;
-    return this;
-  }
+	/**
+	 * @param menuItems
+	 *            menuItems or {@code null} for none
+	 */
+	public MenusAndMenuItems setMenuItems(
+			java.util.List<StoreMenuItem> menuItems) {
+		this.menuItems = menuItems;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<StoreMenuHierarchy> getMenusAndSubmenus() {
-    return menusAndSubmenus;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<StoreMenuHierarchy> getMenusAndSubmenus() {
+		return menusAndSubmenus;
+	}
 
-  /**
-   * @param menusAndSubmenus menusAndSubmenus or {@code null} for none
-   */
-  public MenusAndMenuItems setMenusAndSubmenus(java.util.List<StoreMenuHierarchy> menusAndSubmenus) {
-    this.menusAndSubmenus = menusAndSubmenus;
-    return this;
-  }
+	/**
+	 * @param menusAndSubmenus
+	 *            menusAndSubmenus or {@code null} for none
+	 */
+	public MenusAndMenuItems setMenusAndSubmenus(
+			java.util.List<StoreMenuHierarchy> menusAndSubmenus) {
+		this.menusAndSubmenus = menusAndSubmenus;
+		return this;
+	}
 
-  @Override
-  public MenusAndMenuItems set(String fieldName, Object value) {
-    return (MenusAndMenuItems) super.set(fieldName, value);
-  }
+	@Override
+	public MenusAndMenuItems set(String fieldName, Object value) {
+		return (MenusAndMenuItems) super.set(fieldName, value);
+	}
 
-  @Override
-  public MenusAndMenuItems clone() {
-    return (MenusAndMenuItems) super.clone();
-  }
+	@Override
+	public MenusAndMenuItems clone() {
+		return (MenusAndMenuItems) super.clone();
+	}
 
 }

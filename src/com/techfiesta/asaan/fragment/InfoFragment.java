@@ -17,7 +17,8 @@ public class InfoFragment extends Fragment {
 	private TextView tvAddress, tvPhone, tvName;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_info_2, container, false);
 		tvAddress = (TextView) v.findViewById(R.id.tv_address);
 		tvPhone = (TextView) v.findViewById(R.id.tv_phone);
@@ -33,9 +34,11 @@ public class InfoFragment extends Fragment {
 	public void onDestroyView() {
 		if (!StoreDetailsActivityNew.isBackButtonPressed) {
 			try {
-				MapFragment fragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
+				MapFragment fragment = (MapFragment) getActivity()
+						.getFragmentManager().findFragmentById(R.id.map);
 				if (fragment != null)
-					getFragmentManager().beginTransaction().remove(fragment).commit();
+					getFragmentManager().beginTransaction().remove(fragment)
+							.commit();
 
 			} catch (IllegalStateException e) {
 				// handle this situation because you are necessary will get

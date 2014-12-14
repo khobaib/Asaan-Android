@@ -21,45 +21,50 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StoreCollection.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreCollection extends com.google.api.client.json.GenericJson {
+public final class StoreCollection extends
+		com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<Store> items;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<Store> items;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<Store> getItems() {
-    return items;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<Store> getItems() {
+		return items;
+	}
 
-  /**
-   * @param items items or {@code null} for none
-   */
-  public StoreCollection setItems(java.util.List<Store> items) {
-    this.items = items;
-    return this;
-  }
+	/**
+	 * @param items
+	 *            items or {@code null} for none
+	 */
+	public StoreCollection setItems(java.util.List<Store> items) {
+		this.items = items;
+		return this;
+	}
 
-  @Override
-  public StoreCollection set(String fieldName, Object value) {
-    return (StoreCollection) super.set(fieldName, value);
-  }
+	@Override
+	public StoreCollection set(String fieldName, Object value) {
+		return (StoreCollection) super.set(fieldName, value);
+	}
 
-  @Override
-  public StoreCollection clone() {
-    return (StoreCollection) super.clone();
-  }
+	@Override
+	public StoreCollection clone() {
+		return (StoreCollection) super.clone();
+	}
 
 }

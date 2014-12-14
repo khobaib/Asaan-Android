@@ -15,11 +15,11 @@ public class Constants {
 	public static final Long ROW_TYPE_MENUITEM = 2L;
 
 	public static final int MENU_TYPE_DINE_IN = 0; // 0 = dine-in, 1 =
-														// carry-out
-	//public static final long MENU_TYPE_CARRYOUT_DELIVERY = 1L;
+													// carry-out
+	// public static final long MENU_TYPE_CARRYOUT_DELIVERY = 1L;
 	public static int ORDER_TYPE_DELIVERY = 1;
 	public static int ORDER_TYPE_CARRYOUT = 2;// 0 = dine-in, 1
-																// = carry-out
+												// = carry-out
 
 	public static final long STORE_ID = 1L;
 

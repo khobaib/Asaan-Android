@@ -40,17 +40,20 @@ public class MenuModifierActivity extends ListActivity {
 		Button btnSave = (Button) this.findViewById(R.id.btn_save);
 
 		Bundle bundle = this.getIntent().getExtras();
-		selectedModGrpId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
-		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(
-				PlaceOrderActivity.SELECTED_MODIFIERS);
+		selectedModGrpId = bundle
+				.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
+		ArrayList<Integer> modOrigSelections = this
+				.getIntent()
+				.getIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS);
 
 		modifiersWithSelection = new ArrayList<ModifierWithSelection>();
 		ArrayList<String> modTitles = new ArrayList<String>();
-		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups().get(
-				(int) selectedModGrpId);
+		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups
+				.getModifierGroups().get((int) selectedModGrpId);
 		selectedModGrpMax = mg.getModifierGroupMaximum();
 		selectedModGrpMin = mg.getModifierGroupMinimum();
-		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
+		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups
+				.getModifiers()) {
 			if (m.getModifierGroupPOSId().longValue() == selectedModGrpId) {
 				// selectedModGrpMax = m.getModifierGroupMaximum();
 				// selectedModGrpMin = m.getModifierGroupMinimum();
@@ -59,14 +62,17 @@ public class MenuModifierActivity extends ListActivity {
 				modifierWithSelection.m = m;
 				String title;
 				if (m.getPrice() > 0)
-					title = m.getShortDescription() + " (" + AsaanUtility.formatCentsToCurrency(m.getPrice()) + ")";
+					title = m.getShortDescription() + " ("
+							+ AsaanUtility.formatCentsToCurrency(m.getPrice())
+							+ ")";
 				else
 					title = m.getShortDescription();
 				modifierWithSelection.isSelected = false;
 				if (modOrigSelections == null)
 					continue;
 				for (Integer selectedModPOSId : modOrigSelections)
-					if (selectedModPOSId.longValue() == m.getModifierPOSId().longValue()) {
+					if (selectedModPOSId.longValue() == m.getModifierPOSId()
+							.longValue()) {
 						modifierWithSelection.isSelected = true;
 						break;
 					}
@@ -83,8 +89,8 @@ public class MenuModifierActivity extends ListActivity {
 		else
 			listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-		ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked,
-				modTitles);
+		ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_checked, modTitles);
 		setListAdapter(myAdapter);
 
 		int i = 0;
@@ -97,22 +103,27 @@ public class MenuModifierActivity extends ListActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 
 				if (listView.getChoiceMode() == ListView.CHOICE_MODE_SINGLE) {
 					int i = 0;
 					for (ModifierWithSelection modifierWithSelection : modifiersWithSelection) {
-						if (i != position && modifierWithSelection.isSelected == true)
+						if (i != position
+								&& modifierWithSelection.isSelected == true)
 							modifierWithSelection.isSelected = false;
-						if (i == position && modifierWithSelection.isSelected == true)
+						if (i == position
+								&& modifierWithSelection.isSelected == true)
 							modifierWithSelection.isSelected = false;
-						if (i == position && modifierWithSelection.isSelected == false)
+						if (i == position
+								&& modifierWithSelection.isSelected == false)
 							modifierWithSelection.isSelected = true;
 						i++;
 					}
 				} else {
 					CheckedTextView ctv = (CheckedTextView) view;
-					ModifierWithSelection modifierWithSelection = modifiersWithSelection.get(position);
+					ModifierWithSelection modifierWithSelection = modifiersWithSelection
+							.get(position);
 					if (ctv.isChecked() == true)
 						modifierWithSelection.isSelected = true;
 					else
@@ -129,14 +140,18 @@ public class MenuModifierActivity extends ListActivity {
 					if (modifierWithSelection.isSelected == true)
 						selCnt++;
 				if (selectedModGrpMax > 0 && selectedModGrpMax < selCnt) {
-					Toast.makeText(getApplication(), "Please select only " + selectedModGrpMax + " options",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(
+							getApplication(),
+							"Please select only " + selectedModGrpMax
+									+ " options", Toast.LENGTH_SHORT).show();
 					return;
 				}
 
 				if (selectedModGrpMin > 0 && selectedModGrpMin > selCnt) {
-					Toast.makeText(getApplication(), "Please select at least " + selectedModGrpMin + " options",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(
+							getApplication(),
+							"Please select at least " + selectedModGrpMin
+									+ " options", Toast.LENGTH_SHORT).show();
 					return;
 				}
 
@@ -152,11 +167,16 @@ public class MenuModifierActivity extends ListActivity {
 					if (m.getPrice() > 0) {
 						price += m.getPrice();
 						if (strDesc.contentEquals(" "))
-							strDesc = m.getLongDescription() + " (" + AsaanUtility.formatCentsToCurrency(m.getPrice())
-									+ ")";
+							strDesc = m.getLongDescription()
+									+ " ("
+									+ AsaanUtility.formatCentsToCurrency(m
+											.getPrice()) + ")";
 						else
-							strDesc += ", " + m.getLongDescription() + " ("
-									+ AsaanUtility.formatCentsToCurrency(m.getPrice()) + ")";
+							strDesc += ", "
+									+ m.getLongDescription()
+									+ " ("
+									+ AsaanUtility.formatCentsToCurrency(m
+											.getPrice()) + ")";
 
 					} else {
 						if (strDesc.contentEquals(" "))
@@ -168,9 +188,12 @@ public class MenuModifierActivity extends ListActivity {
 
 				Intent intent = new Intent();
 
-				intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, finalSelections);
-				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_DESC, strDesc);
-				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_PRICE, price);
+				intent.putIntegerArrayListExtra(
+						PlaceOrderActivity.SELECTED_MODIFIERS, finalSelections);
+				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_DESC,
+						strDesc);
+				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_PRICE,
+						price);
 				setResult(RESULT_OK, intent);
 				finish();
 			}

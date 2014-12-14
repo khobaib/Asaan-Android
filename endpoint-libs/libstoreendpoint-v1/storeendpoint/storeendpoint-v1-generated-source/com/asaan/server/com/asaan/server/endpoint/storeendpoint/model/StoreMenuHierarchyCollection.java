@@ -21,51 +21,59 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StoreMenuHierarchyCollection.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuHierarchyCollection extends com.google.api.client.json.GenericJson {
+public final class StoreMenuHierarchyCollection extends
+		com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuHierarchy> items;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<StoreMenuHierarchy> items;
 
-  static {
-    // hack to force ProGuard to consider StoreMenuHierarchy used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(StoreMenuHierarchy.class);
-  }
+	static {
+		// hack to force ProGuard to consider StoreMenuHierarchy used, since
+		// otherwise it would be stripped out
+		// see
+		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
+		com.google.api.client.util.Data.nullOf(StoreMenuHierarchy.class);
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<StoreMenuHierarchy> getItems() {
-    return items;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<StoreMenuHierarchy> getItems() {
+		return items;
+	}
 
-  /**
-   * @param items items or {@code null} for none
-   */
-  public StoreMenuHierarchyCollection setItems(java.util.List<StoreMenuHierarchy> items) {
-    this.items = items;
-    return this;
-  }
+	/**
+	 * @param items
+	 *            items or {@code null} for none
+	 */
+	public StoreMenuHierarchyCollection setItems(
+			java.util.List<StoreMenuHierarchy> items) {
+		this.items = items;
+		return this;
+	}
 
-  @Override
-  public StoreMenuHierarchyCollection set(String fieldName, Object value) {
-    return (StoreMenuHierarchyCollection) super.set(fieldName, value);
-  }
+	@Override
+	public StoreMenuHierarchyCollection set(String fieldName, Object value) {
+		return (StoreMenuHierarchyCollection) super.set(fieldName, value);
+	}
 
-  @Override
-  public StoreMenuHierarchyCollection clone() {
-    return (StoreMenuHierarchyCollection) super.clone();
-  }
+	@Override
+	public StoreMenuHierarchyCollection clone() {
+		return (StoreMenuHierarchyCollection) super.clone();
+	}
 
 }

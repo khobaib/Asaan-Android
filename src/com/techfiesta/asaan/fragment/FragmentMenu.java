@@ -10,9 +10,11 @@ import com.techfiesta.asaan.R;
 
 public class FragmentMenu extends Fragment {
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-		View v = inflater.inflate(R.layout.frag_restaurant_history, container, false);
+		View v = inflater.inflate(R.layout.frag_restaurant_history, container,
+				false);
 		return v;
 	}
 

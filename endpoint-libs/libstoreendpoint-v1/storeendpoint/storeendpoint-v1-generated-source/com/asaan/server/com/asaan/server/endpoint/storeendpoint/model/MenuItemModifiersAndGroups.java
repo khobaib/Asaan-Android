@@ -21,78 +21,91 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for MenuItemModifiersAndGroups.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenuItemModifiersAndGroups extends com.google.api.client.json.GenericJson {
+public final class MenuItemModifiersAndGroups extends
+		com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifierGroup> modifierGroups;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<StoreMenuItemModifierGroup> modifierGroups;
 
-  static {
-    // hack to force ProGuard to consider StoreMenuItemModifierGroup used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(StoreMenuItemModifierGroup.class);
-  }
+	static {
+		// hack to force ProGuard to consider StoreMenuItemModifierGroup used,
+		// since otherwise it would be stripped out
+		// see
+		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
+		com.google.api.client.util.Data
+				.nullOf(StoreMenuItemModifierGroup.class);
+	}
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifier> modifiers;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<StoreMenuItemModifier> modifiers;
 
-  static {
-    // hack to force ProGuard to consider StoreMenuItemModifier used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(StoreMenuItemModifier.class);
-  }
+	static {
+		// hack to force ProGuard to consider StoreMenuItemModifier used, since
+		// otherwise it would be stripped out
+		// see
+		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
+		com.google.api.client.util.Data.nullOf(StoreMenuItemModifier.class);
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<StoreMenuItemModifierGroup> getModifierGroups() {
-    return modifierGroups;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<StoreMenuItemModifierGroup> getModifierGroups() {
+		return modifierGroups;
+	}
 
-  /**
-   * @param modifierGroups modifierGroups or {@code null} for none
-   */
-  public MenuItemModifiersAndGroups setModifierGroups(java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
-    this.modifierGroups = modifierGroups;
-    return this;
-  }
+	/**
+	 * @param modifierGroups
+	 *            modifierGroups or {@code null} for none
+	 */
+	public MenuItemModifiersAndGroups setModifierGroups(
+			java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
+		this.modifierGroups = modifierGroups;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<StoreMenuItemModifier> getModifiers() {
-    return modifiers;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<StoreMenuItemModifier> getModifiers() {
+		return modifiers;
+	}
 
-  /**
-   * @param modifiers modifiers or {@code null} for none
-   */
-  public MenuItemModifiersAndGroups setModifiers(java.util.List<StoreMenuItemModifier> modifiers) {
-    this.modifiers = modifiers;
-    return this;
-  }
+	/**
+	 * @param modifiers
+	 *            modifiers or {@code null} for none
+	 */
+	public MenuItemModifiersAndGroups setModifiers(
+			java.util.List<StoreMenuItemModifier> modifiers) {
+		this.modifiers = modifiers;
+		return this;
+	}
 
-  @Override
-  public MenuItemModifiersAndGroups set(String fieldName, Object value) {
-    return (MenuItemModifiersAndGroups) super.set(fieldName, value);
-  }
+	@Override
+	public MenuItemModifiersAndGroups set(String fieldName, Object value) {
+		return (MenuItemModifiersAndGroups) super.set(fieldName, value);
+	}
 
-  @Override
-  public MenuItemModifiersAndGroups clone() {
-    return (MenuItemModifiersAndGroups) super.clone();
-  }
+	@Override
+	public MenuItemModifiersAndGroups clone() {
+		return (MenuItemModifiersAndGroups) super.clone();
+	}
 
 }

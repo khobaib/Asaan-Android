@@ -16,38 +16,39 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 
-public class LoginActivity extends Activity{
-	
+public class LoginActivity extends Activity {
+
 	EditText userEmail;
 	EditText passWord;
 	Button Login;
 	ParseUser currentUser;
 	private ProgressDialog pDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		getActionBar().hide();
+		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		// getActionBar().hide();
 		setContentView(R.layout.activity_login);
-		
+
 		userEmail = (EditText) findViewById(R.id.et_email);
 		passWord = (EditText) findViewById(R.id.et_pass);
 		Login = (Button) findViewById(R.id.b_login);
-		
+
 		pDialog = new ProgressDialog(LoginActivity.this);
 		pDialog.setMessage("Logging in...");
-		
+
 		Login.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				LoginUser();
-				
+
 			}
 		});
 	}
-	
+
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
@@ -62,7 +63,8 @@ public class LoginActivity extends Activity{
 
 			@Override
 			public void done(ParseUser user, ParseException e) {
-				if(pDialog.isShowing()) pDialog.dismiss();
+				if (pDialog.isShowing())
+					pDialog.dismiss();
 				if (user != null) {
 
 					currentUser = ParseUser.getCurrentUser();

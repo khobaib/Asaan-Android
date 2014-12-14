@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StoreStats.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,224 +34,243 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 @SuppressWarnings("javadoc")
 public final class StoreStats extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long createdDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long createdDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer daysOfService;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer daysOfService;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long dislikes;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long dislikes;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long lastOrderPlacedDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long lastOrderPlacedDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long likes;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long likes;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long modifiedDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long modifiedDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long orders;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long orders;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long recommendations;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long recommendations;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long storeId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long storeId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long visits;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long visits;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getCreatedDate() {
-    return createdDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getCreatedDate() {
+		return createdDate;
+	}
 
-  /**
-   * @param createdDate createdDate or {@code null} for none
-   */
-  public StoreStats setCreatedDate(java.lang.Long createdDate) {
-    this.createdDate = createdDate;
-    return this;
-  }
+	/**
+	 * @param createdDate
+	 *            createdDate or {@code null} for none
+	 */
+	public StoreStats setCreatedDate(java.lang.Long createdDate) {
+		this.createdDate = createdDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getDaysOfService() {
-    return daysOfService;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getDaysOfService() {
+		return daysOfService;
+	}
 
-  /**
-   * @param daysOfService daysOfService or {@code null} for none
-   */
-  public StoreStats setDaysOfService(java.lang.Integer daysOfService) {
-    this.daysOfService = daysOfService;
-    return this;
-  }
+	/**
+	 * @param daysOfService
+	 *            daysOfService or {@code null} for none
+	 */
+	public StoreStats setDaysOfService(java.lang.Integer daysOfService) {
+		this.daysOfService = daysOfService;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getDislikes() {
-    return dislikes;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getDislikes() {
+		return dislikes;
+	}
 
-  /**
-   * @param dislikes dislikes or {@code null} for none
-   */
-  public StoreStats setDislikes(java.lang.Long dislikes) {
-    this.dislikes = dislikes;
-    return this;
-  }
+	/**
+	 * @param dislikes
+	 *            dislikes or {@code null} for none
+	 */
+	public StoreStats setDislikes(java.lang.Long dislikes) {
+		this.dislikes = dislikes;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getLastOrderPlacedDate() {
-    return lastOrderPlacedDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getLastOrderPlacedDate() {
+		return lastOrderPlacedDate;
+	}
 
-  /**
-   * @param lastOrderPlacedDate lastOrderPlacedDate or {@code null} for none
-   */
-  public StoreStats setLastOrderPlacedDate(java.lang.Long lastOrderPlacedDate) {
-    this.lastOrderPlacedDate = lastOrderPlacedDate;
-    return this;
-  }
+	/**
+	 * @param lastOrderPlacedDate
+	 *            lastOrderPlacedDate or {@code null} for none
+	 */
+	public StoreStats setLastOrderPlacedDate(java.lang.Long lastOrderPlacedDate) {
+		this.lastOrderPlacedDate = lastOrderPlacedDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getLikes() {
-    return likes;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getLikes() {
+		return likes;
+	}
 
-  /**
-   * @param likes likes or {@code null} for none
-   */
-  public StoreStats setLikes(java.lang.Long likes) {
-    this.likes = likes;
-    return this;
-  }
+	/**
+	 * @param likes
+	 *            likes or {@code null} for none
+	 */
+	public StoreStats setLikes(java.lang.Long likes) {
+		this.likes = likes;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getModifiedDate() {
-    return modifiedDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getModifiedDate() {
+		return modifiedDate;
+	}
 
-  /**
-   * @param modifiedDate modifiedDate or {@code null} for none
-   */
-  public StoreStats setModifiedDate(java.lang.Long modifiedDate) {
-    this.modifiedDate = modifiedDate;
-    return this;
-  }
+	/**
+	 * @param modifiedDate
+	 *            modifiedDate or {@code null} for none
+	 */
+	public StoreStats setModifiedDate(java.lang.Long modifiedDate) {
+		this.modifiedDate = modifiedDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getOrders() {
-    return orders;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getOrders() {
+		return orders;
+	}
 
-  /**
-   * @param orders orders or {@code null} for none
-   */
-  public StoreStats setOrders(java.lang.Long orders) {
-    this.orders = orders;
-    return this;
-  }
+	/**
+	 * @param orders
+	 *            orders or {@code null} for none
+	 */
+	public StoreStats setOrders(java.lang.Long orders) {
+		this.orders = orders;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getRecommendations() {
-    return recommendations;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getRecommendations() {
+		return recommendations;
+	}
 
-  /**
-   * @param recommendations recommendations or {@code null} for none
-   */
-  public StoreStats setRecommendations(java.lang.Long recommendations) {
-    this.recommendations = recommendations;
-    return this;
-  }
+	/**
+	 * @param recommendations
+	 *            recommendations or {@code null} for none
+	 */
+	public StoreStats setRecommendations(java.lang.Long recommendations) {
+		this.recommendations = recommendations;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getStoreId() {
-    return storeId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getStoreId() {
+		return storeId;
+	}
 
-  /**
-   * @param storeId storeId or {@code null} for none
-   */
-  public StoreStats setStoreId(java.lang.Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
+	/**
+	 * @param storeId
+	 *            storeId or {@code null} for none
+	 */
+	public StoreStats setStoreId(java.lang.Long storeId) {
+		this.storeId = storeId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getVisits() {
-    return visits;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getVisits() {
+		return visits;
+	}
 
-  /**
-   * @param visits visits or {@code null} for none
-   */
-  public StoreStats setVisits(java.lang.Long visits) {
-    this.visits = visits;
-    return this;
-  }
+	/**
+	 * @param visits
+	 *            visits or {@code null} for none
+	 */
+	public StoreStats setVisits(java.lang.Long visits) {
+		this.visits = visits;
+		return this;
+	}
 
-  @Override
-  public StoreStats set(String fieldName, Object value) {
-    return (StoreStats) super.set(fieldName, value);
-  }
+	@Override
+	public StoreStats set(String fieldName, Object value) {
+		return (StoreStats) super.set(fieldName, value);
+	}
 
-  @Override
-  public StoreStats clone() {
-    return (StoreStats) super.clone();
-  }
+	@Override
+	public StoreStats clone() {
+		return (StoreStats) super.clone();
+	}
 
 }

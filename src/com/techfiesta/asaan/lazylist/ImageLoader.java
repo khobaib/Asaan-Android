@@ -29,19 +29,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-
-
 public class ImageLoader {
 
 	MemoryCache memoryCache = new MemoryCache();
 	FileCache fileCache;
 	private Activity mContext;
 	private ProgressBar mProgressBar;
-	private Map<ImageView, String> imageViews = Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
+	private Map<ImageView, String> imageViews = Collections
+			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	ExecutorService executorService;
 	Handler handler = new Handler();// handler to display images in UI thread
 
-	final int stub_id = R.drawable.ic_history_item_restaurant;
+	final int stub_id = R.drawable.resturant_detail_demo;
 
 	public ImageLoader(Activity context) {
 		this.mContext = context;
@@ -98,14 +97,16 @@ public class ImageLoader {
 		// TODO Auto-generated method stub
 		Bitmap temp = null;
 		try {
-			//Logger.logger("bitmap size in resizeBitmap" + bitmap.getRowBytes());
+			// Logger.logger("bitmap size in resizeBitmap" +
+			// bitmap.getRowBytes());
 			if (bitmap != null) {
 				WindowManager w = mContext.getWindowManager();
 				Point size = new Point();
 				int Measuredwidth = 0;
 				int Measuredheight = 0;
 				float witdh, height;
-				if (bitmap.getWidth() > mContext.getWindowManager().getDefaultDisplay().getWidth()) {
+				if (bitmap.getWidth() > mContext.getWindowManager()
+						.getDefaultDisplay().getWidth()) {
 					Display d = w.getDefaultDisplay();
 					Measuredwidth = d.getWidth();
 					Measuredheight = d.getHeight();
@@ -118,11 +119,13 @@ public class ImageLoader {
 						witdh = Measuredheight;
 						height = Measuredwidth;
 					}
-					float retion = ((float) witdh) / ((float) bitmap.getWidth());
+					float retion = ((float) witdh)
+							/ ((float) bitmap.getWidth());
 					witdh = ((float) bitmap.getWidth()) * retion;
 					height = ((float) bitmap.getHeight()) * retion;
 
-					temp = bitmap.createScaledBitmap(bitmap, (int) (witdh), (int) (height), true);
+					temp = bitmap.createScaledBitmap(bitmap, (int) (witdh),
+							(int) (height), true);
 				} else
 					temp = bitmap;
 			}
@@ -149,19 +152,24 @@ public class ImageLoader {
 				Display d = w.getDefaultDisplay();
 				Measuredwidth = d.getWidth();
 				Measuredheight = d.getHeight();
-				//Logger.logger("========", "Measuredwidth = " + Measuredwidth + " & Measuredheight = " + Measuredheight);
+				// Logger.logger("========", "Measuredwidth = " + Measuredwidth
+				// + " & Measuredheight = " + Measuredheight);
 				// Log.e("Measuredwidth",""+Measuredwidth);
 				// Log.e("Measuredheight",""+Measuredheight);
 
-				//Logger.logger("========",
-						//"bitmap width = " + bitmap.getWidth() + " & bitmap height = " + bitmap.getHeight());
-				float retion = ((float) Measuredwidth) / ((float) bitmap.getWidth());
+				// Logger.logger("========",
+				// "bitmap width = " + bitmap.getWidth() + " & bitmap height = "
+				// + bitmap.getHeight());
+				float retion = ((float) Measuredwidth)
+						/ ((float) bitmap.getWidth());
 				width = ((float) bitmap.getWidth()) * retion;
 				height = ((float) bitmap.getHeight()) * retion;
-				//Logger.logger("on screen", "bitmap width = " + width + " & bitmap height = " + height);
+				// Logger.logger("on screen", "bitmap width = " + width +
+				// " & bitmap height = " + height);
 				// Log.e("witdh",""+witdh);
 				// Log.e("height",""+height);
-				temp = bitmap.createScaledBitmap(bitmap, (int) (width), (int) (height), true);
+				temp = bitmap.createScaledBitmap(bitmap, (int) (width),
+						(int) (height), true);
 
 			}
 
@@ -183,7 +191,7 @@ public class ImageLoader {
 		// from SD cache
 		Bitmap b = decodeFile(f, imageQuality);
 		if (b != null) {
-			//Logger.logger("retrieving splash from file cache");
+			// Logger.logger("retrieving splash from file cache");
 			return b;
 		}
 
@@ -192,7 +200,8 @@ public class ImageLoader {
 			Bitmap bitmap = null;
 			Log.d("-------", url);
 			URL imageUrl = new URL(url);
-			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) imageUrl
+					.openConnection();
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			conn.setInstanceFollowRedirects(true);
@@ -226,7 +235,8 @@ public class ImageLoader {
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
 			int scale = 1;
 			while (true) {
-				if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
+				if (width_tmp / 2 < REQUIRED_SIZE
+						|| height_tmp / 2 < REQUIRED_SIZE)
 					break;
 				width_tmp /= 2;
 				height_tmp /= 2;
