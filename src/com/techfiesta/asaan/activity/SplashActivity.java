@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Window;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
@@ -34,8 +33,8 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		getActionBar().hide();
+		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		// getActionBar().hide();
 
 		setContentView(R.layout.splash);
 		mContext = SplashActivity.this;

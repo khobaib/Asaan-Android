@@ -77,7 +77,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".activity.StoreDetailsActivity"></activity>
-        <activity android:name=".activity.MenuActivity"></activity>
+        <activity android:name=".activity.MenuActivity" android:theme="@android:style/Theme.Holo"></activity>
         <activity android:name=".activity.StoreDetailsActivityNew"></activity>
         <activity android:name=".activity.PlaceOrderActivity"></activity>
         <activity android:name=".activity.MyCartActivity"></activity>

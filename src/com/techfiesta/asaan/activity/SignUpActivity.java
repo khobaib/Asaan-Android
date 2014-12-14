@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -27,8 +26,8 @@ public class SignUpActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		getActionBar().hide();
+		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		// getActionBar().hide();
 
 		setContentView(R.layout.activity_signup);
 		edtEmail = (EditText) findViewById(R.id.et_email);
