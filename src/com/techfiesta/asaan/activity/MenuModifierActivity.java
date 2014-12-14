@@ -24,6 +24,7 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 @SuppressLint("UseSparseArrays")
 public class MenuModifierActivity extends ListActivity {
 	long selectedModGrpId, selectedModGrpMax, selectedModGrpMin;
+	int selectedModGrpIndex;
 
 	List<ModifierWithSelection> modifiersWithSelection;
 
@@ -41,13 +42,14 @@ public class MenuModifierActivity extends ListActivity {
 
 		Bundle bundle = this.getIntent().getExtras();
 		selectedModGrpId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
+		selectedModGrpIndex = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_INDEX);
 		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(
 				PlaceOrderActivity.SELECTED_MODIFIERS);
 
 		modifiersWithSelection = new ArrayList<ModifierWithSelection>();
 		ArrayList<String> modTitles = new ArrayList<String>();
 		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups().get(
-				(int) selectedModGrpId);
+				selectedModGrpIndex);
 		selectedModGrpMax = mg.getModifierGroupMaximum();
 		selectedModGrpMin = mg.getModifierGroupMinimum();
 		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {

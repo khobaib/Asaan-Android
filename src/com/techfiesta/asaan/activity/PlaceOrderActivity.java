@@ -398,9 +398,11 @@ public class PlaceOrderActivity extends Activity {
 		}
 
 		public void listItemClick(int position) {
+			Log.e(">>>>", "position = " + position);
 			listItemClickPosition = position;
 			long selectedModGrpId = getItem(position).posId;
 			Intent intent = new Intent(getActivity(), MenuModifierActivity.class);
+			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_INDEX, listItemClickPosition);
 			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID, selectedModGrpId);
 			ModifierGroup modifierGroup = modifierGroups.get(listItemClickPosition);
 			intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, modifierGroup.selectedModifiers);
@@ -463,10 +465,11 @@ public class PlaceOrderActivity extends Activity {
 		protected Void doInBackground(Void... params) {
 			long startTime = new Date().getTime();
 			try {
+				Log.e(">>>>>>>", "store id = " + SplashActivity.STORE_ID + " menuItemPOSId = " + menuItemPOSId);
 				menuItemModifiersAndGroups = SplashActivity.mStoreendpoint.getStoreMenuItemModifiers(
 						SplashActivity.STORE_ID, menuItemPOSId).execute();
 				logger.log(Level.INFO, "execute elapsed Time = " + (new Date().getTime() - startTime));
-				Log.e("size", "" + menuItemModifiersAndGroups.size());
+				Log.e("size", "" + menuItemModifiersAndGroups.getModifiers().size());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
