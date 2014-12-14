@@ -46,8 +46,7 @@ public class SignUpActivity extends Activity {
 				Log.e("MSG", "on click sign up");
 				String email = edtEmail.getText().toString();
 				String pass = edtPass.getText().toString();
-				if (email == null || email.equals("")
-						|| !email.endsWith(".com")) {
+				if (email == null || email.equals("") || !email.endsWith(".com")) {
 					alert("Please enter email address.");
 				} else if (pass == null || pass.length() < 8) {
 					alert("Password muct be atleast 8 characters.");
@@ -74,8 +73,7 @@ public class SignUpActivity extends Activity {
 
 				if (e == null) {
 					// go to profile activity
-					Intent intent = new Intent(SignUpActivity.this,
-							ProfileActivity.class);
+					Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
 					startActivity(intent);
 				} else {
 					alert("Error in sign up!");
@@ -96,16 +94,14 @@ public class SignUpActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
 			finish();
-			overridePendingTransition(R.anim.prev_slide_in,
-					R.anim.prev_slide_out);
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
 	private void alert(String msg) {
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-				SignUpActivity.this);
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this);
 
 		// Setting Dialog Title
 		alertDialog.setTitle("Asaan");

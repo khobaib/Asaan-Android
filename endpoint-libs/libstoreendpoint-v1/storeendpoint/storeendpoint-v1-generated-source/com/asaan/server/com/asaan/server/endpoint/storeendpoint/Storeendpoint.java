@@ -39,19 +39,17 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public class Storeendpoint extends
-		com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
+public class Storeendpoint extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
 
 	// Note: Leave this static initializer at the top of the file.
 	static {
-		com.google.api.client.util.Preconditions
-				.checkState(
-						com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1
-								&& com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
-						"You are currently running with version %s of google-api-client. "
-								+ "You need at least version 1.15 of google-api-client to run version "
-								+ "1.18.0-rc of the storeendpoint library.",
-						com.google.api.client.googleapis.GoogleUtils.VERSION);
+		com.google.api.client.util.Preconditions.checkState(
+				com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1
+						&& com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
+				"You are currently running with version %s of google-api-client. "
+						+ "You need at least version 1.15 of google-api-client to run version "
+						+ "1.18.0-rc of the storeendpoint library.",
+				com.google.api.client.googleapis.GoogleUtils.VERSION);
 	}
 
 	/**
@@ -74,8 +72,7 @@ public class Storeendpoint extends
 	 * The default encoded base URL of the service. This is determined when the
 	 * library is generated and normally should not be changed.
 	 */
-	public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL
-			+ DEFAULT_SERVICE_PATH;
+	public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL + DEFAULT_SERVICE_PATH;
 
 	/**
 	 * Constructor.
@@ -113,8 +110,7 @@ public class Storeendpoint extends
 	 *            HTTP request initializer or {@code null} for none
 	 * @since 1.7
 	 */
-	public Storeendpoint(
-			com.google.api.client.http.HttpTransport transport,
+	public Storeendpoint(com.google.api.client.http.HttpTransport transport,
 			com.google.api.client.json.JsonFactory jsonFactory,
 			com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
 		this(new Builder(transport, jsonFactory, httpRequestInitializer));
@@ -129,8 +125,7 @@ public class Storeendpoint extends
 	}
 
 	@Override
-	protected void initialize(
-			com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest)
+	protected void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest)
 			throws java.io.IOException {
 		super.initialize(httpClientRequest);
 	}
@@ -147,17 +142,14 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStatsForAllStores getStatsForAllStores(
-			java.lang.Integer firstPosition, java.lang.Integer maxResult)
+	public GetStatsForAllStores getStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult)
 			throws java.io.IOException {
-		GetStatsForAllStores result = new GetStatsForAllStores(firstPosition,
-				maxResult);
+		GetStatsForAllStores result = new GetStatsForAllStores(firstPosition, maxResult);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStatsForAllStores
-			extends
+	public class GetStatsForAllStores extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection> {
 
 		private static final String REST_PATH = "storestatscollection/{firstPosition}/{maxResult}";
@@ -180,20 +172,13 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStatsForAllStores(java.lang.Integer firstPosition,
-				java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection.class);
-			this.firstPosition = com.google.api.client.util.Preconditions
-					.checkNotNull(firstPosition,
-							"Required parameter firstPosition must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -241,8 +226,7 @@ public class Storeendpoint extends
 			return firstPosition;
 		}
 
-		public GetStatsForAllStores setFirstPosition(
-				java.lang.Integer firstPosition) {
+		public GetStatsForAllStores setFirstPosition(java.lang.Integer firstPosition) {
 			this.firstPosition = firstPosition;
 			return this;
 		}
@@ -284,8 +268,7 @@ public class Storeendpoint extends
 		return result;
 	}
 
-	public class GetStore
-			extends
+	public class GetStore extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
 
 		private static final String REST_PATH = "store/{storeId}";
@@ -306,15 +289,10 @@ public class Storeendpoint extends
 		 * @since 1.13
 		 */
 		protected GetStore(java.lang.Long storeId) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
 		}
 
 		@Override
@@ -388,8 +366,7 @@ public class Storeendpoint extends
 		return result;
 	}
 
-	public class GetStoreCount
-			extends
+	public class GetStoreCount extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong> {
 
 		private static final String REST_PATH = "asaanlong";
@@ -410,11 +387,7 @@ public class Storeendpoint extends
 		 * @since 1.13
 		 */
 		protected GetStoreCount() {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong.class);
 		}
 
@@ -472,17 +445,14 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStoreMenuHierarchyAndItems getStoreMenuHierarchyAndItems(
-			java.lang.Long storeId, java.lang.Integer menuType,
-			java.lang.Integer maxResult) throws java.io.IOException {
-		GetStoreMenuHierarchyAndItems result = new GetStoreMenuHierarchyAndItems(
-				storeId, menuType, maxResult);
+	public GetStoreMenuHierarchyAndItems getStoreMenuHierarchyAndItems(java.lang.Long storeId,
+			java.lang.Integer menuType, java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuHierarchyAndItems result = new GetStoreMenuHierarchyAndItems(storeId, menuType, maxResult);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStoreMenuHierarchyAndItems
-			extends
+	public class GetStoreMenuHierarchyAndItems extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems> {
 
 		private static final String REST_PATH = "menusandmenuitems/{storeId}/{menuType}/{maxResult}";
@@ -505,23 +475,16 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStoreMenuHierarchyAndItems(java.lang.Long storeId,
-				java.lang.Integer menuType, java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStoreMenuHierarchyAndItems(java.lang.Long storeId, java.lang.Integer menuType,
+				java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.menuType = com.google.api.client.util.Preconditions
-					.checkNotNull(menuType,
-							"Required parameter menuType must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuType = com.google.api.client.util.Preconditions.checkNotNull(menuType,
+					"Required parameter menuType must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -540,24 +503,18 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public GetStoreMenuHierarchyAndItems setOauthToken(
-				java.lang.String oauthToken) {
-			return (GetStoreMenuHierarchyAndItems) super
-					.setOauthToken(oauthToken);
+		public GetStoreMenuHierarchyAndItems setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenuHierarchyAndItems) super.setOauthToken(oauthToken);
 		}
 
 		@Override
-		public GetStoreMenuHierarchyAndItems setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
-			return (GetStoreMenuHierarchyAndItems) super
-					.setPrettyPrint(prettyPrint);
+		public GetStoreMenuHierarchyAndItems setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuHierarchyAndItems) super.setPrettyPrint(prettyPrint);
 		}
 
 		@Override
-		public GetStoreMenuHierarchyAndItems setQuotaUser(
-				java.lang.String quotaUser) {
-			return (GetStoreMenuHierarchyAndItems) super
-					.setQuotaUser(quotaUser);
+		public GetStoreMenuHierarchyAndItems setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenuHierarchyAndItems) super.setQuotaUser(quotaUser);
 		}
 
 		@Override
@@ -590,8 +547,7 @@ public class Storeendpoint extends
 			return menuType;
 		}
 
-		public GetStoreMenuHierarchyAndItems setMenuType(
-				java.lang.Integer menuType) {
+		public GetStoreMenuHierarchyAndItems setMenuType(java.lang.Integer menuType) {
 			this.menuType = menuType;
 			return this;
 		}
@@ -606,17 +562,14 @@ public class Storeendpoint extends
 			return maxResult;
 		}
 
-		public GetStoreMenuHierarchyAndItems setMaxResult(
-				java.lang.Integer maxResult) {
+		public GetStoreMenuHierarchyAndItems setMaxResult(java.lang.Integer maxResult) {
 			this.maxResult = maxResult;
 			return this;
 		}
 
 		@Override
-		public GetStoreMenuHierarchyAndItems set(String parameterName,
-				Object value) {
-			return (GetStoreMenuHierarchyAndItems) super.set(parameterName,
-					value);
+		public GetStoreMenuHierarchyAndItems set(String parameterName, Object value) {
+			return (GetStoreMenuHierarchyAndItems) super.set(parameterName, value);
 		}
 	}
 
@@ -632,11 +585,9 @@ public class Storeendpoint extends
 	 * @param menuItemPOSId
 	 * @return the request
 	 */
-	public GetStoreMenuItemModifiers getStoreMenuItemModifiers(
-			java.lang.Long storeId, java.lang.Integer menuItemPOSId)
+	public GetStoreMenuItemModifiers getStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId)
 			throws java.io.IOException {
-		GetStoreMenuItemModifiers result = new GetStoreMenuItemModifiers(
-				storeId, menuItemPOSId);
+		GetStoreMenuItemModifiers result = new GetStoreMenuItemModifiers(storeId, menuItemPOSId);
 		initialize(result);
 		return result;
 	}
@@ -665,20 +616,13 @@ public class Storeendpoint extends
 		 * @param menuItemPOSId
 		 * @since 1.13
 		 */
-		protected GetStoreMenuItemModifiers(java.lang.Long storeId,
-				java.lang.Integer menuItemPOSId) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.menuItemPOSId = com.google.api.client.util.Preconditions
-					.checkNotNull(menuItemPOSId,
-							"Required parameter menuItemPOSId must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuItemPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuItemPOSId,
+					"Required parameter menuItemPOSId must be specified.");
 		}
 
 		@Override
@@ -697,16 +641,13 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public GetStoreMenuItemModifiers setOauthToken(
-				java.lang.String oauthToken) {
+		public GetStoreMenuItemModifiers setOauthToken(java.lang.String oauthToken) {
 			return (GetStoreMenuItemModifiers) super.setOauthToken(oauthToken);
 		}
 
 		@Override
-		public GetStoreMenuItemModifiers setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
-			return (GetStoreMenuItemModifiers) super
-					.setPrettyPrint(prettyPrint);
+		public GetStoreMenuItemModifiers setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuItemModifiers) super.setPrettyPrint(prettyPrint);
 		}
 
 		@Override
@@ -744,8 +685,7 @@ public class Storeendpoint extends
 			return menuItemPOSId;
 		}
 
-		public GetStoreMenuItemModifiers setMenuItemPOSId(
-				java.lang.Integer menuItemPOSId) {
+		public GetStoreMenuItemModifiers setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
 			this.menuItemPOSId = menuItemPOSId;
 			return this;
 		}
@@ -769,11 +709,9 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStoreMenuItems getStoreMenuItems(java.lang.Long storeId,
-			java.lang.Integer firstPosition, java.lang.Integer maxResult)
-			throws java.io.IOException {
-		GetStoreMenuItems result = new GetStoreMenuItems(storeId,
-				firstPosition, maxResult);
+	public GetStoreMenuItems getStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition,
+			java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuItems result = new GetStoreMenuItems(storeId, firstPosition, maxResult);
 		initialize(result);
 		return result;
 	}
@@ -802,23 +740,15 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStoreMenuItems(java.lang.Long storeId,
-				java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.firstPosition = com.google.api.client.util.Preconditions
-					.checkNotNull(firstPosition,
-							"Required parameter firstPosition must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -881,8 +811,7 @@ public class Storeendpoint extends
 			return firstPosition;
 		}
 
-		public GetStoreMenuItems setFirstPosition(
-				java.lang.Integer firstPosition) {
+		public GetStoreMenuItems setFirstPosition(java.lang.Integer firstPosition) {
 			this.firstPosition = firstPosition;
 			return this;
 		}
@@ -922,12 +851,9 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStoreMenuItemsForMenu getStoreMenuItemsForMenu(
-			java.lang.Long storeId, java.lang.Integer menuPOSId,
-			java.lang.Integer firstPosition, java.lang.Integer maxResult)
-			throws java.io.IOException {
-		GetStoreMenuItemsForMenu result = new GetStoreMenuItemsForMenu(storeId,
-				menuPOSId, firstPosition, maxResult);
+	public GetStoreMenuItemsForMenu getStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId,
+			java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuItemsForMenu result = new GetStoreMenuItemsForMenu(storeId, menuPOSId, firstPosition, maxResult);
 		initialize(result);
 		return result;
 	}
@@ -958,27 +884,18 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStoreMenuItemsForMenu(java.lang.Long storeId,
-				java.lang.Integer menuPOSId, java.lang.Integer firstPosition,
-				java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId,
+				java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.menuPOSId = com.google.api.client.util.Preconditions
-					.checkNotNull(menuPOSId,
-							"Required parameter menuPOSId must be specified.");
-			this.firstPosition = com.google.api.client.util.Preconditions
-					.checkNotNull(firstPosition,
-							"Required parameter firstPosition must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuPOSId,
+					"Required parameter menuPOSId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -997,14 +914,12 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public GetStoreMenuItemsForMenu setOauthToken(
-				java.lang.String oauthToken) {
+		public GetStoreMenuItemsForMenu setOauthToken(java.lang.String oauthToken) {
 			return (GetStoreMenuItemsForMenu) super.setOauthToken(oauthToken);
 		}
 
 		@Override
-		public GetStoreMenuItemsForMenu setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
+		public GetStoreMenuItemsForMenu setPrettyPrint(java.lang.Boolean prettyPrint) {
 			return (GetStoreMenuItemsForMenu) super.setPrettyPrint(prettyPrint);
 		}
 
@@ -1058,8 +973,7 @@ public class Storeendpoint extends
 			return firstPosition;
 		}
 
-		public GetStoreMenuItemsForMenu setFirstPosition(
-				java.lang.Integer firstPosition) {
+		public GetStoreMenuItemsForMenu setFirstPosition(java.lang.Integer firstPosition) {
 			this.firstPosition = firstPosition;
 			return this;
 		}
@@ -1097,11 +1011,9 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStoreMenus getStoreMenus(java.lang.Long storeId,
-			java.lang.Integer firstPosition, java.lang.Integer maxResult)
-			throws java.io.IOException {
-		GetStoreMenus result = new GetStoreMenus(storeId, firstPosition,
-				maxResult);
+	public GetStoreMenus getStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition,
+			java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenus result = new GetStoreMenus(storeId, firstPosition, maxResult);
 		initialize(result);
 		return result;
 	}
@@ -1130,23 +1042,15 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStoreMenus(java.lang.Long storeId,
-				java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchyCollection.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.firstPosition = com.google.api.client.util.Preconditions
-					.checkNotNull(firstPosition,
-							"Required parameter firstPosition must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -1245,15 +1149,13 @@ public class Storeendpoint extends
 	 * @param storeId
 	 * @return the request
 	 */
-	public GetStoreOwners getStoreOwners(java.lang.Long storeId)
-			throws java.io.IOException {
+	public GetStoreOwners getStoreOwners(java.lang.Long storeId) throws java.io.IOException {
 		GetStoreOwners result = new GetStoreOwners(storeId);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStoreOwners
-			extends
+	public class GetStoreOwners extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection> {
 
 		private static final String REST_PATH = "storeownercollection/{storeId}";
@@ -1275,15 +1177,10 @@ public class Storeendpoint extends
 		 * @since 1.13
 		 */
 		protected GetStoreOwners(java.lang.Long storeId) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
 		}
 
 		@Override
@@ -1353,15 +1250,13 @@ public class Storeendpoint extends
 	 * @param storeId
 	 * @return the request
 	 */
-	public GetStorePOSConnection getStorePOSConnection(java.lang.Long storeId)
-			throws java.io.IOException {
+	public GetStorePOSConnection getStorePOSConnection(java.lang.Long storeId) throws java.io.IOException {
 		GetStorePOSConnection result = new GetStorePOSConnection(storeId);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStorePOSConnection
-			extends
+	public class GetStorePOSConnection extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection> {
 
 		private static final String REST_PATH = "storeposconnection/{storeId}";
@@ -1383,15 +1278,10 @@ public class Storeendpoint extends
 		 * @since 1.13
 		 */
 		protected GetStorePOSConnection(java.lang.Long storeId) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
 		}
 
 		@Override
@@ -1415,8 +1305,7 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public GetStorePOSConnection setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
+		public GetStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
 			return (GetStorePOSConnection) super.setPrettyPrint(prettyPrint);
 		}
 
@@ -1461,15 +1350,13 @@ public class Storeendpoint extends
 	 * @param storeId
 	 * @return the request
 	 */
-	public GetStoreStats getStoreStats(java.lang.Long storeId)
-			throws java.io.IOException {
+	public GetStoreStats getStoreStats(java.lang.Long storeId) throws java.io.IOException {
 		GetStoreStats result = new GetStoreStats(storeId);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStoreStats
-			extends
+	public class GetStoreStats extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats> {
 
 		private static final String REST_PATH = "storestats/{storeId}";
@@ -1491,15 +1378,10 @@ public class Storeendpoint extends
 		 * @since 1.13
 		 */
 		protected GetStoreStats(java.lang.Long storeId) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
 		}
 
 		@Override
@@ -1569,15 +1451,13 @@ public class Storeendpoint extends
 	 * @param maxResult
 	 * @return the request
 	 */
-	public GetStores getStores(java.lang.Integer firstPosition,
-			java.lang.Integer maxResult) throws java.io.IOException {
+	public GetStores getStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
 		GetStores result = new GetStores(firstPosition, maxResult);
 		initialize(result);
 		return result;
 	}
 
-	public class GetStores
-			extends
+	public class GetStores extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection> {
 
 		private static final String REST_PATH = "storecollection/{firstPosition}/{maxResult}";
@@ -1598,20 +1478,13 @@ public class Storeendpoint extends
 		 * @param maxResult
 		 * @since 1.13
 		 */
-		protected GetStores(java.lang.Integer firstPosition,
-				java.lang.Integer maxResult) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected GetStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection.class);
-			this.firstPosition = com.google.api.client.util.Preconditions
-					.checkNotNull(firstPosition,
-							"Required parameter firstPosition must be specified.");
-			this.maxResult = com.google.api.client.util.Preconditions
-					.checkNotNull(maxResult,
-							"Required parameter maxResult must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
 		}
 
 		@Override
@@ -1697,16 +1570,14 @@ public class Storeendpoint extends
 	 * @param order
 	 * @return the request
 	 */
-	public PlaceOrder placeOrder(java.lang.Long storeId,
-			java.lang.Integer orderMode, java.lang.String order)
+	public PlaceOrder placeOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order)
 			throws java.io.IOException {
 		PlaceOrder result = new PlaceOrder(storeId, orderMode, order);
 		initialize(result);
 		return result;
 	}
 
-	public class PlaceOrder
-			extends
+	public class PlaceOrder extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder> {
 
 		private static final String REST_PATH = "placeOrder/{storeId}/{orderMode}/{order}";
@@ -1728,22 +1599,15 @@ public class Storeendpoint extends
 		 * @param order
 		 * @since 1.13
 		 */
-		protected PlaceOrder(java.lang.Long storeId,
-				java.lang.Integer orderMode, java.lang.String order) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+		protected PlaceOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder.class);
-			this.storeId = com.google.api.client.util.Preconditions
-					.checkNotNull(storeId,
-							"Required parameter storeId must be specified.");
-			this.orderMode = com.google.api.client.util.Preconditions
-					.checkNotNull(orderMode,
-							"Required parameter orderMode must be specified.");
-			this.order = com.google.api.client.util.Preconditions.checkNotNull(
-					order, "Required parameter order must be specified.");
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.orderMode = com.google.api.client.util.Preconditions.checkNotNull(orderMode,
+					"Required parameter orderMode must be specified.");
+			this.order = com.google.api.client.util.Preconditions.checkNotNull(order,
+					"Required parameter order must be specified.");
 		}
 
 		@Override
@@ -1874,8 +1738,7 @@ public class Storeendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
 		 * @since 1.13
 		 */
-		protected RemoveStoreOwner(
-				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
+		protected RemoveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
 			super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
 		}
 
@@ -1932,16 +1795,14 @@ public class Storeendpoint extends
 	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
 	 * @return the request
 	 */
-	public SaveStore saveStore(
-			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content)
+	public SaveStore saveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content)
 			throws java.io.IOException {
 		SaveStore result = new SaveStore(content);
 		initialize(result);
 		return result;
 	}
 
-	public class SaveStore
-			extends
+	public class SaveStore extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
 
 		private static final String REST_PATH = "saveStore";
@@ -1963,13 +1824,8 @@ public class Storeendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
 		 * @since 1.13
 		 */
-		protected SaveStore(
-				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
 		}
 
@@ -2083,8 +1939,7 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStoreMenuCombined setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
+		public SaveStoreMenuCombined setPrettyPrint(java.lang.Boolean prettyPrint) {
 			return (SaveStoreMenuCombined) super.setPrettyPrint(prettyPrint);
 		}
 
@@ -2125,8 +1980,7 @@ public class Storeendpoint extends
 		return result;
 	}
 
-	public class SaveStoreMenuHierarchy
-			extends
+	public class SaveStoreMenuHierarchy extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy> {
 
 		private static final String REST_PATH = "saveStoreMenuHierarchy";
@@ -2151,11 +2005,7 @@ public class Storeendpoint extends
 		 */
 		protected SaveStoreMenuHierarchy(
 				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy.class);
 		}
 
@@ -2180,8 +2030,7 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStoreMenuHierarchy setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
+		public SaveStoreMenuHierarchy setPrettyPrint(java.lang.Boolean prettyPrint) {
 			return (SaveStoreMenuHierarchy) super.setPrettyPrint(prettyPrint);
 		}
 
@@ -2222,8 +2071,7 @@ public class Storeendpoint extends
 		return result;
 	}
 
-	public class SaveStoreMenuItem
-			extends
+	public class SaveStoreMenuItem extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem> {
 
 		private static final String REST_PATH = "saveStoreMenuItem";
@@ -2246,13 +2094,8 @@ public class Storeendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem}
 		 * @since 1.13
 		 */
-		protected SaveStoreMenuItem(
-				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveStoreMenuItem(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem.class);
 		}
 
@@ -2313,14 +2156,12 @@ public class Storeendpoint extends
 	public SaveStoreMenuItemModifier saveStoreMenuItemModifier(
 			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content)
 			throws java.io.IOException {
-		SaveStoreMenuItemModifier result = new SaveStoreMenuItemModifier(
-				content);
+		SaveStoreMenuItemModifier result = new SaveStoreMenuItemModifier(content);
 		initialize(result);
 		return result;
 	}
 
-	public class SaveStoreMenuItemModifier
-			extends
+	public class SaveStoreMenuItemModifier extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier> {
 
 		private static final String REST_PATH = "saveStoreMenuItemModifier";
@@ -2346,11 +2187,7 @@ public class Storeendpoint extends
 		 */
 		protected SaveStoreMenuItemModifier(
 				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier.class);
 		}
 
@@ -2370,16 +2207,13 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStoreMenuItemModifier setOauthToken(
-				java.lang.String oauthToken) {
+		public SaveStoreMenuItemModifier setOauthToken(java.lang.String oauthToken) {
 			return (SaveStoreMenuItemModifier) super.setOauthToken(oauthToken);
 		}
 
 		@Override
-		public SaveStoreMenuItemModifier setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
-			return (SaveStoreMenuItemModifier) super
-					.setPrettyPrint(prettyPrint);
+		public SaveStoreMenuItemModifier setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuItemModifier) super.setPrettyPrint(prettyPrint);
 		}
 
 		@Override
@@ -2414,8 +2248,7 @@ public class Storeendpoint extends
 	public SaveStoreMenuItemModifierGroup saveStoreMenuItemModifierGroup(
 			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content)
 			throws java.io.IOException {
-		SaveStoreMenuItemModifierGroup result = new SaveStoreMenuItemModifierGroup(
-				content);
+		SaveStoreMenuItemModifierGroup result = new SaveStoreMenuItemModifierGroup(content);
 		initialize(result);
 		return result;
 	}
@@ -2446,11 +2279,7 @@ public class Storeendpoint extends
 		 */
 		protected SaveStoreMenuItemModifierGroup(
 				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup.class);
 		}
 
@@ -2470,24 +2299,18 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStoreMenuItemModifierGroup setOauthToken(
-				java.lang.String oauthToken) {
-			return (SaveStoreMenuItemModifierGroup) super
-					.setOauthToken(oauthToken);
+		public SaveStoreMenuItemModifierGroup setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuItemModifierGroup) super.setOauthToken(oauthToken);
 		}
 
 		@Override
-		public SaveStoreMenuItemModifierGroup setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
-			return (SaveStoreMenuItemModifierGroup) super
-					.setPrettyPrint(prettyPrint);
+		public SaveStoreMenuItemModifierGroup setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuItemModifierGroup) super.setPrettyPrint(prettyPrint);
 		}
 
 		@Override
-		public SaveStoreMenuItemModifierGroup setQuotaUser(
-				java.lang.String quotaUser) {
-			return (SaveStoreMenuItemModifierGroup) super
-					.setQuotaUser(quotaUser);
+		public SaveStoreMenuItemModifierGroup setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuItemModifierGroup) super.setQuotaUser(quotaUser);
 		}
 
 		@Override
@@ -2496,10 +2319,8 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStoreMenuItemModifierGroup set(String parameterName,
-				Object value) {
-			return (SaveStoreMenuItemModifierGroup) super.set(parameterName,
-					value);
+		public SaveStoreMenuItemModifierGroup set(String parameterName, Object value) {
+			return (SaveStoreMenuItemModifierGroup) super.set(parameterName, value);
 		}
 	}
 
@@ -2523,8 +2344,7 @@ public class Storeendpoint extends
 		return result;
 	}
 
-	public class SaveStoreOwner
-			extends
+	public class SaveStoreOwner extends
 			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner> {
 
 		private static final String REST_PATH = "saveStoreOwner";
@@ -2547,13 +2367,8 @@ public class Storeendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
 		 * @since 1.13
 		 */
-		protected SaveStoreOwner(
-				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
-			super(
-					Storeendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner.class);
 		}
 
@@ -2667,8 +2482,7 @@ public class Storeendpoint extends
 		}
 
 		@Override
-		public SaveStorePOSConnection setPrettyPrint(
-				java.lang.Boolean prettyPrint) {
+		public SaveStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
 			return (SaveStorePOSConnection) super.setPrettyPrint(prettyPrint);
 		}
 
@@ -2697,8 +2511,7 @@ public class Storeendpoint extends
 	 *
 	 * @since 1.3.0
 	 */
-	public static final class Builder
-			extends
+	public static final class Builder extends
 			com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient.Builder {
 
 		/**
@@ -2733,12 +2546,10 @@ public class Storeendpoint extends
 		 *            HTTP request initializer or {@code null} for none
 		 * @since 1.7
 		 */
-		public Builder(
-				com.google.api.client.http.HttpTransport transport,
+		public Builder(com.google.api.client.http.HttpTransport transport,
 				com.google.api.client.json.JsonFactory jsonFactory,
 				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-			super(transport, jsonFactory, DEFAULT_ROOT_URL,
-					DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
+			super(transport, jsonFactory, DEFAULT_ROOT_URL, DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
 		}
 
 		/** Builds a new instance of {@link Storeendpoint}. */
@@ -2760,8 +2571,7 @@ public class Storeendpoint extends
 		@Override
 		public Builder setHttpRequestInitializer(
 				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-			return (Builder) super
-					.setHttpRequestInitializer(httpRequestInitializer);
+			return (Builder) super.setHttpRequestInitializer(httpRequestInitializer);
 		}
 
 		@Override
@@ -2771,15 +2581,12 @@ public class Storeendpoint extends
 
 		@Override
 		public Builder setSuppressPatternChecks(boolean suppressPatternChecks) {
-			return (Builder) super
-					.setSuppressPatternChecks(suppressPatternChecks);
+			return (Builder) super.setSuppressPatternChecks(suppressPatternChecks);
 		}
 
 		@Override
-		public Builder setSuppressRequiredParameterChecks(
-				boolean suppressRequiredParameterChecks) {
-			return (Builder) super
-					.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
+		public Builder setSuppressRequiredParameterChecks(boolean suppressRequiredParameterChecks) {
+			return (Builder) super.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
 		}
 
 		@Override
@@ -2794,15 +2601,13 @@ public class Storeendpoint extends
 		 */
 		public Builder setStoreendpointRequestInitializer(
 				StoreendpointRequestInitializer storeendpointRequestInitializer) {
-			return (Builder) super
-					.setGoogleClientRequestInitializer(storeendpointRequestInitializer);
+			return (Builder) super.setGoogleClientRequestInitializer(storeendpointRequestInitializer);
 		}
 
 		@Override
 		public Builder setGoogleClientRequestInitializer(
 				com.google.api.client.googleapis.services.GoogleClientRequestInitializer googleClientRequestInitializer) {
-			return (Builder) super
-					.setGoogleClientRequestInitializer(googleClientRequestInitializer);
+			return (Builder) super.setGoogleClientRequestInitializer(googleClientRequestInitializer);
 		}
 	}
 }

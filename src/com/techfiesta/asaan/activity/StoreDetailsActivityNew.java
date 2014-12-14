@@ -19,8 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-public class StoreDetailsActivityNew extends FragmentActivity implements
-		TabListener {
+public class StoreDetailsActivityNew extends FragmentActivity implements TabListener {
 
 	ActionBar actionBar = null;
 	InfoFragment infoFragment;
@@ -83,8 +82,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements
 		} else if (position == 1) {
 			ft.replace(R.id.content_frame, fragmentMenu);
 		} else if (position == 2) {
-			Intent intent = new Intent(StoreDetailsActivityNew.this,
-					MenuActivity.class);
+			Intent intent = new Intent(StoreDetailsActivityNew.this, MenuActivity.class);
 			startActivity(intent);
 		} else if (position == 3) {
 			ft.replace(R.id.content_frame, reviewFragment);
@@ -124,8 +122,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.my_cart) {
-			Intent intent = new Intent(StoreDetailsActivityNew.this,
-					OrderDetailsActivity.class);
+			Intent intent = new Intent(StoreDetailsActivityNew.this, OrderDetailsActivity.class);
 			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);

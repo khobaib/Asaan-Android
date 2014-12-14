@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuCombined extends
-		com.google.api.client.json.GenericJson {
+public final class StoreMenuCombined extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -79,8 +78,7 @@ public final class StoreMenuCombined extends
 		// since otherwise it would be stripped out
 		// see
 		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
-		com.google.api.client.util.Data
-				.nullOf(StoreMenuItemModifierGroup.class);
+		com.google.api.client.util.Data.nullOf(StoreMenuItemModifierGroup.class);
 	}
 
 	/**
@@ -110,8 +108,7 @@ public final class StoreMenuCombined extends
 	 * @param storeMenuHierarchy
 	 *            storeMenuHierarchy or {@code null} for none
 	 */
-	public StoreMenuCombined setStoreMenuHierarchy(
-			java.util.List<StoreMenuHierarchy> storeMenuHierarchy) {
+	public StoreMenuCombined setStoreMenuHierarchy(java.util.List<StoreMenuHierarchy> storeMenuHierarchy) {
 		this.storeMenuHierarchy = storeMenuHierarchy;
 		return this;
 	}
@@ -127,8 +124,7 @@ public final class StoreMenuCombined extends
 	 * @param storeMenuItem
 	 *            storeMenuItem or {@code null} for none
 	 */
-	public StoreMenuCombined setStoreMenuItem(
-			java.util.List<StoreMenuItem> storeMenuItem) {
+	public StoreMenuCombined setStoreMenuItem(java.util.List<StoreMenuItem> storeMenuItem) {
 		this.storeMenuItem = storeMenuItem;
 		return this;
 	}
@@ -144,8 +140,7 @@ public final class StoreMenuCombined extends
 	 * @param storeMenuItemModifier
 	 *            storeMenuItemModifier or {@code null} for none
 	 */
-	public StoreMenuCombined setStoreMenuItemModifier(
-			java.util.List<StoreMenuItemModifier> storeMenuItemModifier) {
+	public StoreMenuCombined setStoreMenuItemModifier(java.util.List<StoreMenuItemModifier> storeMenuItemModifier) {
 		this.storeMenuItemModifier = storeMenuItemModifier;
 		return this;
 	}

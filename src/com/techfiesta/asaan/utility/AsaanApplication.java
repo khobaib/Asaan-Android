@@ -44,8 +44,7 @@ public class AsaanApplication extends Application {
 	}
 
 	private void initializeSharedPreference() {
-		this.SP = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
+		this.SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 	}
 
 }

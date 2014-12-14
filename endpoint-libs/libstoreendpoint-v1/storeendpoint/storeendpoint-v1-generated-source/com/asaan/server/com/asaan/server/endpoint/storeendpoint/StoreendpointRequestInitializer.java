@@ -26,8 +26,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  * </p>
  *
  * <pre>
- * public static final GoogleClientRequestInitializer KEY_INITIALIZER = new StoreendpointRequestInitializer(
- * 		KEY);
+ * public static final GoogleClientRequestInitializer KEY_INITIALIZER = new StoreendpointRequestInitializer(KEY);
  * </pre>
  *
  * <p>
@@ -35,8 +34,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  * </p>
  *
  * <pre>
- * public static final GoogleClientRequestInitializer INITIALIZER = new StoreendpointRequestInitializer(
- * 		KEY, USER_IP);
+ * public static final GoogleClientRequestInitializer INITIALIZER = new StoreendpointRequestInitializer(KEY, USER_IP);
  * </pre>
  *
  * <p>
@@ -80,8 +78,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  *
  * @since 1.12
  */
-public class StoreendpointRequestInitializer
-		extends
+public class StoreendpointRequestInitializer extends
 		com.google.api.client.googleapis.services.json.CommonGoogleJsonClientRequestInitializer {
 
 	public StoreendpointRequestInitializer() {
@@ -126,7 +123,6 @@ public class StoreendpointRequestInitializer
 	 * @throws java.io.IOException
 	 *             I/O exception
 	 */
-	protected void initializeStoreendpointRequest(
-			StoreendpointRequest<?> request) throws java.io.IOException {
+	protected void initializeStoreendpointRequest(StoreendpointRequest<?> request) throws java.io.IOException {
 	}
 }

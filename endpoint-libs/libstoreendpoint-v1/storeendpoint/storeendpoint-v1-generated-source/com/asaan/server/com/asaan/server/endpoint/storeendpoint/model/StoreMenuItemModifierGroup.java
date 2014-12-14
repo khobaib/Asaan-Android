@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuItemModifierGroup extends
-		com.google.api.client.json.GenericJson {
+public final class StoreMenuItemModifierGroup extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -142,8 +141,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param menuItemPOSId
 	 *            menuItemPOSId or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setMenuItemPOSId(
-			java.lang.Integer menuItemPOSId) {
+	public StoreMenuItemModifierGroup setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
 		this.menuItemPOSId = menuItemPOSId;
 		return this;
 	}
@@ -159,8 +157,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifiedDate
 	 *            modifiedDate or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifiedDate(
-			java.lang.Long modifiedDate) {
+	public StoreMenuItemModifierGroup setModifiedDate(java.lang.Long modifiedDate) {
 		this.modifiedDate = modifiedDate;
 		return this;
 	}
@@ -176,8 +173,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifierGroupLongDescription
 	 *            modifierGroupLongDescription or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifierGroupLongDescription(
-			java.lang.String modifierGroupLongDescription) {
+	public StoreMenuItemModifierGroup setModifierGroupLongDescription(java.lang.String modifierGroupLongDescription) {
 		this.modifierGroupLongDescription = modifierGroupLongDescription;
 		return this;
 	}
@@ -193,8 +189,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifierGroupMaximum
 	 *            modifierGroupMaximum or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifierGroupMaximum(
-			java.lang.Integer modifierGroupMaximum) {
+	public StoreMenuItemModifierGroup setModifierGroupMaximum(java.lang.Integer modifierGroupMaximum) {
 		this.modifierGroupMaximum = modifierGroupMaximum;
 		return this;
 	}
@@ -210,8 +205,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifierGroupMinimum
 	 *            modifierGroupMinimum or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifierGroupMinimum(
-			java.lang.Integer modifierGroupMinimum) {
+	public StoreMenuItemModifierGroup setModifierGroupMinimum(java.lang.Integer modifierGroupMinimum) {
 		this.modifierGroupMinimum = modifierGroupMinimum;
 		return this;
 	}
@@ -227,8 +221,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifierGroupPOSId
 	 *            modifierGroupPOSId or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifierGroupPOSId(
-			java.lang.Integer modifierGroupPOSId) {
+	public StoreMenuItemModifierGroup setModifierGroupPOSId(java.lang.Integer modifierGroupPOSId) {
 		this.modifierGroupPOSId = modifierGroupPOSId;
 		return this;
 	}
@@ -244,8 +237,7 @@ public final class StoreMenuItemModifierGroup extends
 	 * @param modifierGroupShortDescription
 	 *            modifierGroupShortDescription or {@code null} for none
 	 */
-	public StoreMenuItemModifierGroup setModifierGroupShortDescription(
-			java.lang.String modifierGroupShortDescription) {
+	public StoreMenuItemModifierGroup setModifierGroupShortDescription(java.lang.String modifierGroupShortDescription) {
 		this.modifierGroupShortDescription = modifierGroupShortDescription;
 		return this;
 	}

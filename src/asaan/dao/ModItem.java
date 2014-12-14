@@ -16,8 +16,7 @@ public class ModItem {
 	public ModItem() {
 	}
 
-	public ModItem(int quantity, int item_id, int parent_item_id, String name,
-			int price) {
+	public ModItem(int quantity, int item_id, int parent_item_id, String name, int price) {
 		this.quantity = quantity;
 		this.item_id = item_id;
 		this.parent_item_id = parent_item_id;

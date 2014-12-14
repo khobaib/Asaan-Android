@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenuItemModifiersAndGroups extends
-		com.google.api.client.json.GenericJson {
+public final class MenuItemModifiersAndGroups extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -46,8 +45,7 @@ public final class MenuItemModifiersAndGroups extends
 		// since otherwise it would be stripped out
 		// see
 		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
-		com.google.api.client.util.Data
-				.nullOf(StoreMenuItemModifierGroup.class);
+		com.google.api.client.util.Data.nullOf(StoreMenuItemModifierGroup.class);
 	}
 
 	/**
@@ -75,8 +73,7 @@ public final class MenuItemModifiersAndGroups extends
 	 * @param modifierGroups
 	 *            modifierGroups or {@code null} for none
 	 */
-	public MenuItemModifiersAndGroups setModifierGroups(
-			java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
+	public MenuItemModifiersAndGroups setModifierGroups(java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
 		this.modifierGroups = modifierGroups;
 		return this;
 	}
@@ -92,8 +89,7 @@ public final class MenuItemModifiersAndGroups extends
 	 * @param modifiers
 	 *            modifiers or {@code null} for none
 	 */
-	public MenuItemModifiersAndGroups setModifiers(
-			java.util.List<StoreMenuItemModifier> modifiers) {
+	public MenuItemModifiersAndGroups setModifiers(java.util.List<StoreMenuItemModifier> modifiers) {
 		this.modifiers = modifiers;
 		return this;
 	}

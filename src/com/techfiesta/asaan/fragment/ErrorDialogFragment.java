@@ -28,8 +28,7 @@ public class ErrorDialogFragment extends DialogFragment {
 		int titleId = getArguments().getInt("titleId");
 		String message = getArguments().getString("message");
 
-		return new AlertDialog.Builder(getActivity()).setTitle(titleId)
-				.setMessage(message)
+		return new AlertDialog.Builder(getActivity()).setTitle(titleId).setMessage(message)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialogInterface, int i) {

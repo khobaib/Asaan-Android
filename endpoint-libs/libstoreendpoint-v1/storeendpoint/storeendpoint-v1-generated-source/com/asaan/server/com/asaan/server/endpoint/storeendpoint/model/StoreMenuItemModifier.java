@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuItemModifier extends
-		com.google.api.client.json.GenericJson {
+public final class StoreMenuItemModifier extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -142,8 +141,7 @@ public final class StoreMenuItemModifier extends
 	 * @param longDescription
 	 *            longDescription or {@code null} for none
 	 */
-	public StoreMenuItemModifier setLongDescription(
-			java.lang.String longDescription) {
+	public StoreMenuItemModifier setLongDescription(java.lang.String longDescription) {
 		this.longDescription = longDescription;
 		return this;
 	}
@@ -175,8 +173,7 @@ public final class StoreMenuItemModifier extends
 	 * @param modifierGroupPOSId
 	 *            modifierGroupPOSId or {@code null} for none
 	 */
-	public StoreMenuItemModifier setModifierGroupPOSId(
-			java.lang.Integer modifierGroupPOSId) {
+	public StoreMenuItemModifier setModifierGroupPOSId(java.lang.Integer modifierGroupPOSId) {
 		this.modifierGroupPOSId = modifierGroupPOSId;
 		return this;
 	}
@@ -192,8 +189,7 @@ public final class StoreMenuItemModifier extends
 	 * @param modifierPOSId
 	 *            modifierPOSId or {@code null} for none
 	 */
-	public StoreMenuItemModifier setModifierPOSId(
-			java.lang.Integer modifierPOSId) {
+	public StoreMenuItemModifier setModifierPOSId(java.lang.Integer modifierPOSId) {
 		this.modifierPOSId = modifierPOSId;
 		return this;
 	}
@@ -225,8 +221,7 @@ public final class StoreMenuItemModifier extends
 	 * @param shortDescription
 	 *            shortDescription or {@code null} for none
 	 */
-	public StoreMenuItemModifier setShortDescription(
-			java.lang.String shortDescription) {
+	public StoreMenuItemModifier setShortDescription(java.lang.String shortDescription) {
 		this.shortDescription = shortDescription;
 		return this;
 	}

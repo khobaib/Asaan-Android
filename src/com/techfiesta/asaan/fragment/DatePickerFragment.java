@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
-public class DatePickerFragment extends DialogFragment implements
-		DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

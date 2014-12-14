@@ -26,18 +26,13 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
 	 * Can be used for QueryBuilder and for referencing column names.
 	 */
 	public static class Properties {
-		public final static Property Quantity = new Property(0, int.class,
-				"quantity", false, "QUANTITY");
-		public final static Property Item_id = new Property(1, int.class,
-				"item_id", false, "ITEM_ID");
-		public final static Property Parent_item_id = new Property(2,
-				int.class, "parent_item_id", false, "PARENT_ITEM_ID");
-		public final static Property Name = new Property(3, String.class,
-				"name", false, "NAME");
-		public final static Property Price = new Property(4, int.class,
-				"price", false, "PRICE");
-		public final static Property Id = new Property(5, Long.class, "id",
-				true, "_id");
+		public final static Property Quantity = new Property(0, int.class, "quantity", false, "QUANTITY");
+		public final static Property Item_id = new Property(1, int.class, "item_id", false, "ITEM_ID");
+		public final static Property Parent_item_id = new Property(2, int.class, "parent_item_id", false,
+				"PARENT_ITEM_ID");
+		public final static Property Name = new Property(3, String.class, "name", false, "NAME");
+		public final static Property Price = new Property(4, int.class, "price", false, "PRICE");
+		public final static Property Id = new Property(5, Long.class, "id", true, "_id");
 	};
 
 	private Query<ModItem> addItem_Mod_itemsQuery;
@@ -64,8 +59,7 @@ public class ModItemDao extends AbstractDao<ModItem, Void> {
 
 	/** Drops the underlying database table. */
 	public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "")
-				+ "'MOD_ITEM'";
+		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "'MOD_ITEM'";
 		db.execSQL(sql);
 	}
 

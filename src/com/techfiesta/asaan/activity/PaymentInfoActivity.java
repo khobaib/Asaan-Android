@@ -86,19 +86,16 @@ public class PaymentInfoActivity extends Activity {
 
 				if (ParseUser.getCurrentUser() != null) {
 
-					Log.e("MSG", "SIGNED UP"
-							+ ParseUser.getCurrentUser().getString("authToken"));
+					Log.e("MSG", "SIGNED UP" + ParseUser.getCurrentUser().getString("authToken"));
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
 					zip = Zip.getText().toString();
 					month = Integer.parseInt(etMonth.getText().toString());
 					year = Integer.parseInt(etYear.getText().toString());
-					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem()
-							.toString());
+					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
 					saveCreditCard();
 				} else {
-					AsaanUtility.simpleAlert(PaymentInfoActivity.this,
-							"User not logged in.");
+					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
 				}
 
 			}
@@ -126,8 +123,7 @@ public class PaymentInfoActivity extends Activity {
 		for (int i = 1; i < 21; i++) {
 			list.add(i * 5);
 		}
-		ArrayAdapter<Integer> adapter = new ArrayAdapter<>(
-				PaymentInfoActivity.this,
+		ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
 				android.R.layout.simple_spinner_dropdown_item, list);
 		defaultTipSpinner.setAdapter(adapter);
 	}
@@ -139,20 +135,19 @@ public class PaymentInfoActivity extends Activity {
 		boolean validation = card.validateCard();
 		if (validation) {
 			// startProgress();
-			new Stripe().createToken(card, PUBLISHABLE_KEY,
-					new TokenCallback() {
-						public void onSuccess(Token token) {
+			new Stripe().createToken(card, PUBLISHABLE_KEY, new TokenCallback() {
+				public void onSuccess(Token token) {
 
-							System.out.println("" + token.getId());
-							saveTokenInGAE(token);
-							// saveToken(token);
-						}
+					System.out.println("" + token.getId());
+					saveTokenInGAE(token);
+					// saveToken(token);
+				}
 
-						public void onError(Exception error) {
-							handleError(error.getLocalizedMessage());
-							// finishProgress();
-						}
-					});
+				public void onError(Exception error) {
+					handleError(error.getLocalizedMessage());
+					// finishProgress();
+				}
+			});
 		} else if (!card.validateNumber()) {
 			handleError("The card number that you entered is invalid");
 		} else if (!card.validateExpiryDate()) {
@@ -206,8 +201,7 @@ public class PaymentInfoActivity extends Activity {
 	}
 
 	private void handleError(String error) {
-		DialogFragment fragment = ErrorDialogFragment.newInstance(
-				R.string.validationErrors, error);
+		DialogFragment fragment = ErrorDialogFragment.newInstance(R.string.validationErrors, error);
 		// fragment.show(getFragmentManager(), "error");
 	}
 
@@ -218,15 +212,11 @@ public class PaymentInfoActivity extends Activity {
 
 			SaveUserCard saveUserCard;
 			try {
-				saveUserCard = SplashActivity.mUserendpoint
-						.saveUserCard(userCard);
+				saveUserCard = SplashActivity.mUserendpoint.saveUserCard(userCard);
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
-				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser
-						.getCurrentUser().getString("authToken"));
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
 				UserCard uc = saveUserCard.execute();
-				Log.e("MSG",
-						"Posting" + uc.getCreatedDate() + "moddate"
-								+ uc.getModifiedDate());
+				Log.e("MSG", "Posting" + uc.getCreatedDate() + "moddate" + uc.getModifiedDate());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

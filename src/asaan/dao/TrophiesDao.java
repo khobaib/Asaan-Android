@@ -26,12 +26,9 @@ public class TrophiesDao extends AbstractDao<Trophies, Void> {
 	 * Can be used for QueryBuilder and for referencing column names.
 	 */
 	public static class Properties {
-		public final static Property Name = new Property(0, String.class,
-				"name", false, "NAME");
-		public final static Property Store_id = new Property(1, Long.class,
-				"store_id", false, "STORE_ID");
-		public final static Property Id = new Property(2, long.class, "id",
-				true, "_id");
+		public final static Property Name = new Property(0, String.class, "name", false, "NAME");
+		public final static Property Store_id = new Property(1, Long.class, "store_id", false, "STORE_ID");
+		public final static Property Id = new Property(2, long.class, "id", true, "_id");
 	};
 
 	private Query<Trophies> dStore_TrophiesListQuery;
@@ -55,8 +52,7 @@ public class TrophiesDao extends AbstractDao<Trophies, Void> {
 
 	/** Drops the underlying database table. */
 	public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "")
-				+ "'TROPHIES'";
+		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "'TROPHIES'";
 		db.execSQL(sql);
 	}
 
@@ -92,8 +88,7 @@ public class TrophiesDao extends AbstractDao<Trophies, Void> {
 	@Override
 	public void readEntity(Cursor cursor, Trophies entity, int offset) {
 		entity.setName(cursor.getString(offset + 0));
-		entity.setStore_id(cursor.isNull(offset + 1) ? null : cursor
-				.getLong(offset + 1));
+		entity.setStore_id(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
 	}
 
 	/** @inheritdoc */

@@ -24,8 +24,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  * @since 1.3
  */
 @SuppressWarnings("javadoc")
-public abstract class StoreendpointRequest<T>
-		extends
+public abstract class StoreendpointRequest<T> extends
 		com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<T> {
 
 	/**
@@ -45,8 +44,8 @@ public abstract class StoreendpointRequest<T>
 	 * @param responseClass
 	 *            response class to parse into
 	 */
-	public StoreendpointRequest(Storeendpoint client, String method,
-			String uriTemplate, Object content, Class<T> responseClass) {
+	public StoreendpointRequest(Storeendpoint client, String method, String uriTemplate, Object content,
+			Class<T> responseClass) {
 		super(client, method, uriTemplate, content, responseClass);
 	}
 
@@ -202,15 +201,12 @@ public abstract class StoreendpointRequest<T>
 	}
 
 	@Override
-	public StoreendpointRequest<T> setDisableGZipContent(
-			boolean disableGZipContent) {
-		return (StoreendpointRequest<T>) super
-				.setDisableGZipContent(disableGZipContent);
+	public StoreendpointRequest<T> setDisableGZipContent(boolean disableGZipContent) {
+		return (StoreendpointRequest<T>) super.setDisableGZipContent(disableGZipContent);
 	}
 
 	@Override
-	public StoreendpointRequest<T> setRequestHeaders(
-			com.google.api.client.http.HttpHeaders headers) {
+	public StoreendpointRequest<T> setRequestHeaders(com.google.api.client.http.HttpHeaders headers) {
 		return (StoreendpointRequest<T>) super.setRequestHeaders(headers);
 	}
 

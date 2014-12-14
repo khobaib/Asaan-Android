@@ -57,19 +57,16 @@ public class CloudEndpointUtils {
 	 *            Google client builder
 	 * @return same Google client builder
 	 */
-	public static <B extends AbstractGoogleClient.Builder> B updateBuilder(
-			B builder) {
+	public static <B extends AbstractGoogleClient.Builder> B updateBuilder(B builder) {
 		if (LOCAL_ANDROID_RUN) {
-			builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID
-					+ "/_ah/api/");
+			builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID + "/_ah/api/");
 		}
 
 		// only enable GZip when connecting to remote server
 		final boolean enableGZip = builder.getRootUrl().startsWith("https:");
 
 		builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-			public void initialize(AbstractGoogleClientRequest<?> request)
-					throws IOException {
+			public void initialize(AbstractGoogleClientRequest<?> request) throws IOException {
 				if (!enableGZip) {
 					request.setDisableGZipContent(true);
 				}
@@ -111,8 +108,7 @@ public class CloudEndpointUtils {
 		// Exceptions that occur in your Cloud Endpoint implementation classes
 		// are wrapped as GoogleJsonResponseExceptions
 		if (t instanceof GoogleJsonResponseException) {
-			GoogleJsonError details = ((GoogleJsonResponseException) t)
-					.getDetails();
+			GoogleJsonError details = ((GoogleJsonResponseException) t).getDetails();
 			if (details != null) {
 				message = details.getMessage();
 			}
@@ -129,12 +125,10 @@ public class CloudEndpointUtils {
 	 *            message to show or {@code null} for none
 	 */
 	public static void showError(final Activity activity, String message) {
-		final String errorMessage = message == null ? "Error" : "[Error ] "
-				+ message;
+		final String errorMessage = message == null ? "Error" : "[Error ] " + message;
 		activity.runOnUiThread(new Runnable() {
 			public void run() {
-				Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
 			}
 		});
 	}

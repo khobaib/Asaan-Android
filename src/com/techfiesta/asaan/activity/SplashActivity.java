@@ -51,8 +51,7 @@ public class SplashActivity extends Activity {
 			new LoadMainScreen().execute();
 
 		} else {
-			internetAvailabilityAlert(context,
-					"Please Check your internet connection");
+			internetAvailabilityAlert(context, "Please Check your internet connection");
 		}
 
 	}
@@ -76,8 +75,7 @@ public class SplashActivity extends Activity {
 			if (result) {
 				Intent i = null;
 				if (currentUser == null) {
-					i = new Intent(SplashActivity.this,
-							LoginChooserActivity.class);
+					i = new Intent(SplashActivity.this, LoginChooserActivity.class);
 				} else {
 					i = new Intent(SplashActivity.this, StoreListActivity.class);
 				}
@@ -95,8 +93,7 @@ public class SplashActivity extends Activity {
 
 	private void buildStoreEndpoint() {
 		Storeendpoint.Builder storeEndpointBuilder;
-		storeEndpointBuilder = new Storeendpoint.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+		storeEndpointBuilder = new Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					@Override
 					public void initialize(HttpRequest arg0) throws IOException {
@@ -105,14 +102,12 @@ public class SplashActivity extends Activity {
 					}
 				});
 		storeEndpointBuilder.setApplicationName("Asaan");
-		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder)
-				.build();
+		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build();
 	}
 
 	private void buildUserEndpoint() {
 		Userendpoint.Builder userEndpointBuilder;
-		userEndpointBuilder = new Userendpoint.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+		userEndpointBuilder = new Userendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 				new HttpRequestInitializer() {
 					@Override
 					public void initialize(HttpRequest arg0) throws IOException {
@@ -121,8 +116,7 @@ public class SplashActivity extends Activity {
 					}
 				});
 		userEndpointBuilder.setApplicationName("Asaan");
-		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder)
-				.build();
+		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
 	}
 
 	private void deleteCurrentUser() {
@@ -139,8 +133,7 @@ public class SplashActivity extends Activity {
 		 * } }); } else
 		 */
 		{
-			Intent i = new Intent(SplashActivity.this,
-					LoginChooserActivity.class);
+			Intent i = new Intent(SplashActivity.this, LoginChooserActivity.class);
 			startActivity(i);
 			// close this activity
 			finish();
@@ -150,8 +143,7 @@ public class SplashActivity extends Activity {
 	}
 
 	private void internetAvailabilityAlert(Context context, String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(context,
-				AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
 		// bld.setTitle(context.getResources().getText(R.string.app_name));
 		bld.setTitle(R.string.app_name);
 		bld.setMessage(message);

@@ -229,8 +229,7 @@ public final class StoreOrder extends com.google.api.client.json.GenericJson {
 	 * @param discountDescription
 	 *            discountDescription or {@code null} for none
 	 */
-	public StoreOrder setDiscountDescription(
-			java.lang.String discountDescription) {
+	public StoreOrder setDiscountDescription(java.lang.String discountDescription) {
 		this.discountDescription = discountDescription;
 		return this;
 	}

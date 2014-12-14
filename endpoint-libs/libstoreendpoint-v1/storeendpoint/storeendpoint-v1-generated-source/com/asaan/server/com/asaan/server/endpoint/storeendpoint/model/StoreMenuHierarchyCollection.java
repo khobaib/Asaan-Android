@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuHierarchyCollection extends
-		com.google.api.client.json.GenericJson {
+public final class StoreMenuHierarchyCollection extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -60,8 +59,7 @@ public final class StoreMenuHierarchyCollection extends
 	 * @param items
 	 *            items or {@code null} for none
 	 */
-	public StoreMenuHierarchyCollection setItems(
-			java.util.List<StoreMenuHierarchy> items) {
+	public StoreMenuHierarchyCollection setItems(java.util.List<StoreMenuHierarchy> items) {
 		this.items = items;
 		return this;
 	}

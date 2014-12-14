@@ -75,8 +75,7 @@ public class UserPicture implements Serializable {
 			e.printStackTrace();
 		}
 
-		int orientation = cursor.getInt(cursor
-				.getColumnIndex(ImageColumns.ORIENTATION));
+		int orientation = cursor.getInt(cursor.getColumnIndex(ImageColumns.ORIENTATION));
 		this.orientation = new Matrix();
 		this.orientation.setRotate(orientation);
 		cursor.close();
@@ -93,8 +92,7 @@ public class UserPicture implements Serializable {
 			return false;
 
 		ExifInterface exif = new ExifInterface(path);
-		int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-				ExifInterface.ORIENTATION_NORMAL);
+		int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
 		this.orientation = new Matrix();
 		switch (orientation) {
@@ -133,8 +131,7 @@ public class UserPicture implements Serializable {
 		InputStream input = resolver.openInputStream(uri);
 		Options options = new Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory
-				.decodeStream(resolver.openInputStream(uri), null, options);
+		BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
 
 		/*
 		 * The input stream could be reset instead of closed and reopened if it
@@ -178,13 +175,11 @@ public class UserPicture implements Serializable {
 
 		Options options = new Options();
 		options.inSampleSize = subSample;
-		Bitmap subSampled = BitmapFactory.decodeStream(
-				resolver.openInputStream(uri), null, options);
+		Bitmap subSampled = BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
 
 		Bitmap picture;
 		if (!orientation.isIdentity()) {
-			picture = Bitmap.createBitmap(subSampled, 0, 0, options.outWidth,
-					options.outHeight, orientation, false);
+			picture = Bitmap.createBitmap(subSampled, 0, 0, options.outWidth, options.outHeight, orientation, false);
 			subSampled.recycle();
 		} else
 			picture = subSampled;

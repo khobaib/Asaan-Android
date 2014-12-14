@@ -273,8 +273,7 @@ public final class Store extends com.google.api.client.json.GenericJson {
 	 * @param backgroundThumbnailUrl
 	 *            backgroundThumbnailUrl or {@code null} for none
 	 */
-	public Store setBackgroundThumbnailUrl(
-			java.lang.String backgroundThumbnailUrl) {
+	public Store setBackgroundThumbnailUrl(java.lang.String backgroundThumbnailUrl) {
 		this.backgroundThumbnailUrl = backgroundThumbnailUrl;
 		return this;
 	}

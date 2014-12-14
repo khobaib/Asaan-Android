@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenusAndMenuItems extends
-		com.google.api.client.json.GenericJson {
+public final class MenusAndMenuItems extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -66,8 +65,7 @@ public final class MenusAndMenuItems extends
 	 * @param menuItems
 	 *            menuItems or {@code null} for none
 	 */
-	public MenusAndMenuItems setMenuItems(
-			java.util.List<StoreMenuItem> menuItems) {
+	public MenusAndMenuItems setMenuItems(java.util.List<StoreMenuItem> menuItems) {
 		this.menuItems = menuItems;
 		return this;
 	}
@@ -83,8 +81,7 @@ public final class MenusAndMenuItems extends
 	 * @param menusAndSubmenus
 	 *            menusAndSubmenus or {@code null} for none
 	 */
-	public MenusAndMenuItems setMenusAndSubmenus(
-			java.util.List<StoreMenuHierarchy> menusAndSubmenus) {
+	public MenusAndMenuItems setMenusAndSubmenus(java.util.List<StoreMenuHierarchy> menusAndSubmenus) {
 		this.menusAndSubmenus = menusAndSubmenus;
 		return this;
 	}

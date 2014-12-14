@@ -39,19 +39,17 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public class Userendpoint extends
-		com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
+public class Userendpoint extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
 
 	// Note: Leave this static initializer at the top of the file.
 	static {
-		com.google.api.client.util.Preconditions
-				.checkState(
-						com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1
-								&& com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
-						"You are currently running with version %s of google-api-client. "
-								+ "You need at least version 1.15 of google-api-client to run version "
-								+ "1.18.0-rc of the userendpoint library.",
-						com.google.api.client.googleapis.GoogleUtils.VERSION);
+		com.google.api.client.util.Preconditions.checkState(
+				com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1
+						&& com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
+				"You are currently running with version %s of google-api-client. "
+						+ "You need at least version 1.15 of google-api-client to run version "
+						+ "1.18.0-rc of the userendpoint library.",
+				com.google.api.client.googleapis.GoogleUtils.VERSION);
 	}
 
 	/**
@@ -74,8 +72,7 @@ public class Userendpoint extends
 	 * The default encoded base URL of the service. This is determined when the
 	 * library is generated and normally should not be changed.
 	 */
-	public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL
-			+ DEFAULT_SERVICE_PATH;
+	public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL + DEFAULT_SERVICE_PATH;
 
 	/**
 	 * Constructor.
@@ -113,8 +110,7 @@ public class Userendpoint extends
 	 *            HTTP request initializer or {@code null} for none
 	 * @since 1.7
 	 */
-	public Userendpoint(
-			com.google.api.client.http.HttpTransport transport,
+	public Userendpoint(com.google.api.client.http.HttpTransport transport,
 			com.google.api.client.json.JsonFactory jsonFactory,
 			com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
 		this(new Builder(transport, jsonFactory, httpRequestInitializer));
@@ -129,8 +125,7 @@ public class Userendpoint extends
 	}
 
 	@Override
-	protected void initialize(
-			com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest)
+	protected void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest)
 			throws java.io.IOException {
 		super.initialize(httpClientRequest);
 	}
@@ -150,8 +145,7 @@ public class Userendpoint extends
 		return result;
 	}
 
-	public class GetUserAddresses
-			extends
+	public class GetUserAddresses extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddressCollection> {
 
 		private static final String REST_PATH = "useraddresscollection";
@@ -172,11 +166,7 @@ public class Userendpoint extends
 		 * @since 1.13
 		 */
 		protected GetUserAddresses() {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Userendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddressCollection.class);
 		}
 
@@ -231,15 +221,13 @@ public class Userendpoint extends
 	 * @param email
 	 * @return the request
 	 */
-	public GetUserByEmail getUserByEmail(java.lang.String email)
-			throws java.io.IOException {
+	public GetUserByEmail getUserByEmail(java.lang.String email) throws java.io.IOException {
 		GetUserByEmail result = new GetUserByEmail(email);
 		initialize(result);
 		return result;
 	}
 
-	public class GetUserByEmail
-			extends
+	public class GetUserByEmail extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User> {
 
 		private static final String REST_PATH = "user/{email}";
@@ -261,14 +249,10 @@ public class Userendpoint extends
 		 * @since 1.13
 		 */
 		protected GetUserByEmail(java.lang.String email) {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Userendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User.class);
-			this.email = com.google.api.client.util.Preconditions.checkNotNull(
-					email, "Required parameter email must be specified.");
+			this.email = com.google.api.client.util.Preconditions.checkNotNull(email,
+					"Required parameter email must be specified.");
 		}
 
 		@Override
@@ -342,8 +326,7 @@ public class Userendpoint extends
 		return result;
 	}
 
-	public class GetUserCards
-			extends
+	public class GetUserCards extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection> {
 
 		private static final String REST_PATH = "usercardcollection";
@@ -363,11 +346,7 @@ public class Userendpoint extends
 		 * @since 1.13
 		 */
 		protected GetUserCards() {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					null,
+			super(Userendpoint.this, "POST", REST_PATH, null,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection.class);
 		}
 
@@ -424,8 +403,7 @@ public class Userendpoint extends
 	 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User}
 	 * @return the request
 	 */
-	public SaveUser saveUser(
-			com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content)
+	public SaveUser saveUser(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content)
 			throws java.io.IOException {
 		SaveUser result = new SaveUser(content);
 		initialize(result);
@@ -453,8 +431,7 @@ public class Userendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User}
 		 * @since 1.13
 		 */
-		protected SaveUser(
-				com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content) {
+		protected SaveUser(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content) {
 			super(Userendpoint.this, "POST", REST_PATH, content, Void.class);
 		}
 
@@ -519,8 +496,7 @@ public class Userendpoint extends
 		return result;
 	}
 
-	public class SaveUserAddress
-			extends
+	public class SaveUserAddress extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddress> {
 
 		private static final String REST_PATH = "saveUserAddress";
@@ -543,13 +519,8 @@ public class Userendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddress}
 		 * @since 1.13
 		 */
-		protected SaveUserAddress(
-				com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddress content) {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveUserAddress(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddress content) {
+			super(Userendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserAddress.class);
 		}
 
@@ -606,16 +577,14 @@ public class Userendpoint extends
 	 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard}
 	 * @return the request
 	 */
-	public SaveUserCard saveUserCard(
-			com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard content)
+	public SaveUserCard saveUserCard(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard content)
 			throws java.io.IOException {
 		SaveUserCard result = new SaveUserCard(content);
 		initialize(result);
 		return result;
 	}
 
-	public class SaveUserCard
-			extends
+	public class SaveUserCard extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard> {
 
 		private static final String REST_PATH = "saveUserCard";
@@ -637,13 +606,8 @@ public class Userendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard}
 		 * @since 1.13
 		 */
-		protected SaveUserCard(
-				com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard content) {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveUserCard(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard content) {
+			super(Userendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard.class);
 		}
 
@@ -700,16 +664,14 @@ public class Userendpoint extends
 	 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User}
 	 * @return the request
 	 */
-	public SaveUserProfile saveUserProfile(
-			com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content)
+	public SaveUserProfile saveUserProfile(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content)
 			throws java.io.IOException {
 		SaveUserProfile result = new SaveUserProfile(content);
 		initialize(result);
 		return result;
 	}
 
-	public class SaveUserProfile
-			extends
+	public class SaveUserProfile extends
 			UserendpointRequest<com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User> {
 
 		private static final String REST_PATH = "saveUserProfile";
@@ -732,13 +694,8 @@ public class Userendpoint extends
 		 *            {@link com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User}
 		 * @since 1.13
 		 */
-		protected SaveUserProfile(
-				com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content) {
-			super(
-					Userendpoint.this,
-					"POST",
-					REST_PATH,
-					content,
+		protected SaveUserProfile(com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User content) {
+			super(Userendpoint.this, "POST", REST_PATH, content,
 					com.asaan.server.com.asaan.server.endpoint.userendpoint.model.User.class);
 		}
 
@@ -792,8 +749,7 @@ public class Userendpoint extends
 	 *
 	 * @since 1.3.0
 	 */
-	public static final class Builder
-			extends
+	public static final class Builder extends
 			com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient.Builder {
 
 		/**
@@ -828,12 +784,10 @@ public class Userendpoint extends
 		 *            HTTP request initializer or {@code null} for none
 		 * @since 1.7
 		 */
-		public Builder(
-				com.google.api.client.http.HttpTransport transport,
+		public Builder(com.google.api.client.http.HttpTransport transport,
 				com.google.api.client.json.JsonFactory jsonFactory,
 				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-			super(transport, jsonFactory, DEFAULT_ROOT_URL,
-					DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
+			super(transport, jsonFactory, DEFAULT_ROOT_URL, DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
 		}
 
 		/** Builds a new instance of {@link Userendpoint}. */
@@ -855,8 +809,7 @@ public class Userendpoint extends
 		@Override
 		public Builder setHttpRequestInitializer(
 				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-			return (Builder) super
-					.setHttpRequestInitializer(httpRequestInitializer);
+			return (Builder) super.setHttpRequestInitializer(httpRequestInitializer);
 		}
 
 		@Override
@@ -866,15 +819,12 @@ public class Userendpoint extends
 
 		@Override
 		public Builder setSuppressPatternChecks(boolean suppressPatternChecks) {
-			return (Builder) super
-					.setSuppressPatternChecks(suppressPatternChecks);
+			return (Builder) super.setSuppressPatternChecks(suppressPatternChecks);
 		}
 
 		@Override
-		public Builder setSuppressRequiredParameterChecks(
-				boolean suppressRequiredParameterChecks) {
-			return (Builder) super
-					.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
+		public Builder setSuppressRequiredParameterChecks(boolean suppressRequiredParameterChecks) {
+			return (Builder) super.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
 		}
 
 		@Override
@@ -887,17 +837,14 @@ public class Userendpoint extends
 		 *
 		 * @since 1.12
 		 */
-		public Builder setUserendpointRequestInitializer(
-				UserendpointRequestInitializer userendpointRequestInitializer) {
-			return (Builder) super
-					.setGoogleClientRequestInitializer(userendpointRequestInitializer);
+		public Builder setUserendpointRequestInitializer(UserendpointRequestInitializer userendpointRequestInitializer) {
+			return (Builder) super.setGoogleClientRequestInitializer(userendpointRequestInitializer);
 		}
 
 		@Override
 		public Builder setGoogleClientRequestInitializer(
 				com.google.api.client.googleapis.services.GoogleClientRequestInitializer googleClientRequestInitializer) {
-			return (Builder) super
-					.setGoogleClientRequestInitializer(googleClientRequestInitializer);
+			return (Builder) super.setGoogleClientRequestInitializer(googleClientRequestInitializer);
 		}
 	}
 }

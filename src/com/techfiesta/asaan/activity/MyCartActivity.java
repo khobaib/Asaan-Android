@@ -54,25 +54,21 @@ public class MyCartActivity extends Activity {
 		lvMyCart = (ListView) findViewById(R.id.lv_orders);
 		initDatabase();
 		OrderList = addItemDao.queryBuilder().list();
-		adapter = new MyCartListAdapter(getApplicationContext(),
-				R.layout.lv_row, OrderList);
+		adapter = new MyCartListAdapter(getApplicationContext(), R.layout.lv_row, OrderList);
 		lvMyCart.setAdapter(adapter);
 
 	}
 
 	private void ConvertToXml() {
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
-				.newInstance();
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
-			DocumentBuilder documentBuilder = documentBuilderFactory
-					.newDocumentBuilder();
+			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.newDocument();
 
 			Element root = document.createElement("CHECKREQUESTS");
 			root.setAttribute("ADDCHECK EXTCHECKID", "Nirav");
 			root.setAttribute("READYTIME", "4:45PM");
-			root.setAttribute("NOTE",
-					"Please make it spicy - no Peanuts Please");
+			root.setAttribute("NOTE", "Please make it spicy - no Peanuts Please");
 			root.setAttribute("ORDERMODE", "1");
 			document.appendChild(root);
 
@@ -98,24 +94,17 @@ public class MyCartActivity extends Activity {
 			String strOrderFor = "Nirav";
 			String strOrderReadyTime = "4:45PM";
 			String strNote = "Please make it spicy - no Peanuts Please";
-			String strOrder = "" + "<CHECKREQUESTS>"
-					+ "<ADDCHECK EXTCHECKID=\"" + strOrderFor
-					+ "\" READYTIME=\"" + strOrderReadyTime + "\" NOTE=\""
-					+ strNote + "\" ORDERMODE=\"@ORDER_MODE\" >"
-					+ "<ITEMREQUESTS>"
-					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Nirav\" >"
-					+ "<MODITEM ITEMID=\"90204\" />" + "</ADDITEM>"
-					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Khobaib\" >"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90204\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90201\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90302\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"91501\" />" + "</ADDITEM>"
-					+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
+					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
+					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Nirav\" >" + "<MODITEM ITEMID=\"90204\" />"
+					+ "</ADDITEM>" + "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Khobaib\" >"
+					+ "<MODITEM QTY=\"1\" ITEMID=\"90204\" />" + "<MODITEM QTY=\"1\" ITEMID=\"90201\" />"
+					+ "<MODITEM QTY=\"1\" ITEMID=\"90302\" />" + "<MODITEM QTY=\"1\" ITEMID=\"91501\" />"
+					+ "</ADDITEM>" + "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
 
 			PlaceOrder PlaceOrderReq;
 			try {
-				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder(
-						(long) 1, 1, strOrder);
+				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
 				headers.put(USER_AUTH_TOKEN_HEADER_NAME, params[0]);
 				StoreOrder order = PlaceOrderReq.execute();

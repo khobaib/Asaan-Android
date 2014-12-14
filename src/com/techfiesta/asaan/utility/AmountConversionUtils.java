@@ -7,8 +7,7 @@ import java.text.ParseException;
 import android.text.TextUtils;
 
 public class AmountConversionUtils {
-	private static final NumberFormat FORMAT_CURRENCY = NumberFormat
-			.getCurrencyInstance();
+	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
 
 	/**
 	 * Parses an amount into cents.
@@ -50,9 +49,7 @@ public class AmountConversionUtils {
 		v_bigDec = v_bigDec.setScale(2, BigDecimal.ROUND_HALF_UP);
 		v_bigDec = v_bigDec.movePointLeft(2);
 		String v_currency = FORMAT_CURRENCY.format(v_bigDec.doubleValue());
-		return v_currency
-				.replace(FORMAT_CURRENCY.getCurrency().getSymbol(), "")
-				.replace(",", "");
+		return v_currency.replace(FORMAT_CURRENCY.getCurrency().getSymbol(), "").replace(",", "");
 	}
 
 	/**

@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class UserAddressCollection extends
-		com.google.api.client.json.GenericJson {
+public final class UserAddressCollection extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.

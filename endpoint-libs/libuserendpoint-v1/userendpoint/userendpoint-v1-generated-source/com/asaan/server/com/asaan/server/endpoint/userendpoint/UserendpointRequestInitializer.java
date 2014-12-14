@@ -26,8 +26,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * </p>
  *
  * <pre>
- * public static final GoogleClientRequestInitializer KEY_INITIALIZER = new UserendpointRequestInitializer(
- * 		KEY);
+ * public static final GoogleClientRequestInitializer KEY_INITIALIZER = new UserendpointRequestInitializer(KEY);
  * </pre>
  *
  * <p>
@@ -35,8 +34,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * </p>
  *
  * <pre>
- * public static final GoogleClientRequestInitializer INITIALIZER = new UserendpointRequestInitializer(
- * 		KEY, USER_IP);
+ * public static final GoogleClientRequestInitializer INITIALIZER = new UserendpointRequestInitializer(KEY, USER_IP);
  * </pre>
  *
  * <p>
@@ -80,8 +78,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  *
  * @since 1.12
  */
-public class UserendpointRequestInitializer
-		extends
+public class UserendpointRequestInitializer extends
 		com.google.api.client.googleapis.services.json.CommonGoogleJsonClientRequestInitializer {
 
 	public UserendpointRequestInitializer() {
@@ -126,7 +123,6 @@ public class UserendpointRequestInitializer
 	 * @throws java.io.IOException
 	 *             I/O exception
 	 */
-	protected void initializeUserendpointRequest(UserendpointRequest<?> request)
-			throws java.io.IOException {
+	protected void initializeUserendpointRequest(UserendpointRequest<?> request) throws java.io.IOException {
 	}
 }

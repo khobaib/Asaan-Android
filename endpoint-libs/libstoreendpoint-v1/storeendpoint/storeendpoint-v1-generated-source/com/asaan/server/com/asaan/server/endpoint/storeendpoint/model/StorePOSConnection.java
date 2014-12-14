@@ -32,8 +32,7 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StorePOSConnection extends
-		com.google.api.client.json.GenericJson {
+public final class StorePOSConnection extends com.google.api.client.json.GenericJson {
 
 	/**
 	 * The value may be {@code null}.
@@ -224,8 +223,7 @@ public final class StorePOSConnection extends
 	 * @param hiddenHeaderName
 	 *            hiddenHeaderName or {@code null} for none
 	 */
-	public StorePOSConnection setHiddenHeaderName(
-			java.lang.String hiddenHeaderName) {
+	public StorePOSConnection setHiddenHeaderName(java.lang.String hiddenHeaderName) {
 		this.hiddenHeaderName = hiddenHeaderName;
 		return this;
 	}
@@ -241,8 +239,7 @@ public final class StorePOSConnection extends
 	 * @param hiddenHeaderValue
 	 *            hiddenHeaderValue or {@code null} for none
 	 */
-	public StorePOSConnection setHiddenHeaderValue(
-			java.lang.String hiddenHeaderValue) {
+	public StorePOSConnection setHiddenHeaderValue(java.lang.String hiddenHeaderValue) {
 		this.hiddenHeaderValue = hiddenHeaderValue;
 		return this;
 	}

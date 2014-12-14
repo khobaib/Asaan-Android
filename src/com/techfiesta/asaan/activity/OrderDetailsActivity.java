@@ -57,10 +57,8 @@ public class OrderDetailsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.order_details);
-		final Button btnPlaceOrder = (Button) this
-				.findViewById(R.id.btn_place_order);
-		final ListView listView = (ListView) this
-				.findViewById(R.id.list_ordered_items);
+		final Button btnPlaceOrder = (Button) this.findViewById(R.id.btn_place_order);
+		final ListView listView = (ListView) this.findViewById(R.id.list_ordered_items);
 		initDatabaseAndPopuateList();
 		mAdapter = new OrderDetailsAdapter();
 		mAdapter.setup(this);
@@ -70,17 +68,14 @@ public class OrderDetailsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
-						+ Constants.ORDER_TYPE_DELIVERY
-						+ "\">"
-						+ "<ITEMREQUESTS>";
+						+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
 
 				for (AddItem addItem : orderList) {
-					orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity()
-							+ "\" ITEMID=\"" + addItem.getItem_id() + "\">";
+					orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
+							+ "\">";
 
 					for (ModItem mod : addItem.getMod_items())
-						orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id()
-								+ "\">";
+						orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
 					orderXML += "</ADDITEM>";
 				}
 				orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
@@ -141,20 +136,15 @@ public class OrderDetailsActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
 			if (rowView == null) {
-				final LayoutInflater inflater = (LayoutInflater) getActivity()
-						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
+						Context.LAYOUT_INFLATER_SERVICE);
 				rowView = inflater.inflate(R.layout.order_details_row, null);
 				final ViewHolder viewHolder = new ViewHolder();
-				viewHolder.txtName = (TextView) rowView
-						.findViewById(R.id.txt_item_name);
-				viewHolder.txtDescription = (TextView) rowView
-						.findViewById(R.id.txt_item_description);
-				viewHolder.txtPrice = (TextView) rowView
-						.findViewById(R.id.txt_item_price);
-				viewHolder.txtQuantity = (TextView) rowView
-						.findViewById(R.id.txt_item_quantity);
-				viewHolder.txtInstructions = (TextView) rowView
-						.findViewById(R.id.txt_item_instructions);
+				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
+				viewHolder.txtDescription = (TextView) rowView.findViewById(R.id.txt_item_description);
+				viewHolder.txtPrice = (TextView) rowView.findViewById(R.id.txt_item_price);
+				viewHolder.txtQuantity = (TextView) rowView.findViewById(R.id.txt_item_quantity);
+				viewHolder.txtInstructions = (TextView) rowView.findViewById(R.id.txt_item_instructions);
 				rowView.setTag(viewHolder);
 			}
 			final ViewHolder holder = (ViewHolder) rowView.getTag();
@@ -162,8 +152,7 @@ public class OrderDetailsActivity extends Activity {
 			final AddItem addItem = orderList.get(position);
 
 			holder.txtName.setText(addItem.getItem_name());
-			holder.txtPrice.setText(AsaanUtility.formatCentsToCurrency(addItem
-					.getPrice()));
+			holder.txtPrice.setText(AsaanUtility.formatCentsToCurrency(addItem.getPrice()));
 			holder.txtQuantity.setText("" + addItem.getQuantity());
 
 			if (addItem.getOrder_for().equals("")) {

@@ -64,8 +64,7 @@ public class PlaceOrderActivity extends Activity {
 
 	private boolean menuItemHasModifiers;
 
-	private static final Logger logger = Logger
-			.getLogger(PlaceOrderActivity.class.getName());
+	private static final Logger logger = Logger.getLogger(PlaceOrderActivity.class.getName());
 	public static final int SELECTED_MODIFIERS_RESULT_CODE = 9600;
 	public static final String SELECTED_MODIFIERS = "SELECTED_MODIFIERS";
 	public static final String SELECTED_MODIFIERS_DESC = "SELECTED_MODIFIERS_DESC";
@@ -95,17 +94,12 @@ public class PlaceOrderActivity extends Activity {
 		setContentView(R.layout.menu_modifier_group);
 
 		Bundle bundle = this.getIntent().getExtras();
-		menuItemPOSId = bundle
-				.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
-		menuItemPrice = bundle
-				.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
+		menuItemPOSId = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
+		menuItemPrice = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
 		Log.e("PRICE", "" + menuItemPrice + "  " + menuItemPOSId);
-		menuItemShortDesc = bundle
-				.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
-		menuItemLongDesc = bundle
-				.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
-		menuItemHasModifiers = bundle.getBoolean(
-				MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
+		menuItemShortDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
+		menuItemLongDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
+		menuItemHasModifiers = bundle.getBoolean(MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
 
 		initUI();
 
@@ -168,12 +162,10 @@ public class PlaceOrderActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode != SELECTED_MODIFIERS_RESULT_CODE
-				|| resultCode != RESULT_OK)
+		if (requestCode != SELECTED_MODIFIERS_RESULT_CODE || resultCode != RESULT_OK)
 			return;
 
-		ArrayList<Integer> modSelections = data
-				.getIntegerArrayListExtra(SELECTED_MODIFIERS);
+		ArrayList<Integer> modSelections = data.getIntegerArrayListExtra(SELECTED_MODIFIERS);
 		String modDesc = data.getExtras().getString(SELECTED_MODIFIERS_DESC);
 		long modPrice = data.getExtras().getLong(SELECTED_MODIFIERS_PRICE);
 		if (modSelections == null || modSelections.size() == 0)
@@ -234,8 +226,7 @@ public class PlaceOrderActivity extends Activity {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				mAdapter.listItemClick(position);
 			}
 
@@ -265,30 +256,23 @@ public class PlaceOrderActivity extends Activity {
 				// txtSpecialInstructions.getText().toString();
 				// MainActivity.orderedItems.add(oi);
 				// finish();
-				int current = AsaanUtility
-						.getCurrentOrderedStoredId(PlaceOrderActivity.this);
-				if (current == AsaanUtility.selectedStore.getId().intValue()
-						|| current == -1) {
+				int current = AsaanUtility.getCurrentOrderedStoredId(PlaceOrderActivity.this);
+				if (current == AsaanUtility.selectedStore.getId().intValue() || current == -1) {
 					initDatabase();
 					long count = addItemDao.count();
-					int quantity = Integer.parseInt(txtQuantity.getText()
-							.toString());
+					int quantity = Integer.parseInt(txtQuantity.getText().toString());
 					int total_cost;
 					if (menuItemHasModifiers) {
-						total_cost = (int) (menuItemPrice + mAdapter
-								.getFinalPrice()) * quantity;
+						total_cost = (int) (menuItemPrice + mAdapter.getFinalPrice()) * quantity;
 						Log.e("MSG", "" + mAdapter.getFinalPrice());
 					} else
 						total_cost = (menuItemPrice) * quantity;
-					addItem = new AddItem(count + 1, AsaanUtility.selectedStore
-							.getId().intValue(), total_cost, menuItemShortDesc,
-							quantity, menuItemPOSId, txtSpecialInstructions
-									.getText().toString());
+					addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
+							menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
 					addItemDao.insert(addItem);
 					// to do
 					if (menuItemHasModifiers) {
-						ArrayList<ModItem> list = mAdapter
-								.getSelecteedModifiersList((int) count + 1);
+						ArrayList<ModItem> list = mAdapter.getSelecteedModifiersList((int) count + 1);
 						if (list != null) {
 							for (int i = 0; i < list.size(); i++) {
 								modItemDao.insert(list.get(i));
@@ -296,9 +280,8 @@ public class PlaceOrderActivity extends Activity {
 						}
 					}
 					toast("Order saved");
-					AsaanUtility.setCurrentOrderdStoreId(
-							PlaceOrderActivity.this, AsaanUtility.selectedStore
-									.getId().intValue());
+					AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this, AsaanUtility.selectedStore.getId()
+							.intValue());
 					finish();
 				} else
 					alert(PlaceOrderActivity.this,
@@ -325,8 +308,7 @@ public class PlaceOrderActivity extends Activity {
 		String strQuantity = (String) txtQuantity.getText();
 		long finalPrice;
 		if (menuItemHasModifiers)
-			finalPrice = (menuItemPrice + mAdapter.getFinalPrice())
-					* Long.parseLong(strQuantity);
+			finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
 		else
 			finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
 
@@ -356,30 +338,22 @@ public class PlaceOrderActivity extends Activity {
 		}
 
 		@SuppressLint("UseSparseArrays")
-		public void setup(PlaceOrderActivity menuModGrpActivity,
-				long menuItemPOSId) {
-			weakActivity = new WeakReference<PlaceOrderActivity>(
-					menuModGrpActivity);
+		public void setup(PlaceOrderActivity menuModGrpActivity, long menuItemPOSId) {
+			weakActivity = new WeakReference<PlaceOrderActivity>(menuModGrpActivity);
 			if (PlaceOrderActivity.menuItemModifiersAndGroups == null
-					|| PlaceOrderActivity.menuItemModifiersAndGroups
-							.getModifierGroups() == null
-					|| PlaceOrderActivity.menuItemModifiersAndGroups
-							.getModifiers() == null)
+					|| PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups() == null
+					|| PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers() == null)
 				return;
 			for (StoreMenuItemModifierGroup storeMenuItemModifierGroup : PlaceOrderActivity.menuItemModifiersAndGroups
 					.getModifierGroups()) {
 				if (storeMenuItemModifierGroup.getMenuItemPOSId() == menuItemPOSId) {
 					ModifierGroup modifierGroup = new ModifierGroup();
-					modifierGroup.posId = storeMenuItemModifierGroup
-							.getModifierGroupPOSId();
+					modifierGroup.posId = storeMenuItemModifierGroup.getModifierGroupPOSId();
 					modifierGroup.selectedModifiers = new ArrayList<Integer>();
-					for (StoreMenuItemModifier modifier : PlaceOrderActivity.menuItemModifiersAndGroups
-							.getModifiers()) {
+					for (StoreMenuItemModifier modifier : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
 						if (modifier.getModifierGroupPOSId() == modifierGroup.posId) {
-							modifierGroup.posShortDesc = modifier
-									.getShortDescription();
-							modifierGroup.posLongDesc = modifier
-									.getLongDescription();
+							modifierGroup.posShortDesc = modifier.getShortDescription();
+							modifierGroup.posLongDesc = modifier.getLongDescription();
 							break;
 						}
 					}
@@ -407,9 +381,8 @@ public class PlaceOrderActivity extends Activity {
 			for (ModifierGroup modifierGroup : modifierGroups) {
 				if (modifierGroup.selectedModifiers == null)
 					continue;
-				ModItem modItem = new ModItem(-1, (int) modifierGroup.posId,
-						parent_id, modifierGroup.selectedModifierDesc,
-						(int) modifierGroup.selectedModifierPrice);
+				ModItem modItem = new ModItem(-1, (int) modifierGroup.posId, parent_id,
+						modifierGroup.selectedModifierDesc, (int) modifierGroup.selectedModifierPrice);
 				modItemList.add(modItem);
 
 			}
@@ -417,10 +390,8 @@ public class PlaceOrderActivity extends Activity {
 			return modItemList;
 		}
 
-		public void setModGroupSelections(ArrayList<Integer> modSelections,
-				String modDesc, long modPrice) {
-			ModifierGroup modifierGroup = modifierGroups
-					.get(listItemClickPosition);
+		public void setModGroupSelections(ArrayList<Integer> modSelections, String modDesc, long modPrice) {
+			ModifierGroup modifierGroup = modifierGroups.get(listItemClickPosition);
 			modifierGroup.selectedModifiers = modSelections;
 			modifierGroup.selectedModifierDesc = modDesc;
 			modifierGroup.selectedModifierPrice = modPrice;
@@ -431,17 +402,11 @@ public class PlaceOrderActivity extends Activity {
 			listItemClickPosition = position;
 			long selectedModGrpId = getItem(position).posId;
 
-			Intent intent = new Intent(getActivity(),
-					MenuModifierActivity.class);
-			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID,
-					selectedModGrpId);
-			ModifierGroup modifierGroup = modifierGroups
-					.get(listItemClickPosition);
-			intent.putIntegerArrayListExtra(
-					PlaceOrderActivity.SELECTED_MODIFIERS,
-					modifierGroup.selectedModifiers);
-			getActivity().startActivityForResult(intent,
-					SELECTED_MODIFIERS_RESULT_CODE);
+			Intent intent = new Intent(getActivity(), MenuModifierActivity.class);
+			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID, selectedModGrpId);
+			ModifierGroup modifierGroup = modifierGroups.get(listItemClickPosition);
+			intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, modifierGroup.selectedModifiers);
+			getActivity().startActivityForResult(intent, SELECTED_MODIFIERS_RESULT_CODE);
 
 		}
 
@@ -476,13 +441,10 @@ public class PlaceOrderActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
 			if (rowView == null) {
-				rowView = View.inflate(getActivity(),
-						R.layout.menu_modifier_group_row, null);
+				rowView = View.inflate(getActivity(), R.layout.menu_modifier_group_row, null);
 				ViewHolder viewHolder = new ViewHolder();
-				viewHolder.txtName = (TextView) rowView
-						.findViewById(R.id.txt_item_name);
-				viewHolder.txtDescription = (TextView) rowView
-						.findViewById(R.id.txt_item_desc);
+				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
+				viewHolder.txtDescription = (TextView) rowView.findViewById(R.id.txt_item_desc);
 				rowView.setTag(viewHolder);
 			}
 			ViewHolder holder = (ViewHolder) rowView.getTag();
@@ -529,8 +491,7 @@ public class PlaceOrderActivity extends Activity {
 	}
 
 	private void alert(final Context context, String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(context,
-				AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
 		// bld.setTitle(context.getResources().getText(R.string.app_name));
 		bld.setTitle(R.string.app_name);
 		bld.setMessage(message);

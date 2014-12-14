@@ -25,8 +25,7 @@ import com.techfiesta.asaan.R;
 
 public class LoginChooserActivity extends Activity {
 
-	private static final String TAG = LoginChooserActivity.class
-			.getSimpleName();
+	private static final String TAG = LoginChooserActivity.class.getSimpleName();
 
 	Context mContext;
 	ParseUser currentUser;
@@ -40,8 +39,7 @@ public class LoginChooserActivity extends Activity {
 		setContentView(R.layout.activity_login_chooser);
 		mContext = LoginChooserActivity.this;
 
-		Typeface tf = Typeface.createFromAsset(getAssets(),
-				"font/helvetica_neue_thn.ttf");
+		Typeface tf = Typeface.createFromAsset(getAssets(), "font/helvetica_neue_thn.ttf");
 		TextView Title = (TextView) findViewById(R.id.tv_title);
 		Title.setTypeface(tf);
 		// buildStoreEndpoint();
@@ -118,8 +116,7 @@ public class LoginChooserActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (ParseFacebookUtils.getSession() != null) {
-			ParseFacebookUtils.finishAuthentication(requestCode, resultCode,
-					data);
+			ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
 		}
 	}
 
@@ -173,62 +170,52 @@ public class LoginChooserActivity extends Activity {
 	}
 
 	private void makeMeRequest() {
-		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
-				new Request.GraphUserCallback() {
+		Request request = Request.newMeRequest(ParseFacebookUtils.getSession(), new Request.GraphUserCallback() {
 
-					@Override
-					public void onCompleted(GraphUser user,
-							com.facebook.Response response) {
-						if (user != null) {
-							// JSONObject userObj = user.getInnerJSONObject();
-							try {
-								// populate data from user profile
-								String firstName = user.getFirstName();
-								String lastName = user.getLastName();
-								String email = (String) user
-										.getProperty("email");
-								URL profilePhotoUrl = new URL(
-										"https://graph.facebook.com/"
-												+ user.getId()
-												+ "/picture?type=small");
-								// String mUrl =
-								// userObj.getJSONObject("picture").getJSONObject("data").getString("url");
+			@Override
+			public void onCompleted(GraphUser user, com.facebook.Response response) {
+				if (user != null) {
+					// JSONObject userObj = user.getInnerJSONObject();
+					try {
+						// populate data from user profile
+						String firstName = user.getFirstName();
+						String lastName = user.getLastName();
+						String email = (String) user.getProperty("email");
+						URL profilePhotoUrl = new URL("https://graph.facebook.com/" + user.getId()
+								+ "/picture?type=small");
+						// String mUrl =
+						// userObj.getJSONObject("picture").getJSONObject("data").getString("url");
 
-								// Save the user profile info in a user property
-								ParseUser localcurrentUser = ParseUser
-										.getCurrentUser();
-								localcurrentUser.put("firstName", firstName);
-								localcurrentUser.put("lastName", lastName);
-								localcurrentUser.put("email", email);
-								localcurrentUser.put("profilePhotoUrl",
-										profilePhotoUrl.toString());
-								localcurrentUser.saveInBackground();
-								Log.d("SUCESS", "Data set success");
+						// Save the user profile info in a user property
+						ParseUser localcurrentUser = ParseUser.getCurrentUser();
+						localcurrentUser.put("firstName", firstName);
+						localcurrentUser.put("lastName", lastName);
+						localcurrentUser.put("email", email);
+						localcurrentUser.put("profilePhotoUrl", profilePhotoUrl.toString());
+						localcurrentUser.saveInBackground();
+						Log.d("SUCESS", "Data set success");
 
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-
-						} else if (response.getError() != null) {
-							/*
-							 * if ((response.getError().getCategory() ==
-							 * FacebookRequestError
-							 * .Category.AUTHENTICATION_RETRY) ||
-							 * (response.getError().getCategory() ==
-							 * FacebookRequestError
-							 * .Category.AUTHENTICATION_REOPEN_SESSION)) {
-							 * Log.d("ERROR",
-							 * "The facebook session was invalidated."); } else
-							 * {
-							 */
-							Log.d("ERROR", "Some other error: "
-									+ response.getError().getErrorMessage());
-							// }
-						}
-
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 
-				});
+				} else if (response.getError() != null) {
+					/*
+					 * if ((response.getError().getCategory() ==
+					 * FacebookRequestError .Category.AUTHENTICATION_RETRY) ||
+					 * (response.getError().getCategory() ==
+					 * FacebookRequestError
+					 * .Category.AUTHENTICATION_REOPEN_SESSION)) {
+					 * Log.d("ERROR", "The facebook session was invalidated.");
+					 * } else {
+					 */
+					Log.d("ERROR", "Some other error: " + response.getError().getErrorMessage());
+					// }
+				}
+
+			}
+
+		});
 		request.executeAsync();
 
 	}

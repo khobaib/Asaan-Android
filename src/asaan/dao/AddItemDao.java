@@ -23,20 +23,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
 	 * Can be used for QueryBuilder and for referencing column names.
 	 */
 	public static class Properties {
-		public final static Property Id = new Property(0, Long.class, "id",
-				true, "_id");
-		public final static Property Store_id = new Property(1, int.class,
-				"store_id", false, "STORE_ID");
-		public final static Property Price = new Property(2, int.class,
-				"price", false, "PRICE");
-		public final static Property Item_name = new Property(3, String.class,
-				"item_name", false, "ITEM_NAME");
-		public final static Property Quantity = new Property(4, int.class,
-				"quantity", false, "QUANTITY");
-		public final static Property Item_id = new Property(5, int.class,
-				"item_id", false, "ITEM_ID");
-		public final static Property Order_for = new Property(6, String.class,
-				"order_for", false, "ORDER_FOR");
+		public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+		public final static Property Store_id = new Property(1, int.class, "store_id", false, "STORE_ID");
+		public final static Property Price = new Property(2, int.class, "price", false, "PRICE");
+		public final static Property Item_name = new Property(3, String.class, "item_name", false, "ITEM_NAME");
+		public final static Property Quantity = new Property(4, int.class, "quantity", false, "QUANTITY");
+		public final static Property Item_id = new Property(5, int.class, "item_id", false, "ITEM_ID");
+		public final static Property Order_for = new Property(6, String.class, "order_for", false, "ORDER_FOR");
 	};
 
 	private DaoSession daoSession;
@@ -65,8 +58,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
 
 	/** Drops the underlying database table. */
 	public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "")
-				+ "'ADD_ITEM'";
+		String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "'ADD_ITEM'";
 		db.execSQL(sql);
 	}
 
@@ -117,8 +109,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
 	/** @inheritdoc */
 	@Override
 	public void readEntity(Cursor cursor, AddItem entity, int offset) {
-		entity.setId(cursor.isNull(offset + 0) ? null : cursor
-				.getLong(offset + 0));
+		entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
 		entity.setStore_id(cursor.getInt(offset + 1));
 		entity.setPrice(cursor.getInt(offset + 2));
 		entity.setItem_name(cursor.getString(offset + 3));

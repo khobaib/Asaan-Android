@@ -35,8 +35,7 @@ public class AddItem {
 		this.id = id;
 	}
 
-	public AddItem(Long id, int store_id, int price, String item_name,
-			int quantity, int item_id, String order_for) {
+	public AddItem(Long id, int store_id, int price, String item_name, int quantity, int item_id, String order_for) {
 		this.id = id;
 		this.store_id = store_id;
 		this.price = price;

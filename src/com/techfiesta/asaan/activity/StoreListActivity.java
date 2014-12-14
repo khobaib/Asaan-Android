@@ -60,9 +60,8 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class StoreListActivity extends FragmentActivity implements
-		GooglePlayServicesClient.OnConnectionFailedListener, LocationListener,
-		GooglePlayServicesClient.ConnectionCallbacks {
+public class StoreListActivity extends FragmentActivity implements GooglePlayServicesClient.OnConnectionFailedListener,
+		LocationListener, GooglePlayServicesClient.ConnectionCallbacks {
 	private GoogleMap mMap;
 	private LocationManager locationManager;
 	private static final long MIN_TIME = 400;
@@ -96,21 +95,18 @@ public class StoreListActivity extends FragmentActivity implements
 		// init database
 		initDatabase();
 		Log.e("stop", "oncreate");
-		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(
-				R.layout.activity_store_list, null);
+		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_store_list, null);
 		StoreListActivity.this.setContentView(viewToLoad);
 
 		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
 		storeListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				Store store = storeList.get(position);
 				// String json=convertModelStoreToJsonStrig(store);
 				AsaanUtility.selectedStore = store;
-				Intent intent = new Intent(StoreListActivity.this,
-						StoreDetailsActivityNew.class);
+				Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivityNew.class);
 				// intent.putExtra("store",json);
 
 				startActivity(intent);
@@ -123,11 +119,9 @@ public class StoreListActivity extends FragmentActivity implements
 			Log.e("status", "loading from local db");
 			loadStoresFromDatabase();
 			if (mLocation == null) {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this,
-						storeList);
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
 			} else {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this,
-						storeList, mLocation);
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
 			}
 			storeListView.setAdapter(storeListAdapter);
 
@@ -234,8 +228,7 @@ public class StoreListActivity extends FragmentActivity implements
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			try {
-				storeCollection = SplashActivity.mStoreendpoint.getStores(
-						INITIAL_POSITION, MAX_RESULT).execute();
+				storeCollection = SplashActivity.mStoreendpoint.getStores(INITIAL_POSITION, MAX_RESULT).execute();
 				Log.e("StoreList Size", "" + storeCollection.getItems().size());
 			} catch (IOException e) {
 
@@ -249,11 +242,9 @@ public class StoreListActivity extends FragmentActivity implements
 			// setting list
 			storeList = storeCollection.getItems();
 			if (mLocation == null) {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this,
-						storeList);
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
 			} else {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this,
-						storeList, mLocation);
+				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
 			}
 			storeListView.setAdapter(storeListAdapter);
 			saveStoreToDatabase();
@@ -268,8 +259,7 @@ public class StoreListActivity extends FragmentActivity implements
 				DStore dStore = new DStore();
 				dStore.setAddress(store.getAddress());
 				dStore.setBackgroundImageUrl(store.getBackgroundImageUrl());
-				dStore.setBackgroundThumbnailUrl(store
-						.getBackgroundThumbnailUrl());
+				dStore.setBackgroundThumbnailUrl(store.getBackgroundThumbnailUrl());
 				dStore.setBeaconId(store.getBeaconId());
 				dStore.setBssid(store.getBssid());
 				dStore.setCity(store.getCity());
@@ -303,14 +293,12 @@ public class StoreListActivity extends FragmentActivity implements
 				dStoreDao.insert(dStore);
 				if (store.getTrophies() != null) {
 					for (int j = 0; j < store.getTrophies().size(); j++) {
-						long rownum = trophiesDao.insert(new Trophies(store
-								.getTrophies().get(j), store.getId()));
+						long rownum = trophiesDao.insert(new Trophies(store.getTrophies().get(j), store.getId()));
 						Log.e("status", rownum + "");
 					}
 				}
 			}
-			AsaanUtility.seLastUpDatedTime(StoreListActivity.this,
-					System.currentTimeMillis());
+			AsaanUtility.seLastUpDatedTime(StoreListActivity.this, System.currentTimeMillis());
 
 		}
 
@@ -331,16 +319,14 @@ public class StoreListActivity extends FragmentActivity implements
 
 		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
 			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			boolean isNetworkEnabled = locationManager
-					.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+			boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			if (isNetworkEnabled)
 				startLocationTracking();
 			else {
 				showSettingsAlert();
 			}
 		} else
-			AsaanUtility.simpleAlert(StoreListActivity.this,
-					"Please check your internet connection");
+			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
 
 		// locationManager = (LocationManager)
 		// getSystemService(Context.LOCATION_SERVICE);
@@ -350,35 +336,29 @@ public class StoreListActivity extends FragmentActivity implements
 	}
 
 	public void showSettingsAlert() {
-		Log.d(">>>> GPS TRACKER <<<<<<",
-				"in showSettingsAlert method - TRYING TO ACTIVATE LOCATION SETTINGS");
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-				StoreListActivity.this);
+		Log.d(">>>> GPS TRACKER <<<<<<", "in showSettingsAlert method - TRYING TO ACTIVATE LOCATION SETTINGS");
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(StoreListActivity.this);
 
 		// Setting Dialog Title
 		alertDialog.setTitle("Location Settings");
 
 		// Setting Dialog Message
-		alertDialog
-				.setMessage("Google's Location Service is not enabled. Do you want to go to settings menu?");
+		alertDialog.setMessage("Google's Location Service is not enabled. Do you want to go to settings menu?");
 
 		// On pressing Settings button
-		alertDialog.setPositiveButton("Settings",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Intent intent = new Intent(
-								Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-						startActivityForResult(intent, 1);
-					}
-				});
+		alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivityForResult(intent, 1);
+			}
+		});
 
 		// on pressing cancel button
-		alertDialog.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
+		alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
 
 		// Showing Alert Message
 		alertDialog.show();
@@ -426,8 +406,7 @@ public class StoreListActivity extends FragmentActivity implements
 				}
 			}
 		} else
-			AsaanUtility.simpleAlert(StoreListActivity.this,
-					"Please check your internet connection");
+			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
 		return false;
 	}
 
@@ -439,8 +418,7 @@ public class StoreListActivity extends FragmentActivity implements
 	public void onLocationChanged(Location location) {
 
 		test_count = test_count + 1;
-		Toast.makeText(StoreListActivity.this, "location changed.",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(StoreListActivity.this, "location changed.", Toast.LENGTH_SHORT).show();
 		AsaanUtility.mLocation = location;
 
 		mLocation = location;
@@ -482,8 +460,7 @@ public class StoreListActivity extends FragmentActivity implements
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		if (requestCode == 1) {
 			Log.e("MSG", "onactivity result");

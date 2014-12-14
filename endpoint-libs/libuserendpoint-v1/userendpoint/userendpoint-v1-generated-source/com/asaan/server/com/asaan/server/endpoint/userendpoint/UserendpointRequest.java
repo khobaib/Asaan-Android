@@ -24,8 +24,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * @since 1.3
  */
 @SuppressWarnings("javadoc")
-public abstract class UserendpointRequest<T>
-		extends
+public abstract class UserendpointRequest<T> extends
 		com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<T> {
 
 	/**
@@ -45,8 +44,8 @@ public abstract class UserendpointRequest<T>
 	 * @param responseClass
 	 *            response class to parse into
 	 */
-	public UserendpointRequest(Userendpoint client, String method,
-			String uriTemplate, Object content, Class<T> responseClass) {
+	public UserendpointRequest(Userendpoint client, String method, String uriTemplate, Object content,
+			Class<T> responseClass) {
 		super(client, method, uriTemplate, content, responseClass);
 	}
 
@@ -202,15 +201,12 @@ public abstract class UserendpointRequest<T>
 	}
 
 	@Override
-	public UserendpointRequest<T> setDisableGZipContent(
-			boolean disableGZipContent) {
-		return (UserendpointRequest<T>) super
-				.setDisableGZipContent(disableGZipContent);
+	public UserendpointRequest<T> setDisableGZipContent(boolean disableGZipContent) {
+		return (UserendpointRequest<T>) super.setDisableGZipContent(disableGZipContent);
 	}
 
 	@Override
-	public UserendpointRequest<T> setRequestHeaders(
-			com.google.api.client.http.HttpHeaders headers) {
+	public UserendpointRequest<T> setRequestHeaders(com.google.api.client.http.HttpHeaders headers) {
 		return (UserendpointRequest<T>) super.setRequestHeaders(headers);
 	}
 

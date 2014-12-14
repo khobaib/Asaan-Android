@@ -15,8 +15,7 @@ public class MyTabListener<T extends Fragment> implements TabListener {
 
 	private Fragment mFragment; // current fragment
 
-	public MyTabListener(Activity activity, String tag, Class<T> clz,
-			Bundle bundle) {
+	public MyTabListener(Activity activity, String tag, Class<T> clz, Bundle bundle) {
 		mActivity = activity;
 		mTag = tag;
 		mClass = clz;
@@ -25,11 +24,9 @@ public class MyTabListener<T extends Fragment> implements TabListener {
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		final Fragment preInitializedFragment = mActivity.getFragmentManager()
-				.findFragmentByTag(mTag);
+		final Fragment preInitializedFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
 		if (preInitializedFragment == null) {
-			mFragment = Fragment.instantiate(mActivity, mClass.getName(),
-					mBundle);
+			mFragment = Fragment.instantiate(mActivity, mClass.getName(), mBundle);
 			ft.add(android.R.id.content, mFragment, mTag);
 		} else
 			ft.attach(preInitializedFragment);
@@ -37,8 +34,7 @@ public class MyTabListener<T extends Fragment> implements TabListener {
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		final Fragment preInitializedFragment = mActivity.getFragmentManager()
-				.findFragmentByTag(mTag);
+		final Fragment preInitializedFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
 
 		if (preInitializedFragment != null)
 			ft.detach(preInitializedFragment);

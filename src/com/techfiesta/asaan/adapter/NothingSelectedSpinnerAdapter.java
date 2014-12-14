@@ -13,8 +13,7 @@ import android.widget.SpinnerAdapter;
  * Spinner to show a 'Nothing Selected...' initially displayed instead of the
  * first choice in the Adapter.
  */
-public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
-		ListAdapter {
+public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapter {
 
 	protected static final int EXTRA = 1;
 	protected SpinnerAdapter adapter;
@@ -34,8 +33,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
 	 *            like a prompt...
 	 * @param context
 	 */
-	public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter,
-			int nothingSelectedLayout, Context context) {
+	public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter, int nothingSelectedLayout, Context context) {
 		this(spinnerAdapter, nothingSelectedLayout, -1, context);
 	}
 
@@ -53,9 +51,8 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
 	 *            layout for your 'Select an Item...' in the dropdown
 	 * @param context
 	 */
-	public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter,
-			int nothingSelectedLayout, int nothingSelectedDropdownLayout,
-			Context context) {
+	public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter, int nothingSelectedLayout,
+			int nothingSelectedDropdownLayout, Context context) {
 		this.adapter = spinnerAdapter;
 		this.context = context;
 		this.nothingSelectedLayout = nothingSelectedLayout;
@@ -93,8 +90,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
 		// http://code.google.com/p/android/issues/detail?id=17128 - Spinner
 		// does not support multiple view types
 		if (position == 0) {
-			return nothingSelectedDropdownLayout == -1 ? new View(context)
-					: getNothingSelectedDropdownView(parent);
+			return nothingSelectedDropdownLayout == -1 ? new View(context) : getNothingSelectedDropdownView(parent);
 		}
 
 		return adapter.getDropDownView(position - EXTRA, null, parent); // could
@@ -115,8 +111,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
 	 * @return
 	 */
 	protected View getNothingSelectedDropdownView(ViewGroup parent) {
-		return layoutInflater.inflate(nothingSelectedDropdownLayout, parent,
-				false);
+		return layoutInflater.inflate(nothingSelectedDropdownLayout, parent, false);
 	}
 
 	@Override
@@ -137,8 +132,7 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter,
 		// does not support multiple view types
 		// This method determines what is the convertView, this should return 1
 		// for pos 0 or return 0 otherwise.
-		return position == 0 ? getViewTypeCount() - EXTRA : adapter
-				.getItemViewType(position - EXTRA);
+		return position == 0 ? getViewTypeCount() - EXTRA : adapter.getItemViewType(position - EXTRA);
 	}
 
 	@Override

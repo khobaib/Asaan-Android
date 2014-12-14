@@ -57,16 +57,12 @@ public class DStore {
 		this.id = id;
 	}
 
-	public DStore(String address, String backgroundImageUrl,
-			String backgroundThumbnailUrl, Long beaconId, String bssid,
-			String city, Long createdDate, Integer deliveryDistance,
-			String description, String fbUrl, String gplusUrl, String hours,
-			long id, Boolean isActive, Double lat, Double lng,
-			Long modifiedDate, String name, String phone, Integer priceRange,
-			Boolean providesCarryout, Boolean providesDelivery,
-			String rewardsDescription, Integer rewardsRate, String ssid,
-			String state, String subType, String twitterUrl, String type,
-			String webSiteUrl, String zip) {
+	public DStore(String address, String backgroundImageUrl, String backgroundThumbnailUrl, Long beaconId,
+			String bssid, String city, Long createdDate, Integer deliveryDistance, String description, String fbUrl,
+			String gplusUrl, String hours, long id, Boolean isActive, Double lat, Double lng, Long modifiedDate,
+			String name, String phone, Integer priceRange, Boolean providesCarryout, Boolean providesDelivery,
+			String rewardsDescription, Integer rewardsRate, String ssid, String state, String subType,
+			String twitterUrl, String type, String webSiteUrl, String zip) {
 		this.address = address;
 		this.backgroundImageUrl = backgroundImageUrl;
 		this.backgroundThumbnailUrl = backgroundThumbnailUrl;
@@ -365,8 +361,7 @@ public class DStore {
 				throw new DaoException("Entity is detached from DAO context");
 			}
 			TrophiesDao targetDao = daoSession.getTrophiesDao();
-			List<Trophies> trophiesListNew = targetDao
-					._queryDStore_TrophiesList(id);
+			List<Trophies> trophiesListNew = targetDao._queryDStore_TrophiesList(id);
 			synchronized (this) {
 				if (trophiesList == null) {
 					trophiesList = trophiesListNew;

@@ -18,8 +18,7 @@ import android.preference.PreferenceManager;
 import android.view.WindowManager.BadTokenException;
 
 public class AsaanUtility {
-	private static final NumberFormat FORMAT_CURRENCY = NumberFormat
-			.getCurrencyInstance();
+	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
 	private static final String CURRENT_ORDERED_STORE_ID = "current_ordered_store_id";
 	private static final String LAST_UPDATE_TIME_IN_MILLIS = "last_update_time_in milis";
 	private static final int CURRENT_INVALID_STORE = -1;
@@ -28,8 +27,7 @@ public class AsaanUtility {
 	public static Store selectedStore = null;
 
 	public static boolean hasInternet(Context context) {
-		ConnectivityManager connectivity = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity != null) {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
 			if (info != null) {
@@ -91,8 +89,7 @@ public class AsaanUtility {
 	}
 
 	public static void simpleAlert(Context context, String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(context,
-				AlertDialog.THEME_HOLO_LIGHT);
+		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
 		bld.setTitle("Asaan");
 		bld.setMessage(message);
 		bld.setCancelable(false);
@@ -107,27 +104,23 @@ public class AsaanUtility {
 	}
 
 	public static void setCurrentOrderdStoreId(Context context, int id) {
-		SharedPreferences.Editor editor = PreferenceManager
-				.getDefaultSharedPreferences(context).edit();
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putInt(CURRENT_ORDERED_STORE_ID, id);
 		editor.commit();
 	}
 
 	public static int getCurrentOrderedStoredId(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getInt(
-				CURRENT_ORDERED_STORE_ID, -1);
+		return PreferenceManager.getDefaultSharedPreferences(context).getInt(CURRENT_ORDERED_STORE_ID, -1);
 	}
 
 	public static void seLastUpDatedTime(Context context, long time) {
-		SharedPreferences.Editor editor = PreferenceManager
-				.getDefaultSharedPreferences(context).edit();
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
 		editor.putLong(LAST_UPDATE_TIME_IN_MILLIS, time);
 		editor.commit();
 	}
 
 	public static long getlastUpdatedTime(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getLong(
-				LAST_UPDATE_TIME_IN_MILLIS, 0);
+		return PreferenceManager.getDefaultSharedPreferences(context).getLong(LAST_UPDATE_TIME_IN_MILLIS, 0);
 	}
 
 	public static ProgressDialog createProgressDialog(Context mContext) {
