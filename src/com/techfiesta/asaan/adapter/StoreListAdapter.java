@@ -27,7 +27,6 @@ import asaan.dao.ModItemDao;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
-import com.techfiesta.asaan.activity.MyCartActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
@@ -120,17 +119,17 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			public void onClick(View v) {
 				Store store = getItem(position);
 
-				int current = store.getId().intValue();
-				int savedId = AsaanUtility.getCurrentOrderedStoredId(mContext);
-				Log.e("size", store.getId().intValue() + " saved  " + savedId);
-				if (current == savedId) {
-					AsaanUtility.selectedStore = getItem(position);
-					Intent intent = new Intent(mContext, MyCartActivity.class);
-					mContext.startActivity(intent);
-				} else if (savedId == -1) {
-					simpleAlert(mContext, "You have no orders.");
-				} else
-					alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
+//				int current = store.getId().intValue();
+//				int savedId = AsaanUtility.getCurrentOrderedStoredId(mContext);
+//				Log.e("size", store.getId().intValue() + " saved  " + savedId);
+//				if (current == savedId) {
+//					AsaanUtility.selectedStore = getItem(position);
+//					Intent intent = new Intent(mContext, MyCartActivity.class);
+//					mContext.startActivity(intent);
+//				} else if (savedId == -1) {
+//					simpleAlert(mContext, "You have no orders.");
+//				} else
+//					alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
 
 			}
 		});

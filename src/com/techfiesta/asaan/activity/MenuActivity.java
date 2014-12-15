@@ -5,9 +5,13 @@ import java.io.IOException;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
@@ -35,11 +39,35 @@ public class MenuActivity extends Activity {
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowHomeEnabled(false);
 
 		setContentView(R.layout.activity_menu);
 
 		storeId = AsaanUtility.selectedStore.getId();
 		new GetMenu().execute();
+	}
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.activity_menu, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_cart:
+				Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
+				startActivity(intent);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	private class GetMenu extends AsyncTask<Void, Void, Void> {
