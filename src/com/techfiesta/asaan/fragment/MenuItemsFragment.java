@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuI
 //import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
+import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
 import com.techfiesta.asaan.activity.PlaceOrderActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
@@ -245,6 +247,19 @@ public class MenuItemsFragment extends ListFragment {
 				holder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
 				imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), holder.imgFood);
 				// holder.imgFood.setVisibility(View.GONE);
+
+				holder.imgFood.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						MenuActivity.selectedMenuItem = storeMenuItem;
+						Intent i = new Intent(context, MenuItemDetailsActivity.class);
+						i.putExtra("selected_menu_item", storeMenuItem.toString());
+						context.startActivity(i);
+						Log.d("???", "Food image clicked" + storeMenuItem.getLongDescription());
+
+					}
+				});
 			}
 
 			return rowView;

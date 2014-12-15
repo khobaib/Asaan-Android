@@ -12,6 +12,7 @@ import android.view.Window;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -22,6 +23,7 @@ public class MenuActivity extends Activity {
 	private static String TAG_TAB_PREFIX = "Menu_Tab_For_";
 
 	public static MenusAndMenuItems menusAndMenuItems;
+	public static StoreMenuItem selectedMenuItem = null;
 
 	private long INITIAL_POSITION = 0;
 	private int MAX_RESULT = 20;

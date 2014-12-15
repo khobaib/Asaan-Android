@@ -100,6 +100,9 @@
         <activity android:name=".activity.ProfileActivity"
              android:theme="@style/AppThemeNoBar"></activity>
         <activity android:name=".activity.SignUpActivityNew"></activity>
+        
+        <activity android:name=".activity.MenuItemDetailsActivity"
+            android:theme="@style/AppThemeNoBar"></activity>
     </application>
 
 </manifest>
