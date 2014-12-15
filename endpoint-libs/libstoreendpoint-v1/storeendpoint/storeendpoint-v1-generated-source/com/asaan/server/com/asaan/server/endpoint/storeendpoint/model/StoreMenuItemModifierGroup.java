@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StoreMenuItemModifierGroup.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,224 +34,238 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 @SuppressWarnings("javadoc")
 public final class StoreMenuItemModifierGroup extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long createdDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long createdDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long id;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long id;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer menuItemPOSId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer menuItemPOSId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long modifiedDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long modifiedDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String modifierGroupLongDescription;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String modifierGroupLongDescription;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer modifierGroupMaximum;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer modifierGroupMaximum;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer modifierGroupMinimum;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer modifierGroupMinimum;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer modifierGroupPOSId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer modifierGroupPOSId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String modifierGroupShortDescription;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String modifierGroupShortDescription;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long storeId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long storeId;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getCreatedDate() {
-    return createdDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getCreatedDate() {
+		return createdDate;
+	}
 
-  /**
-   * @param createdDate createdDate or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setCreatedDate(java.lang.Long createdDate) {
-    this.createdDate = createdDate;
-    return this;
-  }
+	/**
+	 * @param createdDate
+	 *            createdDate or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setCreatedDate(java.lang.Long createdDate) {
+		this.createdDate = createdDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getId() {
-    return id;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getId() {
+		return id;
+	}
 
-  /**
-   * @param id id or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setId(java.lang.Long id) {
-    this.id = id;
-    return this;
-  }
+	/**
+	 * @param id
+	 *            id or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setId(java.lang.Long id) {
+		this.id = id;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getMenuItemPOSId() {
-    return menuItemPOSId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getMenuItemPOSId() {
+		return menuItemPOSId;
+	}
 
-  /**
-   * @param menuItemPOSId menuItemPOSId or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
-    this.menuItemPOSId = menuItemPOSId;
-    return this;
-  }
+	/**
+	 * @param menuItemPOSId
+	 *            menuItemPOSId or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
+		this.menuItemPOSId = menuItemPOSId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getModifiedDate() {
-    return modifiedDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getModifiedDate() {
+		return modifiedDate;
+	}
 
-  /**
-   * @param modifiedDate modifiedDate or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifiedDate(java.lang.Long modifiedDate) {
-    this.modifiedDate = modifiedDate;
-    return this;
-  }
+	/**
+	 * @param modifiedDate
+	 *            modifiedDate or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifiedDate(java.lang.Long modifiedDate) {
+		this.modifiedDate = modifiedDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getModifierGroupLongDescription() {
-    return modifierGroupLongDescription;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getModifierGroupLongDescription() {
+		return modifierGroupLongDescription;
+	}
 
-  /**
-   * @param modifierGroupLongDescription modifierGroupLongDescription or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifierGroupLongDescription(java.lang.String modifierGroupLongDescription) {
-    this.modifierGroupLongDescription = modifierGroupLongDescription;
-    return this;
-  }
+	/**
+	 * @param modifierGroupLongDescription
+	 *            modifierGroupLongDescription or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifierGroupLongDescription(java.lang.String modifierGroupLongDescription) {
+		this.modifierGroupLongDescription = modifierGroupLongDescription;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getModifierGroupMaximum() {
-    return modifierGroupMaximum;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getModifierGroupMaximum() {
+		return modifierGroupMaximum;
+	}
 
-  /**
-   * @param modifierGroupMaximum modifierGroupMaximum or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifierGroupMaximum(java.lang.Integer modifierGroupMaximum) {
-    this.modifierGroupMaximum = modifierGroupMaximum;
-    return this;
-  }
+	/**
+	 * @param modifierGroupMaximum
+	 *            modifierGroupMaximum or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifierGroupMaximum(java.lang.Integer modifierGroupMaximum) {
+		this.modifierGroupMaximum = modifierGroupMaximum;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getModifierGroupMinimum() {
-    return modifierGroupMinimum;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getModifierGroupMinimum() {
+		return modifierGroupMinimum;
+	}
 
-  /**
-   * @param modifierGroupMinimum modifierGroupMinimum or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifierGroupMinimum(java.lang.Integer modifierGroupMinimum) {
-    this.modifierGroupMinimum = modifierGroupMinimum;
-    return this;
-  }
+	/**
+	 * @param modifierGroupMinimum
+	 *            modifierGroupMinimum or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifierGroupMinimum(java.lang.Integer modifierGroupMinimum) {
+		this.modifierGroupMinimum = modifierGroupMinimum;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getModifierGroupPOSId() {
-    return modifierGroupPOSId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getModifierGroupPOSId() {
+		return modifierGroupPOSId;
+	}
 
-  /**
-   * @param modifierGroupPOSId modifierGroupPOSId or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifierGroupPOSId(java.lang.Integer modifierGroupPOSId) {
-    this.modifierGroupPOSId = modifierGroupPOSId;
-    return this;
-  }
+	/**
+	 * @param modifierGroupPOSId
+	 *            modifierGroupPOSId or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifierGroupPOSId(java.lang.Integer modifierGroupPOSId) {
+		this.modifierGroupPOSId = modifierGroupPOSId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getModifierGroupShortDescription() {
-    return modifierGroupShortDescription;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getModifierGroupShortDescription() {
+		return modifierGroupShortDescription;
+	}
 
-  /**
-   * @param modifierGroupShortDescription modifierGroupShortDescription or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setModifierGroupShortDescription(java.lang.String modifierGroupShortDescription) {
-    this.modifierGroupShortDescription = modifierGroupShortDescription;
-    return this;
-  }
+	/**
+	 * @param modifierGroupShortDescription
+	 *            modifierGroupShortDescription or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setModifierGroupShortDescription(java.lang.String modifierGroupShortDescription) {
+		this.modifierGroupShortDescription = modifierGroupShortDescription;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getStoreId() {
-    return storeId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getStoreId() {
+		return storeId;
+	}
 
-  /**
-   * @param storeId storeId or {@code null} for none
-   */
-  public StoreMenuItemModifierGroup setStoreId(java.lang.Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
+	/**
+	 * @param storeId
+	 *            storeId or {@code null} for none
+	 */
+	public StoreMenuItemModifierGroup setStoreId(java.lang.Long storeId) {
+		this.storeId = storeId;
+		return this;
+	}
 
-  @Override
-  public StoreMenuItemModifierGroup set(String fieldName, Object value) {
-    return (StoreMenuItemModifierGroup) super.set(fieldName, value);
-  }
+	@Override
+	public StoreMenuItemModifierGroup set(String fieldName, Object value) {
+		return (StoreMenuItemModifierGroup) super.set(fieldName, value);
+	}
 
-  @Override
-  public StoreMenuItemModifierGroup clone() {
-    return (StoreMenuItemModifierGroup) super.clone();
-  }
+	@Override
+	public StoreMenuItemModifierGroup clone() {
+		return (StoreMenuItemModifierGroup) super.clone();
+	}
 
 }

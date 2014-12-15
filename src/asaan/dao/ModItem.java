@@ -6,64 +6,67 @@ package asaan.dao;
  */
 public class ModItem {
 
-    private int quantity;
-    private int item_id;
-    private int parent_item_id;
-    /** Not-null value. */
-    private String name;
-    private int price;
+	private int quantity;
+	private int item_id;
+	private int parent_item_id;
+	/** Not-null value. */
+	private String name;
+	private int price;
 
-    public ModItem() {
-    }
+	public ModItem() {
+	}
 
-    public ModItem(int quantity, int item_id, int parent_item_id, String name, int price) {
-        this.quantity = quantity;
-        this.item_id = item_id;
-        this.parent_item_id = parent_item_id;
-        this.name = name;
-        this.price = price;
-    }
+	public ModItem(int quantity, int item_id, int parent_item_id, String name, int price) {
+		this.quantity = quantity;
+		this.item_id = item_id;
+		this.parent_item_id = parent_item_id;
+		this.name = name;
+		this.price = price;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-    public int getItem_id() {
-        return item_id;
-    }
+	public int getItem_id() {
+		return item_id;
+	}
 
-    public void setItem_id(int item_id) {
-        this.item_id = item_id;
-    }
+	public void setItem_id(int item_id) {
+		this.item_id = item_id;
+	}
 
-    public int getParent_item_id() {
-        return parent_item_id;
-    }
+	public int getParent_item_id() {
+		return parent_item_id;
+	}
 
-    public void setParent_item_id(int parent_item_id) {
-        this.parent_item_id = parent_item_id;
-    }
+	public void setParent_item_id(int parent_item_id) {
+		this.parent_item_id = parent_item_id;
+	}
 
-    /** Not-null value. */
-    public String getName() {
-        return name;
-    }
+	/** Not-null value. */
+	public String getName() {
+		return name;
+	}
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Not-null value; ensure this value is available before it is saved to the
+	 * database.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public int getPrice() {
-        return price;
-    }
+	public int getPrice() {
+		return price;
+	}
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+	public void setPrice(int price) {
+		this.price = price;
+	}
 
 }

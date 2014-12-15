@@ -41,11 +41,10 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class OrderDetailsActivity extends Activity
-{
+public class OrderDetailsActivity extends Activity {
 	private OrderDetailsAdapter mAdapter;
 	public List<AddItem> orderList;
-	
+
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
@@ -55,8 +54,7 @@ public class OrderDetailsActivity extends Activity
 	private ModItemDao modItemDao;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.order_details);
 		final Button btnPlaceOrder = (Button) this.findViewById(R.id.btn_place_order);
@@ -66,55 +64,49 @@ public class OrderDetailsActivity extends Activity
 		mAdapter.setup(this);
 		listView.setAdapter(mAdapter);
 
-		btnPlaceOrder.setOnClickListener(new View.OnClickListener()
-		{
+		btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v)
-			{
-				String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\"" + Constants.ORDER_TYPE_DELIVERY + "\">" +
-						"<ITEMREQUESTS>";
-				
-				for (AddItem addItem : orderList)
-				{
-					orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id() + "\">";
-			
+			public void onClick(View v) {
+				String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
+						+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
+
+				for (AddItem addItem : orderList) {
+					orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
+							+ "\">";
+
 					for (ModItem mod : addItem.getMod_items())
-							orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
+						orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
 					orderXML += "</ADDITEM>";
 				}
 				orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
-				
+
 				new DownloadFilesTask().execute(orderXML);
 			}
 		});
 	}
-	private void initDatabaseAndPopuateList()
-	{
+
+	private void initDatabaseAndPopuateList() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        addItemDao = daoSession.getAddItemDao();
-		modItemDao=daoSession.getModItemDao();
-		orderList=addItemDao.queryBuilder().list();
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		modItemDao = daoSession.getModItemDao();
+		orderList = addItemDao.queryBuilder().list();
 	}
 
-	private  class OrderDetailsAdapter extends BaseAdapter
-	{
+	private class OrderDetailsAdapter extends BaseAdapter {
 		WeakReference<OrderDetailsActivity> weakActivity;
 
-		OrderDetailsActivity getActivity()
-		{
+		OrderDetailsActivity getActivity() {
 			return weakActivity.get();
 		}
 
-		public void setup(OrderDetailsActivity activity)
-		{
+		public void setup(OrderDetailsActivity activity) {
 			weakActivity = new WeakReference<OrderDetailsActivity>(activity);
 		}
 
-		private class ViewHolder
-		{
+		private class ViewHolder {
 			public TextView txtName;
 			public TextView txtDescription;
 			public TextView txtPrice;
@@ -123,33 +115,29 @@ public class OrderDetailsActivity extends Activity
 		}
 
 		@Override
-		public int getCount()
-		{
+		public int getCount() {
 			return orderList.size();
 		}
 
 		@Override
-		public AddItem getItem(int position)
-		{
+		public AddItem getItem(int position) {
 			// TODO Auto-generated method stub
 			return orderList.get(position);
 		}
 
 		@Override
-		public long getItemId(int position)
-		{
+		public long getItemId(int position) {
 			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@SuppressLint("InflateParams")
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
-		{
+		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
-			if (rowView == null)
-			{
-				final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			if (rowView == null) {
+				final LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(
+						Context.LAYOUT_INFLATER_SERVICE);
 				rowView = inflater.inflate(R.layout.order_details_row, null);
 				final ViewHolder viewHolder = new ViewHolder();
 				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
@@ -167,13 +155,11 @@ public class OrderDetailsActivity extends Activity
 			holder.txtPrice.setText(AsaanUtility.formatCentsToCurrency(addItem.getPrice()));
 			holder.txtQuantity.setText("" + addItem.getQuantity());
 
-			if (addItem.getOrder_for().equals(""))
-			{
+			if (addItem.getOrder_for().equals("")) {
 				holder.txtInstructions.setText("");
 				holder.txtInstructions.setVisibility(View.GONE);
-				
-			} else
-			{
+
+			} else {
 				holder.txtInstructions.setText(addItem.getOrder_for());
 				holder.txtInstructions.setVisibility(View.VISIBLE);
 			}
@@ -183,11 +169,9 @@ public class OrderDetailsActivity extends Activity
 	}
 }
 
-class DownloadFilesTask extends AsyncTask<String, Void, Long>
-{
+class DownloadFilesTask extends AsyncTask<String, Void, Long> {
 	@Override
-	protected Long doInBackground(String... xmlstr)
-	{
+	protected Long doInBackground(String... xmlstr) {
 
 		// int count = xmlstr.length;
 
@@ -200,27 +184,23 @@ class DownloadFilesTask extends AsyncTask<String, Void, Long>
 		// httpPost.setHeader(HTTP.,"text/xml; charset-utf8");
 		// httpPost.setHeader(HTTP.CONTENT_LEN,
 		// Integer.toString(xmlstr[0].length()));
-		try
-		{
-            // Add your data
+		try {
+			// Add your data
 			StringEntity se = new StringEntity(xmlstr[0], HTTP.UTF_8);
-	        se.setContentType("text/xml");         
-            httpPost.setEntity(se);
+			se.setContentType("text/xml");
+			httpPost.setEntity(se);
 
-            // Execute HTTP Post Request
-            HttpResponse response = httpClient.execute(httpPost);
-            
-            HttpEntity entity = response.getEntity();
-            String responseString = EntityUtils.toString(entity, "UTF-8");
-            System.out.println(responseString);
-		} catch (final ClientProtocolException e)
-		{
+			// Execute HTTP Post Request
+			HttpResponse response = httpClient.execute(httpPost);
+
+			HttpEntity entity = response.getEntity();
+			String responseString = EntityUtils.toString(entity, "UTF-8");
+			System.out.println(responseString);
+		} catch (final ClientProtocolException e) {
 			e.printStackTrace();
-		} catch (final IOException e)
-		{
+		} catch (final IOException e) {
 			e.printStackTrace();
-		} catch (final Exception e)
-		{
+		} catch (final Exception e) {
 			e.printStackTrace();
 		}
 
@@ -228,8 +208,7 @@ class DownloadFilesTask extends AsyncTask<String, Void, Long>
 	}
 
 	@Override
-	protected void onPostExecute(Long feed)
-	{
+	protected void onPostExecute(Long feed) {
 		// TODO: check this.exception
 		// TODO: do something with the feed
 	}

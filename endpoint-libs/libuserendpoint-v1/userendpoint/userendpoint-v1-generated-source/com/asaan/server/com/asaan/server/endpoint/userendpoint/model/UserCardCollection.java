@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint.model;
 /**
  * Model definition for UserCardCollection.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the userendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the userendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,35 +34,36 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint.model;
 @SuppressWarnings("javadoc")
 public final class UserCardCollection extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<UserCard> items;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<UserCard> items;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<UserCard> getItems() {
-    return items;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<UserCard> getItems() {
+		return items;
+	}
 
-  /**
-   * @param items items or {@code null} for none
-   */
-  public UserCardCollection setItems(java.util.List<UserCard> items) {
-    this.items = items;
-    return this;
-  }
+	/**
+	 * @param items
+	 *            items or {@code null} for none
+	 */
+	public UserCardCollection setItems(java.util.List<UserCard> items) {
+		this.items = items;
+		return this;
+	}
 
-  @Override
-  public UserCardCollection set(String fieldName, Object value) {
-    return (UserCardCollection) super.set(fieldName, value);
-  }
+	@Override
+	public UserCardCollection set(String fieldName, Object value) {
+		return (UserCardCollection) super.set(fieldName, value);
+	}
 
-  @Override
-  public UserCardCollection clone() {
-    return (UserCardCollection) super.clone();
-  }
+	@Override
+	public UserCardCollection clone() {
+		return (UserCardCollection) super.clone();
+	}
 
 }

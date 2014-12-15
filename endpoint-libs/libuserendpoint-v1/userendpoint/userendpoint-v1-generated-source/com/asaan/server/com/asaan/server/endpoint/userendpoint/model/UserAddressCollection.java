@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint.model;
 /**
  * Model definition for UserAddressCollection.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the userendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the userendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,41 +34,44 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint.model;
 @SuppressWarnings("javadoc")
 public final class UserAddressCollection extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.util.List<UserAddress> items;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.util.List<UserAddress> items;
 
-  static {
-    // hack to force ProGuard to consider UserAddress used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(UserAddress.class);
-  }
+	static {
+		// hack to force ProGuard to consider UserAddress used, since otherwise
+		// it would be stripped out
+		// see
+		// http://code.google.com/p/google-api-java-client/issues/detail?id=528
+		com.google.api.client.util.Data.nullOf(UserAddress.class);
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<UserAddress> getItems() {
-    return items;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.util.List<UserAddress> getItems() {
+		return items;
+	}
 
-  /**
-   * @param items items or {@code null} for none
-   */
-  public UserAddressCollection setItems(java.util.List<UserAddress> items) {
-    this.items = items;
-    return this;
-  }
+	/**
+	 * @param items
+	 *            items or {@code null} for none
+	 */
+	public UserAddressCollection setItems(java.util.List<UserAddress> items) {
+		this.items = items;
+		return this;
+	}
 
-  @Override
-  public UserAddressCollection set(String fieldName, Object value) {
-    return (UserAddressCollection) super.set(fieldName, value);
-  }
+	@Override
+	public UserAddressCollection set(String fieldName, Object value) {
+		return (UserAddressCollection) super.set(fieldName, value);
+	}
 
-  @Override
-  public UserAddressCollection clone() {
-    return (UserAddressCollection) super.clone();
-  }
+	@Override
+	public UserAddressCollection clone() {
+		return (UserAddressCollection) super.clone();
+	}
 
 }

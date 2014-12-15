@@ -2,92 +2,104 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
     <ImageView
+        android:id="@+id/restaurant_bg_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <!--
+         <com.parse.ParseImageView
         android:id="@+id/restaurant_bg_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/resturant_detail_demo" />
+    -->
 
-   <!--  <com.parse.ParseImageView
-        android:id="@+id/restaurant_bg_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/resturant_detail_demo" /> -->
 
-    <LinearLayout
+    <!--
+         <RelativeLayout
         android:id="@+id/ll_rest_details_overlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/restaurant_bg_image"
-        android:layout_alignTop="@+id/restaurant_bg_image"
-        android:orientation="vertical" >
+        android:layout_centerInParent="true"
+         >
+    -->
 
+
+    <!--
         <RelativeLayout
             android:id="@+id/rl_blanktop"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" >
         </RelativeLayout>
+    -->
 
-        <RelativeLayout
-            android:id="@+id/rl_rest_details_bottom"
+    <RelativeLayout
+        android:id="@+id/rl_rest_details_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <TextView
+            android:id="@+id/tv_restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:singleLine="true"
+            android:text="Restaurant Name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_first_trophy"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_restaurant_name"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="First Trophy"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_restaurant_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="Restaurant Name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_subtype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_first_trophy"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:text="Subtype"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_first_trophy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_restaurant_name"
-                android:layout_alignRight="@+id/tv_restaurant_name"
-                android:layout_below="@+id/tv_restaurant_name"
-                android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="First Trophy"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+    <!-- </RelativeLayout> -->
 
-            <TextView
-                android:id="@+id/tv_subtype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_restaurant_name"
-                android:layout_alignRight="@+id/tv_restaurant_name"
-                android:layout_below="@+id/tv_first_trophy"
-                android:layout_marginTop="10dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="Subtype"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </LinearLayout>
-    
-       <LinearLayout
+    <LinearLayout
         android:id="@+id/ll_event_handlers"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -101,10 +113,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Call"
-            android:textStyle="bold"
-            android:textColor="@color/text_golden_color" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_golden_color"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/b_menu"
@@ -112,10 +124,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Menu"
-            android:textStyle="bold"
-            android:textColor="@color/text_golden_color" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_golden_color"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/b_online_order"
@@ -123,10 +135,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Online Order"
-            android:textStyle="bold"
-            android:textColor="@color/text_golden_color" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_golden_color"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/b_reserve"
@@ -134,10 +146,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Reserve"
-            android:textStyle="bold"
-            android:textColor="@color/text_golden_color" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_golden_color"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </RelativeLayout>

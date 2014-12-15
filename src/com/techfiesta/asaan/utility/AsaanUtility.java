@@ -1,7 +1,5 @@
 package com.techfiesta.asaan.utility;
 
-
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
@@ -21,13 +19,13 @@ import android.view.WindowManager.BadTokenException;
 
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();
-	private static final String CURRENT_ORDERED_STORE_ID="current_ordered_store_id"; 
-	private static final String LAST_UPDATE_TIME_IN_MILLIS="last_update_time_in milis"; 
-	private static final int CURRENT_INVALID_STORE=-1; 
+	private static final String CURRENT_ORDERED_STORE_ID = "current_ordered_store_id";
+	private static final String LAST_UPDATE_TIME_IN_MILLIS = "last_update_time_in milis";
+	private static final int CURRENT_INVALID_STORE = -1;
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
-    public static Store selectedStore=null;
-	
+	public static Store selectedStore = null;
+
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity != null) {
@@ -42,8 +40,8 @@ public class AsaanUtility {
 		}
 		return false;
 	}
-	public static String formatCentsToCurrency(long p_value)
-	{
+
+	public static String formatCentsToCurrency(long p_value) {
 		BigDecimal v_bigDec = new BigDecimal(p_value);
 		v_bigDec = v_bigDec.setScale(2, BigDecimal.ROUND_HALF_UP);
 		v_bigDec = v_bigDec.movePointLeft(2);
@@ -89,7 +87,7 @@ public class AsaanUtility {
 		if (mGps != null && mGps.isGPSEnabled)
 			mGps.stopUsingGPS();
 	}
-	
+
 	public static void simpleAlert(Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
 		bld.setTitle("Asaan");
@@ -104,30 +102,27 @@ public class AsaanUtility {
 		});
 		bld.create().show();
 	}
-	public static void setCurrentOrderdStoreId(Context context,int id)
-	{
-		SharedPreferences.Editor editor = PreferenceManager
-				.getDefaultSharedPreferences(context).edit();
-		editor.putInt(CURRENT_ORDERED_STORE_ID,id);
+
+	public static void setCurrentOrderdStoreId(Context context, int id) {
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+		editor.putInt(CURRENT_ORDERED_STORE_ID, id);
 		editor.commit();
 	}
-	public static int getCurrentOrderedStoredId(Context context)
-	{
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getInt(CURRENT_ORDERED_STORE_ID,-1);
+
+	public static int getCurrentOrderedStoredId(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getInt(CURRENT_ORDERED_STORE_ID, -1);
 	}
-	public static void seLastUpDatedTime(Context context,long time)
-	{
-		SharedPreferences.Editor editor = PreferenceManager
-				.getDefaultSharedPreferences(context).edit();
-		editor.putLong(LAST_UPDATE_TIME_IN_MILLIS,time);
+
+	public static void seLastUpDatedTime(Context context, long time) {
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+		editor.putLong(LAST_UPDATE_TIME_IN_MILLIS, time);
 		editor.commit();
 	}
-	public static long getlastUpdatedTime(Context context)
-	{
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getLong(LAST_UPDATE_TIME_IN_MILLIS,0);
+
+	public static long getlastUpdatedTime(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getLong(LAST_UPDATE_TIME_IN_MILLIS, 0);
 	}
+
 	public static ProgressDialog createProgressDialog(Context mContext) {
 		ProgressDialog dialog = new ProgressDialog(mContext);
 		try {
@@ -140,6 +135,5 @@ public class AsaanUtility {
 		// dialog.setMessage(Message);
 		return dialog;
 	}
-
 
 }

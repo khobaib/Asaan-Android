@@ -28,64 +28,64 @@ import asaan.dao.TrophiesDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
-    private final DaoConfig addItemDaoConfig;
-    private final DaoConfig modItemDaoConfig;
-    private final DaoConfig dStoreDaoConfig;
-    private final DaoConfig trophiesDaoConfig;
+	private final DaoConfig addItemDaoConfig;
+	private final DaoConfig modItemDaoConfig;
+	private final DaoConfig dStoreDaoConfig;
+	private final DaoConfig trophiesDaoConfig;
 
-    private final AddItemDao addItemDao;
-    private final ModItemDao modItemDao;
-    private final DStoreDao dStoreDao;
-    private final TrophiesDao trophiesDao;
+	private final AddItemDao addItemDao;
+	private final ModItemDao modItemDao;
+	private final DStoreDao dStoreDao;
+	private final TrophiesDao trophiesDao;
 
-    public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
-            daoConfigMap) {
-        super(db);
+	public DaoSession(SQLiteDatabase db, IdentityScopeType type,
+			Map<Class<? extends AbstractDao<?, ?>>, DaoConfig> daoConfigMap) {
+		super(db);
 
-        addItemDaoConfig = daoConfigMap.get(AddItemDao.class).clone();
-        addItemDaoConfig.initIdentityScope(type);
+		addItemDaoConfig = daoConfigMap.get(AddItemDao.class).clone();
+		addItemDaoConfig.initIdentityScope(type);
 
-        modItemDaoConfig = daoConfigMap.get(ModItemDao.class).clone();
-        modItemDaoConfig.initIdentityScope(type);
+		modItemDaoConfig = daoConfigMap.get(ModItemDao.class).clone();
+		modItemDaoConfig.initIdentityScope(type);
 
-        dStoreDaoConfig = daoConfigMap.get(DStoreDao.class).clone();
-        dStoreDaoConfig.initIdentityScope(type);
+		dStoreDaoConfig = daoConfigMap.get(DStoreDao.class).clone();
+		dStoreDaoConfig.initIdentityScope(type);
 
-        trophiesDaoConfig = daoConfigMap.get(TrophiesDao.class).clone();
-        trophiesDaoConfig.initIdentityScope(type);
+		trophiesDaoConfig = daoConfigMap.get(TrophiesDao.class).clone();
+		trophiesDaoConfig.initIdentityScope(type);
 
-        addItemDao = new AddItemDao(addItemDaoConfig, this);
-        modItemDao = new ModItemDao(modItemDaoConfig, this);
-        dStoreDao = new DStoreDao(dStoreDaoConfig, this);
-        trophiesDao = new TrophiesDao(trophiesDaoConfig, this);
+		addItemDao = new AddItemDao(addItemDaoConfig, this);
+		modItemDao = new ModItemDao(modItemDaoConfig, this);
+		dStoreDao = new DStoreDao(dStoreDaoConfig, this);
+		trophiesDao = new TrophiesDao(trophiesDaoConfig, this);
 
-        registerDao(AddItem.class, addItemDao);
-        registerDao(ModItem.class, modItemDao);
-        registerDao(DStore.class, dStoreDao);
-        registerDao(Trophies.class, trophiesDao);
-    }
-    
-    public void clear() {
-        addItemDaoConfig.getIdentityScope().clear();
-        modItemDaoConfig.getIdentityScope().clear();
-        dStoreDaoConfig.getIdentityScope().clear();
-        trophiesDaoConfig.getIdentityScope().clear();
-    }
+		registerDao(AddItem.class, addItemDao);
+		registerDao(ModItem.class, modItemDao);
+		registerDao(DStore.class, dStoreDao);
+		registerDao(Trophies.class, trophiesDao);
+	}
 
-    public AddItemDao getAddItemDao() {
-        return addItemDao;
-    }
+	public void clear() {
+		addItemDaoConfig.getIdentityScope().clear();
+		modItemDaoConfig.getIdentityScope().clear();
+		dStoreDaoConfig.getIdentityScope().clear();
+		trophiesDaoConfig.getIdentityScope().clear();
+	}
 
-    public ModItemDao getModItemDao() {
-        return modItemDao;
-    }
+	public AddItemDao getAddItemDao() {
+		return addItemDao;
+	}
 
-    public DStoreDao getDStoreDao() {
-        return dStoreDao;
-    }
+	public ModItemDao getModItemDao() {
+		return modItemDao;
+	}
 
-    public TrophiesDao getTrophiesDao() {
-        return trophiesDao;
-    }
+	public DStoreDao getDStoreDao() {
+		return dStoreDao;
+	}
+
+	public TrophiesDao getTrophiesDao() {
+		return trophiesDao;
+	}
 
 }

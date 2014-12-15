@@ -21,9 +21,12 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 /**
  * Model definition for StorePOSConnection.
  *
- * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
- * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
- * <a href="http://code.google.com/p/google-http-java-client/wiki/JSON">http://code.google.com/p/google-http-java-client/wiki/JSON</a>
+ * <p>
+ * This is the Java data model class that specifies how to parse/serialize into
+ * the JSON that is transmitted over HTTP when working with the storeendpoint.
+ * For a detailed explanation see: <a
+ * href="http://code.google.com/p/google-http-java-client/wiki/JSON"
+ * >http://code.google.com/p/google-http-java-client/wiki/JSON</a>
  * </p>
  *
  * @author Google, Inc.
@@ -31,287 +34,304 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 @SuppressWarnings("javadoc")
 public final class StorePOSConnection extends com.google.api.client.json.GenericJson {
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer asaanTenderId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer asaanTenderId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer carryoutModeId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer carryoutModeId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long createdDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long createdDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.Integer deliveryModeId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.Integer deliveryModeId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String fallbackEmail;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String fallbackEmail;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String fallbackFax;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String fallbackFax;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String hiddenHeaderName;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String hiddenHeaderName;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String hiddenHeaderValue;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String hiddenHeaderValue;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long modifiedDate;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long modifiedDate;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long status;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long status;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long storeId;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	@com.google.api.client.json.JsonString
+	private java.lang.Long storeId;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String token;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String token;
 
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String url;
+	/**
+	 * The value may be {@code null}.
+	 */
+	@com.google.api.client.util.Key
+	private java.lang.String url;
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getAsaanTenderId() {
-    return asaanTenderId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getAsaanTenderId() {
+		return asaanTenderId;
+	}
 
-  /**
-   * @param asaanTenderId asaanTenderId or {@code null} for none
-   */
-  public StorePOSConnection setAsaanTenderId(java.lang.Integer asaanTenderId) {
-    this.asaanTenderId = asaanTenderId;
-    return this;
-  }
+	/**
+	 * @param asaanTenderId
+	 *            asaanTenderId or {@code null} for none
+	 */
+	public StorePOSConnection setAsaanTenderId(java.lang.Integer asaanTenderId) {
+		this.asaanTenderId = asaanTenderId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getCarryoutModeId() {
-    return carryoutModeId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getCarryoutModeId() {
+		return carryoutModeId;
+	}
 
-  /**
-   * @param carryoutModeId carryoutModeId or {@code null} for none
-   */
-  public StorePOSConnection setCarryoutModeId(java.lang.Integer carryoutModeId) {
-    this.carryoutModeId = carryoutModeId;
-    return this;
-  }
+	/**
+	 * @param carryoutModeId
+	 *            carryoutModeId or {@code null} for none
+	 */
+	public StorePOSConnection setCarryoutModeId(java.lang.Integer carryoutModeId) {
+		this.carryoutModeId = carryoutModeId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getCreatedDate() {
-    return createdDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getCreatedDate() {
+		return createdDate;
+	}
 
-  /**
-   * @param createdDate createdDate or {@code null} for none
-   */
-  public StorePOSConnection setCreatedDate(java.lang.Long createdDate) {
-    this.createdDate = createdDate;
-    return this;
-  }
+	/**
+	 * @param createdDate
+	 *            createdDate or {@code null} for none
+	 */
+	public StorePOSConnection setCreatedDate(java.lang.Long createdDate) {
+		this.createdDate = createdDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Integer getDeliveryModeId() {
-    return deliveryModeId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Integer getDeliveryModeId() {
+		return deliveryModeId;
+	}
 
-  /**
-   * @param deliveryModeId deliveryModeId or {@code null} for none
-   */
-  public StorePOSConnection setDeliveryModeId(java.lang.Integer deliveryModeId) {
-    this.deliveryModeId = deliveryModeId;
-    return this;
-  }
+	/**
+	 * @param deliveryModeId
+	 *            deliveryModeId or {@code null} for none
+	 */
+	public StorePOSConnection setDeliveryModeId(java.lang.Integer deliveryModeId) {
+		this.deliveryModeId = deliveryModeId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getFallbackEmail() {
-    return fallbackEmail;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getFallbackEmail() {
+		return fallbackEmail;
+	}
 
-  /**
-   * @param fallbackEmail fallbackEmail or {@code null} for none
-   */
-  public StorePOSConnection setFallbackEmail(java.lang.String fallbackEmail) {
-    this.fallbackEmail = fallbackEmail;
-    return this;
-  }
+	/**
+	 * @param fallbackEmail
+	 *            fallbackEmail or {@code null} for none
+	 */
+	public StorePOSConnection setFallbackEmail(java.lang.String fallbackEmail) {
+		this.fallbackEmail = fallbackEmail;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getFallbackFax() {
-    return fallbackFax;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getFallbackFax() {
+		return fallbackFax;
+	}
 
-  /**
-   * @param fallbackFax fallbackFax or {@code null} for none
-   */
-  public StorePOSConnection setFallbackFax(java.lang.String fallbackFax) {
-    this.fallbackFax = fallbackFax;
-    return this;
-  }
+	/**
+	 * @param fallbackFax
+	 *            fallbackFax or {@code null} for none
+	 */
+	public StorePOSConnection setFallbackFax(java.lang.String fallbackFax) {
+		this.fallbackFax = fallbackFax;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getHiddenHeaderName() {
-    return hiddenHeaderName;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getHiddenHeaderName() {
+		return hiddenHeaderName;
+	}
 
-  /**
-   * @param hiddenHeaderName hiddenHeaderName or {@code null} for none
-   */
-  public StorePOSConnection setHiddenHeaderName(java.lang.String hiddenHeaderName) {
-    this.hiddenHeaderName = hiddenHeaderName;
-    return this;
-  }
+	/**
+	 * @param hiddenHeaderName
+	 *            hiddenHeaderName or {@code null} for none
+	 */
+	public StorePOSConnection setHiddenHeaderName(java.lang.String hiddenHeaderName) {
+		this.hiddenHeaderName = hiddenHeaderName;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getHiddenHeaderValue() {
-    return hiddenHeaderValue;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getHiddenHeaderValue() {
+		return hiddenHeaderValue;
+	}
 
-  /**
-   * @param hiddenHeaderValue hiddenHeaderValue or {@code null} for none
-   */
-  public StorePOSConnection setHiddenHeaderValue(java.lang.String hiddenHeaderValue) {
-    this.hiddenHeaderValue = hiddenHeaderValue;
-    return this;
-  }
+	/**
+	 * @param hiddenHeaderValue
+	 *            hiddenHeaderValue or {@code null} for none
+	 */
+	public StorePOSConnection setHiddenHeaderValue(java.lang.String hiddenHeaderValue) {
+		this.hiddenHeaderValue = hiddenHeaderValue;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getModifiedDate() {
-    return modifiedDate;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getModifiedDate() {
+		return modifiedDate;
+	}
 
-  /**
-   * @param modifiedDate modifiedDate or {@code null} for none
-   */
-  public StorePOSConnection setModifiedDate(java.lang.Long modifiedDate) {
-    this.modifiedDate = modifiedDate;
-    return this;
-  }
+	/**
+	 * @param modifiedDate
+	 *            modifiedDate or {@code null} for none
+	 */
+	public StorePOSConnection setModifiedDate(java.lang.Long modifiedDate) {
+		this.modifiedDate = modifiedDate;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getStatus() {
-    return status;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getStatus() {
+		return status;
+	}
 
-  /**
-   * @param status status or {@code null} for none
-   */
-  public StorePOSConnection setStatus(java.lang.Long status) {
-    this.status = status;
-    return this;
-  }
+	/**
+	 * @param status
+	 *            status or {@code null} for none
+	 */
+	public StorePOSConnection setStatus(java.lang.Long status) {
+		this.status = status;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getStoreId() {
-    return storeId;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.Long getStoreId() {
+		return storeId;
+	}
 
-  /**
-   * @param storeId storeId or {@code null} for none
-   */
-  public StorePOSConnection setStoreId(java.lang.Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
+	/**
+	 * @param storeId
+	 *            storeId or {@code null} for none
+	 */
+	public StorePOSConnection setStoreId(java.lang.Long storeId) {
+		this.storeId = storeId;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getToken() {
-    return token;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getToken() {
+		return token;
+	}
 
-  /**
-   * @param token token or {@code null} for none
-   */
-  public StorePOSConnection setToken(java.lang.String token) {
-    this.token = token;
-    return this;
-  }
+	/**
+	 * @param token
+	 *            token or {@code null} for none
+	 */
+	public StorePOSConnection setToken(java.lang.String token) {
+		this.token = token;
+		return this;
+	}
 
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getUrl() {
-    return url;
-  }
+	/**
+	 * @return value or {@code null} for none
+	 */
+	public java.lang.String getUrl() {
+		return url;
+	}
 
-  /**
-   * @param url url or {@code null} for none
-   */
-  public StorePOSConnection setUrl(java.lang.String url) {
-    this.url = url;
-    return this;
-  }
+	/**
+	 * @param url
+	 *            url or {@code null} for none
+	 */
+	public StorePOSConnection setUrl(java.lang.String url) {
+		this.url = url;
+		return this;
+	}
 
-  @Override
-  public StorePOSConnection set(String fieldName, Object value) {
-    return (StorePOSConnection) super.set(fieldName, value);
-  }
+	@Override
+	public StorePOSConnection set(String fieldName, Object value) {
+		return (StorePOSConnection) super.set(fieldName, value);
+	}
 
-  @Override
-  public StorePOSConnection clone() {
-    return (StorePOSConnection) super.clone();
-  }
+	@Override
+	public StorePOSConnection clone() {
+		return (StorePOSConnection) super.clone();
+	}
 
 }

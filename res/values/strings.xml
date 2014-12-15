@@ -82,11 +82,11 @@
     <string name="food_is_spicy">Menu item is spicy</string>
     <string name="food_is_gluten_free">Menu item is gluten free</string>
     <string name="order_quantity">1</string>
-    <string name="order_quantity_text">Quantity</string>
-    <string name="order_quantity_plus">+</string>
-    <string name="order_quantity_minus">&#8212;</string>
+    <string name="order_quantity_text">Qty</string>
+    <string name="order_quantity_plus" formatted = "false">&gt;</string>
+    <string name="order_quantity_minus" formatted = "false"> &lt;</string>
     <string name="title_no_menu_available">Menu for this restaurant has not been uploaded. Please contact the restaurant for further assistance.</string>
-    <string name="place_order">Place Order</string>
+    <string name="place_order">Add to Order -</string>
     <string name="additional_options">Additional Options</string>
     <string name="additional_option_name">Add Protein</string>
     <string name="additional_option_1">Chicken</string>
@@ -104,5 +104,6 @@
     <string name="gallery_left_arrow">Move to previous menu item image</string>
     <string name="gallery_right_arrow">Move to next menu item image</string>
     <string name="gallery_selected_menu_item">Selected menu item image</string>
+    <string name="menu_modifier_title">Happy Hour </string>
 
 </resources>

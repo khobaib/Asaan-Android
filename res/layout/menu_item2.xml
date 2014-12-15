@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/margin_10dp"
+    android:paddingRight="@dimen/margin_10dp"
+    android:paddingTop="@dimen/margin_5dp"
+    android:paddingBottom="@dimen/margin_5dp"
+    android:orientation="vertical"
+    android:background="@color/app_bg_color" >
+
+    <ImageView
+        android:id="@+id/image_food_item"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:padding="1dp"
+        android:contentDescription="@string/menu_category_title"
+        
+         />
+
+    <TextView
+        android:id="@+id/txt_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/image_food_item"
+		android:layout_marginLeft="@dimen/margin_10dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="16dp"
+        android:text="@string/food_menu_item_name"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/txt_item_name"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/food_menu_item_price"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_item_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_item_name"
+        android:layout_below="@id/txt_item_name"
+        android:layout_toLeftOf="@id/txt_item_price"
+        android:layout_marginRight="@dimen/margin_5dp"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_marginBottom="@dimen/margin_5dp"
+        android:text="@string/food_menu_item_desc" />
+
+    <!-- <TextView
+        android:id="@+id/txt_item_ordered_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_item_name"
+        android:layout_below="@id/txt_item_desc"
+        android:text="@string/food_menu_item_ordered_count" 
+        android:textStyle="italic"
+        android:textColor="@color/txtBlue" /> -->
+
+    <TextView
+        android:id="@+id/txt_item_ranking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/txt_item_ordered_today" />
+    
+    <ImageView
+        android:id="@+id/image_vegetarian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txt_item_name"
+        android:layout_toRightOf="@+id/txt_item_name"
+        android:contentDescription="@string/food_is_vegetarian"
+        android:visibility="gone"
+        android:src="@drawable/menu_vegetarian" />
+
+    <ImageView
+        android:id="@+id/image_spicy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/image_vegetarian"
+        android:layout_toRightOf="@+id/image_vegetarian"
+        android:contentDescription="@string/food_is_spicy"
+        android:visibility="gone"
+        android:src="@drawable/menu_spicy" />
+
+    <ImageView
+        android:id="@+id/image_glutenfree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/image_spicy"
+        android:layout_toRightOf="@+id/image_spicy"
+        android:contentDescription="@string/food_is_gluten_free"
+        android:visibility="gone"
+        android:src="@drawable/menu_glutenfree" />
+
+    <!-- <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/txt_item_ordered_today"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:background="@color/txtGrey" /> -->
+    
+</RelativeLayout>

@@ -201,7 +201,7 @@ public class LoginChooserActivity extends Activity {
 				} else if (response.getError() != null) {
 					/*
 					 * if ((response.getError().getCategory() ==
-					 * FacebookRequestError.Category.AUTHENTICATION_RETRY) ||
+					 * FacebookRequestError .Category.AUTHENTICATION_RETRY) ||
 					 * (response.getError().getCategory() ==
 					 * FacebookRequestError
 					 * .Category.AUTHENTICATION_REOPEN_SESSION)) {

@@ -41,6 +41,7 @@ public class MenuModifierActivity extends ListActivity {
 		Button btnSave = (Button) this.findViewById(R.id.btn_save);
 
 		Bundle bundle = this.getIntent().getExtras();
+
 		selectedModGrpId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
 		selectedModGrpIndex = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_INDEX);
 		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(
@@ -50,6 +51,7 @@ public class MenuModifierActivity extends ListActivity {
 		ArrayList<String> modTitles = new ArrayList<String>();
 		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups().get(
 				selectedModGrpIndex);
+
 		selectedModGrpMax = mg.getModifierGroupMaximum();
 		selectedModGrpMin = mg.getModifierGroupMinimum();
 		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {

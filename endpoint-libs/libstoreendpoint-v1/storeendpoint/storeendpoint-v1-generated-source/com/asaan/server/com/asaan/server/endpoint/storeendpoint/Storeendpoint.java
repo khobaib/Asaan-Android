@@ -26,13 +26,13 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
  * </p>
  *
  * <p>
- * For more information about this service, see the
- * <a href="" target="_blank">API Documentation</a>
+ * For more information about this service, see the <a href=""
+ * target="_blank">API Documentation</a>
  * </p>
  *
  * <p>
- * This service uses {@link StoreendpointRequestInitializer} to initialize global parameters via its
- * {@link Builder}.
+ * This service uses {@link StoreendpointRequestInitializer} to initialize
+ * global parameters via its {@link Builder}.
  * </p>
  *
  * @since 1.3
@@ -41,2304 +41,2573 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
 @SuppressWarnings("javadoc")
 public class Storeendpoint extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient {
 
-  // Note: Leave this static initializer at the top of the file.
-  static {
-    com.google.api.client.util.Preconditions.checkState(
-        com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1 &&
-        com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
-        "You are currently running with version %s of google-api-client. " +
-        "You need at least version 1.15 of google-api-client to run version " +
-        "1.18.0-rc of the storeendpoint library.", com.google.api.client.googleapis.GoogleUtils.VERSION);
-  }
+	// Note: Leave this static initializer at the top of the file.
+	static {
+		com.google.api.client.util.Preconditions.checkState(
+				com.google.api.client.googleapis.GoogleUtils.MAJOR_VERSION == 1
+						&& com.google.api.client.googleapis.GoogleUtils.MINOR_VERSION >= 15,
+				"You are currently running with version %s of google-api-client. "
+						+ "You need at least version 1.15 of google-api-client to run version "
+						+ "1.18.0-rc of the storeendpoint library.",
+				com.google.api.client.googleapis.GoogleUtils.VERSION);
+	}
 
-  /**
-   * The default encoded root URL of the service. This is determined when the library is generated
-   * and normally should not be changed.
-   *
-   * @since 1.7
-   */
-  public static final String DEFAULT_ROOT_URL = "https://asaan-server.appspot.com/_ah/api/";
+	/**
+	 * The default encoded root URL of the service. This is determined when the
+	 * library is generated and normally should not be changed.
+	 *
+	 * @since 1.7
+	 */
+	public static final String DEFAULT_ROOT_URL = "https://asaan-server.appspot.com/_ah/api/";
 
-  /**
-   * The default encoded service path of the service. This is determined when the library is
-   * generated and normally should not be changed.
-   *
-   * @since 1.7
-   */
-  public static final String DEFAULT_SERVICE_PATH = "storeendpoint/v1/";
+	/**
+	 * The default encoded service path of the service. This is determined when
+	 * the library is generated and normally should not be changed.
+	 *
+	 * @since 1.7
+	 */
+	public static final String DEFAULT_SERVICE_PATH = "storeendpoint/v1/";
 
-  /**
-   * The default encoded base URL of the service. This is determined when the library is generated
-   * and normally should not be changed.
-   */
-  public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL + DEFAULT_SERVICE_PATH;
+	/**
+	 * The default encoded base URL of the service. This is determined when the
+	 * library is generated and normally should not be changed.
+	 */
+	public static final String DEFAULT_BASE_URL = DEFAULT_ROOT_URL + DEFAULT_SERVICE_PATH;
 
-  /**
-   * Constructor.
-   *
-   * <p>
-   * Use {@link Builder} if you need to specify any of the optional parameters.
-   * </p>
-   *
-   * @param transport HTTP transport, which should normally be:
-   *        <ul>
-   *        <li>Google App Engine:
-   *        {@code com.google.api.client.extensions.appengine.http.UrlFetchTransport}</li>
-   *        <li>Android: {@code newCompatibleTransport} from
-   *        {@code com.google.api.client.extensions.android.http.AndroidHttp}</li>
-   *        <li>Java: {@link com.google.api.client.googleapis.javanet.GoogleNetHttpTransport#newTrustedTransport()}
-   *        </li>
-   *        </ul>
-   * @param jsonFactory JSON factory, which may be:
-   *        <ul>
-   *        <li>Jackson: {@code com.google.api.client.json.jackson2.JacksonFactory}</li>
-   *        <li>Google GSON: {@code com.google.api.client.json.gson.GsonFactory}</li>
-   *        <li>Android Honeycomb or higher:
-   *        {@code com.google.api.client.extensions.android.json.AndroidJsonFactory}</li>
-   *        </ul>
-   * @param httpRequestInitializer HTTP request initializer or {@code null} for none
-   * @since 1.7
-   */
-  public Storeendpoint(com.google.api.client.http.HttpTransport transport, com.google.api.client.json.JsonFactory jsonFactory,
-      com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-    this(new Builder(transport, jsonFactory, httpRequestInitializer));
-  }
+	/**
+	 * Constructor.
+	 *
+	 * <p>
+	 * Use {@link Builder} if you need to specify any of the optional
+	 * parameters.
+	 * </p>
+	 *
+	 * @param transport
+	 *            HTTP transport, which should normally be:
+	 *            <ul>
+	 *            <li>Google App Engine:
+	 *            {@code com.google.api.client.extensions.appengine.http.UrlFetchTransport}
+	 *            </li>
+	 *            <li>Android: {@code newCompatibleTransport} from
+	 *            {@code com.google.api.client.extensions.android.http.AndroidHttp}
+	 *            </li>
+	 *            <li>Java:
+	 *            {@link com.google.api.client.googleapis.javanet.GoogleNetHttpTransport#newTrustedTransport()}
+	 *            </li>
+	 *            </ul>
+	 * @param jsonFactory
+	 *            JSON factory, which may be:
+	 *            <ul>
+	 *            <li>Jackson:
+	 *            {@code com.google.api.client.json.jackson2.JacksonFactory}</li>
+	 *            <li>Google GSON:
+	 *            {@code com.google.api.client.json.gson.GsonFactory}</li>
+	 *            <li>Android Honeycomb or higher:
+	 *            {@code com.google.api.client.extensions.android.json.AndroidJsonFactory}
+	 *            </li>
+	 *            </ul>
+	 * @param httpRequestInitializer
+	 *            HTTP request initializer or {@code null} for none
+	 * @since 1.7
+	 */
+	public Storeendpoint(com.google.api.client.http.HttpTransport transport,
+			com.google.api.client.json.JsonFactory jsonFactory,
+			com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
+		this(new Builder(transport, jsonFactory, httpRequestInitializer));
+	}
 
-  /**
-   * @param builder builder
-   */
-  Storeendpoint(Builder builder) {
-    super(builder);
-  }
+	/**
+	 * @param builder
+	 *            builder
+	 */
+	Storeendpoint(Builder builder) {
+		super(builder);
+	}
 
-  @Override
-  protected void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest) throws java.io.IOException {
-    super.initialize(httpClientRequest);
-  }
+	@Override
+	protected void initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest<?> httpClientRequest)
+			throws java.io.IOException {
+		super.initialize(httpClientRequest);
+	}
 
-  /**
-   * Create a request for the method "getStatsForAllStores".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStatsForAllStores#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param firstPosition
-   * @param maxResult
-   * @return the request
-   */
-  public GetStatsForAllStores getStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStatsForAllStores result = new GetStatsForAllStores(firstPosition, maxResult);
-    initialize(result);
-    return result;
-  }
+	/**
+	 * Create a request for the method "getStatsForAllStores".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStatsForAllStores#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param firstPosition
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStatsForAllStores getStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult)
+			throws java.io.IOException {
+		GetStatsForAllStores result = new GetStatsForAllStores(firstPosition, maxResult);
+		initialize(result);
+		return result;
+	}
 
-  public class GetStatsForAllStores extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection> {
+	public class GetStatsForAllStores extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection> {
 
-    private static final String REST_PATH = "storestatscollection/{firstPosition}/{maxResult}";
+		private static final String REST_PATH = "storestatscollection/{firstPosition}/{maxResult}";
 
-    /**
-     * Create a request for the method "getStatsForAllStores".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStatsForAllStores#execute()} method to invoke the
-     * remote operation. <p> {@link GetStatsForAllStores#initialize(com.google.api.client.googleapis.s
-     * ervices.AbstractGoogleClientRequest)} must be called to initialize this instance immediately
-     * after invoking the constructor. </p>
-     *
-     * @param firstPosition
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection.class);
-      this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition, "Required parameter firstPosition must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
+		/**
+		 * Create a request for the method "getStatsForAllStores".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStatsForAllStores#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link
+		 * GetStatsForAllStores#initialize(com.google.api.client.googleapis.s
+		 * ervices.AbstractGoogleClientRequest)} must be called to initialize
+		 * this instance immediately after invoking the constructor.
+		 * </p>
+		 *
+		 * @param firstPosition
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStatsForAllStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection.class);
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
 
-    @Override
-    public GetStatsForAllStores setAlt(java.lang.String alt) {
-      return (GetStatsForAllStores) super.setAlt(alt);
-    }
+		@Override
+		public GetStatsForAllStores setAlt(java.lang.String alt) {
+			return (GetStatsForAllStores) super.setAlt(alt);
+		}
 
-    @Override
-    public GetStatsForAllStores setFields(java.lang.String fields) {
-      return (GetStatsForAllStores) super.setFields(fields);
-    }
+		@Override
+		public GetStatsForAllStores setFields(java.lang.String fields) {
+			return (GetStatsForAllStores) super.setFields(fields);
+		}
 
-    @Override
-    public GetStatsForAllStores setKey(java.lang.String key) {
-      return (GetStatsForAllStores) super.setKey(key);
-    }
+		@Override
+		public GetStatsForAllStores setKey(java.lang.String key) {
+			return (GetStatsForAllStores) super.setKey(key);
+		}
 
-    @Override
-    public GetStatsForAllStores setOauthToken(java.lang.String oauthToken) {
-      return (GetStatsForAllStores) super.setOauthToken(oauthToken);
-    }
+		@Override
+		public GetStatsForAllStores setOauthToken(java.lang.String oauthToken) {
+			return (GetStatsForAllStores) super.setOauthToken(oauthToken);
+		}
 
-    @Override
-    public GetStatsForAllStores setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStatsForAllStores) super.setPrettyPrint(prettyPrint);
-    }
+		@Override
+		public GetStatsForAllStores setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStatsForAllStores) super.setPrettyPrint(prettyPrint);
+		}
 
-    @Override
-    public GetStatsForAllStores setQuotaUser(java.lang.String quotaUser) {
-      return (GetStatsForAllStores) super.setQuotaUser(quotaUser);
-    }
+		@Override
+		public GetStatsForAllStores setQuotaUser(java.lang.String quotaUser) {
+			return (GetStatsForAllStores) super.setQuotaUser(quotaUser);
+		}
 
-    @Override
-    public GetStatsForAllStores setUserIp(java.lang.String userIp) {
-      return (GetStatsForAllStores) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStatsForAllStores setUserIp(java.lang.String userIp) {
+			return (GetStatsForAllStores) super.setUserIp(userIp);
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer firstPosition;
+		@com.google.api.client.util.Key
+		private java.lang.Integer firstPosition;
 
-    /**
-
-     */
-    public java.lang.Integer getFirstPosition() {
-      return firstPosition;
-    }
-
-    public GetStatsForAllStores setFirstPosition(java.lang.Integer firstPosition) {
-      this.firstPosition = firstPosition;
-      return this;
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
-
-    /**
-
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
-
-    public GetStatsForAllStores setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
-
-    @Override
-    public GetStatsForAllStores set(String parameterName, Object value) {
-      return (GetStatsForAllStores) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "getStore".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStore#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @return the request
-   */
-  public GetStore getStore(java.lang.Long storeId) throws java.io.IOException {
-    GetStore result = new GetStore(storeId);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStore extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
-
-    private static final String REST_PATH = "store/{storeId}";
-
-    /**
-     * Create a request for the method "getStore".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStore#execute()} method to invoke the remote operation.
-     * <p> {@link
-     * GetStore#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
-     * must be called to initialize this instance immediately after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @since 1.13
-     */
-    protected GetStore(java.lang.Long storeId) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-    }
-
-    @Override
-    public GetStore setAlt(java.lang.String alt) {
-      return (GetStore) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStore setFields(java.lang.String fields) {
-      return (GetStore) super.setFields(fields);
-    }
-
-    @Override
-    public GetStore setKey(java.lang.String key) {
-      return (GetStore) super.setKey(key);
-    }
-
-    @Override
-    public GetStore setOauthToken(java.lang.String oauthToken) {
-      return (GetStore) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStore setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStore) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStore setQuotaUser(java.lang.String quotaUser) {
-      return (GetStore) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStore setUserIp(java.lang.String userIp) {
-      return (GetStore) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Integer getFirstPosition() {
+			return firstPosition;
+		}
 
-    public GetStore setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStatsForAllStores setFirstPosition(java.lang.Integer firstPosition) {
+			this.firstPosition = firstPosition;
+			return this;
+		}
 
-    @Override
-    public GetStore set(String parameterName, Object value) {
-      return (GetStore) super.set(parameterName, value);
-    }
-  }
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
 
-  /**
-   * Create a request for the method "getStoreCount".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreCount#execute()} method to invoke the remote operation.
-   *
-   * @return the request
-   */
-  public GetStoreCount getStoreCount() throws java.io.IOException {
-    GetStoreCount result = new GetStoreCount();
-    initialize(result);
-    return result;
-  }
-
-  public class GetStoreCount extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong> {
-
-    private static final String REST_PATH = "asaanlong";
-
-    /**
-     * Create a request for the method "getStoreCount".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreCount#execute()} method to invoke the remote
-     * operation. <p> {@link GetStoreCount#initialize(com.google.api.client.googleapis.services.Abstra
-     * ctGoogleClientRequest)} must be called to initialize this instance immediately after invoking
-     * the constructor. </p>
-     *
-     * @since 1.13
-     */
-    protected GetStoreCount() {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong.class);
-    }
-
-    @Override
-    public GetStoreCount setAlt(java.lang.String alt) {
-      return (GetStoreCount) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreCount setFields(java.lang.String fields) {
-      return (GetStoreCount) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreCount setKey(java.lang.String key) {
-      return (GetStoreCount) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreCount setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreCount) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreCount setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreCount) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreCount setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreCount) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreCount setUserIp(java.lang.String userIp) {
-      return (GetStoreCount) super.setUserIp(userIp);
-    }
-
-    @Override
-    public GetStoreCount set(String parameterName, Object value) {
-      return (GetStoreCount) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "getStoreMenuHierarchyAndItems".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreMenuHierarchyAndItems#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param storeId
-   * @param menuType
-   * @param maxResult
-   * @return the request
-   */
-  public GetStoreMenuHierarchyAndItems getStoreMenuHierarchyAndItems(java.lang.Long storeId, java.lang.Integer menuType, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStoreMenuHierarchyAndItems result = new GetStoreMenuHierarchyAndItems(storeId, menuType, maxResult);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStoreMenuHierarchyAndItems extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems> {
-
-    private static final String REST_PATH = "menusandmenuitems/{storeId}/{menuType}/{maxResult}";
-
-    /**
-     * Create a request for the method "getStoreMenuHierarchyAndItems".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreMenuHierarchyAndItems#execute()} method to invoke
-     * the remote operation. <p> {@link GetStoreMenuHierarchyAndItems#initialize(com.google.api.client
-     * .googleapis.services.AbstractGoogleClientRequest)} must be called to initialize this instance
-     * immediately after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @param menuType
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStoreMenuHierarchyAndItems(java.lang.Long storeId, java.lang.Integer menuType, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.menuType = com.google.api.client.util.Preconditions.checkNotNull(menuType, "Required parameter menuType must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setAlt(java.lang.String alt) {
-      return (GetStoreMenuHierarchyAndItems) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setFields(java.lang.String fields) {
-      return (GetStoreMenuHierarchyAndItems) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setKey(java.lang.String key) {
-      return (GetStoreMenuHierarchyAndItems) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreMenuHierarchyAndItems) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreMenuHierarchyAndItems) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreMenuHierarchyAndItems) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreMenuHierarchyAndItems setUserIp(java.lang.String userIp) {
-      return (GetStoreMenuHierarchyAndItems) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
 
-    public GetStoreMenuHierarchyAndItems setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStatsForAllStores setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer menuType;
+		@Override
+		public GetStatsForAllStores set(String parameterName, Object value) {
+			return (GetStatsForAllStores) super.set(parameterName, value);
+		}
+	}
 
-    /**
+	/**
+	 * Create a request for the method "getStore".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStore#execute()} method to invoke the remote operation.
+	 *
+	 * @param storeId
+	 * @return the request
+	 */
+	public GetStore getStore(java.lang.Long storeId) throws java.io.IOException {
+		GetStore result = new GetStore(storeId);
+		initialize(result);
+		return result;
+	}
 
-     */
-    public java.lang.Integer getMenuType() {
-      return menuType;
-    }
+	public class GetStore extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
 
-    public GetStoreMenuHierarchyAndItems setMenuType(java.lang.Integer menuType) {
-      this.menuType = menuType;
-      return this;
-    }
+		private static final String REST_PATH = "store/{storeId}";
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
+		/**
+		 * Create a request for the method "getStore".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStore#execute()} method to invoke the remote operation.
+		 * <p>
+		 * {@link GetStore#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @since 1.13
+		 */
+		protected GetStore(java.lang.Long storeId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+		}
 
-    /**
+		@Override
+		public GetStore setAlt(java.lang.String alt) {
+			return (GetStore) super.setAlt(alt);
+		}
 
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
+		@Override
+		public GetStore setFields(java.lang.String fields) {
+			return (GetStore) super.setFields(fields);
+		}
 
-    public GetStoreMenuHierarchyAndItems setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
+		@Override
+		public GetStore setKey(java.lang.String key) {
+			return (GetStore) super.setKey(key);
+		}
 
-    @Override
-    public GetStoreMenuHierarchyAndItems set(String parameterName, Object value) {
-      return (GetStoreMenuHierarchyAndItems) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStore setOauthToken(java.lang.String oauthToken) {
+			return (GetStore) super.setOauthToken(oauthToken);
+		}
 
-  /**
-   * Create a request for the method "getStoreMenuItemModifiers".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreMenuItemModifiers#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param storeId
-   * @param menuItemPOSId
-   * @return the request
-   */
-  public GetStoreMenuItemModifiers getStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId) throws java.io.IOException {
-    GetStoreMenuItemModifiers result = new GetStoreMenuItemModifiers(storeId, menuItemPOSId);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStore setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStore) super.setPrettyPrint(prettyPrint);
+		}
 
-  public class GetStoreMenuItemModifiers extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups> {
+		@Override
+		public GetStore setQuotaUser(java.lang.String quotaUser) {
+			return (GetStore) super.setQuotaUser(quotaUser);
+		}
 
-    private static final String REST_PATH = "menuitemmodifiersandgroups/{storeId}/{menuItemPOSId}";
+		@Override
+		public GetStore setUserIp(java.lang.String userIp) {
+			return (GetStore) super.setUserIp(userIp);
+		}
 
-    /**
-     * Create a request for the method "getStoreMenuItemModifiers".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreMenuItemModifiers#execute()} method to invoke the
-     * remote operation. <p> {@link GetStoreMenuItemModifiers#initialize(com.google.api.client.googlea
-     * pis.services.AbstractGoogleClientRequest)} must be called to initialize this instance
-     * immediately after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @param menuItemPOSId
-     * @since 1.13
-     */
-    protected GetStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.menuItemPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuItemPOSId, "Required parameter menuItemPOSId must be specified.");
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
 
-    @Override
-    public GetStoreMenuItemModifiers setAlt(java.lang.String alt) {
-      return (GetStoreMenuItemModifiers) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setFields(java.lang.String fields) {
-      return (GetStoreMenuItemModifiers) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setKey(java.lang.String key) {
-      return (GetStoreMenuItemModifiers) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreMenuItemModifiers) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreMenuItemModifiers) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreMenuItemModifiers) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreMenuItemModifiers setUserIp(java.lang.String userIp) {
-      return (GetStoreMenuItemModifiers) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    public GetStoreMenuItemModifiers setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStore setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer menuItemPOSId;
+		@Override
+		public GetStore set(String parameterName, Object value) {
+			return (GetStore) super.set(parameterName, value);
+		}
+	}
 
-    /**
+	/**
+	 * Create a request for the method "getStoreCount".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreCount#execute()} method to invoke the remote operation.
+	 *
+	 * @return the request
+	 */
+	public GetStoreCount getStoreCount() throws java.io.IOException {
+		GetStoreCount result = new GetStoreCount();
+		initialize(result);
+		return result;
+	}
 
-     */
-    public java.lang.Integer getMenuItemPOSId() {
-      return menuItemPOSId;
-    }
+	public class GetStoreCount extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong> {
 
-    public GetStoreMenuItemModifiers setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
-      this.menuItemPOSId = menuItemPOSId;
-      return this;
-    }
+		private static final String REST_PATH = "asaanlong";
 
-    @Override
-    public GetStoreMenuItemModifiers set(String parameterName, Object value) {
-      return (GetStoreMenuItemModifiers) super.set(parameterName, value);
-    }
-  }
+		/**
+		 * Create a request for the method "getStoreCount".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreCount#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStoreCount#initialize(com.google.api.client.googleapis.services.Abstra ctGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @since 1.13
+		 */
+		protected GetStoreCount() {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.AsaanLong.class);
+		}
 
-  /**
-   * Create a request for the method "getStoreMenuItems".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreMenuItems#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @param firstPosition
-   * @param maxResult
-   * @return the request
-   */
-  public GetStoreMenuItems getStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStoreMenuItems result = new GetStoreMenuItems(storeId, firstPosition, maxResult);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStoreCount setAlt(java.lang.String alt) {
+			return (GetStoreCount) super.setAlt(alt);
+		}
 
-  public class GetStoreMenuItems extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection> {
+		@Override
+		public GetStoreCount setFields(java.lang.String fields) {
+			return (GetStoreCount) super.setFields(fields);
+		}
 
-    private static final String REST_PATH = "storemenuitemcollection/{storeId}/{firstPosition}/{maxResult}";
+		@Override
+		public GetStoreCount setKey(java.lang.String key) {
+			return (GetStoreCount) super.setKey(key);
+		}
 
-    /**
-     * Create a request for the method "getStoreMenuItems".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreMenuItems#execute()} method to invoke the remote
-     * operation. <p> {@link GetStoreMenuItems#initialize(com.google.api.client.googleapis.services.Ab
-     * stractGoogleClientRequest)} must be called to initialize this instance immediately after
-     * invoking the constructor. </p>
-     *
-     * @param storeId
-     * @param firstPosition
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition, "Required parameter firstPosition must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
+		@Override
+		public GetStoreCount setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreCount) super.setOauthToken(oauthToken);
+		}
 
-    @Override
-    public GetStoreMenuItems setAlt(java.lang.String alt) {
-      return (GetStoreMenuItems) super.setAlt(alt);
-    }
+		@Override
+		public GetStoreCount setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreCount) super.setPrettyPrint(prettyPrint);
+		}
 
-    @Override
-    public GetStoreMenuItems setFields(java.lang.String fields) {
-      return (GetStoreMenuItems) super.setFields(fields);
-    }
+		@Override
+		public GetStoreCount setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreCount) super.setQuotaUser(quotaUser);
+		}
 
-    @Override
-    public GetStoreMenuItems setKey(java.lang.String key) {
-      return (GetStoreMenuItems) super.setKey(key);
-    }
+		@Override
+		public GetStoreCount setUserIp(java.lang.String userIp) {
+			return (GetStoreCount) super.setUserIp(userIp);
+		}
 
-    @Override
-    public GetStoreMenuItems setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreMenuItems) super.setOauthToken(oauthToken);
-    }
+		@Override
+		public GetStoreCount set(String parameterName, Object value) {
+			return (GetStoreCount) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public GetStoreMenuItems setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreMenuItems) super.setPrettyPrint(prettyPrint);
-    }
+	/**
+	 * Create a request for the method "getStoreMenuHierarchyAndItems".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreMenuHierarchyAndItems#execute()} method to invoke the
+	 * remote operation.
+	 *
+	 * @param storeId
+	 * @param menuType
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStoreMenuHierarchyAndItems getStoreMenuHierarchyAndItems(java.lang.Long storeId,
+			java.lang.Integer menuType, java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuHierarchyAndItems result = new GetStoreMenuHierarchyAndItems(storeId, menuType, maxResult);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public GetStoreMenuItems setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreMenuItems) super.setQuotaUser(quotaUser);
-    }
+	public class GetStoreMenuHierarchyAndItems extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems> {
 
-    @Override
-    public GetStoreMenuItems setUserIp(java.lang.String userIp) {
-      return (GetStoreMenuItems) super.setUserIp(userIp);
-    }
+		private static final String REST_PATH = "menusandmenuitems/{storeId}/{menuType}/{maxResult}";
 
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
+		/**
+		 * Create a request for the method "getStoreMenuHierarchyAndItems".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreMenuHierarchyAndItems#execute()} method to invoke the
+		 * remote operation.
+		 * <p>
+		 * {@link GetStoreMenuHierarchyAndItems#initialize(com.google.api.client .googleapis.services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param menuType
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStoreMenuHierarchyAndItems(java.lang.Long storeId, java.lang.Integer menuType,
+				java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuType = com.google.api.client.util.Preconditions.checkNotNull(menuType,
+					"Required parameter menuType must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
 
-    /**
+		@Override
+		public GetStoreMenuHierarchyAndItems setAlt(java.lang.String alt) {
+			return (GetStoreMenuHierarchyAndItems) super.setAlt(alt);
+		}
 
-     */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		@Override
+		public GetStoreMenuHierarchyAndItems setFields(java.lang.String fields) {
+			return (GetStoreMenuHierarchyAndItems) super.setFields(fields);
+		}
 
-    public GetStoreMenuItems setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		@Override
+		public GetStoreMenuHierarchyAndItems setKey(java.lang.String key) {
+			return (GetStoreMenuHierarchyAndItems) super.setKey(key);
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer firstPosition;
+		@Override
+		public GetStoreMenuHierarchyAndItems setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenuHierarchyAndItems) super.setOauthToken(oauthToken);
+		}
 
-    /**
+		@Override
+		public GetStoreMenuHierarchyAndItems setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuHierarchyAndItems) super.setPrettyPrint(prettyPrint);
+		}
 
-     */
-    public java.lang.Integer getFirstPosition() {
-      return firstPosition;
-    }
+		@Override
+		public GetStoreMenuHierarchyAndItems setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenuHierarchyAndItems) super.setQuotaUser(quotaUser);
+		}
 
-    public GetStoreMenuItems setFirstPosition(java.lang.Integer firstPosition) {
-      this.firstPosition = firstPosition;
-      return this;
-    }
+		@Override
+		public GetStoreMenuHierarchyAndItems setUserIp(java.lang.String userIp) {
+			return (GetStoreMenuHierarchyAndItems) super.setUserIp(userIp);
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
 
-    /**
-
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
-
-    public GetStoreMenuItems setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
-
-    @Override
-    public GetStoreMenuItems set(String parameterName, Object value) {
-      return (GetStoreMenuItems) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "getStoreMenuItemsForMenu".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreMenuItemsForMenu#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param storeId
-   * @param menuPOSId
-   * @param firstPosition
-   * @param maxResult
-   * @return the request
-   */
-  public GetStoreMenuItemsForMenu getStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId, java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStoreMenuItemsForMenu result = new GetStoreMenuItemsForMenu(storeId, menuPOSId, firstPosition, maxResult);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStoreMenuItemsForMenu extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection> {
-
-    private static final String REST_PATH = "storemenuitemcollection/{storeId}/{menuPOSId}/{firstPosition}/{maxResult}";
-
-    /**
-     * Create a request for the method "getStoreMenuItemsForMenu".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreMenuItemsForMenu#execute()} method to invoke the
-     * remote operation. <p> {@link GetStoreMenuItemsForMenu#initialize(com.google.api.client.googleap
-     * is.services.AbstractGoogleClientRequest)} must be called to initialize this instance
-     * immediately after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @param menuPOSId
-     * @param firstPosition
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.menuPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuPOSId, "Required parameter menuPOSId must be specified.");
-      this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition, "Required parameter firstPosition must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setAlt(java.lang.String alt) {
-      return (GetStoreMenuItemsForMenu) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setFields(java.lang.String fields) {
-      return (GetStoreMenuItemsForMenu) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setKey(java.lang.String key) {
-      return (GetStoreMenuItemsForMenu) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreMenuItemsForMenu) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreMenuItemsForMenu) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreMenuItemsForMenu) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu setUserIp(java.lang.String userIp) {
-      return (GetStoreMenuItemsForMenu) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    public GetStoreMenuItemsForMenu setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStoreMenuHierarchyAndItems setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer menuPOSId;
+		@com.google.api.client.util.Key
+		private java.lang.Integer menuType;
 
-    /**
-
-     */
-    public java.lang.Integer getMenuPOSId() {
-      return menuPOSId;
-    }
-
-    public GetStoreMenuItemsForMenu setMenuPOSId(java.lang.Integer menuPOSId) {
-      this.menuPOSId = menuPOSId;
-      return this;
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Integer firstPosition;
-
-    /**
+		/**
 
      */
-    public java.lang.Integer getFirstPosition() {
-      return firstPosition;
-    }
+		public java.lang.Integer getMenuType() {
+			return menuType;
+		}
 
-    public GetStoreMenuItemsForMenu setFirstPosition(java.lang.Integer firstPosition) {
-      this.firstPosition = firstPosition;
-      return this;
-    }
+		public GetStoreMenuHierarchyAndItems setMenuType(java.lang.Integer menuType) {
+			this.menuType = menuType;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
 
-    /**
-
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
-
-    public GetStoreMenuItemsForMenu setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
-
-    @Override
-    public GetStoreMenuItemsForMenu set(String parameterName, Object value) {
-      return (GetStoreMenuItemsForMenu) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "getStoreMenus".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreMenus#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @param firstPosition
-   * @param maxResult
-   * @return the request
-   */
-  public GetStoreMenus getStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStoreMenus result = new GetStoreMenus(storeId, firstPosition, maxResult);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStoreMenus extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchyCollection> {
-
-    private static final String REST_PATH = "storemenuhierarchycollection/{storeId}/{firstPosition}/{maxResult}";
-
-    /**
-     * Create a request for the method "getStoreMenus".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreMenus#execute()} method to invoke the remote
-     * operation. <p> {@link GetStoreMenus#initialize(com.google.api.client.googleapis.services.Abstra
-     * ctGoogleClientRequest)} must be called to initialize this instance immediately after invoking
-     * the constructor. </p>
-     *
-     * @param storeId
-     * @param firstPosition
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchyCollection.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition, "Required parameter firstPosition must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
-
-    @Override
-    public GetStoreMenus setAlt(java.lang.String alt) {
-      return (GetStoreMenus) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreMenus setFields(java.lang.String fields) {
-      return (GetStoreMenus) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreMenus setKey(java.lang.String key) {
-      return (GetStoreMenus) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreMenus setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreMenus) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreMenus setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreMenus) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreMenus setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreMenus) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreMenus setUserIp(java.lang.String userIp) {
-      return (GetStoreMenus) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
 
-    public GetStoreMenus setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStoreMenuHierarchyAndItems setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer firstPosition;
+		@Override
+		public GetStoreMenuHierarchyAndItems set(String parameterName, Object value) {
+			return (GetStoreMenuHierarchyAndItems) super.set(parameterName, value);
+		}
+	}
 
-    /**
+	/**
+	 * Create a request for the method "getStoreMenuItemModifiers".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreMenuItemModifiers#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param storeId
+	 * @param menuItemPOSId
+	 * @return the request
+	 */
+	public GetStoreMenuItemModifiers getStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId)
+			throws java.io.IOException {
+		GetStoreMenuItemModifiers result = new GetStoreMenuItemModifiers(storeId, menuItemPOSId);
+		initialize(result);
+		return result;
+	}
 
-     */
-    public java.lang.Integer getFirstPosition() {
-      return firstPosition;
-    }
+	public class GetStoreMenuItemModifiers
+			extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups> {
 
-    public GetStoreMenus setFirstPosition(java.lang.Integer firstPosition) {
-      this.firstPosition = firstPosition;
-      return this;
-    }
+		private static final String REST_PATH = "menuitemmodifiersandgroups/{storeId}/{menuItemPOSId}";
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
+		/**
+		 * Create a request for the method "getStoreMenuItemModifiers".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreMenuItemModifiers#execute()} method to invoke the
+		 * remote operation.
+		 * <p>
+		 * {@link
+		 * GetStoreMenuItemModifiers#initialize(com.google.api.client.googlea
+		 * pis.services.AbstractGoogleClientRequest)} must be called to
+		 * initialize this instance immediately after invoking the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param menuItemPOSId
+		 * @since 1.13
+		 */
+		protected GetStoreMenuItemModifiers(java.lang.Long storeId, java.lang.Integer menuItemPOSId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuItemPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuItemPOSId,
+					"Required parameter menuItemPOSId must be specified.");
+		}
 
-    /**
+		@Override
+		public GetStoreMenuItemModifiers setAlt(java.lang.String alt) {
+			return (GetStoreMenuItemModifiers) super.setAlt(alt);
+		}
 
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
+		@Override
+		public GetStoreMenuItemModifiers setFields(java.lang.String fields) {
+			return (GetStoreMenuItemModifiers) super.setFields(fields);
+		}
 
-    public GetStoreMenus setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
+		@Override
+		public GetStoreMenuItemModifiers setKey(java.lang.String key) {
+			return (GetStoreMenuItemModifiers) super.setKey(key);
+		}
 
-    @Override
-    public GetStoreMenus set(String parameterName, Object value) {
-      return (GetStoreMenus) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreMenuItemModifiers setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenuItemModifiers) super.setOauthToken(oauthToken);
+		}
 
-  /**
-   * Create a request for the method "getStoreOwners".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreOwners#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @return the request
-   */
-  public GetStoreOwners getStoreOwners(java.lang.Long storeId) throws java.io.IOException {
-    GetStoreOwners result = new GetStoreOwners(storeId);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStoreMenuItemModifiers setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuItemModifiers) super.setPrettyPrint(prettyPrint);
+		}
 
-  public class GetStoreOwners extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection> {
+		@Override
+		public GetStoreMenuItemModifiers setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenuItemModifiers) super.setQuotaUser(quotaUser);
+		}
 
-    private static final String REST_PATH = "storeownercollection/{storeId}";
+		@Override
+		public GetStoreMenuItemModifiers setUserIp(java.lang.String userIp) {
+			return (GetStoreMenuItemModifiers) super.setUserIp(userIp);
+		}
 
-    /**
-     * Create a request for the method "getStoreOwners".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreOwners#execute()} method to invoke the remote
-     * operation. <p> {@link GetStoreOwners#initialize(com.google.api.client.googleapis.services.Abstr
-     * actGoogleClientRequest)} must be called to initialize this instance immediately after invoking
-     * the constructor. </p>
-     *
-     * @param storeId
-     * @since 1.13
-     */
-    protected GetStoreOwners(java.lang.Long storeId) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
 
-    @Override
-    public GetStoreOwners setAlt(java.lang.String alt) {
-      return (GetStoreOwners) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStoreOwners setFields(java.lang.String fields) {
-      return (GetStoreOwners) super.setFields(fields);
-    }
-
-    @Override
-    public GetStoreOwners setKey(java.lang.String key) {
-      return (GetStoreOwners) super.setKey(key);
-    }
-
-    @Override
-    public GetStoreOwners setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreOwners) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStoreOwners setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreOwners) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStoreOwners setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreOwners) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStoreOwners setUserIp(java.lang.String userIp) {
-      return (GetStoreOwners) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    public GetStoreOwners setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStoreMenuItemModifiers setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public GetStoreOwners set(String parameterName, Object value) {
-      return (GetStoreOwners) super.set(parameterName, value);
-    }
-  }
+		@com.google.api.client.util.Key
+		private java.lang.Integer menuItemPOSId;
 
-  /**
-   * Create a request for the method "getStorePOSConnection".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStorePOSConnection#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param storeId
-   * @return the request
-   */
-  public GetStorePOSConnection getStorePOSConnection(java.lang.Long storeId) throws java.io.IOException {
-    GetStorePOSConnection result = new GetStorePOSConnection(storeId);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStorePOSConnection extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection> {
-
-    private static final String REST_PATH = "storeposconnection/{storeId}";
-
-    /**
-     * Create a request for the method "getStorePOSConnection".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStorePOSConnection#execute()} method to invoke the
-     * remote operation. <p> {@link GetStorePOSConnection#initialize(com.google.api.client.googleapis.
-     * services.AbstractGoogleClientRequest)} must be called to initialize this instance immediately
-     * after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @since 1.13
-     */
-    protected GetStorePOSConnection(java.lang.Long storeId) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-    }
-
-    @Override
-    public GetStorePOSConnection setAlt(java.lang.String alt) {
-      return (GetStorePOSConnection) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStorePOSConnection setFields(java.lang.String fields) {
-      return (GetStorePOSConnection) super.setFields(fields);
-    }
-
-    @Override
-    public GetStorePOSConnection setKey(java.lang.String key) {
-      return (GetStorePOSConnection) super.setKey(key);
-    }
-
-    @Override
-    public GetStorePOSConnection setOauthToken(java.lang.String oauthToken) {
-      return (GetStorePOSConnection) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStorePOSConnection) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStorePOSConnection setQuotaUser(java.lang.String quotaUser) {
-      return (GetStorePOSConnection) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStorePOSConnection setUserIp(java.lang.String userIp) {
-      return (GetStorePOSConnection) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Integer getMenuItemPOSId() {
+			return menuItemPOSId;
+		}
 
-    public GetStorePOSConnection setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStoreMenuItemModifiers setMenuItemPOSId(java.lang.Integer menuItemPOSId) {
+			this.menuItemPOSId = menuItemPOSId;
+			return this;
+		}
 
-    @Override
-    public GetStorePOSConnection set(String parameterName, Object value) {
-      return (GetStorePOSConnection) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreMenuItemModifiers set(String parameterName, Object value) {
+			return (GetStoreMenuItemModifiers) super.set(parameterName, value);
+		}
+	}
 
-  /**
-   * Create a request for the method "getStoreStats".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStoreStats#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @return the request
-   */
-  public GetStoreStats getStoreStats(java.lang.Long storeId) throws java.io.IOException {
-    GetStoreStats result = new GetStoreStats(storeId);
-    initialize(result);
-    return result;
-  }
+	/**
+	 * Create a request for the method "getStoreMenuItems".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreMenuItems#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param storeId
+	 * @param firstPosition
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStoreMenuItems getStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition,
+			java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuItems result = new GetStoreMenuItems(storeId, firstPosition, maxResult);
+		initialize(result);
+		return result;
+	}
 
-  public class GetStoreStats extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats> {
+	public class GetStoreMenuItems
+			extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection> {
 
-    private static final String REST_PATH = "storestats/{storeId}";
+		private static final String REST_PATH = "storemenuitemcollection/{storeId}/{firstPosition}/{maxResult}";
 
-    /**
-     * Create a request for the method "getStoreStats".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStoreStats#execute()} method to invoke the remote
-     * operation. <p> {@link GetStoreStats#initialize(com.google.api.client.googleapis.services.Abstra
-     * ctGoogleClientRequest)} must be called to initialize this instance immediately after invoking
-     * the constructor. </p>
-     *
-     * @param storeId
-     * @since 1.13
-     */
-    protected GetStoreStats(java.lang.Long storeId) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-    }
+		/**
+		 * Create a request for the method "getStoreMenuItems".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreMenuItems#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStoreMenuItems#initialize(com.google.api.client.googleapis.services.Ab stractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param firstPosition
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStoreMenuItems(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
 
-    @Override
-    public GetStoreStats setAlt(java.lang.String alt) {
-      return (GetStoreStats) super.setAlt(alt);
-    }
+		@Override
+		public GetStoreMenuItems setAlt(java.lang.String alt) {
+			return (GetStoreMenuItems) super.setAlt(alt);
+		}
 
-    @Override
-    public GetStoreStats setFields(java.lang.String fields) {
-      return (GetStoreStats) super.setFields(fields);
-    }
+		@Override
+		public GetStoreMenuItems setFields(java.lang.String fields) {
+			return (GetStoreMenuItems) super.setFields(fields);
+		}
 
-    @Override
-    public GetStoreStats setKey(java.lang.String key) {
-      return (GetStoreStats) super.setKey(key);
-    }
+		@Override
+		public GetStoreMenuItems setKey(java.lang.String key) {
+			return (GetStoreMenuItems) super.setKey(key);
+		}
 
-    @Override
-    public GetStoreStats setOauthToken(java.lang.String oauthToken) {
-      return (GetStoreStats) super.setOauthToken(oauthToken);
-    }
+		@Override
+		public GetStoreMenuItems setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenuItems) super.setOauthToken(oauthToken);
+		}
 
-    @Override
-    public GetStoreStats setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStoreStats) super.setPrettyPrint(prettyPrint);
-    }
+		@Override
+		public GetStoreMenuItems setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuItems) super.setPrettyPrint(prettyPrint);
+		}
 
-    @Override
-    public GetStoreStats setQuotaUser(java.lang.String quotaUser) {
-      return (GetStoreStats) super.setQuotaUser(quotaUser);
-    }
+		@Override
+		public GetStoreMenuItems setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenuItems) super.setQuotaUser(quotaUser);
+		}
 
-    @Override
-    public GetStoreStats setUserIp(java.lang.String userIp) {
-      return (GetStoreStats) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStoreMenuItems setUserIp(java.lang.String userIp) {
+			return (GetStoreMenuItems) super.setUserIp(userIp);
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
 
-    /**
-
-     */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
-
-    public GetStoreStats setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
-
-    @Override
-    public GetStoreStats set(String parameterName, Object value) {
-      return (GetStoreStats) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "getStores".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link GetStores#execute()} method to invoke the remote operation.
-   *
-   * @param firstPosition
-   * @param maxResult
-   * @return the request
-   */
-  public GetStores getStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
-    GetStores result = new GetStores(firstPosition, maxResult);
-    initialize(result);
-    return result;
-  }
-
-  public class GetStores extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection> {
-
-    private static final String REST_PATH = "storecollection/{firstPosition}/{maxResult}";
-
-    /**
-     * Create a request for the method "getStores".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link GetStores#execute()} method to invoke the remote
-     * operation. <p> {@link
-     * GetStores#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
-     * must be called to initialize this instance immediately after invoking the constructor. </p>
-     *
-     * @param firstPosition
-     * @param maxResult
-     * @since 1.13
-     */
-    protected GetStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection.class);
-      this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition, "Required parameter firstPosition must be specified.");
-      this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult, "Required parameter maxResult must be specified.");
-    }
-
-    @Override
-    public GetStores setAlt(java.lang.String alt) {
-      return (GetStores) super.setAlt(alt);
-    }
-
-    @Override
-    public GetStores setFields(java.lang.String fields) {
-      return (GetStores) super.setFields(fields);
-    }
-
-    @Override
-    public GetStores setKey(java.lang.String key) {
-      return (GetStores) super.setKey(key);
-    }
-
-    @Override
-    public GetStores setOauthToken(java.lang.String oauthToken) {
-      return (GetStores) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public GetStores setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (GetStores) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public GetStores setQuotaUser(java.lang.String quotaUser) {
-      return (GetStores) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public GetStores setUserIp(java.lang.String userIp) {
-      return (GetStores) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Integer firstPosition;
-
-    /**
+		/**
 
      */
-    public java.lang.Integer getFirstPosition() {
-      return firstPosition;
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    public GetStores setFirstPosition(java.lang.Integer firstPosition) {
-      this.firstPosition = firstPosition;
-      return this;
-    }
+		public GetStoreMenuItems setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer maxResult;
+		@com.google.api.client.util.Key
+		private java.lang.Integer firstPosition;
 
-    /**
-
-     */
-    public java.lang.Integer getMaxResult() {
-      return maxResult;
-    }
-
-    public GetStores setMaxResult(java.lang.Integer maxResult) {
-      this.maxResult = maxResult;
-      return this;
-    }
-
-    @Override
-    public GetStores set(String parameterName, Object value) {
-      return (GetStores) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "placeOrder".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link PlaceOrder#execute()} method to invoke the remote operation.
-   *
-   * @param storeId
-   * @param orderMode
-   * @param order
-   * @return the request
-   */
-  public PlaceOrder placeOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order) throws java.io.IOException {
-    PlaceOrder result = new PlaceOrder(storeId, orderMode, order);
-    initialize(result);
-    return result;
-  }
-
-  public class PlaceOrder extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder> {
-
-    private static final String REST_PATH = "placeOrder/{storeId}/{orderMode}/{order}";
-
-    /**
-     * Create a request for the method "placeOrder".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link PlaceOrder#execute()} method to invoke the remote
-     * operation. <p> {@link
-     * PlaceOrder#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
-     * must be called to initialize this instance immediately after invoking the constructor. </p>
-     *
-     * @param storeId
-     * @param orderMode
-     * @param order
-     * @since 1.13
-     */
-    protected PlaceOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order) {
-      super(Storeendpoint.this, "POST", REST_PATH, null, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder.class);
-      this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId, "Required parameter storeId must be specified.");
-      this.orderMode = com.google.api.client.util.Preconditions.checkNotNull(orderMode, "Required parameter orderMode must be specified.");
-      this.order = com.google.api.client.util.Preconditions.checkNotNull(order, "Required parameter order must be specified.");
-    }
-
-    @Override
-    public PlaceOrder setAlt(java.lang.String alt) {
-      return (PlaceOrder) super.setAlt(alt);
-    }
-
-    @Override
-    public PlaceOrder setFields(java.lang.String fields) {
-      return (PlaceOrder) super.setFields(fields);
-    }
-
-    @Override
-    public PlaceOrder setKey(java.lang.String key) {
-      return (PlaceOrder) super.setKey(key);
-    }
-
-    @Override
-    public PlaceOrder setOauthToken(java.lang.String oauthToken) {
-      return (PlaceOrder) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public PlaceOrder setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (PlaceOrder) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public PlaceOrder setQuotaUser(java.lang.String quotaUser) {
-      return (PlaceOrder) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public PlaceOrder setUserIp(java.lang.String userIp) {
-      return (PlaceOrder) super.setUserIp(userIp);
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.Long storeId;
-
-    /**
+		/**
 
      */
-    public java.lang.Long getStoreId() {
-      return storeId;
-    }
+		public java.lang.Integer getFirstPosition() {
+			return firstPosition;
+		}
 
-    public PlaceOrder setStoreId(java.lang.Long storeId) {
-      this.storeId = storeId;
-      return this;
-    }
+		public GetStoreMenuItems setFirstPosition(java.lang.Integer firstPosition) {
+			this.firstPosition = firstPosition;
+			return this;
+		}
 
-    @com.google.api.client.util.Key
-    private java.lang.Integer orderMode;
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
 
-    /**
-
-     */
-    public java.lang.Integer getOrderMode() {
-      return orderMode;
-    }
-
-    public PlaceOrder setOrderMode(java.lang.Integer orderMode) {
-      this.orderMode = orderMode;
-      return this;
-    }
-
-    @com.google.api.client.util.Key
-    private java.lang.String order;
-
-    /**
+		/**
 
      */
-    public java.lang.String getOrder() {
-      return order;
-    }
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
 
-    public PlaceOrder setOrder(java.lang.String order) {
-      this.order = order;
-      return this;
-    }
+		public GetStoreMenuItems setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
 
-    @Override
-    public PlaceOrder set(String parameterName, Object value) {
-      return (PlaceOrder) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreMenuItems set(String parameterName, Object value) {
+			return (GetStoreMenuItems) super.set(parameterName, value);
+		}
+	}
 
-  /**
-   * Create a request for the method "removeStoreOwner".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link RemoveStoreOwner#execute()} method to invoke the remote operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
-   * @return the request
-   */
-  public RemoveStoreOwner removeStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) throws java.io.IOException {
-    RemoveStoreOwner result = new RemoveStoreOwner(content);
-    initialize(result);
-    return result;
-  }
+	/**
+	 * Create a request for the method "getStoreMenuItemsForMenu".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreMenuItemsForMenu#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param storeId
+	 * @param menuPOSId
+	 * @param firstPosition
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStoreMenuItemsForMenu getStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId,
+			java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenuItemsForMenu result = new GetStoreMenuItemsForMenu(storeId, menuPOSId, firstPosition, maxResult);
+		initialize(result);
+		return result;
+	}
 
-  public class RemoveStoreOwner extends StoreendpointRequest<Void> {
+	public class GetStoreMenuItemsForMenu
+			extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection> {
 
-    private static final String REST_PATH = "storeowner";
+		private static final String REST_PATH = "storemenuitemcollection/{storeId}/{menuPOSId}/{firstPosition}/{maxResult}";
 
-    /**
-     * Create a request for the method "removeStoreOwner".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link RemoveStoreOwner#execute()} method to invoke the remote
-     * operation. <p> {@link RemoveStoreOwner#initialize(com.google.api.client.googleapis.services.Abs
-     * tractGoogleClientRequest)} must be called to initialize this instance immediately after
-     * invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
-     * @since 1.13
+		/**
+		 * Create a request for the method "getStoreMenuItemsForMenu".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreMenuItemsForMenu#execute()} method to invoke the
+		 * remote operation.
+		 * <p>
+		 * {@link
+		 * GetStoreMenuItemsForMenu#initialize(com.google.api.client.googleap
+		 * is.services.AbstractGoogleClientRequest)} must be called to
+		 * initialize this instance immediately after invoking the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param menuPOSId
+		 * @param firstPosition
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStoreMenuItemsForMenu(java.lang.Long storeId, java.lang.Integer menuPOSId,
+				java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemCollection.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.menuPOSId = com.google.api.client.util.Preconditions.checkNotNull(menuPOSId,
+					"Required parameter menuPOSId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setAlt(java.lang.String alt) {
+			return (GetStoreMenuItemsForMenu) super.setAlt(alt);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setFields(java.lang.String fields) {
+			return (GetStoreMenuItemsForMenu) super.setFields(fields);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setKey(java.lang.String key) {
+			return (GetStoreMenuItemsForMenu) super.setKey(key);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenuItemsForMenu) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenuItemsForMenu) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenuItemsForMenu) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStoreMenuItemsForMenu setUserIp(java.lang.String userIp) {
+			return (GetStoreMenuItemsForMenu) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
      */
-    protected RemoveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    @Override
-    public RemoveStoreOwner setAlt(java.lang.String alt) {
-      return (RemoveStoreOwner) super.setAlt(alt);
-    }
+		public GetStoreMenuItemsForMenu setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public RemoveStoreOwner setFields(java.lang.String fields) {
-      return (RemoveStoreOwner) super.setFields(fields);
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Integer menuPOSId;
 
-    @Override
-    public RemoveStoreOwner setKey(java.lang.String key) {
-      return (RemoveStoreOwner) super.setKey(key);
-    }
+		/**
 
-    @Override
-    public RemoveStoreOwner setOauthToken(java.lang.String oauthToken) {
-      return (RemoveStoreOwner) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public RemoveStoreOwner setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (RemoveStoreOwner) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public RemoveStoreOwner setQuotaUser(java.lang.String quotaUser) {
-      return (RemoveStoreOwner) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public RemoveStoreOwner setUserIp(java.lang.String userIp) {
-      return (RemoveStoreOwner) super.setUserIp(userIp);
-    }
-
-    @Override
-    public RemoveStoreOwner set(String parameterName, Object value) {
-      return (RemoveStoreOwner) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "saveStore".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStore#execute()} method to invoke the remote operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
-   * @return the request
-   */
-  public SaveStore saveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content) throws java.io.IOException {
-    SaveStore result = new SaveStore(content);
-    initialize(result);
-    return result;
-  }
-
-  public class SaveStore extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
-
-    private static final String REST_PATH = "saveStore";
-
-    /**
-     * Create a request for the method "saveStore".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStore#execute()} method to invoke the remote
-     * operation. <p> {@link
-     * SaveStore#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
-     * must be called to initialize this instance immediately after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
-     * @since 1.13
      */
-    protected SaveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
-    }
+		public java.lang.Integer getMenuPOSId() {
+			return menuPOSId;
+		}
 
-    @Override
-    public SaveStore setAlt(java.lang.String alt) {
-      return (SaveStore) super.setAlt(alt);
-    }
+		public GetStoreMenuItemsForMenu setMenuPOSId(java.lang.Integer menuPOSId) {
+			this.menuPOSId = menuPOSId;
+			return this;
+		}
 
-    @Override
-    public SaveStore setFields(java.lang.String fields) {
-      return (SaveStore) super.setFields(fields);
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Integer firstPosition;
 
-    @Override
-    public SaveStore setKey(java.lang.String key) {
-      return (SaveStore) super.setKey(key);
-    }
+		/**
 
-    @Override
-    public SaveStore setOauthToken(java.lang.String oauthToken) {
-      return (SaveStore) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public SaveStore setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStore) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public SaveStore setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStore) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public SaveStore setUserIp(java.lang.String userIp) {
-      return (SaveStore) super.setUserIp(userIp);
-    }
-
-    @Override
-    public SaveStore set(String parameterName, Object value) {
-      return (SaveStore) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "saveStoreMenuCombined".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreMenuCombined#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined}
-   * @return the request
-   */
-  public SaveStoreMenuCombined saveStoreMenuCombined(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined content) throws java.io.IOException {
-    SaveStoreMenuCombined result = new SaveStoreMenuCombined(content);
-    initialize(result);
-    return result;
-  }
-
-  public class SaveStoreMenuCombined extends StoreendpointRequest<Void> {
-
-    private static final String REST_PATH = "saveStoreMenuCombined";
-
-    /**
-     * Create a request for the method "saveStoreMenuCombined".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreMenuCombined#execute()} method to invoke the
-     * remote operation. <p> {@link SaveStoreMenuCombined#initialize(com.google.api.client.googleapis.
-     * services.AbstractGoogleClientRequest)} must be called to initialize this instance immediately
-     * after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined}
-     * @since 1.13
      */
-    protected SaveStoreMenuCombined(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
-    }
+		public java.lang.Integer getFirstPosition() {
+			return firstPosition;
+		}
 
-    @Override
-    public SaveStoreMenuCombined setAlt(java.lang.String alt) {
-      return (SaveStoreMenuCombined) super.setAlt(alt);
-    }
+		public GetStoreMenuItemsForMenu setFirstPosition(java.lang.Integer firstPosition) {
+			this.firstPosition = firstPosition;
+			return this;
+		}
 
-    @Override
-    public SaveStoreMenuCombined setFields(java.lang.String fields) {
-      return (SaveStoreMenuCombined) super.setFields(fields);
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
 
-    @Override
-    public SaveStoreMenuCombined setKey(java.lang.String key) {
-      return (SaveStoreMenuCombined) super.setKey(key);
-    }
+		/**
 
-    @Override
-    public SaveStoreMenuCombined setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreMenuCombined) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public SaveStoreMenuCombined setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreMenuCombined) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public SaveStoreMenuCombined setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreMenuCombined) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public SaveStoreMenuCombined setUserIp(java.lang.String userIp) {
-      return (SaveStoreMenuCombined) super.setUserIp(userIp);
-    }
-
-    @Override
-    public SaveStoreMenuCombined set(String parameterName, Object value) {
-      return (SaveStoreMenuCombined) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "saveStoreMenuHierarchy".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreMenuHierarchy#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy}
-   * @return the request
-   */
-  public SaveStoreMenuHierarchy saveStoreMenuHierarchy(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy content) throws java.io.IOException {
-    SaveStoreMenuHierarchy result = new SaveStoreMenuHierarchy(content);
-    initialize(result);
-    return result;
-  }
-
-  public class SaveStoreMenuHierarchy extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy> {
-
-    private static final String REST_PATH = "saveStoreMenuHierarchy";
-
-    /**
-     * Create a request for the method "saveStoreMenuHierarchy".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreMenuHierarchy#execute()} method to invoke the
-     * remote operation. <p> {@link SaveStoreMenuHierarchy#initialize(com.google.api.client.googleapis
-     * .services.AbstractGoogleClientRequest)} must be called to initialize this instance immediately
-     * after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy}
-     * @since 1.13
      */
-    protected SaveStoreMenuHierarchy(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy.class);
-    }
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
 
-    @Override
-    public SaveStoreMenuHierarchy setAlt(java.lang.String alt) {
-      return (SaveStoreMenuHierarchy) super.setAlt(alt);
-    }
+		public GetStoreMenuItemsForMenu setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
 
-    @Override
-    public SaveStoreMenuHierarchy setFields(java.lang.String fields) {
-      return (SaveStoreMenuHierarchy) super.setFields(fields);
-    }
+		@Override
+		public GetStoreMenuItemsForMenu set(String parameterName, Object value) {
+			return (GetStoreMenuItemsForMenu) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public SaveStoreMenuHierarchy setKey(java.lang.String key) {
-      return (SaveStoreMenuHierarchy) super.setKey(key);
-    }
+	/**
+	 * Create a request for the method "getStoreMenus".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreMenus#execute()} method to invoke the remote operation.
+	 *
+	 * @param storeId
+	 * @param firstPosition
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStoreMenus getStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition,
+			java.lang.Integer maxResult) throws java.io.IOException {
+		GetStoreMenus result = new GetStoreMenus(storeId, firstPosition, maxResult);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public SaveStoreMenuHierarchy setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreMenuHierarchy) super.setOauthToken(oauthToken);
-    }
+	public class GetStoreMenus
+			extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchyCollection> {
 
-    @Override
-    public SaveStoreMenuHierarchy setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreMenuHierarchy) super.setPrettyPrint(prettyPrint);
-    }
+		private static final String REST_PATH = "storemenuhierarchycollection/{storeId}/{firstPosition}/{maxResult}";
 
-    @Override
-    public SaveStoreMenuHierarchy setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreMenuHierarchy) super.setQuotaUser(quotaUser);
-    }
+		/**
+		 * Create a request for the method "getStoreMenus".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreMenus#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStoreMenus#initialize(com.google.api.client.googleapis.services.Abstra ctGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param firstPosition
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStoreMenus(java.lang.Long storeId, java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchyCollection.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
 
-    @Override
-    public SaveStoreMenuHierarchy setUserIp(java.lang.String userIp) {
-      return (SaveStoreMenuHierarchy) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStoreMenus setAlt(java.lang.String alt) {
+			return (GetStoreMenus) super.setAlt(alt);
+		}
 
-    @Override
-    public SaveStoreMenuHierarchy set(String parameterName, Object value) {
-      return (SaveStoreMenuHierarchy) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreMenus setFields(java.lang.String fields) {
+			return (GetStoreMenus) super.setFields(fields);
+		}
 
-  /**
-   * Create a request for the method "saveStoreMenuItem".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreMenuItem#execute()} method to invoke the remote operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem}
-   * @return the request
-   */
-  public SaveStoreMenuItem saveStoreMenuItem(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content) throws java.io.IOException {
-    SaveStoreMenuItem result = new SaveStoreMenuItem(content);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStoreMenus setKey(java.lang.String key) {
+			return (GetStoreMenus) super.setKey(key);
+		}
 
-  public class SaveStoreMenuItem extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem> {
+		@Override
+		public GetStoreMenus setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreMenus) super.setOauthToken(oauthToken);
+		}
 
-    private static final String REST_PATH = "saveStoreMenuItem";
+		@Override
+		public GetStoreMenus setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreMenus) super.setPrettyPrint(prettyPrint);
+		}
 
-    /**
-     * Create a request for the method "saveStoreMenuItem".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreMenuItem#execute()} method to invoke the remote
-     * operation. <p> {@link SaveStoreMenuItem#initialize(com.google.api.client.googleapis.services.Ab
-     * stractGoogleClientRequest)} must be called to initialize this instance immediately after
-     * invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem}
-     * @since 1.13
+		@Override
+		public GetStoreMenus setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreMenus) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStoreMenus setUserIp(java.lang.String userIp) {
+			return (GetStoreMenus) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
      */
-    protected SaveStoreMenuItem(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem.class);
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    @Override
-    public SaveStoreMenuItem setAlt(java.lang.String alt) {
-      return (SaveStoreMenuItem) super.setAlt(alt);
-    }
+		public GetStoreMenus setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public SaveStoreMenuItem setFields(java.lang.String fields) {
-      return (SaveStoreMenuItem) super.setFields(fields);
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Integer firstPosition;
 
-    @Override
-    public SaveStoreMenuItem setKey(java.lang.String key) {
-      return (SaveStoreMenuItem) super.setKey(key);
-    }
+		/**
 
-    @Override
-    public SaveStoreMenuItem setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreMenuItem) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public SaveStoreMenuItem setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreMenuItem) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public SaveStoreMenuItem setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreMenuItem) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public SaveStoreMenuItem setUserIp(java.lang.String userIp) {
-      return (SaveStoreMenuItem) super.setUserIp(userIp);
-    }
-
-    @Override
-    public SaveStoreMenuItem set(String parameterName, Object value) {
-      return (SaveStoreMenuItem) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "saveStoreMenuItemModifier".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreMenuItemModifier#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier}
-   * @return the request
-   */
-  public SaveStoreMenuItemModifier saveStoreMenuItemModifier(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content) throws java.io.IOException {
-    SaveStoreMenuItemModifier result = new SaveStoreMenuItemModifier(content);
-    initialize(result);
-    return result;
-  }
-
-  public class SaveStoreMenuItemModifier extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier> {
-
-    private static final String REST_PATH = "saveStoreMenuItemModifier";
-
-    /**
-     * Create a request for the method "saveStoreMenuItemModifier".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreMenuItemModifier#execute()} method to invoke the
-     * remote operation. <p> {@link SaveStoreMenuItemModifier#initialize(com.google.api.client.googlea
-     * pis.services.AbstractGoogleClientRequest)} must be called to initialize this instance
-     * immediately after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier}
-     * @since 1.13
      */
-    protected SaveStoreMenuItemModifier(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier.class);
-    }
+		public java.lang.Integer getFirstPosition() {
+			return firstPosition;
+		}
 
-    @Override
-    public SaveStoreMenuItemModifier setAlt(java.lang.String alt) {
-      return (SaveStoreMenuItemModifier) super.setAlt(alt);
-    }
+		public GetStoreMenus setFirstPosition(java.lang.Integer firstPosition) {
+			this.firstPosition = firstPosition;
+			return this;
+		}
 
-    @Override
-    public SaveStoreMenuItemModifier setFields(java.lang.String fields) {
-      return (SaveStoreMenuItemModifier) super.setFields(fields);
-    }
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
 
-    @Override
-    public SaveStoreMenuItemModifier setKey(java.lang.String key) {
-      return (SaveStoreMenuItemModifier) super.setKey(key);
-    }
+		/**
 
-    @Override
-    public SaveStoreMenuItemModifier setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreMenuItemModifier) super.setOauthToken(oauthToken);
-    }
-
-    @Override
-    public SaveStoreMenuItemModifier setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreMenuItemModifier) super.setPrettyPrint(prettyPrint);
-    }
-
-    @Override
-    public SaveStoreMenuItemModifier setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreMenuItemModifier) super.setQuotaUser(quotaUser);
-    }
-
-    @Override
-    public SaveStoreMenuItemModifier setUserIp(java.lang.String userIp) {
-      return (SaveStoreMenuItemModifier) super.setUserIp(userIp);
-    }
-
-    @Override
-    public SaveStoreMenuItemModifier set(String parameterName, Object value) {
-      return (SaveStoreMenuItemModifier) super.set(parameterName, value);
-    }
-  }
-
-  /**
-   * Create a request for the method "saveStoreMenuItemModifierGroup".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreMenuItemModifierGroup#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup}
-   * @return the request
-   */
-  public SaveStoreMenuItemModifierGroup saveStoreMenuItemModifierGroup(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content) throws java.io.IOException {
-    SaveStoreMenuItemModifierGroup result = new SaveStoreMenuItemModifierGroup(content);
-    initialize(result);
-    return result;
-  }
-
-  public class SaveStoreMenuItemModifierGroup extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup> {
-
-    private static final String REST_PATH = "saveStoreMenuItemModifierGroup";
-
-    /**
-     * Create a request for the method "saveStoreMenuItemModifierGroup".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreMenuItemModifierGroup#execute()} method to invoke
-     * the remote operation. <p> {@link SaveStoreMenuItemModifierGroup#initialize(com.google.api.clien
-     * t.googleapis.services.AbstractGoogleClientRequest)} must be called to initialize this instance
-     * immediately after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup}
-     * @since 1.13
      */
-    protected SaveStoreMenuItemModifierGroup(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup.class);
-    }
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setAlt(java.lang.String alt) {
-      return (SaveStoreMenuItemModifierGroup) super.setAlt(alt);
-    }
+		public GetStoreMenus setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setFields(java.lang.String fields) {
-      return (SaveStoreMenuItemModifierGroup) super.setFields(fields);
-    }
+		@Override
+		public GetStoreMenus set(String parameterName, Object value) {
+			return (GetStoreMenus) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setKey(java.lang.String key) {
-      return (SaveStoreMenuItemModifierGroup) super.setKey(key);
-    }
+	/**
+	 * Create a request for the method "getStoreOwners".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreOwners#execute()} method to invoke the remote operation.
+	 *
+	 * @param storeId
+	 * @return the request
+	 */
+	public GetStoreOwners getStoreOwners(java.lang.Long storeId) throws java.io.IOException {
+		GetStoreOwners result = new GetStoreOwners(storeId);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreMenuItemModifierGroup) super.setOauthToken(oauthToken);
-    }
+	public class GetStoreOwners extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection> {
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreMenuItemModifierGroup) super.setPrettyPrint(prettyPrint);
-    }
+		private static final String REST_PATH = "storeownercollection/{storeId}";
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreMenuItemModifierGroup) super.setQuotaUser(quotaUser);
-    }
+		/**
+		 * Create a request for the method "getStoreOwners".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreOwners#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStoreOwners#initialize(com.google.api.client.googleapis.services.Abstr actGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @since 1.13
+		 */
+		protected GetStoreOwners(java.lang.Long storeId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwnerCollection.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+		}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup setUserIp(java.lang.String userIp) {
-      return (SaveStoreMenuItemModifierGroup) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStoreOwners setAlt(java.lang.String alt) {
+			return (GetStoreOwners) super.setAlt(alt);
+		}
 
-    @Override
-    public SaveStoreMenuItemModifierGroup set(String parameterName, Object value) {
-      return (SaveStoreMenuItemModifierGroup) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreOwners setFields(java.lang.String fields) {
+			return (GetStoreOwners) super.setFields(fields);
+		}
 
-  /**
-   * Create a request for the method "saveStoreOwner".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStoreOwner#execute()} method to invoke the remote operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
-   * @return the request
-   */
-  public SaveStoreOwner saveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) throws java.io.IOException {
-    SaveStoreOwner result = new SaveStoreOwner(content);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStoreOwners setKey(java.lang.String key) {
+			return (GetStoreOwners) super.setKey(key);
+		}
 
-  public class SaveStoreOwner extends StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner> {
+		@Override
+		public GetStoreOwners setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreOwners) super.setOauthToken(oauthToken);
+		}
 
-    private static final String REST_PATH = "saveStoreOwner";
+		@Override
+		public GetStoreOwners setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreOwners) super.setPrettyPrint(prettyPrint);
+		}
 
-    /**
-     * Create a request for the method "saveStoreOwner".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStoreOwner#execute()} method to invoke the remote
-     * operation. <p> {@link SaveStoreOwner#initialize(com.google.api.client.googleapis.services.Abstr
-     * actGoogleClientRequest)} must be called to initialize this instance immediately after invoking
-     * the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
-     * @since 1.13
+		@Override
+		public GetStoreOwners setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreOwners) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStoreOwners setUserIp(java.lang.String userIp) {
+			return (GetStoreOwners) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
      */
-    protected SaveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner.class);
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    @Override
-    public SaveStoreOwner setAlt(java.lang.String alt) {
-      return (SaveStoreOwner) super.setAlt(alt);
-    }
+		public GetStoreOwners setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public SaveStoreOwner setFields(java.lang.String fields) {
-      return (SaveStoreOwner) super.setFields(fields);
-    }
+		@Override
+		public GetStoreOwners set(String parameterName, Object value) {
+			return (GetStoreOwners) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public SaveStoreOwner setKey(java.lang.String key) {
-      return (SaveStoreOwner) super.setKey(key);
-    }
+	/**
+	 * Create a request for the method "getStorePOSConnection".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStorePOSConnection#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param storeId
+	 * @return the request
+	 */
+	public GetStorePOSConnection getStorePOSConnection(java.lang.Long storeId) throws java.io.IOException {
+		GetStorePOSConnection result = new GetStorePOSConnection(storeId);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public SaveStoreOwner setOauthToken(java.lang.String oauthToken) {
-      return (SaveStoreOwner) super.setOauthToken(oauthToken);
-    }
+	public class GetStorePOSConnection extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection> {
 
-    @Override
-    public SaveStoreOwner setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStoreOwner) super.setPrettyPrint(prettyPrint);
-    }
+		private static final String REST_PATH = "storeposconnection/{storeId}";
 
-    @Override
-    public SaveStoreOwner setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStoreOwner) super.setQuotaUser(quotaUser);
-    }
+		/**
+		 * Create a request for the method "getStorePOSConnection".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStorePOSConnection#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStorePOSConnection#initialize(com.google.api.client.googleapis. services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @since 1.13
+		 */
+		protected GetStorePOSConnection(java.lang.Long storeId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+		}
 
-    @Override
-    public SaveStoreOwner setUserIp(java.lang.String userIp) {
-      return (SaveStoreOwner) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStorePOSConnection setAlt(java.lang.String alt) {
+			return (GetStorePOSConnection) super.setAlt(alt);
+		}
 
-    @Override
-    public SaveStoreOwner set(String parameterName, Object value) {
-      return (SaveStoreOwner) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStorePOSConnection setFields(java.lang.String fields) {
+			return (GetStorePOSConnection) super.setFields(fields);
+		}
 
-  /**
-   * Create a request for the method "saveStorePOSConnection".
-   *
-   * This request holds the parameters needed by the storeendpoint server.  After setting any optional
-   * parameters, call the {@link SaveStorePOSConnection#execute()} method to invoke the remote
-   * operation.
-   *
-   * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection}
-   * @return the request
-   */
-  public SaveStorePOSConnection saveStorePOSConnection(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection content) throws java.io.IOException {
-    SaveStorePOSConnection result = new SaveStorePOSConnection(content);
-    initialize(result);
-    return result;
-  }
+		@Override
+		public GetStorePOSConnection setKey(java.lang.String key) {
+			return (GetStorePOSConnection) super.setKey(key);
+		}
 
-  public class SaveStorePOSConnection extends StoreendpointRequest<Void> {
+		@Override
+		public GetStorePOSConnection setOauthToken(java.lang.String oauthToken) {
+			return (GetStorePOSConnection) super.setOauthToken(oauthToken);
+		}
 
-    private static final String REST_PATH = "saveStorePOSConnection";
+		@Override
+		public GetStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStorePOSConnection) super.setPrettyPrint(prettyPrint);
+		}
 
-    /**
-     * Create a request for the method "saveStorePOSConnection".
-     *
-     * This request holds the parameters needed by the the storeendpoint server.  After setting any
-     * optional parameters, call the {@link SaveStorePOSConnection#execute()} method to invoke the
-     * remote operation. <p> {@link SaveStorePOSConnection#initialize(com.google.api.client.googleapis
-     * .services.AbstractGoogleClientRequest)} must be called to initialize this instance immediately
-     * after invoking the constructor. </p>
-     *
-     * @param content the {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection}
-     * @since 1.13
+		@Override
+		public GetStorePOSConnection setQuotaUser(java.lang.String quotaUser) {
+			return (GetStorePOSConnection) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStorePOSConnection setUserIp(java.lang.String userIp) {
+			return (GetStorePOSConnection) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
      */
-    protected SaveStorePOSConnection(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection content) {
-      super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    @Override
-    public SaveStorePOSConnection setAlt(java.lang.String alt) {
-      return (SaveStorePOSConnection) super.setAlt(alt);
-    }
+		public GetStorePOSConnection setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public SaveStorePOSConnection setFields(java.lang.String fields) {
-      return (SaveStorePOSConnection) super.setFields(fields);
-    }
+		@Override
+		public GetStorePOSConnection set(String parameterName, Object value) {
+			return (GetStorePOSConnection) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public SaveStorePOSConnection setKey(java.lang.String key) {
-      return (SaveStorePOSConnection) super.setKey(key);
-    }
+	/**
+	 * Create a request for the method "getStoreStats".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStoreStats#execute()} method to invoke the remote operation.
+	 *
+	 * @param storeId
+	 * @return the request
+	 */
+	public GetStoreStats getStoreStats(java.lang.Long storeId) throws java.io.IOException {
+		GetStoreStats result = new GetStoreStats(storeId);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public SaveStorePOSConnection setOauthToken(java.lang.String oauthToken) {
-      return (SaveStorePOSConnection) super.setOauthToken(oauthToken);
-    }
+	public class GetStoreStats extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats> {
 
-    @Override
-    public SaveStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
-      return (SaveStorePOSConnection) super.setPrettyPrint(prettyPrint);
-    }
+		private static final String REST_PATH = "storestats/{storeId}";
 
-    @Override
-    public SaveStorePOSConnection setQuotaUser(java.lang.String quotaUser) {
-      return (SaveStorePOSConnection) super.setQuotaUser(quotaUser);
-    }
+		/**
+		 * Create a request for the method "getStoreStats".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStoreStats#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link GetStoreStats#initialize(com.google.api.client.googleapis.services.Abstra ctGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @since 1.13
+		 */
+		protected GetStoreStats(java.lang.Long storeId) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+		}
 
-    @Override
-    public SaveStorePOSConnection setUserIp(java.lang.String userIp) {
-      return (SaveStorePOSConnection) super.setUserIp(userIp);
-    }
+		@Override
+		public GetStoreStats setAlt(java.lang.String alt) {
+			return (GetStoreStats) super.setAlt(alt);
+		}
 
-    @Override
-    public SaveStorePOSConnection set(String parameterName, Object value) {
-      return (SaveStorePOSConnection) super.set(parameterName, value);
-    }
-  }
+		@Override
+		public GetStoreStats setFields(java.lang.String fields) {
+			return (GetStoreStats) super.setFields(fields);
+		}
 
-  /**
-   * Builder for {@link Storeendpoint}.
-   *
-   * <p>
-   * Implementation is not thread-safe.
-   * </p>
-   *
-   * @since 1.3.0
-   */
-  public static final class Builder extends com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient.Builder {
+		@Override
+		public GetStoreStats setKey(java.lang.String key) {
+			return (GetStoreStats) super.setKey(key);
+		}
 
-    /**
-     * Returns an instance of a new builder.
-     *
-     * @param transport HTTP transport, which should normally be:
-     *        <ul>
-     *        <li>Google App Engine:
-     *        {@code com.google.api.client.extensions.appengine.http.UrlFetchTransport}</li>
-     *        <li>Android: {@code newCompatibleTransport} from
-     *        {@code com.google.api.client.extensions.android.http.AndroidHttp}</li>
-     *        <li>Java: {@link com.google.api.client.googleapis.javanet.GoogleNetHttpTransport#newTrustedTransport()}
-     *        </li>
-     *        </ul>
-     * @param jsonFactory JSON factory, which may be:
-     *        <ul>
-     *        <li>Jackson: {@code com.google.api.client.json.jackson2.JacksonFactory}</li>
-     *        <li>Google GSON: {@code com.google.api.client.json.gson.GsonFactory}</li>
-     *        <li>Android Honeycomb or higher:
-     *        {@code com.google.api.client.extensions.android.json.AndroidJsonFactory}</li>
-     *        </ul>
-     * @param httpRequestInitializer HTTP request initializer or {@code null} for none
-     * @since 1.7
+		@Override
+		public GetStoreStats setOauthToken(java.lang.String oauthToken) {
+			return (GetStoreStats) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public GetStoreStats setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStoreStats) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public GetStoreStats setQuotaUser(java.lang.String quotaUser) {
+			return (GetStoreStats) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStoreStats setUserIp(java.lang.String userIp) {
+			return (GetStoreStats) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
      */
-    public Builder(com.google.api.client.http.HttpTransport transport, com.google.api.client.json.JsonFactory jsonFactory,
-        com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-      super(
-          transport,
-          jsonFactory,
-          DEFAULT_ROOT_URL,
-          DEFAULT_SERVICE_PATH,
-          httpRequestInitializer,
-          false);
-    }
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
 
-    /** Builds a new instance of {@link Storeendpoint}. */
-    @Override
-    public Storeendpoint build() {
-      return new Storeendpoint(this);
-    }
+		public GetStoreStats setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
 
-    @Override
-    public Builder setRootUrl(String rootUrl) {
-      return (Builder) super.setRootUrl(rootUrl);
-    }
+		@Override
+		public GetStoreStats set(String parameterName, Object value) {
+			return (GetStoreStats) super.set(parameterName, value);
+		}
+	}
 
-    @Override
-    public Builder setServicePath(String servicePath) {
-      return (Builder) super.setServicePath(servicePath);
-    }
+	/**
+	 * Create a request for the method "getStores".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link GetStores#execute()} method to invoke the remote operation.
+	 *
+	 * @param firstPosition
+	 * @param maxResult
+	 * @return the request
+	 */
+	public GetStores getStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) throws java.io.IOException {
+		GetStores result = new GetStores(firstPosition, maxResult);
+		initialize(result);
+		return result;
+	}
 
-    @Override
-    public Builder setHttpRequestInitializer(com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
-      return (Builder) super.setHttpRequestInitializer(httpRequestInitializer);
-    }
+	public class GetStores extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection> {
 
-    @Override
-    public Builder setApplicationName(String applicationName) {
-      return (Builder) super.setApplicationName(applicationName);
-    }
+		private static final String REST_PATH = "storecollection/{firstPosition}/{maxResult}";
 
-    @Override
-    public Builder setSuppressPatternChecks(boolean suppressPatternChecks) {
-      return (Builder) super.setSuppressPatternChecks(suppressPatternChecks);
-    }
+		/**
+		 * Create a request for the method "getStores".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link GetStores#execute()} method to invoke the remote operation.
+		 * <p>
+		 * {@link GetStores#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param firstPosition
+		 * @param maxResult
+		 * @since 1.13
+		 */
+		protected GetStores(java.lang.Integer firstPosition, java.lang.Integer maxResult) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection.class);
+			this.firstPosition = com.google.api.client.util.Preconditions.checkNotNull(firstPosition,
+					"Required parameter firstPosition must be specified.");
+			this.maxResult = com.google.api.client.util.Preconditions.checkNotNull(maxResult,
+					"Required parameter maxResult must be specified.");
+		}
 
-    @Override
-    public Builder setSuppressRequiredParameterChecks(boolean suppressRequiredParameterChecks) {
-      return (Builder) super.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
-    }
+		@Override
+		public GetStores setAlt(java.lang.String alt) {
+			return (GetStores) super.setAlt(alt);
+		}
 
-    @Override
-    public Builder setSuppressAllChecks(boolean suppressAllChecks) {
-      return (Builder) super.setSuppressAllChecks(suppressAllChecks);
-    }
+		@Override
+		public GetStores setFields(java.lang.String fields) {
+			return (GetStores) super.setFields(fields);
+		}
 
-    /**
-     * Set the {@link StoreendpointRequestInitializer}.
-     *
-     * @since 1.12
+		@Override
+		public GetStores setKey(java.lang.String key) {
+			return (GetStores) super.setKey(key);
+		}
+
+		@Override
+		public GetStores setOauthToken(java.lang.String oauthToken) {
+			return (GetStores) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public GetStores setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (GetStores) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public GetStores setQuotaUser(java.lang.String quotaUser) {
+			return (GetStores) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public GetStores setUserIp(java.lang.String userIp) {
+			return (GetStores) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Integer firstPosition;
+
+		/**
+
      */
-    public Builder setStoreendpointRequestInitializer(
-        StoreendpointRequestInitializer storeendpointRequestInitializer) {
-      return (Builder) super.setGoogleClientRequestInitializer(storeendpointRequestInitializer);
-    }
+		public java.lang.Integer getFirstPosition() {
+			return firstPosition;
+		}
 
-    @Override
-    public Builder setGoogleClientRequestInitializer(
-        com.google.api.client.googleapis.services.GoogleClientRequestInitializer googleClientRequestInitializer) {
-      return (Builder) super.setGoogleClientRequestInitializer(googleClientRequestInitializer);
-    }
-  }
+		public GetStores setFirstPosition(java.lang.Integer firstPosition) {
+			this.firstPosition = firstPosition;
+			return this;
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Integer maxResult;
+
+		/**
+
+     */
+		public java.lang.Integer getMaxResult() {
+			return maxResult;
+		}
+
+		public GetStores setMaxResult(java.lang.Integer maxResult) {
+			this.maxResult = maxResult;
+			return this;
+		}
+
+		@Override
+		public GetStores set(String parameterName, Object value) {
+			return (GetStores) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "placeOrder".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link PlaceOrder#execute()} method to invoke the remote operation.
+	 *
+	 * @param storeId
+	 * @param orderMode
+	 * @param order
+	 * @return the request
+	 */
+	public PlaceOrder placeOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order)
+			throws java.io.IOException {
+		PlaceOrder result = new PlaceOrder(storeId, orderMode, order);
+		initialize(result);
+		return result;
+	}
+
+	public class PlaceOrder extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder> {
+
+		private static final String REST_PATH = "placeOrder/{storeId}/{orderMode}/{order}";
+
+		/**
+		 * Create a request for the method "placeOrder".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link PlaceOrder#execute()} method to invoke the remote operation.
+		 * <p>
+		 * {@link PlaceOrder#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param storeId
+		 * @param orderMode
+		 * @param order
+		 * @since 1.13
+		 */
+		protected PlaceOrder(java.lang.Long storeId, java.lang.Integer orderMode, java.lang.String order) {
+			super(Storeendpoint.this, "POST", REST_PATH, null,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder.class);
+			this.storeId = com.google.api.client.util.Preconditions.checkNotNull(storeId,
+					"Required parameter storeId must be specified.");
+			this.orderMode = com.google.api.client.util.Preconditions.checkNotNull(orderMode,
+					"Required parameter orderMode must be specified.");
+			this.order = com.google.api.client.util.Preconditions.checkNotNull(order,
+					"Required parameter order must be specified.");
+		}
+
+		@Override
+		public PlaceOrder setAlt(java.lang.String alt) {
+			return (PlaceOrder) super.setAlt(alt);
+		}
+
+		@Override
+		public PlaceOrder setFields(java.lang.String fields) {
+			return (PlaceOrder) super.setFields(fields);
+		}
+
+		@Override
+		public PlaceOrder setKey(java.lang.String key) {
+			return (PlaceOrder) super.setKey(key);
+		}
+
+		@Override
+		public PlaceOrder setOauthToken(java.lang.String oauthToken) {
+			return (PlaceOrder) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public PlaceOrder setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (PlaceOrder) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public PlaceOrder setQuotaUser(java.lang.String quotaUser) {
+			return (PlaceOrder) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public PlaceOrder setUserIp(java.lang.String userIp) {
+			return (PlaceOrder) super.setUserIp(userIp);
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Long storeId;
+
+		/**
+
+     */
+		public java.lang.Long getStoreId() {
+			return storeId;
+		}
+
+		public PlaceOrder setStoreId(java.lang.Long storeId) {
+			this.storeId = storeId;
+			return this;
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.Integer orderMode;
+
+		/**
+
+     */
+		public java.lang.Integer getOrderMode() {
+			return orderMode;
+		}
+
+		public PlaceOrder setOrderMode(java.lang.Integer orderMode) {
+			this.orderMode = orderMode;
+			return this;
+		}
+
+		@com.google.api.client.util.Key
+		private java.lang.String order;
+
+		/**
+
+     */
+		public java.lang.String getOrder() {
+			return order;
+		}
+
+		public PlaceOrder setOrder(java.lang.String order) {
+			this.order = order;
+			return this;
+		}
+
+		@Override
+		public PlaceOrder set(String parameterName, Object value) {
+			return (PlaceOrder) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "removeStoreOwner".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link RemoveStoreOwner#execute()} method to invoke the remote operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
+	 * @return the request
+	 */
+	public RemoveStoreOwner removeStoreOwner(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content)
+			throws java.io.IOException {
+		RemoveStoreOwner result = new RemoveStoreOwner(content);
+		initialize(result);
+		return result;
+	}
+
+	public class RemoveStoreOwner extends StoreendpointRequest<Void> {
+
+		private static final String REST_PATH = "storeowner";
+
+		/**
+		 * Create a request for the method "removeStoreOwner".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link RemoveStoreOwner#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link RemoveStoreOwner#initialize(com.google.api.client.googleapis.services.Abs tractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
+		 * @since 1.13
+		 */
+		protected RemoveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
+		}
+
+		@Override
+		public RemoveStoreOwner setAlt(java.lang.String alt) {
+			return (RemoveStoreOwner) super.setAlt(alt);
+		}
+
+		@Override
+		public RemoveStoreOwner setFields(java.lang.String fields) {
+			return (RemoveStoreOwner) super.setFields(fields);
+		}
+
+		@Override
+		public RemoveStoreOwner setKey(java.lang.String key) {
+			return (RemoveStoreOwner) super.setKey(key);
+		}
+
+		@Override
+		public RemoveStoreOwner setOauthToken(java.lang.String oauthToken) {
+			return (RemoveStoreOwner) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public RemoveStoreOwner setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (RemoveStoreOwner) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public RemoveStoreOwner setQuotaUser(java.lang.String quotaUser) {
+			return (RemoveStoreOwner) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public RemoveStoreOwner setUserIp(java.lang.String userIp) {
+			return (RemoveStoreOwner) super.setUserIp(userIp);
+		}
+
+		@Override
+		public RemoveStoreOwner set(String parameterName, Object value) {
+			return (RemoveStoreOwner) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStore".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStore#execute()} method to invoke the remote operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
+	 * @return the request
+	 */
+	public SaveStore saveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content)
+			throws java.io.IOException {
+		SaveStore result = new SaveStore(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStore extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store> {
+
+		private static final String REST_PATH = "saveStore";
+
+		/**
+		 * Create a request for the method "saveStore".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStore#execute()} method to invoke the remote operation.
+		 * <p>
+		 * {@link SaveStore#initialize(com.google.api.client.googleapis.services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store}
+		 * @since 1.13
+		 */
+		protected SaveStore(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store.class);
+		}
+
+		@Override
+		public SaveStore setAlt(java.lang.String alt) {
+			return (SaveStore) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStore setFields(java.lang.String fields) {
+			return (SaveStore) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStore setKey(java.lang.String key) {
+			return (SaveStore) super.setKey(key);
+		}
+
+		@Override
+		public SaveStore setOauthToken(java.lang.String oauthToken) {
+			return (SaveStore) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStore setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStore) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStore setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStore) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStore setUserIp(java.lang.String userIp) {
+			return (SaveStore) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStore set(String parameterName, Object value) {
+			return (SaveStore) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreMenuCombined".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreMenuCombined#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined}
+	 * @return the request
+	 */
+	public SaveStoreMenuCombined saveStoreMenuCombined(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined content)
+			throws java.io.IOException {
+		SaveStoreMenuCombined result = new SaveStoreMenuCombined(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreMenuCombined extends StoreendpointRequest<Void> {
+
+		private static final String REST_PATH = "saveStoreMenuCombined";
+
+		/**
+		 * Create a request for the method "saveStoreMenuCombined".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreMenuCombined#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link SaveStoreMenuCombined#initialize(com.google.api.client.googleapis. services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined}
+		 * @since 1.13
+		 */
+		protected SaveStoreMenuCombined(
+				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuCombined content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setAlt(java.lang.String alt) {
+			return (SaveStoreMenuCombined) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setFields(java.lang.String fields) {
+			return (SaveStoreMenuCombined) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setKey(java.lang.String key) {
+			return (SaveStoreMenuCombined) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuCombined) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuCombined) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuCombined) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreMenuCombined setUserIp(java.lang.String userIp) {
+			return (SaveStoreMenuCombined) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreMenuCombined set(String parameterName, Object value) {
+			return (SaveStoreMenuCombined) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreMenuHierarchy".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreMenuHierarchy#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy}
+	 * @return the request
+	 */
+	public SaveStoreMenuHierarchy saveStoreMenuHierarchy(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy content)
+			throws java.io.IOException {
+		SaveStoreMenuHierarchy result = new SaveStoreMenuHierarchy(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreMenuHierarchy extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy> {
+
+		private static final String REST_PATH = "saveStoreMenuHierarchy";
+
+		/**
+		 * Create a request for the method "saveStoreMenuHierarchy".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreMenuHierarchy#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link SaveStoreMenuHierarchy#initialize(com.google.api.client.googleapis .services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy}
+		 * @since 1.13
+		 */
+		protected SaveStoreMenuHierarchy(
+				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy.class);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setAlt(java.lang.String alt) {
+			return (SaveStoreMenuHierarchy) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setFields(java.lang.String fields) {
+			return (SaveStoreMenuHierarchy) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setKey(java.lang.String key) {
+			return (SaveStoreMenuHierarchy) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuHierarchy) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuHierarchy) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuHierarchy) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy setUserIp(java.lang.String userIp) {
+			return (SaveStoreMenuHierarchy) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreMenuHierarchy set(String parameterName, Object value) {
+			return (SaveStoreMenuHierarchy) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreMenuItem".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreMenuItem#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem}
+	 * @return the request
+	 */
+	public SaveStoreMenuItem saveStoreMenuItem(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content)
+			throws java.io.IOException {
+		SaveStoreMenuItem result = new SaveStoreMenuItem(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreMenuItem extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem> {
+
+		private static final String REST_PATH = "saveStoreMenuItem";
+
+		/**
+		 * Create a request for the method "saveStoreMenuItem".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreMenuItem#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link SaveStoreMenuItem#initialize(com.google.api.client.googleapis.services.Ab stractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem}
+		 * @since 1.13
+		 */
+		protected SaveStoreMenuItem(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem.class);
+		}
+
+		@Override
+		public SaveStoreMenuItem setAlt(java.lang.String alt) {
+			return (SaveStoreMenuItem) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreMenuItem setFields(java.lang.String fields) {
+			return (SaveStoreMenuItem) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreMenuItem setKey(java.lang.String key) {
+			return (SaveStoreMenuItem) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreMenuItem setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuItem) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreMenuItem setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuItem) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreMenuItem setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuItem) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreMenuItem setUserIp(java.lang.String userIp) {
+			return (SaveStoreMenuItem) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreMenuItem set(String parameterName, Object value) {
+			return (SaveStoreMenuItem) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreMenuItemModifier".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreMenuItemModifier#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier}
+	 * @return the request
+	 */
+	public SaveStoreMenuItemModifier saveStoreMenuItemModifier(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content)
+			throws java.io.IOException {
+		SaveStoreMenuItemModifier result = new SaveStoreMenuItemModifier(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreMenuItemModifier extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier> {
+
+		private static final String REST_PATH = "saveStoreMenuItemModifier";
+
+		/**
+		 * Create a request for the method "saveStoreMenuItemModifier".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreMenuItemModifier#execute()} method to invoke the
+		 * remote operation.
+		 * <p>
+		 * {@link
+		 * SaveStoreMenuItemModifier#initialize(com.google.api.client.googlea
+		 * pis.services.AbstractGoogleClientRequest)} must be called to
+		 * initialize this instance immediately after invoking the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier}
+		 * @since 1.13
+		 */
+		protected SaveStoreMenuItemModifier(
+				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier.class);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setAlt(java.lang.String alt) {
+			return (SaveStoreMenuItemModifier) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setFields(java.lang.String fields) {
+			return (SaveStoreMenuItemModifier) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setKey(java.lang.String key) {
+			return (SaveStoreMenuItemModifier) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuItemModifier) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuItemModifier) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuItemModifier) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier setUserIp(java.lang.String userIp) {
+			return (SaveStoreMenuItemModifier) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifier set(String parameterName, Object value) {
+			return (SaveStoreMenuItemModifier) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreMenuItemModifierGroup".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreMenuItemModifierGroup#execute()} method to invoke the
+	 * remote operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup}
+	 * @return the request
+	 */
+	public SaveStoreMenuItemModifierGroup saveStoreMenuItemModifierGroup(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content)
+			throws java.io.IOException {
+		SaveStoreMenuItemModifierGroup result = new SaveStoreMenuItemModifierGroup(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreMenuItemModifierGroup
+			extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup> {
+
+		private static final String REST_PATH = "saveStoreMenuItemModifierGroup";
+
+		/**
+		 * Create a request for the method "saveStoreMenuItemModifierGroup".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreMenuItemModifierGroup#execute()} method to invoke the
+		 * remote operation.
+		 * <p>
+		 * {@link SaveStoreMenuItemModifierGroup#initialize(com.google.api.clien
+		 * t.googleapis.services.AbstractGoogleClientRequest)} must be called to
+		 * initialize this instance immediately after invoking the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup}
+		 * @since 1.13
+		 */
+		protected SaveStoreMenuItemModifierGroup(
+				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup.class);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setAlt(java.lang.String alt) {
+			return (SaveStoreMenuItemModifierGroup) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setFields(java.lang.String fields) {
+			return (SaveStoreMenuItemModifierGroup) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setKey(java.lang.String key) {
+			return (SaveStoreMenuItemModifierGroup) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreMenuItemModifierGroup) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreMenuItemModifierGroup) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreMenuItemModifierGroup) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup setUserIp(java.lang.String userIp) {
+			return (SaveStoreMenuItemModifierGroup) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreMenuItemModifierGroup set(String parameterName, Object value) {
+			return (SaveStoreMenuItemModifierGroup) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStoreOwner".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStoreOwner#execute()} method to invoke the remote operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
+	 * @return the request
+	 */
+	public SaveStoreOwner saveStoreOwner(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content)
+			throws java.io.IOException {
+		SaveStoreOwner result = new SaveStoreOwner(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStoreOwner extends
+			StoreendpointRequest<com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner> {
+
+		private static final String REST_PATH = "saveStoreOwner";
+
+		/**
+		 * Create a request for the method "saveStoreOwner".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStoreOwner#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link SaveStoreOwner#initialize(com.google.api.client.googleapis.services.Abstr actGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner}
+		 * @since 1.13
+		 */
+		protected SaveStoreOwner(com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content,
+					com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOwner.class);
+		}
+
+		@Override
+		public SaveStoreOwner setAlt(java.lang.String alt) {
+			return (SaveStoreOwner) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStoreOwner setFields(java.lang.String fields) {
+			return (SaveStoreOwner) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStoreOwner setKey(java.lang.String key) {
+			return (SaveStoreOwner) super.setKey(key);
+		}
+
+		@Override
+		public SaveStoreOwner setOauthToken(java.lang.String oauthToken) {
+			return (SaveStoreOwner) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStoreOwner setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStoreOwner) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStoreOwner setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStoreOwner) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStoreOwner setUserIp(java.lang.String userIp) {
+			return (SaveStoreOwner) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStoreOwner set(String parameterName, Object value) {
+			return (SaveStoreOwner) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Create a request for the method "saveStorePOSConnection".
+	 *
+	 * This request holds the parameters needed by the storeendpoint server.
+	 * After setting any optional parameters, call the
+	 * {@link SaveStorePOSConnection#execute()} method to invoke the remote
+	 * operation.
+	 *
+	 * @param content
+	 *            the
+	 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection}
+	 * @return the request
+	 */
+	public SaveStorePOSConnection saveStorePOSConnection(
+			com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection content)
+			throws java.io.IOException {
+		SaveStorePOSConnection result = new SaveStorePOSConnection(content);
+		initialize(result);
+		return result;
+	}
+
+	public class SaveStorePOSConnection extends StoreendpointRequest<Void> {
+
+		private static final String REST_PATH = "saveStorePOSConnection";
+
+		/**
+		 * Create a request for the method "saveStorePOSConnection".
+		 *
+		 * This request holds the parameters needed by the the storeendpoint
+		 * server. After setting any optional parameters, call the
+		 * {@link SaveStorePOSConnection#execute()} method to invoke the remote
+		 * operation.
+		 * <p>
+		 * {@link SaveStorePOSConnection#initialize(com.google.api.client.googleapis .services.AbstractGoogleClientRequest)}
+		 * must be called to initialize this instance immediately after invoking
+		 * the constructor.
+		 * </p>
+		 *
+		 * @param content
+		 *            the
+		 *            {@link com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection}
+		 * @since 1.13
+		 */
+		protected SaveStorePOSConnection(
+				com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StorePOSConnection content) {
+			super(Storeendpoint.this, "POST", REST_PATH, content, Void.class);
+		}
+
+		@Override
+		public SaveStorePOSConnection setAlt(java.lang.String alt) {
+			return (SaveStorePOSConnection) super.setAlt(alt);
+		}
+
+		@Override
+		public SaveStorePOSConnection setFields(java.lang.String fields) {
+			return (SaveStorePOSConnection) super.setFields(fields);
+		}
+
+		@Override
+		public SaveStorePOSConnection setKey(java.lang.String key) {
+			return (SaveStorePOSConnection) super.setKey(key);
+		}
+
+		@Override
+		public SaveStorePOSConnection setOauthToken(java.lang.String oauthToken) {
+			return (SaveStorePOSConnection) super.setOauthToken(oauthToken);
+		}
+
+		@Override
+		public SaveStorePOSConnection setPrettyPrint(java.lang.Boolean prettyPrint) {
+			return (SaveStorePOSConnection) super.setPrettyPrint(prettyPrint);
+		}
+
+		@Override
+		public SaveStorePOSConnection setQuotaUser(java.lang.String quotaUser) {
+			return (SaveStorePOSConnection) super.setQuotaUser(quotaUser);
+		}
+
+		@Override
+		public SaveStorePOSConnection setUserIp(java.lang.String userIp) {
+			return (SaveStorePOSConnection) super.setUserIp(userIp);
+		}
+
+		@Override
+		public SaveStorePOSConnection set(String parameterName, Object value) {
+			return (SaveStorePOSConnection) super.set(parameterName, value);
+		}
+	}
+
+	/**
+	 * Builder for {@link Storeendpoint}.
+	 *
+	 * <p>
+	 * Implementation is not thread-safe.
+	 * </p>
+	 *
+	 * @since 1.3.0
+	 */
+	public static final class Builder extends
+			com.google.api.client.googleapis.services.json.AbstractGoogleJsonClient.Builder {
+
+		/**
+		 * Returns an instance of a new builder.
+		 *
+		 * @param transport
+		 *            HTTP transport, which should normally be:
+		 *            <ul>
+		 *            <li>Google App Engine:
+		 *            {@code com.google.api.client.extensions.appengine.http.UrlFetchTransport}
+		 *            </li>
+		 *            <li>Android: {@code newCompatibleTransport} from
+		 *            {@code com.google.api.client.extensions.android.http.AndroidHttp}
+		 *            </li>
+		 *            <li>Java:
+		 *            {@link com.google.api.client.googleapis.javanet.GoogleNetHttpTransport#newTrustedTransport()}
+		 *            </li>
+		 *            </ul>
+		 * @param jsonFactory
+		 *            JSON factory, which may be:
+		 *            <ul>
+		 *            <li>Jackson:
+		 *            {@code com.google.api.client.json.jackson2.JacksonFactory}
+		 *            </li>
+		 *            <li>Google GSON:
+		 *            {@code com.google.api.client.json.gson.GsonFactory}</li>
+		 *            <li>Android Honeycomb or higher:
+		 *            {@code com.google.api.client.extensions.android.json.AndroidJsonFactory}
+		 *            </li>
+		 *            </ul>
+		 * @param httpRequestInitializer
+		 *            HTTP request initializer or {@code null} for none
+		 * @since 1.7
+		 */
+		public Builder(com.google.api.client.http.HttpTransport transport,
+				com.google.api.client.json.JsonFactory jsonFactory,
+				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
+			super(transport, jsonFactory, DEFAULT_ROOT_URL, DEFAULT_SERVICE_PATH, httpRequestInitializer, false);
+		}
+
+		/** Builds a new instance of {@link Storeendpoint}. */
+		@Override
+		public Storeendpoint build() {
+			return new Storeendpoint(this);
+		}
+
+		@Override
+		public Builder setRootUrl(String rootUrl) {
+			return (Builder) super.setRootUrl(rootUrl);
+		}
+
+		@Override
+		public Builder setServicePath(String servicePath) {
+			return (Builder) super.setServicePath(servicePath);
+		}
+
+		@Override
+		public Builder setHttpRequestInitializer(
+				com.google.api.client.http.HttpRequestInitializer httpRequestInitializer) {
+			return (Builder) super.setHttpRequestInitializer(httpRequestInitializer);
+		}
+
+		@Override
+		public Builder setApplicationName(String applicationName) {
+			return (Builder) super.setApplicationName(applicationName);
+		}
+
+		@Override
+		public Builder setSuppressPatternChecks(boolean suppressPatternChecks) {
+			return (Builder) super.setSuppressPatternChecks(suppressPatternChecks);
+		}
+
+		@Override
+		public Builder setSuppressRequiredParameterChecks(boolean suppressRequiredParameterChecks) {
+			return (Builder) super.setSuppressRequiredParameterChecks(suppressRequiredParameterChecks);
+		}
+
+		@Override
+		public Builder setSuppressAllChecks(boolean suppressAllChecks) {
+			return (Builder) super.setSuppressAllChecks(suppressAllChecks);
+		}
+
+		/**
+		 * Set the {@link StoreendpointRequestInitializer}.
+		 *
+		 * @since 1.12
+		 */
+		public Builder setStoreendpointRequestInitializer(
+				StoreendpointRequestInitializer storeendpointRequestInitializer) {
+			return (Builder) super.setGoogleClientRequestInitializer(storeendpointRequestInitializer);
+		}
+
+		@Override
+		public Builder setGoogleClientRequestInitializer(
+				com.google.api.client.googleapis.services.GoogleClientRequestInitializer googleClientRequestInitializer) {
+			return (Builder) super.setGoogleClientRequestInitializer(googleClientRequestInitializer);
+		}
+	}
 }

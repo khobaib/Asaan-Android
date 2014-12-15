@@ -29,8 +29,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-
-
 public class ImageLoader {
 
 	MemoryCache memoryCache = new MemoryCache();
@@ -41,7 +39,7 @@ public class ImageLoader {
 	ExecutorService executorService;
 	Handler handler = new Handler();// handler to display images in UI thread
 
-	final int stub_id = R.drawable.ic_history_item_restaurant;
+	final int stub_id = R.drawable.resturant_detail_demo;
 
 	public ImageLoader(Activity context) {
 		this.mContext = context;
@@ -98,7 +96,8 @@ public class ImageLoader {
 		// TODO Auto-generated method stub
 		Bitmap temp = null;
 		try {
-			//Logger.logger("bitmap size in resizeBitmap" + bitmap.getRowBytes());
+			// Logger.logger("bitmap size in resizeBitmap" +
+			// bitmap.getRowBytes());
 			if (bitmap != null) {
 				WindowManager w = mContext.getWindowManager();
 				Point size = new Point();
@@ -149,16 +148,19 @@ public class ImageLoader {
 				Display d = w.getDefaultDisplay();
 				Measuredwidth = d.getWidth();
 				Measuredheight = d.getHeight();
-				//Logger.logger("========", "Measuredwidth = " + Measuredwidth + " & Measuredheight = " + Measuredheight);
+				// Logger.logger("========", "Measuredwidth = " + Measuredwidth
+				// + " & Measuredheight = " + Measuredheight);
 				// Log.e("Measuredwidth",""+Measuredwidth);
 				// Log.e("Measuredheight",""+Measuredheight);
 
-				//Logger.logger("========",
-						//"bitmap width = " + bitmap.getWidth() + " & bitmap height = " + bitmap.getHeight());
+				// Logger.logger("========",
+				// "bitmap width = " + bitmap.getWidth() + " & bitmap height = "
+				// + bitmap.getHeight());
 				float retion = ((float) Measuredwidth) / ((float) bitmap.getWidth());
 				width = ((float) bitmap.getWidth()) * retion;
 				height = ((float) bitmap.getHeight()) * retion;
-				//Logger.logger("on screen", "bitmap width = " + width + " & bitmap height = " + height);
+				// Logger.logger("on screen", "bitmap width = " + width +
+				// " & bitmap height = " + height);
 				// Log.e("witdh",""+witdh);
 				// Log.e("height",""+height);
 				temp = bitmap.createScaledBitmap(bitmap, (int) (width), (int) (height), true);
@@ -183,7 +185,7 @@ public class ImageLoader {
 		// from SD cache
 		Bitmap b = decodeFile(f, imageQuality);
 		if (b != null) {
-			//Logger.logger("retrieving splash from file cache");
+			// Logger.logger("retrieving splash from file cache");
 			return b;
 		}
 

@@ -26,8 +26,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * </p>
  *
  * <pre>
-  public static final GoogleClientRequestInitializer KEY_INITIALIZER =
-      new UserendpointRequestInitializer(KEY);
+ * public static final GoogleClientRequestInitializer KEY_INITIALIZER = new UserendpointRequestInitializer(KEY);
  * </pre>
  *
  * <p>
@@ -35,8 +34,7 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * </p>
  *
  * <pre>
-  public static final GoogleClientRequestInitializer INITIALIZER =
-      new UserendpointRequestInitializer(KEY, USER_IP);
+ * public static final GoogleClientRequestInitializer INITIALIZER = new UserendpointRequestInitializer(KEY, USER_IP);
  * </pre>
  *
  * <p>
@@ -44,33 +42,34 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  * </p>
  *
  * <pre>
-  public static class MyRequestInitializer extends UserendpointRequestInitializer {
-
-    {@literal @}Override
-    public void initializeUserendpointRequest(UserendpointRequest{@literal <}?{@literal >} request)
-        throws IOException {
-      // custom logic
-    }
-  }
+ *   public static class MyRequestInitializer extends UserendpointRequestInitializer {
+ * 
+ *     {@literal @}Override
+ *     public void initializeUserendpointRequest(UserendpointRequest{@literal <}?{@literal >} request)
+ *         throws IOException {
+ *       // custom logic
+ *     }
+ *   }
  * </pre>
  *
  * <p>
- * Finally, to set the key and userIp parameters and insert custom logic, extend it like this:
+ * Finally, to set the key and userIp parameters and insert custom logic, extend
+ * it like this:
  * </p>
  *
  * <pre>
-  public static class MyRequestInitializer2 extends UserendpointRequestInitializer {
-
-    public MyKeyRequestInitializer() {
-      super(KEY, USER_IP);
-    }
-
-    {@literal @}Override
-    public void initializeUserendpointRequest(UserendpointRequest{@literal <}?{@literal >} request)
-        throws IOException {
-      // custom logic
-    }
-  }
+ *   public static class MyRequestInitializer2 extends UserendpointRequestInitializer {
+ * 
+ *     public MyKeyRequestInitializer() {
+ *       super(KEY, USER_IP);
+ *     }
+ * 
+ *     {@literal @}Override
+ *     public void initializeUserendpointRequest(UserendpointRequest{@literal <}?{@literal >} request)
+ *         throws IOException {
+ *       // custom logic
+ *     }
+ *   }
  * </pre>
  *
  * <p>
@@ -79,43 +78,51 @@ package com.asaan.server.com.asaan.server.endpoint.userendpoint;
  *
  * @since 1.12
  */
-public class UserendpointRequestInitializer extends com.google.api.client.googleapis.services.json.CommonGoogleJsonClientRequestInitializer {
+public class UserendpointRequestInitializer extends
+		com.google.api.client.googleapis.services.json.CommonGoogleJsonClientRequestInitializer {
 
-  public UserendpointRequestInitializer() {
-    super();
-  }
+	public UserendpointRequestInitializer() {
+		super();
+	}
 
-  /**
-   * @param key API key or {@code null} to leave it unchanged
-   */
-  public UserendpointRequestInitializer(String key) {
-    super(key);
-  }
+	/**
+	 * @param key
+	 *            API key or {@code null} to leave it unchanged
+	 */
+	public UserendpointRequestInitializer(String key) {
+		super(key);
+	}
 
-  /**
-   * @param key API key or {@code null} to leave it unchanged
-   * @param userIp user IP or {@code null} to leave it unchanged
-   */
-  public UserendpointRequestInitializer(String key, String userIp) {
-    super(key, userIp);
-  }
+	/**
+	 * @param key
+	 *            API key or {@code null} to leave it unchanged
+	 * @param userIp
+	 *            user IP or {@code null} to leave it unchanged
+	 */
+	public UserendpointRequestInitializer(String key, String userIp) {
+		super(key, userIp);
+	}
 
-  @Override
-  public final void initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<?> request) throws java.io.IOException {
-    super.initializeJsonRequest(request);
-    initializeUserendpointRequest((UserendpointRequest<?>) request);
-  }
+	@Override
+	public final void initializeJsonRequest(
+			com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest<?> request)
+			throws java.io.IOException {
+		super.initializeJsonRequest(request);
+		initializeUserendpointRequest((UserendpointRequest<?>) request);
+	}
 
-  /**
-   * Initializes Userendpoint request.
-   *
-   * <p>
-   * Default implementation does nothing. Called from
-   * {@link #initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest)}.
-   * </p>
-   *
-   * @throws java.io.IOException I/O exception
-   */
-  protected void initializeUserendpointRequest(UserendpointRequest<?> request) throws java.io.IOException {
-  }
+	/**
+	 * Initializes Userendpoint request.
+	 *
+	 * <p>
+	 * Default implementation does nothing. Called from
+	 * {@link #initializeJsonRequest(com.google.api.client.googleapis.services.json.AbstractGoogleJsonClientRequest)}
+	 * .
+	 * </p>
+	 *
+	 * @throws java.io.IOException
+	 *             I/O exception
+	 */
+	protected void initializeUserendpointRequest(UserendpointRequest<?> request) throws java.io.IOException {
+	}
 }
