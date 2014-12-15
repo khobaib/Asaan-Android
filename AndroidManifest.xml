@@ -103,6 +103,9 @@
         
         <activity android:name=".activity.MenuItemDetailsActivity"
             android:theme="@style/AppThemeNoBar"></activity>
+        
+        <activity android:name=".activity.OnlineOrderActivity"
+            android:theme="@style/AppThemeNoBar"></activity>
     </application>
 
 </manifest>

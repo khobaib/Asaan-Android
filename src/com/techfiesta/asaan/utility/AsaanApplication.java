@@ -20,6 +20,8 @@ public class AsaanApplication extends Application {
 	private static Context context;
 	protected SharedPreferences SP;
 
+	int PARENT_PAGE;
+
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -45,6 +47,14 @@ public class AsaanApplication extends Application {
 
 	private void initializeSharedPreference() {
 		this.SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+	}
+
+	public int getPARENT_PAGE() {
+		return PARENT_PAGE;
+	}
+
+	public void setPARENT_PAGE(int pARENT_PAGE) {
+		PARENT_PAGE = pARENT_PAGE;
 	}
 
 }

@@ -49,27 +49,25 @@ public class MenuActivity extends Activity {
 		storeId = AsaanUtility.selectedStore.getId();
 		new GetMenu().execute();
 	}
-	
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.activity_menu, menu);
-	    return super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_menu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_cart:
-				Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
-				startActivity(intent);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_cart:
+			Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private class GetMenu extends AsyncTask<Void, Void, Void> {

@@ -35,4 +35,7 @@ public class Constants {
 	public static final String BUNDLE_KEY_ORDER_DETAILS_AVAILABLE = "BUNDLE_KEY_ORDER_DETAILS_AVAILABLE";
 	public static final String BUNDLE_KEY_MODIFIERGRP_ID = "BUNDLE_KEY_MODIFIERGRP_ID";
 
+	public static final int FROM_STORE_LIST = 11;
+	public static final int FROM_ONLINE_ORDER = 12;
+
 }
