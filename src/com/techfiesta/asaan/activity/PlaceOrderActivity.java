@@ -451,7 +451,7 @@ public class PlaceOrderActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
 			if (rowView == null) {
-				rowView = View.inflate(getActivity(), R.layout.menu_modifier_group_row, null);
+				rowView = View.inflate(getActivity(), R.layout.row_menu_modifier_group, null);
 				ViewHolder viewHolder = new ViewHolder();
 				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
 				viewHolder.txtDescription = (TextView) rowView.findViewById(R.id.txt_item_desc);

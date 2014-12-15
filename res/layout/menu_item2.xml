@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/txt_item_ordered_today" />
+        android:layout_alignTop="@+id/txt_item_ordered_today" />
     
     <ImageView
         android:id="@+id/image_vegetarian"

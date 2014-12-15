@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/resturant_detail_demo" />
+        android:src="@drawable/resturant_detail_demo" />
     -->
 
 
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-         >
+         >
     -->
 
 
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" >
-        </RelativeLayout>
+        </RelativeLayout>
     -->
 
     <RelativeLayout
@@ -113,6 +113,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="Call"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_golden_color"
@@ -124,6 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="Menu"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_golden_color"
@@ -135,6 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="Online Order"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_golden_color"
@@ -146,6 +152,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="Reserve"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_golden_color"
