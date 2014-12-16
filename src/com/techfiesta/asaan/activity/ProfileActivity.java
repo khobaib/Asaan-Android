@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -29,7 +30,7 @@ public class ProfileActivity extends Activity {
 	private EditText FirstName;
 	private EditText LastName;
 	private EditText Phone;
-	private Button btnSave;
+	private Button btnSave,btnSkip;
 
 	String profilePhotoUrl;
 	String firstName;
@@ -43,6 +44,7 @@ public class ProfileActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
 
 	private String selectedImagePath;
+	private ProgressDialog pdialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,11 @@ public class ProfileActivity extends Activity {
 		Phone = (EditText) findViewById(R.id.et_phone);
 		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
 		btnSave = (Button) findViewById(R.id.b_save);
+		btnSkip = (Button) findViewById(R.id.b_skip);
+		
+		pdialog = new ProgressDialog(ProfileActivity.this);
+		pdialog.setMessage("Loading...");
+		
 		btnSave.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -78,6 +85,15 @@ public class ProfileActivity extends Activity {
 					saveUserData();
 				}
 
+			}
+		});
+		btnSkip.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(ProfileActivity.this,PaymentInfoActivity.class);
+				startActivity(intent);
+				
 			}
 		});
 		ProfilePicture.setOnClickListener(new OnClickListener() {
@@ -116,12 +132,14 @@ public class ProfileActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
+		pdialog.show();
 		user.saveInBackground(new SaveCallback() {
 
 			@Override
 			public void done(ParseException e) {
+				pdialog.dismiss();
 				if (e == null) {
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
+//					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
 					Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
 					startActivity(intent);
 				} else {

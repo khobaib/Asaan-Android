@@ -7,8 +7,6 @@ import java.io.InvalidObjectException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.http.entity.SerializableEntity;
-
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -72,6 +70,8 @@ public class UserPicture implements Serializable {
 			setPath(filepath);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeException e){
 			e.printStackTrace();
 		}
 

@@ -40,6 +40,7 @@
 
   <style name="SpinnerDropDownItemAppTheme" parent="android:Widget.DropDownItem.Spinner">
       <item name="android:checkMark">@drawable/apptheme_btn_radio_holo_dark</item>
+      <item name="android:textColor">@color/text_golden_color</item>
   </style>
   <style name="TabAppTheme">
       <item name="android:gravity">center_horizontal</item>

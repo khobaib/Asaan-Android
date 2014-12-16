@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,10 +21,13 @@ import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
+import asaan.dao.ModItem;
+import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -41,11 +45,14 @@ public class EditCartActivity extends Activity {
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
-
+	private AddItem addItem;
+	private ModItem modItem;
+	private ModItemDao modItemDao;
+	
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
-	List<AddItem> OrderList;
-
+	List<AddItem> orderList;
+	
 	private ProgressDialog pDialog;
 	private Button bDone;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
@@ -77,7 +84,7 @@ public class EditCartActivity extends Activity {
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Please wait we are taking your order...");
 
-		initDatabase();
+		initDatabaseAndPopuateList();
 
 		tvStoreName.setText(AsaanUtility.selectedStore.getName());
 	}
@@ -88,12 +95,30 @@ public class EditCartActivity extends Activity {
 
 		updateCartInfo();
 	}
+	
+	private String getOrderString()
+	  {
+		  String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
+					+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
 
-	public void updateCartInfo() {
-		OrderList = addItemDao.queryBuilder().list();
+			for (AddItem addItem : orderList) {
+				orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
+						+ "\">";
 
+				for (ModItem mod : addItem.getMod_items())
+					orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">"; 
+				orderXML += "</ADDITEM>";
+			}
+			orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
+			
+			return orderXML;
+
+	  }
+	public void updateCartInfo(){
+		orderList = addItemDao.queryBuilder().list();
+		
 		int subtotalAmount = 0;
-		for (AddItem item : OrderList) {
+		for (AddItem item : orderList) {
 			subtotalAmount += item.getPrice();
 		}
 		String subtotal = "$" + String.format("%.2f", ((double) subtotalAmount / 100));
@@ -109,21 +134,22 @@ public class EditCartActivity extends Activity {
 		tvTotal.setText("$" + String.format("%.2f", total));
 
 		tvAmountDue.setText("$" + String.format("%.2f", total));
-
-		adapter = new MyCartListAdapter(EditCartActivity.this, OrderList, Constants.EDIT_CART_ACTIVITY);
+		
+		adapter = new MyCartListAdapter(EditCartActivity.this, orderList, Constants.EDIT_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
 	}
-
-	private void initDatabase() {
+	
+	private void initDatabaseAndPopuateList() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
-		// modItemDao = daoSession.getModItemDao();
+		modItemDao = daoSession.getModItemDao();
+		orderList = addItemDao.queryBuilder().list();
 	}
-
-	public void onClickPlaceOrder(View v) {
+	
+	public void onClickPlaceOrder(View v){
 		showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
 
@@ -139,12 +165,13 @@ public class EditCartActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
 				if (alertType == ALERT_TYPE_CANCEL_ORDER) {
-					deletefromDatabase();
+					deleteAllPostedOrders();
 					Intent i = new Intent(EditCartActivity.this, StoreListActivity.class);
 					startActivity(i);
 					overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
 					finish();
 				} else {
+					
 					new RemotePlaceOrderTask().execute();
 				}
 			}
@@ -175,23 +202,23 @@ public class EditCartActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(String... params) {
-			String strOrderFor = "Nirav";
+			String strOrderFor = "Khobaib";
 			String strOrderReadyTime = "4:45PM";
 			String strNote = "Please make it spicy - no Peanuts Please";
 			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
 					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
-					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Nirav\" >" + "<MODITEM ITEMID=\"90204\" />"
-					+ "</ADDITEM>" + "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Khobaib\" >"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90204\" />" + "<MODITEM QTY=\"1\" ITEMID=\"90201\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90302\" />" + "<MODITEM QTY=\"1\" ITEMID=\"91501\" />"
-					+ "</ADDITEM>" + "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+					+ getOrderString()+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+			
+			Log.e("Order String", strOrder);
 
 			PlaceOrder PlaceOrderReq;
 			try {
+				String token = ParseUser.getCurrentUser().getString("authToken");
 				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
-				headers.put(USER_AUTH_TOKEN_HEADER_NAME, params[0]);
+				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
 				StoreOrder order = PlaceOrderReq.execute();
+				
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -204,16 +231,44 @@ public class EditCartActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			deleteAllPostedOrders();
 			if (pDialog.isShowing())
 				pDialog.dismiss();
+			showDialogOrderPosted();
 		}
 	}
 
-	private void deletefromDatabase() {
-		initDatabase();
+	private void deleteAllPostedOrders()
+	{
+		// deleting all orders
+		OpenHelper helper = new DaoMaster.DevOpenHelper(EditCartActivity.this, "asaan-db", null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		AddItemDao addItemDao = daoSession.getAddItemDao();
+		ModItemDao modItemDao = daoSession.getModItemDao();
 		addItemDao.deleteAll();
+		modItemDao.deleteAll();
 		AsaanUtility.setCurrentOrderdStoreId(EditCartActivity.this, -1);
-		adapter.notifyDataSetChanged();
+	}
+	private void showDialogOrderPosted() {
+		AlertDialog.Builder bld = new AlertDialog.Builder(EditCartActivity.this);
+		bld.setTitle("Order Received!");
+		bld.setMessage("Order is taken.");
+		bld.setCancelable(false);
+		bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent i = new Intent(EditCartActivity.this, StoreListActivity.class);
+				
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			}
+		});
+		bld.create().show();
 	}
 
 }

@@ -14,7 +14,17 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/text_golden_color"
         android:textStyle="bold" />
-
+ 
+    <Button
+        android:id="@+id/b_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:text="Skip"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/text_golden_color"
+        android:textStyle="bold" />
     <RelativeLayout
         android:id="@+id/rl_profile_title"
         android:layout_width="match_parent"
