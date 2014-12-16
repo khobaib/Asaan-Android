@@ -169,6 +169,7 @@ public class PaymentInfoActivity extends Activity {
 					handleError(error.getLocalizedMessage());
 					// finishProgress();
 				}
+				
 			});
 		} else if (!card.validateNumber()) {
 			handleError("The card number that you entered is invalid");

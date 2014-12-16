@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
+import asaan.dao.AddItemDao.Properties;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
@@ -276,12 +277,21 @@ public class PlaceOrderActivity extends Activity {
 						Log.e("MSG", "" + mAdapter.getFinalPrice());
 					} else
 						total_cost = (menuItemPrice) * quantity;
-					addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
-							menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
+					
+					addItem=new AddItem();
+					addItem.setStore_id(AsaanUtility.selectedStore.getId().intValue());
+					addItem.setPrice(total_cost);
+					addItem.setQuantity(quantity);
+					addItem.setItem_name(menuItemShortDesc);
+					addItem.setItem_id(menuItemPOSId);
+					addItem.setOrder_for(txtSpecialInstructions.getText().toString());
+					//addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
+						//	menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
 					addItemDao.insert(addItem);
+					
 					// to do
 					if (menuItemHasModifiers) {
-						ArrayList<ModItem> list = mAdapter.getSelecteedModifiersList((int) count + 1);
+						ArrayList<ModItem> list = mAdapter.getSelecteedModifiersList((int)getMaxID()+1);
 						if (list != null) {
 							for (int i = 0; i < list.size(); i++) {
 								modItemDao.insert(list.get(i));
@@ -304,6 +314,21 @@ public class PlaceOrderActivity extends Activity {
 
 	private void toast(String str) {
 		Toast.makeText(PlaceOrderActivity.this, str, Toast.LENGTH_LONG).show();
+	}
+	private long getMaxID()
+	{
+		List<AddItem> list=addItemDao.queryBuilder().list();
+		long max=list.get(0).getId();
+		AddItem addItem=list.get(0);
+		for(int i=0;i<list.size();i++)
+		{
+			if(max<list.get(i).getId())
+			{
+				 max=list.get(i).getId();
+				 addItem=list.get(i);
+			}
+		}
+		return addItem.getId();
 	}
 
 	public void setDescAndPriceWithChoices() {

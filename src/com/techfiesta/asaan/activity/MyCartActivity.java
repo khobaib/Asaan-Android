@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -164,8 +165,7 @@ public class MyCartActivity extends Activity {
 	}
   private String getOrderString()
   {
-	  String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
-				+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
+	  String orderXML ="";
 
 		for (AddItem addItem : orderList) {
 			orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
@@ -175,7 +175,7 @@ public class MyCartActivity extends Activity {
 				orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
 			orderXML += "</ADDITEM>";
 		}
-		orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
+	
 		
 		return orderXML;
 
@@ -199,8 +199,8 @@ public class MyCartActivity extends Activity {
 				if(alertType == ALERT_TYPE_CANCEL_ORDER){
 					// finish to store list & delete the order data from db
 				} else {
-					String orderString=getOrderString();
-					new  DownloadFilesTask().execute(orderString);
+					
+					new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
@@ -236,11 +236,9 @@ public class MyCartActivity extends Activity {
 			String strNote = "Please make it spicy - no Peanuts Please";
 			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
 					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
-					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Nirav\" >" + "<MODITEM ITEMID=\"90204\" />"
-					+ "</ADDITEM>" + "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Khobaib\" >"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90204\" />" + "<MODITEM QTY=\"1\" ITEMID=\"90201\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90302\" />" + "<MODITEM QTY=\"1\" ITEMID=\"91501\" />"
-					+ "</ADDITEM>" + "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+					+ getOrderString()+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+			
+			Log.e("Order String", strOrder);
 
 			PlaceOrder PlaceOrderReq;
 			try {
@@ -250,6 +248,7 @@ public class MyCartActivity extends Activity {
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
 				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
 				StoreOrder order = PlaceOrderReq.execute();
+
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -264,50 +263,6 @@ public class MyCartActivity extends Activity {
 			super.onPostExecute(result);
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-		}
-	}
-	class DownloadFilesTask extends AsyncTask<String, Void, Long> {
-		@Override
-		protected Long doInBackground(String... xmlstr) {
-
-			// int count = xmlstr.length;
-
-			final HttpClient httpClient = new DefaultHttpClient();
-
-			final HttpPost httpPost = new HttpPost("http://98.213.233.241:81");
-			// HttpPost httpPost = new HttpPost("http://192.168.1.30:81");
-			// HttpPost httpPost = new HttpPost("98.213.233.241", 81, "http");
-			// httpPost.setHeader(HTTP.CONTENT_TYPE,"text/xml;charset=UTF-8");
-			// httpPost.setHeader(HTTP.,"text/xml; charset-utf8");
-			// httpPost.setHeader(HTTP.CONTENT_LEN,
-			// Integer.toString(xmlstr[0].length()));
-			try {
-				// Add your data
-				StringEntity se = new StringEntity(xmlstr[0], HTTP.UTF_8);
-				se.setContentType("text/xml");
-				httpPost.setEntity(se);
-
-				// Execute HTTP Post Request
-				HttpResponse response = httpClient.execute(httpPost);
-
-				HttpEntity entity = response.getEntity();
-				String responseString = EntityUtils.toString(entity, "UTF-8");
-				System.out.println(responseString);
-			} catch (final ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-
-			return (long) 0;
-		}
-
-		@Override
-		protected void onPostExecute(Long feed) {
-			// TODO: check this.exception
-			// TODO: do something with the feed
 		}
 	}
 }

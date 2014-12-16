@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -37,7 +38,6 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.MyCartActivity.DownloadFilesTask;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
@@ -117,7 +117,7 @@ public class EditCartActivity extends Activity {
 						+ "\">";
 
 				for (ModItem mod : addItem.getMod_items())
-					orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
+					orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">"; 
 				orderXML += "</ADDITEM>";
 			}
 			orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
@@ -181,8 +181,8 @@ public class EditCartActivity extends Activity {
 				if(alertType == ALERT_TYPE_CANCEL_ORDER){
 					// finish to store list & delete the order data from db
 				} else {
-					String orderString=getOrderString();
-					new  DownloadFilesTask().execute(orderString);
+					
+					new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
@@ -218,11 +218,9 @@ public class EditCartActivity extends Activity {
 			String strNote = "Please make it spicy - no Peanuts Please";
 			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
 					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
-					+ "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Nirav\" >" + "<MODITEM ITEMID=\"90204\" />"
-					+ "</ADDITEM>" + "<ADDITEM QTY=\"1\" ITEMID=\"7007\" FOR=\"Khobaib\" >"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90204\" />" + "<MODITEM QTY=\"1\" ITEMID=\"90201\" />"
-					+ "<MODITEM QTY=\"1\" ITEMID=\"90302\" />" + "<MODITEM QTY=\"1\" ITEMID=\"91501\" />"
-					+ "</ADDITEM>" + "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+					+ getOrderString()+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+			
+			Log.e("Order String", strOrder);
 
 			PlaceOrder PlaceOrderReq;
 			try {
