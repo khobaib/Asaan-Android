@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,41 +31,41 @@ import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.NestedListView;
 
 public class EditCartActivity extends Activity {
-	
+
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;
 	private static final int ALERT_TYPE_CANCEL_ORDER = 2;
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
-	
+
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
-	
+
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
 	List<AddItem> OrderList;
-	
+
 	private ProgressDialog pDialog;
 	private Button bDone;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
-		
+
 		bDone = (Button) findViewById(R.id.b_edit);
 		bDone.setText("Done");
 		bDone.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
 				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 			}
 		});
-		
+
 		lvOrder = (NestedListView) findViewById(R.id.lv_items);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
@@ -73,7 +74,7 @@ public class EditCartActivity extends Activity {
 		tvTax = (TextView) findViewById(R.id.tv_tax_amount);
 		tvTotal = (TextView) findViewById(R.id.tv_total_amount);
 		tvAmountDue = (TextView) findViewById(R.id.tv_due_amount);
-		
+
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Please wait we are taking your order...");
 
@@ -81,19 +82,17 @@ public class EditCartActivity extends Activity {
 
 		tvStoreName.setText(AsaanUtility.selectedStore.getName());
 	}
-	
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		updateCartInfo();
 	}
-	
-	
-	public void updateCartInfo(){
+
+	public void updateCartInfo() {
 		OrderList = addItemDao.queryBuilder().list();
-		
+
 		int subtotalAmount = 0;
 		for (AddItem item : OrderList) {
 			subtotalAmount += item.getPrice();
@@ -109,64 +108,64 @@ public class EditCartActivity extends Activity {
 
 		double total = ((double) subtotalAmount / 100) + gratuity + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
-		
+
 		tvAmountDue.setText("$" + String.format("%.2f", total));
-		
+
 		adapter = new MyCartListAdapter(EditCartActivity.this, OrderList, Constants.EDIT_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
 	}
-	
-	
+
 	private void initDatabase() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
-//		modItemDao = daoSession.getModItemDao();
+		// modItemDao = daoSession.getModItemDao();
 	}
-	
-	
-	public void onClickPlaceOrder(View v){
+
+	public void onClickPlaceOrder(View v) {
 		showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
 
-	public void onClickCancelOrder(View v){
+	public void onClickCancelOrder(View v) {
 		showAlert(ALERT_TYPE_CANCEL_ORDER);
 	}
 
-
-	private void showAlert(final int alertType){
-		AlertDialog Alert = new AlertDialog.Builder(this).create();		          
-		Alert.setMessage("Confirm?");	
+	private void showAlert(final int alertType) {
+		AlertDialog Alert = new AlertDialog.Builder(this).create();
+		Alert.setMessage("Confirm?");
 
 		Alert.setButton(Constants.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
-				if(alertType == ALERT_TYPE_CANCEL_ORDER){
-					// finish to store list & delete the order data from db
+				if (alertType == ALERT_TYPE_CANCEL_ORDER) {
+					deletefromDatabase();
+					Intent i = new Intent(EditCartActivity.this, StoreListActivity.class);
+					startActivity(i);
+					overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
+					finish();
 				} else {
 					new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
-		if(alertType == ALERT_TYPE_CANCEL_ORDER){
+		if (alertType == ALERT_TYPE_CANCEL_ORDER) {
 			Alert.setButton(Constants.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					dialog.dismiss();
 				}
-			}); 	
+			});
 		} else {
 			Alert.setButton(Constants.BUTTON_NEGATIVE, "Maybe Later", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					dialog.dismiss();
 				}
-			});     
+			});
 		}
 		Alert.show();
 	}
-	
-	
+
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
 		@Override
@@ -210,7 +209,12 @@ public class EditCartActivity extends Activity {
 				pDialog.dismiss();
 		}
 	}
-	
-	
+
+	private void deletefromDatabase() {
+		initDatabase();
+		addItemDao.deleteAll();
+		AsaanUtility.setCurrentOrderdStoreId(EditCartActivity.this, -1);
+		adapter.notifyDataSetChanged();
+	}
 
 }
