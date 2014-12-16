@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -33,6 +35,7 @@ import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.DefaultTipsSpinnerAdapter;
 import com.techfiesta.asaan.adapter.NothingSelectedSpinnerAdapter;
 import com.techfiesta.asaan.fragment.ErrorDialogFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -44,7 +47,8 @@ public class PaymentInfoActivity extends Activity {
 	EditText CardNumber;
 	EditText CVC;
 	EditText Zip;
-	Button SaveCard;
+	private Button btnSave;
+	private Button btnSkip;
 	EditText etMonth;
 	// Button SaveTip;
 	Spinner defaultTipSpinner;
@@ -59,6 +63,8 @@ public class PaymentInfoActivity extends Activity {
 	int month;
 	int year;
 	int tips;
+	private ProgressDialog pDialog;
+	
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 
@@ -73,13 +79,18 @@ public class PaymentInfoActivity extends Activity {
 		etMonth = (EditText) findViewById(R.id.et_month);
 		etYear = (EditText) findViewById(R.id.et_year);
 
-		SaveCard = (Button) findViewById(R.id.b_save);
+		btnSave = (Button) findViewById(R.id.b_save);
+		btnSkip=(Button)findViewById(R.id.b_skip);
+		
+		pDialog = new ProgressDialog(PaymentInfoActivity.this);
+		pDialog.setMessage("Loading...");
+		
 		defaultTipSpinner = (Spinner) findViewById(R.id.s_tip_selector);
 		createDefaultTipSpinner();
 
 		// updateMonth_YearSpinners();
 
-		SaveCard.setOnClickListener(new OnClickListener() {
+		btnSave.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -98,6 +109,15 @@ public class PaymentInfoActivity extends Activity {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
 				}
 
+			}
+		});
+		btnSkip.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
+				startActivity(intent);
+				
 			}
 		});
 
@@ -123,8 +143,9 @@ public class PaymentInfoActivity extends Activity {
 		for (int i = 1; i < 21; i++) {
 			list.add(i * 5);
 		}
-		ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
-				android.R.layout.simple_spinner_dropdown_item, list);
+		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
+			//	android.R.layout.simple_spinner_dropdown_item, list);
+		DefaultTipsSpinnerAdapter adapter=new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item, list);
 		defaultTipSpinner.setAdapter(adapter);
 	}
 
@@ -144,6 +165,7 @@ public class PaymentInfoActivity extends Activity {
 				}
 
 				public void onError(Exception error) {
+					Log.e("state", "error");
 					handleError(error.getLocalizedMessage());
 					// finishProgress();
 				}
@@ -160,6 +182,8 @@ public class PaymentInfoActivity extends Activity {
 	}
 
 	private void saveTokenInGAE(Token token) {
+		Log.e("state", "inside GAE");
+		pDialog.show();
 		Card card = token.getCard();
 		/*
 		 * JsonObject cardObj=new JsonObject();
@@ -211,12 +235,24 @@ public class PaymentInfoActivity extends Activity {
 		protected Void doInBackground(Void... arg0) {
 
 			SaveUserCard saveUserCard;
+			UserCard responseUserCard =null;
 			try {
 				saveUserCard = SplashActivity.mUserendpoint.saveUserCard(userCard);
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
-				UserCard uc = saveUserCard.execute();
-				Log.e("MSG", "Posting" + uc.getCreatedDate() + "moddate" + uc.getModifiedDate());
+				responseUserCard = saveUserCard.execute();
+				Log.e("MSG", "created_date" + responseUserCard.getCreatedDate() + "mod_date" + responseUserCard.getModifiedDate());
+				pDialog.dismiss();
+				if(responseUserCard != null)
+				{
+					Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
+					startActivity(intent);
+				}
+				else
+				{
+					Log.e("error", "error in savig card");
+					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "Updating Payment ingo failed");
+				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

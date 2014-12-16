@@ -3,6 +3,16 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -17,13 +27,17 @@ import android.widget.TextView;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
+import asaan.dao.ModItem;
+import asaan.dao.ModItemDao;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.MyCartActivity.DownloadFilesTask;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
@@ -40,10 +54,13 @@ public class EditCartActivity extends Activity {
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
+	private AddItem addItem;
+	private ModItem modItem;
+	private ModItemDao modItemDao;
 	
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
-	List<AddItem> OrderList;
+	List<AddItem> orderList;
 	
 	private ProgressDialog pDialog;
 	private Button bDone;
@@ -77,7 +94,7 @@ public class EditCartActivity extends Activity {
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Please wait we are taking your order...");
 
-		initDatabase();
+		initDatabaseAndPopuateList();
 
 		tvStoreName.setText(AsaanUtility.selectedStore.getName());
 	}
@@ -90,12 +107,29 @@ public class EditCartActivity extends Activity {
 		updateCartInfo();
 	}
 	
-	
+	private String getOrderString()
+	  {
+		  String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
+					+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
+
+			for (AddItem addItem : orderList) {
+				orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
+						+ "\">";
+
+				for (ModItem mod : addItem.getMod_items())
+					orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
+				orderXML += "</ADDITEM>";
+			}
+			orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
+			
+			return orderXML;
+
+	  }
 	public void updateCartInfo(){
-		OrderList = addItemDao.queryBuilder().list();
+		orderList = addItemDao.queryBuilder().list();
 		
 		int subtotalAmount = 0;
-		for (AddItem item : OrderList) {
+		for (AddItem item : orderList) {
 			subtotalAmount += item.getPrice();
 		}
 		String subtotal = "$" + String.format("%.2f", ((double) subtotalAmount / 100));
@@ -112,20 +146,21 @@ public class EditCartActivity extends Activity {
 		
 		tvAmountDue.setText("$" + String.format("%.2f", total));
 		
-		adapter = new MyCartListAdapter(EditCartActivity.this, OrderList, Constants.EDIT_CART_ACTIVITY);
+		adapter = new MyCartListAdapter(EditCartActivity.this, orderList, Constants.EDIT_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
 	}
 	
 	
-	private void initDatabase() {
+
+	private void initDatabaseAndPopuateList() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
-//		modItemDao = daoSession.getModItemDao();
+		modItemDao = daoSession.getModItemDao();
+		orderList = addItemDao.queryBuilder().list();
 	}
-	
 	
 	public void onClickPlaceOrder(View v){
 		showAlert(ALERT_TYPE_PLACE_ORDER);
@@ -146,7 +181,8 @@ public class EditCartActivity extends Activity {
 				if(alertType == ALERT_TYPE_CANCEL_ORDER){
 					// finish to store list & delete the order data from db
 				} else {
-					new RemotePlaceOrderTask().execute();
+					String orderString=getOrderString();
+					new  DownloadFilesTask().execute(orderString);
 				}
 			}
 		});
@@ -210,7 +246,49 @@ public class EditCartActivity extends Activity {
 				pDialog.dismiss();
 		}
 	}
-	
-	
+	class DownloadFilesTask extends AsyncTask<String, Void, Long> {
+		@Override
+		protected Long doInBackground(String... xmlstr) {
+
+			// int count = xmlstr.length;
+
+			final HttpClient httpClient = new DefaultHttpClient();
+
+			final HttpPost httpPost = new HttpPost("http://98.213.233.241:81");
+			// HttpPost httpPost = new HttpPost("http://192.168.1.30:81");
+			// HttpPost httpPost = new HttpPost("98.213.233.241", 81, "http");
+			// httpPost.setHeader(HTTP.CONTENT_TYPE,"text/xml;charset=UTF-8");
+			// httpPost.setHeader(HTTP.,"text/xml; charset-utf8");
+			// httpPost.setHeader(HTTP.CONTENT_LEN,
+			// Integer.toString(xmlstr[0].length()));
+			try {
+				// Add your data
+				StringEntity se = new StringEntity(xmlstr[0], HTTP.UTF_8);
+				se.setContentType("text/xml");
+				httpPost.setEntity(se);
+
+				// Execute HTTP Post Request
+				HttpResponse response = httpClient.execute(httpPost);
+
+				HttpEntity entity = response.getEntity();
+				String responseString = EntityUtils.toString(entity, "UTF-8");
+				System.out.println(responseString);
+			} catch (final ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (final IOException e) {
+				e.printStackTrace();
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+
+			return (long) 0;
+		}
+
+		@Override
+		protected void onPostExecute(Long feed) {
+			// TODO: check this.exception
+			// TODO: do something with the feed
+		}
+	}	
 
 }
