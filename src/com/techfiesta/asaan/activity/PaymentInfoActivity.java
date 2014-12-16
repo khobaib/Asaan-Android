@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.SaveUserCard;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
@@ -56,7 +57,7 @@ public class PaymentInfoActivity extends Activity {
 
 	ImageView NEXT2;
 
-	int expMonth, expYear;
+
 	String cardNumber;
 	String cardCVC;
 	String zip;
@@ -140,7 +141,7 @@ public class PaymentInfoActivity extends Activity {
 
 	private void createDefaultTipSpinner() {
 		ArrayList<Integer> list = new ArrayList<>();
-		for (int i = 1; i < 21; i++) {
+		for (int i = 1; i < 7; i++) {
 			list.add(i * 5);
 		}
 		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
@@ -151,7 +152,8 @@ public class PaymentInfoActivity extends Activity {
 
 	public void saveCreditCard() {
 
-		Card card = new Card(cardNumber, expMonth, expYear, cardCVC);
+		pDialog.show();
+		Card card = new Card(cardNumber, month, year, cardCVC);
 
 		boolean validation = card.validateCard();
 		if (validation) {
@@ -184,7 +186,7 @@ public class PaymentInfoActivity extends Activity {
 
 	private void saveTokenInGAE(Token token) {
 		Log.e("state", "inside GAE");
-		pDialog.show();
+		
 		Card card = token.getCard();
 		/*
 		 * JsonObject cardObj=new JsonObject();
@@ -226,7 +228,10 @@ public class PaymentInfoActivity extends Activity {
 	}
 
 	private void handleError(String error) {
-		DialogFragment fragment = ErrorDialogFragment.newInstance(R.string.validationErrors, error);
+		if(pDialog.isShowing())
+			pDialog.dismiss();
+		Toast.makeText(PaymentInfoActivity.this, error,Toast.LENGTH_SHORT).show();
+		//DialogFragment fragment = ErrorDialogFragment.newInstance(R.string.validationErrors, error);
 		// fragment.show(getFragmentManager(), "error");
 	}
 
