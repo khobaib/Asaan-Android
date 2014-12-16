@@ -84,7 +84,7 @@
         </activity>
         <activity android:name=".activity.StoreDetailsActivity"></activity>
 
-        <activity android:name=".activity.MenuActivity" android:theme="@android:style/Theme.Holo"></activity>
+        <activity android:name=".activity.MenuActivity" android:theme="@style/AppThemeBar"></activity>
         <activity android:name=".activity.StoreDetailsActivityNew"
              android:theme="@style/AppThemeBar"></activity>
         <activity android:name=".activity.PlaceOrderActivity"

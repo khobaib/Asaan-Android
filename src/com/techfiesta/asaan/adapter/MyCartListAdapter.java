@@ -21,7 +21,6 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 		super(context, resource, objects);
 		this.mContext = context;
 
-
 	}
 
 	private class ViewHolder {
