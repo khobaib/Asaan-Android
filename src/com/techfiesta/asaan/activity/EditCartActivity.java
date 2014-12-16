@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -224,10 +225,12 @@ public class EditCartActivity extends Activity {
 
 			PlaceOrder PlaceOrderReq;
 			try {
+				String token = ParseUser.getCurrentUser().getString("authToken");
 				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
-				headers.put(USER_AUTH_TOKEN_HEADER_NAME, params[0]);
+				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
 				StoreOrder order = PlaceOrderReq.execute();
+				
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -240,53 +243,43 @@ public class EditCartActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			deleteAllPostedOrders();
 			if (pDialog.isShowing())
 				pDialog.dismiss();
+			showDialogOrderPosted();
 		}
 	}
-	class DownloadFilesTask extends AsyncTask<String, Void, Long> {
-		@Override
-		protected Long doInBackground(String... xmlstr) {
+	private void deleteAllPostedOrders()
+	{
+		// deleting all orders
+		OpenHelper helper = new DaoMaster.DevOpenHelper(EditCartActivity.this, "asaan-db", null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		AddItemDao addItemDao = daoSession.getAddItemDao();
+		ModItemDao modItemDao = daoSession.getModItemDao();
+		addItemDao.deleteAll();
+		modItemDao.deleteAll();
+		AsaanUtility.setCurrentOrderdStoreId(EditCartActivity.this, -1);
+	}
+	private void showDialogOrderPosted() {
+		AlertDialog.Builder bld = new AlertDialog.Builder(EditCartActivity.this);
+		bld.setTitle("Order Received!");
+		bld.setMessage("Order is taken.");
+		bld.setCancelable(false);
+		bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
 
-			// int count = xmlstr.length;
-
-			final HttpClient httpClient = new DefaultHttpClient();
-
-			final HttpPost httpPost = new HttpPost("http://98.213.233.241:81");
-			// HttpPost httpPost = new HttpPost("http://192.168.1.30:81");
-			// HttpPost httpPost = new HttpPost("98.213.233.241", 81, "http");
-			// httpPost.setHeader(HTTP.CONTENT_TYPE,"text/xml;charset=UTF-8");
-			// httpPost.setHeader(HTTP.,"text/xml; charset-utf8");
-			// httpPost.setHeader(HTTP.CONTENT_LEN,
-			// Integer.toString(xmlstr[0].length()));
-			try {
-				// Add your data
-				StringEntity se = new StringEntity(xmlstr[0], HTTP.UTF_8);
-				se.setContentType("text/xml");
-				httpPost.setEntity(se);
-
-				// Execute HTTP Post Request
-				HttpResponse response = httpClient.execute(httpPost);
-
-				HttpEntity entity = response.getEntity();
-				String responseString = EntityUtils.toString(entity, "UTF-8");
-				System.out.println(responseString);
-			} catch (final ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			} catch (final Exception e) {
-				e.printStackTrace();
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent i = new Intent(EditCartActivity.this, StoreListActivity.class);
+				
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 			}
-
-			return (long) 0;
-		}
-
-		@Override
-		protected void onPostExecute(Long feed) {
-			// TODO: check this.exception
-			// TODO: do something with the feed
-		}
-	}	
+		});
+		bld.create().show();
+	}
 
 }

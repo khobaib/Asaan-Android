@@ -248,6 +248,7 @@ public class MyCartActivity extends Activity {
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
 				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
 				StoreOrder order = PlaceOrderReq.execute();
+				
 
 
 			} catch (IOException e) {
@@ -261,8 +262,43 @@ public class MyCartActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			deleteAllPostedOrders();
 			if (pDialog.isShowing())
 				pDialog.dismiss();
+			showDialogOrderPosted();
 		}
 	}
+	private void deleteAllPostedOrders()
+	{
+		// deleting all orders
+		OpenHelper helper = new DaoMaster.DevOpenHelper(MyCartActivity.this, "asaan-db", null);
+		SQLiteDatabase db = helper.getWritableDatabase();
+		DaoMaster daoMaster = new DaoMaster(db);
+		DaoSession daoSession = daoMaster.newSession();
+		AddItemDao addItemDao = daoSession.getAddItemDao();
+		ModItemDao modItemDao = daoSession.getModItemDao();
+		addItemDao.deleteAll();
+		modItemDao.deleteAll();
+		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
+	}
+	private void showDialogOrderPosted() {
+		AlertDialog.Builder bld = new AlertDialog.Builder(MyCartActivity.this);
+		bld.setTitle("Order Received!");
+		bld.setMessage("Order is taken.");
+		bld.setCancelable(false);
+		bld.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent i = new Intent(MyCartActivity.this, StoreListActivity.class);
+				
+				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			}
+		});
+		bld.create().show();
+	}
+
 }
