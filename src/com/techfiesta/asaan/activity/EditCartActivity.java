@@ -65,7 +65,7 @@ public class EditCartActivity extends Activity {
 			}
 		});
 		
-		lvOrder = (NestedListView) findViewById(R.id.lv_items);
+		lvOrder = (NestedListView) findViewById(R.id.lv_item_list);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
 		tvSubtotal = (TextView) findViewById(R.id.tv_subtotal_amount);

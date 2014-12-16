@@ -144,6 +144,7 @@ public class LoginChooserActivity extends Activity {
 					currentUser = ParseUser.getCurrentUser();
 					if (currentUser != null) {
 						launchActivity(StoreListActivity.class);
+						finish();
 					}
 
 				}
@@ -156,7 +157,7 @@ public class LoginChooserActivity extends Activity {
 	private void setUserDataforFB() {
 		Session session = ParseFacebookUtils.getSession();
 		if (session != null && session.isOpened()) {
-
+			Log.e(">>>>>>", "session opened");
 			makeMeRequest();
 
 		}
@@ -164,6 +165,7 @@ public class LoginChooserActivity extends Activity {
 		currentUser = ParseUser.getCurrentUser();
 		if (currentUser != null) {
 			launchActivity(StoreListActivity.class);
+			finish();
 		}
 
 	}

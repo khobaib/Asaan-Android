@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/b_calcel_order" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +71,7 @@
                 android:textStyle="bold" />
 
             <com.techfiesta.asaan.utility.NestedListView
-                android:id="@+id/lv_items"
+                android:id="@+id/lv_item_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/rl_edit"
@@ -82,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignLeft="@+id/rl_edit"
-                android:layout_below="@+id/lv_items"
+                android:layout_below="@+id/lv_item_list"
                 android:background="@color/white" />
 
             <RelativeLayout

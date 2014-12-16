@@ -29,7 +29,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -481,7 +480,7 @@ public class PlaceOrderActivity extends Activity {
 				menuItemModifiersAndGroups = SplashActivity.mStoreendpoint.getStoreMenuItemModifiers(
 						SplashActivity.STORE_ID, menuItemPOSId).execute();
 				logger.log(Level.INFO, "execute elapsed Time = " + (new Date().getTime() - startTime));
-				Log.e("size", "" + menuItemModifiersAndGroups.getModifiers().size());
+//				Log.e("size", "" + menuItemModifiersAndGroups.getModifiers().size());
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

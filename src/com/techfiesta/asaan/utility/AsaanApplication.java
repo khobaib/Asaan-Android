@@ -1,12 +1,13 @@
 package com.techfiesta.asaan.utility;
 
-import com.parse.Parse;
-import com.parse.ParseFacebookUtils;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
+import com.techfiesta.asaan.R;
 
 public class AsaanApplication extends Application {
 
@@ -28,7 +29,7 @@ public class AsaanApplication extends Application {
 		super.onCreate();
 		Parse.initialize(this, ASAAN_APPLICATION_ID, ASAAN_CLIENT_KEY);
 
-		ParseFacebookUtils.initialize(FB_APP_ID);
+		ParseFacebookUtils.initialize(getResources().getString(R.string.fb_asaan_app_id));
 
 		context = getApplicationContext();
 		initializeSharedPreference();

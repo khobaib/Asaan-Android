@@ -64,7 +64,7 @@ public class MyCartActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
-		lvOrder = (NestedListView) findViewById(R.id.lv_items);
+		lvOrder = (NestedListView) findViewById(R.id.lv_item_list);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
 		tvSubtotal = (TextView) findViewById(R.id.tv_subtotal_amount);
