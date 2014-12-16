@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color" >
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:background="@color/gray"
+        android:gravity="center|left"
+        android:padding="1dp"
+        android:text="	Let&apos;s get your order started"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_message"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/margin_5dp" >
+
+        <RelativeLayout
+            android:id="@+id/rl_delivery_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp" >
+
+            <Button
+                android:id="@+id/tv_time_less"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:onClick="onClickTimeMinus"
+                android:background="@color/transparent"
+                android:text="@string/order_quantity_minus"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/tv_time_greater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@color/transparent"
+                android:onClick="onClickTimePlus"
+                android:layout_alignParentRight="true"
+                android:text="@string/order_quantity_plus"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_delivery_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_time_greater"
+                android:layout_centerHorizontal="true"
+                android:text="12:50 pm"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_delivery_time_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_delivery_time"
+                android:layout_centerHorizontal="true"
+                android:text="Delivery/Carryout time"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_people_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_delivery_time"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp" >
+
+            <Button
+                android:id="@+id/tv_people_less"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:onClick="onClickPeopleMinus"
+                android:text="@string/order_quantity_minus"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/tv_people_greater"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_alignParentEnd="true"
+                android:onClick="onClickPeoplePlus"
+                android:layout_alignParentRight="true"
+                android:text="@string/order_quantity_plus"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_num_of_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_people_greater"
+                android:layout_centerHorizontal="true"
+                android:text="1"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_people_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_num_of_people"
+                android:layout_centerHorizontal="true"
+                android:text="People"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_carryout_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_details"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_15dp"
+        android:text="Start your carryout order"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/tv_carry_out_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_alignBaseline="@+id/tv_carryout_order"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:text="@string/order_quantity_plus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tv_delivery_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_carryout_order"
+        android:layout_below="@+id/tv_carryout_order"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_25dp"
+        android:text="Start your delivery order"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/tv_delivery_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:layout_alignBaseline="@+id/tv_delivery_order"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:text="@string/order_quantity_plus"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

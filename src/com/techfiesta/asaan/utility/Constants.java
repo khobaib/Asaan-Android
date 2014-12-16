@@ -41,4 +41,7 @@ public class Constants {
 	public static final int BUTTON_POSITIVE = -1;
 	public static final int BUTTON_NEGATIVE = -2;
 
+	public static final int FROM_STORE_LIST = 11;
+	public static final int FROM_ONLINE_ORDER = 12;
+
 }

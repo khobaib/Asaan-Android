@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="apptheme_color">#33b5e5</color>
+    <color name="apptheme_color">#cb9832</color>
     <color name="fb_login_bg_color">#3B5998</color>
     <color name="login_bg_color">#5D570B</color>
     <color name="signup_bg_color">#996633</color>

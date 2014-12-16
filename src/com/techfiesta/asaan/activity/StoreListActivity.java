@@ -40,7 +40,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
+import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
 public class StoreListActivity extends FragmentActivity implements GooglePlayServicesClient.OnConnectionFailedListener,
 		LocationListener, GooglePlayServicesClient.ConnectionCallbacks {
@@ -69,6 +71,8 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
 
+	AsaanApplication appInstance;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,6 +84,8 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_store_list, null);
 		StoreListActivity.this.setContentView(viewToLoad);
 
+		appInstance = (AsaanApplication) getApplication();
+
 		storeListView = (ListView) findViewById(R.id.lvRestaurantList);
 		storeListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -88,6 +94,7 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 				Store store = storeList.get(position);
 				// String json=convertModelStoreToJsonStrig(store);
 				AsaanUtility.selectedStore = store;
+				appInstance.setPARENT_PAGE(Constants.FROM_STORE_LIST);
 				Intent intent = new Intent(StoreListActivity.this, StoreDetailsActivityNew.class);
 				// intent.putExtra("store",json);
 

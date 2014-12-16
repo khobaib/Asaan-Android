@@ -3,58 +3,88 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <style name="AppTheme" parent="@style/_AppTheme"/>
+    <style name="AppTheme" parent="@style/_AppTheme" />
 
-  <style name="_AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
-
-  <item name="android:editTextStyle">@style/EditTextAppTheme</item>
-
-    <item name="android:textColorHighlight">#99cb9832</item>
-
-    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppTheme</item>
-
-    <item name="android:checkboxStyle">@style/CheckBoxAppTheme</item>
-
-    <item name="android:radioButtonStyle">@style/RadioButtonAppTheme</item>
-
-    <item name="android:buttonStyle">@style/ButtonAppTheme</item>
-
-    <item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
-
-    <item name="android:spinnerStyle">@style/SpinnerAppTheme</item>
-
-    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemAppTheme</item>
-
-    <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
-
-    <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
-
-    <item name="android:ratingBarStyle">@style/RatingBarAppTheme</item>
-
-    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigAppTheme</item>
-
-    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallAppTheme</item>
-
-    <item name="android:buttonStyleToggle">@style/ToggleAppTheme</item>
-
-    <item name="android:listViewStyle">@style/ListViewAppTheme</item>
-
-    <item name="android:listViewWhiteStyle">@style/ListViewAppTheme.White</item>
-
-    <item name="android:spinnerItemStyle">@style/SpinnerItemAppTheme</item>
-
-     <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>
+    <style name="_AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
+        <!-- <item name="android:titleTextStyle">@style/MyActionBarTitleText</item> -->
+        <item name="android:popupMenuStyle">@style/PopupMenu.Asaan_tab</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Asaan_tab</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Asaan_tab</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Asaan_tab</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Transparent.Asaan_tab</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_asaan_tab</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Asaan_tab</item>
+        <item name="android:editTextStyle">@style/EditTextAppTheme</item>
+        <item name="android:textColorHighlight">#99cb9832</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppTheme</item>
+        <item name="android:checkboxStyle">@style/CheckBoxAppTheme</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonAppTheme</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
+        <item name="android:spinnerStyle">@style/SpinnerAppTheme</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemAppTheme</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+        <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+        <item name="android:ratingBarStyle">@style/RatingBarAppTheme</item>
+        <item name="android:ratingBarStyleIndicator">@style/RatingBarBigAppTheme</item>
+        <item name="android:ratingBarStyleSmall">@style/RatingBarSmallAppTheme</item>
+        <item name="android:buttonStyleToggle">@style/ToggleAppTheme</item>
+        <item name="android:listViewStyle">@style/ListViewAppTheme</item>
+        <item name="android:listViewWhiteStyle">@style/ListViewAppTheme.White</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemAppTheme</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/myCirclePageIndicator</item>
+    </style>
     
-  
+     <style name="MyActionBarTabText"
+           parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@color/text_golden_color</item>
+    </style>
+    
+    <style name="MyActionBarTitleText"
+           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/text_golden_color</item>
+    </style>
 
-  </style>
-  <style name="AppThemeNoBar" parent="@style/AppTheme">
-     <item name="android:windowNoTitle">true</item>
-</style>
+    <style name="ActionBar.Transparent.Asaan_tab" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_asaan_tab</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Asaan_tab</item>
+    </style>
 
-<style name="AppThemeBar" parent="@style/AppTheme">
-    <item name="android:windowNoTitle">false</item>
-</style>
+    <style name="PopupMenu.Asaan_tab" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_asaan_tab</item>
+    </style>
+
+    <style name="DropDownListView.Asaan_tab" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_asaan_tab</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Asaan_tab" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_asaan_tab</item>
+    </style>
+
+    <style name="DropDownNav.Asaan_tab" parent="@android:style/Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_asaan_tab</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_asaan_tab</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_asaan_tab</item>
+    </style>
+
+    <style name="ProgressBar.Asaan_tab" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_asaan_tab</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Asaan_tab" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_asaan_tab</item>
+    </style>
+
+    <style name="AppThemeNoBar" parent="@style/AppTheme">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppThemeBar" parent="@style/AppTheme">
+        <item name="android:windowNoTitle">false</item>
+    </style>
+
     <style name="myCirclePageIndicator" parent="Widget">
         <item name="fillColor">@color/khaki</item>
         <item name="centered">true</item>
