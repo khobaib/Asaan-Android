@@ -3,18 +3,10 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,43 +19,52 @@ import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
-import asaan.dao.ModItem;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.google.api.client.http.HttpHeaders;
-import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.NestedListView;
 
-public class MyCartActivity extends Activity {
-
+public class EditCartActivity extends Activity {
+	
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;
 	private static final int ALERT_TYPE_CANCEL_ORDER = 2;
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
+	
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
-	private AddItem addItem;
-	private ModItem modItem;
-	//	private ModItemDao modItemDao;
+	
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
 	List<AddItem> OrderList;
-
+	
 	private ProgressDialog pDialog;
-	private Button bEdit;		
+	private Button bDone;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
+		
+		bDone = (Button) findViewById(R.id.b_edit);
+		bDone.setText("Done");
+		bDone.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			}
+		});
+		
 		lvOrder = (NestedListView) findViewById(R.id.lv_items);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
@@ -72,33 +73,27 @@ public class MyCartActivity extends Activity {
 		tvTax = (TextView) findViewById(R.id.tv_tax_amount);
 		tvTotal = (TextView) findViewById(R.id.tv_total_amount);
 		tvAmountDue = (TextView) findViewById(R.id.tv_due_amount);
-
+		
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Please wait we are taking your order...");
 
-		bEdit = (Button) findViewById(R.id.b_edit);
-		bEdit.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(MyCartActivity.this, EditCartActivity.class));
-				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-
-			}
-		});
-
+		initDatabase();
 
 		tvStoreName.setText(AsaanUtility.selectedStore.getName());
-
-		initDatabase();
 	}
-
+	
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		
+		updateCartInfo();
+	}
+	
+	
+	public void updateCartInfo(){
 		OrderList = addItemDao.queryBuilder().list();
-
+		
 		int subtotalAmount = 0;
 		for (AddItem item : OrderList) {
 			subtotalAmount += item.getPrice();
@@ -114,41 +109,24 @@ public class MyCartActivity extends Activity {
 
 		double total = ((double) subtotalAmount / 100) + gratuity + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
-
+		
 		tvAmountDue.setText("$" + String.format("%.2f", total));
-
-		adapter = new MyCartListAdapter(MyCartActivity.this, OrderList, Constants.MY_CART_ACTIVITY);
+		
+		adapter = new MyCartListAdapter(EditCartActivity.this, OrderList, Constants.EDIT_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
 	}
-
-	private void ConvertToXml() {
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		try {
-			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.newDocument();
-
-			Element root = document.createElement("CHECKREQUESTS");
-			root.setAttribute("ADDCHECK EXTCHECKID", "Nirav");
-			root.setAttribute("READYTIME", "4:45PM");
-			root.setAttribute("NOTE", "Please make it spicy - no Peanuts Please");
-			root.setAttribute("ORDERMODE", "1");
-			document.appendChild(root);
-
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
+	
 	private void initDatabase() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
-		//		modItemDao = daoSession.getModItemDao();
+//		modItemDao = daoSession.getModItemDao();
 	}
-
+	
+	
 	public void onClickPlaceOrder(View v){
 		showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
@@ -187,8 +165,8 @@ public class MyCartActivity extends Activity {
 		}
 		Alert.show();
 	}
-
-
+	
+	
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
 		@Override
@@ -212,11 +190,9 @@ public class MyCartActivity extends Activity {
 
 			PlaceOrder PlaceOrderReq;
 			try {
-				String token = ParseUser.getCurrentUser().getString("authToken");
-				
 				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
-				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
+				headers.put(USER_AUTH_TOKEN_HEADER_NAME, params[0]);
 				StoreOrder order = PlaceOrderReq.execute();
 
 			} catch (IOException e) {
@@ -234,4 +210,7 @@ public class MyCartActivity extends Activity {
 				pDialog.dismiss();
 		}
 	}
+	
+	
+
 }

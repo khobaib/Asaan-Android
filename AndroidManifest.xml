@@ -49,8 +49,7 @@
         <activity
             android:name="com.techfiesta.asaan.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoBar"
-             >
+            android:theme="@style/AppThemeNoBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,40 +68,62 @@
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:screenOrientation="portrait" 
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.techfiesta.asaan.activity.StoreListActivity"
-            android:screenOrientation="portrait" 
-            android:theme="@style/AppThemeNoBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoBar" >
         </activity>
         <activity
             android:name="com.techfiesta.asaan.activity.LoginActivity"
-            android:screenOrientation="portrait" 
-            android:theme="@style/AppThemeNoBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoBar" >
         </activity>
-        <activity android:name=".activity.StoreDetailsActivity"></activity>
-
-        <activity android:name=".activity.MenuActivity" android:theme="@android:style/Theme.Holo"></activity>
-        <activity android:name=".activity.StoreDetailsActivityNew"
-             android:theme="@style/AppThemeBar"></activity>
-        <activity android:name=".activity.PlaceOrderActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.MyCartActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.MenuModifierActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.OrderDetailsActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.PaymentInfoActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.ProfileActivity"
-             android:theme="@style/AppThemeNoBar"></activity>
-        <activity android:name=".activity.SignUpActivityNew"></activity>
-        
-        <activity android:name=".activity.MenuItemDetailsActivity"
-            android:theme="@style/AppThemeNoBar"></activity>
+        <activity android:name=".activity.StoreDetailsActivity" >
+        </activity>
+        <activity
+            android:name=".activity.MenuActivity"
+            android:theme="@android:style/Theme.Holo" >
+        </activity>
+        <activity
+            android:name=".activity.StoreDetailsActivityNew"
+            android:theme="@style/AppThemeBar" >
+        </activity>
+        <activity
+            android:name=".activity.PlaceOrderActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.MyCartActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.MenuModifierActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.OrderDetailsActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.PaymentInfoActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity android:name=".activity.SignUpActivityNew" >
+        </activity>
+        <activity
+            android:name=".activity.EditCartActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
+        <activity
+            android:name=".activity.MenuItemDetailsActivity"
+            android:theme="@style/AppThemeNoBar" >
+        </activity>
     </application>
 
 </manifest>

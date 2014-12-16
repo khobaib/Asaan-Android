@@ -66,6 +66,7 @@ public class MenuActivity extends Activity {
 	        case R.id.action_cart:
 				Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
 				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
