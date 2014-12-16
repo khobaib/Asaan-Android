@@ -59,15 +59,18 @@ public class MenuActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		case R.id.action_cart:
-			Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
-			startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_cart:
+				Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+
 	}
 
 	private class GetMenu extends AsyncTask<Void, Void, Void> {

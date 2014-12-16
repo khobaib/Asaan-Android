@@ -34,6 +34,12 @@ public class Constants {
 	public static final String BUNDLE_KEY_ORDER_DETAILS_POSITION = "BUNDLE_KEY_ORDER_DETAILS_POSITION";
 	public static final String BUNDLE_KEY_ORDER_DETAILS_AVAILABLE = "BUNDLE_KEY_ORDER_DETAILS_AVAILABLE";
 	public static final String BUNDLE_KEY_MODIFIERGRP_ID = "BUNDLE_KEY_MODIFIERGRP_ID";
+	
+	public static final int MY_CART_ACTIVITY = 1;
+	public static final int EDIT_CART_ACTIVITY = 2;
+	
+	public static final int BUTTON_POSITIVE = -1;
+	public static final int BUTTON_NEGATIVE = -2;
 
 	public static final int FROM_STORE_LIST = 11;
 	public static final int FROM_ONLINE_ORDER = 12;
