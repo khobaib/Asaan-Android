@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -51,13 +52,13 @@ public class MyCartActivity extends Activity {
 	private AddItemDao addItemDao;
 	private AddItem addItem;
 	private ModItem modItem;
-	//	private ModItemDao modItemDao;
+	// private ModItemDao modItemDao;
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
 	List<AddItem> OrderList;
 
 	private ProgressDialog pDialog;
-	private Button bEdit;		
+	private Button bEdit;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
 
 	@Override
@@ -87,7 +88,6 @@ public class MyCartActivity extends Activity {
 			}
 		});
 
-
 		tvStoreName.setText(AsaanUtility.selectedStore.getName());
 
 		initDatabase();
@@ -98,6 +98,7 @@ public class MyCartActivity extends Activity {
 		super.onResume();
 
 		OrderList = addItemDao.queryBuilder().list();
+		Log.e(">>>", "List count" + addItemDao.count());
 
 		int subtotalAmount = 0;
 		for (AddItem item : OrderList) {
@@ -146,48 +147,52 @@ public class MyCartActivity extends Activity {
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
-		//		modItemDao = daoSession.getModItemDao();
+		// modItemDao = daoSession.getModItemDao();
 	}
 
-	public void onClickPlaceOrder(View v){
+	public void onClickPlaceOrder(View v) {
 		showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
 
-	public void onClickCancelOrder(View v){
+	public void onClickCancelOrder(View v) {
 		showAlert(ALERT_TYPE_CANCEL_ORDER);
 	}
 
-
-	private void showAlert(final int alertType){
-		AlertDialog Alert = new AlertDialog.Builder(this).create();		          
-		Alert.setMessage("Confirm?");	
+	private void showAlert(final int alertType) {
+		AlertDialog Alert = new AlertDialog.Builder(this).create();
+		Alert.setMessage("Confirm?");
 
 		Alert.setButton(Constants.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
-				if(alertType == ALERT_TYPE_CANCEL_ORDER){
-					// finish to store list & delete the order data from db
+				if (alertType == ALERT_TYPE_CANCEL_ORDER) {
+					deletefromDatabase();
+					Intent i = new Intent(MyCartActivity.this, StoreListActivity.class);
+					startActivity(i);
+					overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
+					finish();
+
 				} else {
+
 					new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
-		if(alertType == ALERT_TYPE_CANCEL_ORDER){
+		if (alertType == ALERT_TYPE_CANCEL_ORDER) {
 			Alert.setButton(Constants.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					dialog.dismiss();
 				}
-			}); 	
+			});
 		} else {
 			Alert.setButton(Constants.BUTTON_NEGATIVE, "Maybe Later", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 					dialog.dismiss();
 				}
-			});     
+			});
 		}
 		Alert.show();
 	}
-
 
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
@@ -213,7 +218,7 @@ public class MyCartActivity extends Activity {
 			PlaceOrder PlaceOrderReq;
 			try {
 				String token = ParseUser.getCurrentUser().getString("authToken");
-				
+
 				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
 				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
 				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
@@ -230,8 +235,17 @@ public class MyCartActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
 			if (pDialog.isShowing())
 				pDialog.dismiss();
 		}
+
+	}
+
+	private void deletefromDatabase() {
+		initDatabase();
+		addItemDao.deleteAll();
+		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
+		adapter.notifyDataSetChanged();
 	}
 }

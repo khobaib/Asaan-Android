@@ -110,9 +110,15 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			@Override
 			public void onClick(View arg0) {
 				Log.e("MSG>>>", "btn menu clicked");
-				AsaanUtility.selectedStore = getItem(position);
-				Intent intent = new Intent(mContext, MenuActivity.class);
-				mContext.startActivity(intent);
+				Store selectedStore = getItem(position);
+				if (AsaanUtility.getCurrentOrderedStoredId(mContext) == selectedStore.getId().intValue()
+						|| AsaanUtility.getCurrentOrderedStoredId(mContext) == -1) {
+					AsaanUtility.selectedStore = selectedStore;
+					Intent intent = new Intent(mContext, MenuActivity.class);
+					mContext.startActivity(intent);
+				} else {
+					alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
+				}
 
 			}
 		});
@@ -121,9 +127,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			@Override
 			public void onClick(View v) {
 
-				AsaanUtility.selectedStore = getItem(position);
-				Intent intent = new Intent(mContext, OnlineOrderActivity.class);
-				mContext.startActivity(intent);
+				Store selectedStore = getItem(position);
+				if (AsaanUtility.getCurrentOrderedStoredId(mContext) == selectedStore.getId().intValue()
+						|| AsaanUtility.getCurrentOrderedStoredId(mContext) == -1) {
+					AsaanUtility.selectedStore = selectedStore;
+					Intent intent = new Intent(mContext, OnlineOrderActivity.class);
+					mContext.startActivity(intent);
+				} else {
+					alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
+				}
+
 				// int current = store.getId().intValue();
 				// int savedId =
 				// AsaanUtility.getCurrentOrderedStoredId(mContext);

@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import asaan.dao.AddItemDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoMaster.OpenHelper;
+import asaan.dao.DaoSession;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
@@ -35,6 +40,11 @@ public class MenuActivity extends Activity {
 
 	ActionBar actionBar = null;
 
+	private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private AddItemDao addItemDao;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +55,7 @@ public class MenuActivity extends Activity {
 		actionBar.setDisplayShowHomeEnabled(false);
 
 		setContentView(R.layout.activity_menu);
-
+		initDatabase();
 		storeId = AsaanUtility.selectedStore.getId();
 		new GetMenu().execute();
 	}
@@ -59,16 +69,30 @@ public class MenuActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_cart:
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_cart:
+			if (addItemDao.count() <= 0) {
+				AsaanUtility.simpleAlert(MenuActivity.this, "You have no order");
+			} else {
 				Intent intent = new Intent(MenuActivity.this, MyCartActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
+	}
+
+	private void initDatabase() {
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		// modItemDao = daoSession.getModItemDao();
 	}
 
 	private class GetMenu extends AsyncTask<Void, Void, Void> {

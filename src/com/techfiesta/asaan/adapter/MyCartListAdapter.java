@@ -35,7 +35,6 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 		this.fromActivity = fromActivity;
 	}
 
-
 	private class ViewHolder {
 		TextView tvItemName;
 		TextView tvItemQty;
@@ -61,16 +60,16 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		if(fromActivity == Constants.EDIT_CART_ACTIVITY){
-//			Log.e(">>>>", "fromactivity = EDIT_CART_ACTIVITY");
+		if (fromActivity == Constants.EDIT_CART_ACTIVITY) {
+			// Log.e(">>>>", "fromactivity = EDIT_CART_ACTIVITY");
 			holder.ivDeleteItem.setVisibility(View.VISIBLE);
 		} else {
-//			Log.e(">>>>", "fromactivity = MY_CART_ACTIVITY");
+			// Log.e(">>>>", "fromactivity = MY_CART_ACTIVITY");
 			holder.ivDeleteItem.setVisibility(View.GONE);
 		}
 
 		AddItem item = getItem(position);
-		
+
 		holder.ivDeleteItem.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -79,8 +78,7 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 
 			}
 		});
-		
-		
+
 		holder.tvItemName.setText(item.getItem_name());
 		holder.tvItemQty.setText(item.getQuantity() + "");
 
@@ -94,10 +92,9 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 		return convertView;
 	}
 
-
-	private void showAlert(final int position){
-		AlertDialog Alert = new AlertDialog.Builder(mContext).create();		          
-		Alert.setMessage("Are you sure?");	
+	private void showAlert(final int position) {
+		AlertDialog Alert = new AlertDialog.Builder(mContext).create();
+		Alert.setMessage("Are you sure?");
 
 		Alert.setButton(Constants.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -109,23 +106,22 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
 			}
-		});            
+		});
 		Alert.show();
 	}
-	
-	
-	private void removeItemAndUpdateCartInfo(int position){
+
+	private void removeItemAndUpdateCartInfo(int position) {
 		AddItem item = getItem(position);
 		remove(item);
 		notifyDataSetChanged();
-		
+
 		OpenHelper helper = new DaoMaster.DevOpenHelper(mContext, "asaan-db", null);
 		SQLiteDatabase db = helper.getWritableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 		DaoSession daoSession = daoMaster.newSession();
 		AddItemDao addItemDao = daoSession.getAddItemDao();
 		addItemDao.delete(item);
-		
+
 		((EditCartActivity) mContext).updateCartInfo();
 	}
 
