@@ -310,7 +310,7 @@ public class PlaceOrderActivity extends Activity {
 		if (menuItemHasModifiers)
 			mAdapter.updatePriceAndDesc();
 
-		TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);
+		//TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);
 		// TextView txtDesc = (TextView) findViewById(R.id.txt_item_desc);
 		TextView txtQuantity = (TextView) findViewById(R.id.txt_quantity);
 
@@ -321,7 +321,7 @@ public class PlaceOrderActivity extends Activity {
 		else
 			finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);
 
-		txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
+		//txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
 		btnPlaceOrder.setText("Add to Order " + AsaanUtility.formatCentsToCurrency(finalPrice));
 		// if (menuItemHasModifiers)
 		// txtDesc.setText(mAdapter.getFinalDesc());
