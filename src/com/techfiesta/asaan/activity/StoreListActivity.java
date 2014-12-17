@@ -118,7 +118,7 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 			Log.e("status", "loading from from server");
 			new GetStroreInfoFromServer().execute();
 		}
-		//updateLocation();
+		// updateLocation();
 
 	}
 

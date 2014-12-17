@@ -71,7 +71,7 @@ public class UserPicture implements Serializable {
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (RuntimeException e){
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 

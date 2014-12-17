@@ -16,12 +16,13 @@ import android.widget.TextView;
 
 public class DefaultTipsSpinnerAdapter extends ArrayAdapter<Integer> {
 	private Context mContext;
-	public DefaultTipsSpinnerAdapter(Context context, int textViewResourceId,
-			ArrayList<Integer> objects) {
+
+	public DefaultTipsSpinnerAdapter(Context context, int textViewResourceId, ArrayList<Integer> objects) {
 		super(context, textViewResourceId, objects);
-		this.mContext=context;
-		
+		this.mContext = context;
+
 	}
+
 	private class ViewHolder {
 		TextView tv;
 	}
@@ -31,6 +32,7 @@ public class DefaultTipsSpinnerAdapter extends ArrayAdapter<Integer> {
 		// TODO Auto-generated method stub
 		return super.getDropDownView(position, convertView, parent);
 	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
@@ -43,11 +45,10 @@ public class DefaultTipsSpinnerAdapter extends ArrayAdapter<Integer> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		holder.tv.setText(""+getItem(position));
-			
-		
+
+		holder.tv.setText("" + getItem(position));
+
 		return convertView;
-		
+
 	}
 }
