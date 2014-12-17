@@ -20,14 +20,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/txtWhite" />
 
-    <!-- <Spinner
-        android:id="@+id/spinner1"
+    <Spinner
+        android:id="@+id/s_submenu_selection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/menu_category_title"
-        android:layout_toRightOf="@+id/menu_category_title" /> -->
+        android:layout_toRightOf="@+id/menu_category_title" />
 
 </RelativeLayout>

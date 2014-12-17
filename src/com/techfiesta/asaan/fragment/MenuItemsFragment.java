@@ -17,17 +17,25 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
+import com.techfiesta.asaan.activity.PaymentInfoActivity;
 import com.techfiesta.asaan.activity.PlaceOrderActivity;
+import com.techfiesta.asaan.adapter.NothingSelectedSpinnerAdapter;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 
@@ -130,6 +138,7 @@ public class MenuItemsFragment extends ListFragment {
 		static class ViewHolder2 {
 			// public ImageView imgGroup;
 			public TextView txtGroupName;
+			public Spinner spSelectSubmenu;
 		}
 
 		public MenuFragmentAdapter(final Context context, List<StoreMenuItem> allItems) {
@@ -140,7 +149,7 @@ public class MenuItemsFragment extends ListFragment {
 
 		public void listItemClick(ListView l, View v, int position, long id) {
 			final StoreMenuItem menuItem = allItems.get(position);
-			if (menuItem != null) {
+			if (menuItem != null && menuItem.getLevel()==ROWDATA_TYPE_MENU_ITEM) {
 
 				final Intent intent = new Intent(context, PlaceOrderActivity.class);
 				intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID, menuItem.getMenuItemPOSId());
@@ -172,10 +181,12 @@ public class MenuItemsFragment extends ListFragment {
 			return position;
 		}
 
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
 			final StoreMenuItem storeMenuItem = allItems.get(position);
+			Log.d("MENU", "Menu Position "+storeMenuItem.getMenuItemPosition() + "level "+storeMenuItem.getLevel()+" name ="+storeMenuItem.getShortDescription());
 			if (rowView == null
 					|| ((Integer) rowView.getTag(R.id.menu_category_title)).intValue() != storeMenuItem.getLevel())
 				if (storeMenuItem.getLevel() == ROWDATA_TYPE_SUBMENU) {
@@ -184,6 +195,7 @@ public class MenuItemsFragment extends ListFragment {
 					// viewHolder2.imgGroup = (ImageView)
 					// rowView.findViewById(R.id.img_menu_category_finder);
 					viewHolder2.txtGroupName = (TextView) rowView.findViewById(R.id.menu_category_title);
+					viewHolder2.spSelectSubmenu = (Spinner) rowView.findViewById(R.id.s_submenu_selection);
 
 					rowView.setTag(viewHolder2);
 					rowView.setTag(R.id.menu_category_title, ROWDATA_TYPE_SUBMENU);
@@ -207,11 +219,37 @@ public class MenuItemsFragment extends ListFragment {
 					rowView.setTag(viewHolder);
 					rowView.setTag(R.id.menu_category_title, ROWDATA_TYPE_MENU_ITEM);
 				}
+
 			if (storeMenuItem.getLevel() == ROWDATA_TYPE_SUBMENU) {
 				final ViewHolder2 holder2 = (ViewHolder2) rowView.getTag();
 
+				generateSubMenuSpinner(holder2);
 				holder2.txtGroupName.setText(storeMenuItem.getShortDescription()); // Submenu
-																					// name
+				holder2.spSelectSubmenu.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> sparent, View view, int position, long id) {
+						if(position>0){
+							String selectedMenu = (String) sparent.getItemAtPosition(position);
+							for(int i=0;i<allItems.size();i++){
+								StoreMenuItem item = allItems.get(i);
+								if(selectedMenu.equals(item.getShortDescription())){
+									Log.d("MENU_SELECTED", "selected item position "+item.getMenuItemPosition());
+
+									mListView.setSelection(item.getMenuItemPosition());
+
+								}
+							}
+						}
+
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						mListView.setSelected(false);
+
+					}
+				});																	// name
 				/*
 				 * holder2.imgGroup.setOnClickListener(new
 				 * View.OnClickListener() {
@@ -263,6 +301,24 @@ public class MenuItemsFragment extends ListFragment {
 			}
 
 			return rowView;
+		}
+
+		public void generateSubMenuSpinner(ViewHolder2 holder2){
+
+			ArrayList<String> list = new ArrayList<String>();
+			for(StoreMenuItem menuItem : allItems){
+				if(menuItem.getLevel()==ROWDATA_TYPE_SUBMENU){
+					list.add(menuItem.getShortDescription());
+				}
+			}
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
+					context, R.layout.spinner_textview, list);
+			holder2.spSelectSubmenu.setAdapter(new NothingSelectedSpinnerAdapter(dataAdapter,
+					R.layout.row_spinner_nothing_selected, context));
+			dataAdapter
+			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
 		}
 	}
 }

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/text_golden_color"
-        android:textSize="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="TextView" />
 
 </RelativeLayout>
