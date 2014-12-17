@@ -29,7 +29,8 @@ public class AsaanApplication extends Application {
 		super.onCreate();
 		Parse.initialize(this, ASAAN_APPLICATION_ID, ASAAN_CLIENT_KEY);
 
-		ParseFacebookUtils.initialize(getResources().getString(R.string.fb_asaan_app_id));
+		 ParseFacebookUtils.initialize(getResources().getString(R.string.fb_asaan_app_id));
+		//ParseFacebookUtils.initialize(getResources().getString(R.string.fb_asaan_app_id_rishta));
 
 		context = getApplicationContext();
 		initializeSharedPreference();

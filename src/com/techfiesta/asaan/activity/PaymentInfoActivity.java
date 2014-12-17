@@ -52,11 +52,10 @@ public class PaymentInfoActivity extends Activity {
 	String cardNumber;
 	String cardCVC;
 	String zip;
-//	int month;
-//	int year;
+	// int month;
+	// int year;
 	int tips;
 	private ProgressDialog pDialog;
-	
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 
@@ -72,11 +71,11 @@ public class PaymentInfoActivity extends Activity {
 		etYear = (EditText) findViewById(R.id.et_year);
 
 		btnSave = (Button) findViewById(R.id.b_save);
-		btnSkip=(Button)findViewById(R.id.b_skip);
-		
+		btnSkip = (Button) findViewById(R.id.b_skip);
+
 		pDialog = new ProgressDialog(PaymentInfoActivity.this);
 		pDialog.setMessage("Loading...");
-		
+
 		defaultTipSpinner = (Spinner) findViewById(R.id.s_tip_selector);
 		createDefaultTipSpinner();
 
@@ -104,15 +103,21 @@ public class PaymentInfoActivity extends Activity {
 			}
 		});
 		btnSkip.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
+				Intent intent = new Intent(PaymentInfoActivity.this, StoreListActivity.class);
 				startActivity(intent);
-				
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				finish();
+
 			}
 		});
 
+	}
+
+	@Override
+	public void onBackPressed() {
 	}
 
 	private void saveDefaultTips() {
@@ -135,9 +140,11 @@ public class PaymentInfoActivity extends Activity {
 		for (int i = 1; i < 21; i++) {
 			list.add(i * 5);
 		}
-		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
-			//	android.R.layout.simple_spinner_dropdown_item, list);
-		DefaultTipsSpinnerAdapter adapter=new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item, list);
+		// ArrayAdapter<Integer> adapter = new
+		// ArrayAdapter<>(PaymentInfoActivity.this,
+		// android.R.layout.simple_spinner_dropdown_item, list);
+		DefaultTipsSpinnerAdapter adapter = new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,
+				android.R.layout.simple_spinner_dropdown_item, list);
 		defaultTipSpinner.setAdapter(adapter);
 	}
 
@@ -165,7 +172,7 @@ public class PaymentInfoActivity extends Activity {
 					handleError(error.getLocalizedMessage());
 					// finishProgress();
 				}
-				
+
 			});
 		} else if (!card.validateNumber()) {
 			handleError("The card number that you entered is invalid");
@@ -232,23 +239,23 @@ public class PaymentInfoActivity extends Activity {
 		protected Void doInBackground(Void... arg0) {
 
 			SaveUserCard saveUserCard;
-			UserCard responseUserCard =null;
+			UserCard responseUserCard = null;
 			try {
 				saveUserCard = SplashActivity.mUserendpoint.saveUserCard(userCard);
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
 				responseUserCard = saveUserCard.execute();
-				Log.e("MSG", "created_date" + responseUserCard.getCreatedDate() + "mod_date" + responseUserCard.getModifiedDate());
+				Log.e("MSG",
+						"created_date" + responseUserCard.getCreatedDate() + "mod_date"
+								+ responseUserCard.getModifiedDate());
 				pDialog.dismiss();
-				if(responseUserCard != null)
-				{
-					Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
+				if (responseUserCard != null) {
+					Intent intent = new Intent(PaymentInfoActivity.this, StoreListActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 					finish();
-				}
-				else
-				{
+				} else {
 					Log.e("error", "error in savig card");
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "Updating Payment ingo failed");
 				}

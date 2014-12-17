@@ -1,14 +1,21 @@
 package com.techfiesta.asaan.activity;
 
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -41,6 +48,21 @@ public class LoginChooserActivity extends Activity {
 		Typeface tf = Typeface.createFromAsset(getAssets(), "font/helvetica_neue_thn.ttf");
 		TextView Title = (TextView) findViewById(R.id.tv_title);
 		Title.setTypeface(tf);
+
+		try {
+			PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+			for (Signature signature : info.signatures) {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+
 		// buildStoreEndpoint();
 		// buildUserEndpoint();
 
@@ -104,11 +126,13 @@ public class LoginChooserActivity extends Activity {
 		Class<?> launchingClass = SignUpActivity.class;
 		// Class<?> launchingClass = ProfileActivity.class;
 		launchActivity(launchingClass);
+		finish();
 	}
 
 	public void onClickLogin(View v) {
 		Class<?> launchingClass = LoginActivity.class;
 		launchActivity(launchingClass);
+		finish();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

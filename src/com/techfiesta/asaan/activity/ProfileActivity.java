@@ -30,7 +30,7 @@ public class ProfileActivity extends Activity {
 	private EditText FirstName;
 	private EditText LastName;
 	private EditText Phone;
-	private Button btnSave,btnSkip;
+	private Button btnSave, btnSkip;
 
 	String profilePhotoUrl;
 	String firstName;
@@ -59,10 +59,10 @@ public class ProfileActivity extends Activity {
 		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
 		btnSave = (Button) findViewById(R.id.b_save);
 		btnSkip = (Button) findViewById(R.id.b_skip);
-		
+
 		pdialog = new ProgressDialog(ProfileActivity.this);
 		pdialog.setMessage("Loading...");
-		
+
 		btnSave.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,12 +88,13 @@ public class ProfileActivity extends Activity {
 			}
 		});
 		btnSkip.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(ProfileActivity.this,PaymentInfoActivity.class);
+				Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
 				startActivity(intent);
-				
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				finish();
 			}
 		});
 		ProfilePicture.setOnClickListener(new OnClickListener() {
@@ -139,9 +140,12 @@ public class ProfileActivity extends Activity {
 			public void done(ParseException e) {
 				pdialog.dismiss();
 				if (e == null) {
-//					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
+					// AsaanUtility.simpleAlert(ProfileActivity.this,
+					// "Profile Updated");
 					Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
 					startActivity(intent);
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					finish();
 				} else {
 					Log.e("error", "updating user failed" + e.toString());
 					AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
@@ -174,6 +178,10 @@ public class ProfileActivity extends Activity {
 			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onBackPressed() {
 	}
 
 	private static boolean validatePhoneNumber(String phoneNo) {

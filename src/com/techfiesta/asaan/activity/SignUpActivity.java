@@ -74,6 +74,8 @@ public class SignUpActivity extends Activity {
 					// go to profile activity
 					Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
 					startActivity(intent);
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					finish();
 				} else {
 					alert("Error in sign up!");
 					// for testing
@@ -92,8 +94,10 @@ public class SignUpActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed
-			finish();
+			Intent i = new Intent(SignUpActivity.this, LoginChooserActivity.class);
+			startActivity(i);
 			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			finish();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
