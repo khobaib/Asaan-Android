@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -23,6 +24,8 @@ public class LoginActivity extends Activity {
 	ParseUser currentUser;
 	private ProgressDialog pDialog;
 
+	TextView ForgetPassword;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -34,6 +37,7 @@ public class LoginActivity extends Activity {
 		userEmail = (EditText) findViewById(R.id.et_email);
 		passWord = (EditText) findViewById(R.id.et_pass);
 		Login = (Button) findViewById(R.id.b_login);
+		ForgetPassword = (TextView) findViewById(R.id.tv_forget_pass);
 
 		pDialog = new ProgressDialog(LoginActivity.this);
 		pDialog.setMessage("Logging in...");
@@ -46,12 +50,21 @@ public class LoginActivity extends Activity {
 
 			}
 		});
+
+		ForgetPassword.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				launchActivity(ResetPasswordActivity.class);
+
+			}
+		});
 	}
 
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);
-		finish();
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	}
 
 	private void LoginUser() {
@@ -69,6 +82,7 @@ public class LoginActivity extends Activity {
 					currentUser = ParseUser.getCurrentUser();
 					Log.d(">>", "login success" + currentUser.getEmail());
 					launchActivity(StoreListActivity.class);
+					finish();
 				} else {
 					Log.d(">>", "login failed");
 				}

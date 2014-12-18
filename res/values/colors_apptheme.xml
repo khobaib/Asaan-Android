@@ -6,4 +6,5 @@
     <color name="signup_bg_color">#996633</color>
     <color name="text_golden_color">#cb9832</color>
     <color name="app_bg_color">#170000</color>
+    <color name="text_grey_background_color">#333333</color>
 </resources>

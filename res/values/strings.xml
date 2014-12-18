@@ -14,8 +14,9 @@
     
     <string name="frontpage_tagline">Discover and share great places with friends.</string>
     <string name="signup_title">Welcome to Asaan! Let\'s start by setting up your account.</string>  
-    <string name="profile_page_title">Your name and photo will help the.</string> 
+    <string name="profile_page_title">Your name and photo will help the maitre d\' recognize you on arrival .</string> 
     <string name="phone_number_warning">Your number to call or text you regarding your account information.</string> 
+    <string name="profile_page_phone_message">Asaan will only use your phone number to call or text you regarding your account information or your transactions through Asaan .</string>
     
     
     <string name="hello_world">Hello world!</string>
@@ -106,5 +107,6 @@
     <string name="gallery_right_arrow">Move to next menu item image</string>
     <string name="gallery_selected_menu_item">Selected menu item image</string>
     <string name="menu_modifier_title">Happy Hour </string>
+    <string name="reset_password_instruction">Enter your email to reset password</string>
 
 </resources>

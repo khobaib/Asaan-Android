@@ -26,8 +26,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
-
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 //import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techfiesta.asaan.R;
@@ -149,7 +147,7 @@ public class MenuItemsFragment extends ListFragment {
 
 		public void listItemClick(ListView l, View v, int position, long id) {
 			final StoreMenuItem menuItem = allItems.get(position);
-			if (menuItem != null && menuItem.getLevel()==ROWDATA_TYPE_MENU_ITEM) {
+			if (menuItem != null && menuItem.getLevel() == ROWDATA_TYPE_MENU_ITEM) {
 
 				final Intent intent = new Intent(context, PlaceOrderActivity.class);
 				intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID, menuItem.getMenuItemPOSId());
@@ -181,12 +179,12 @@ public class MenuItemsFragment extends ListFragment {
 			return position;
 		}
 
-
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView = convertView;
 			final StoreMenuItem storeMenuItem = allItems.get(position);
-			Log.d("MENU", "Menu Position "+storeMenuItem.getMenuItemPosition() + "level "+storeMenuItem.getLevel()+" name ="+storeMenuItem.getShortDescription());
+			Log.d("MENU", "Menu Position " + storeMenuItem.getMenuItemPosition() + "level " + storeMenuItem.getLevel()
+					+ " name =" + storeMenuItem.getShortDescription());
 			if (rowView == null
 					|| ((Integer) rowView.getTag(R.id.menu_category_title)).intValue() != storeMenuItem.getLevel())
 				if (storeMenuItem.getLevel() == ROWDATA_TYPE_SUBMENU) {
@@ -229,12 +227,12 @@ public class MenuItemsFragment extends ListFragment {
 
 					@Override
 					public void onItemSelected(AdapterView<?> sparent, View view, int position, long id) {
-						if(position>0){
+						if (position > 0) {
 							String selectedMenu = (String) sparent.getItemAtPosition(position);
-							for(int i=0;i<allItems.size();i++){
+							for (int i = 0; i < allItems.size(); i++) {
 								StoreMenuItem item = allItems.get(i);
-								if(selectedMenu.equals(item.getShortDescription())){
-									Log.d("MENU_SELECTED", "selected item position "+item.getMenuItemPosition());
+								if (selectedMenu.equals(item.getShortDescription())) {
+									Log.d("MENU_SELECTED", "selected item position " + item.getMenuItemPosition());
 
 									mListView.setSelection(item.getMenuItemPosition());
 
@@ -249,7 +247,7 @@ public class MenuItemsFragment extends ListFragment {
 						mListView.setSelected(false);
 
 					}
-				});																	// name
+				}); // name
 				/*
 				 * holder2.imgGroup.setOnClickListener(new
 				 * View.OnClickListener() {
@@ -303,27 +301,24 @@ public class MenuItemsFragment extends ListFragment {
 			return rowView;
 		}
 
-		public void generateSubMenuSpinner(ViewHolder2 holder2){
+		public void generateSubMenuSpinner(ViewHolder2 holder2) {
 
 			ArrayList<String> list = new ArrayList<String>();
-			for(StoreMenuItem menuItem : allItems){
-				if(menuItem.getLevel()==ROWDATA_TYPE_SUBMENU){
+			for (StoreMenuItem menuItem : allItems) {
+				if (menuItem.getLevel() == ROWDATA_TYPE_SUBMENU) {
 					String name = menuItem.getShortDescription();
-					if(name!=null){
+					if (name != null) {
 						list.add(name);
-					}else{
+					} else {
 						list.add("Name not found");
 					}
-					
+
 				}
 			}
-			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-					context, R.layout.spinner_textview, list);
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, R.layout.spinner_textview, list);
 			holder2.spSelectSubmenu.setAdapter(new NothingSelectedSpinnerAdapter(dataAdapter,
 					R.layout.row_spinner_nothing_selected, context));
-			dataAdapter
-			.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		}
 	}

@@ -126,6 +126,10 @@
         </activity>        
         <activity android:name=".activity.OnlineOrderActivity"
             android:theme="@style/AppThemeNoBar"></activity>
+        
+        <activity android:name=".activity.ResetPasswordActivity"
+            android:theme="@style/AppThemeNoBar">
+        </activity>
     </application>
 
 </manifest>

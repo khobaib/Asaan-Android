@@ -52,7 +52,7 @@ public class ProfileActivity extends Activity {
 		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		// getActionBar().hide();
 
-		setContentView(R.layout.activity_profile);
+		setContentView(R.layout.activity_profile_new);
 		FirstName = (EditText) findViewById(R.id.et_first_name);
 		LastName = (EditText) findViewById(R.id.et_last_name);
 		Phone = (EditText) findViewById(R.id.et_phone);

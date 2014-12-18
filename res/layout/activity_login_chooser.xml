@@ -4,92 +4,113 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg_color" >
 
-    <ImageView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login_chooser_background" >
+
+        <TextView
+            android:id="@+id/tv_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:text="ASAAN"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <!--
+        <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="71dp"
         android:layout_height="61dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/asaan_icon" />
+        -->
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_icon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Asaan"
-        android:textColor="@color/text_golden_color"
-        android:textSize="45dp" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Asaan"
+            android:textColor="@color/text_golden_color"
+            android:textSize="45dp" />
 
-    <TextView
-        android:id="@+id/tv_tag_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
-        android:text="@string/frontpage_tagline"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:textColor="@color/text_golden_color" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/b_fb_login"
+        <TextView
+            android:id="@+id/tv_tag_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/fb_login_bg_color"
-            android:gravity="center"
-            android:onClick="onClickFBLogin"
-            android:padding="10dp"
-            android:text="Connect with facebook"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@string/frontpage_tagline"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
+            android:textColor="@color/text_golden_color"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/b_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@color/login_bg_color"
-            android:gravity="center"
-            android:onClick="onClickLogin"
-            android:padding="10dp"
-            android:text="Login"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/b_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@color/signup_bg_color"
-            android:gravity="center"
-            android:onClick="onClickSignup"
-            android:padding="10dp"
-            android:text="Signup"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/b_fb_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/fb_login_bg_color"
+                android:gravity="center"
+                android:onClick="onClickFBLogin"
+                android:padding="10dp"
+                android:text="Connect with facebook"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/login_bg_color"
+                android:gravity="center"
+                android:onClick="onClickLogin"
+                android:padding="10dp"
+                android:text="Login"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/signup_bg_color"
+                android:gravity="center"
+                android:onClick="onClickSignup"
+                android:padding="10dp"
+                android:text="Signup"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
