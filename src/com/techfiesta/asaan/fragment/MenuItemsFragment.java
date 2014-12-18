@@ -308,7 +308,13 @@ public class MenuItemsFragment extends ListFragment {
 			ArrayList<String> list = new ArrayList<String>();
 			for(StoreMenuItem menuItem : allItems){
 				if(menuItem.getLevel()==ROWDATA_TYPE_SUBMENU){
-					list.add(menuItem.getShortDescription());
+					String name = menuItem.getShortDescription();
+					if(name!=null){
+						list.add(name);
+					}else{
+						list.add("Name not found");
+					}
+					
 				}
 			}
 			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
