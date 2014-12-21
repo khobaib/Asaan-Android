@@ -39,7 +39,7 @@ public class ImageLoader {
 	ExecutorService executorService;
 	Handler handler = new Handler();// handler to display images in UI thread
 
-	final int stub_id = R.drawable.resturant_detail_demo;
+	final int stub_id = R.drawable.loading_wait;
 
 	public ImageLoader(Activity context) {
 		this.mContext = context;
