@@ -35,27 +35,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 
 	private Context mContext;
 	private List<Store> storeList;
-	private Location mLocation;
 	private ImageLoader imageLoader;
 
 	public StoreListAdapter(Context context, List<Store> stores) {
 		super(context, R.layout.row_restaurant_list, stores);
 		this.mContext = context;
 		this.storeList = stores;
-		this.mLocation = null;
 		imageLoader = new ImageLoader((Activity) context);
 	}
 
-	public void setLocation(Location location) {
-		this.mLocation = location;
-	}
-
-	public StoreListAdapter(Context context, List<Store> stores, Location location) {
-		super(context, R.layout.row_restaurant_list, stores);
-		this.mContext = context;
-		this.storeList = stores;
-		this.mLocation = location;
-	}
+	
 
 	private class ViewHolder {
 		// ParseImageView ivPhoto;

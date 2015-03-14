@@ -44,17 +44,11 @@ import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class StoreListActivity extends FragmentActivity implements GooglePlayServicesClient.OnConnectionFailedListener,
-		LocationListener, GooglePlayServicesClient.ConnectionCallbacks {
-	private GoogleMap mMap;
-	private LocationManager locationManager;
-	private static final long MIN_TIME = 400;
-	private static final float MIN_DISTANCE = 1000;
-	int test_count = 0;
+public class StoreListActivity extends FragmentActivity {
+	
+
 
 	Context mContext;
-	Location mLocation;
-	boolean isLocation;
 	private ListView storeListView;
 	private StoreListAdapter storeListAdapter;
 	private StoreCollection storeCollection;
@@ -68,8 +62,6 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 	private DaoSession daoSession;
 	private DStoreDao dStoreDao;
 	private TrophiesDao trophiesDao;
-	private LocationClient locationClient;
-	private LocationRequest locationRequest;
 
 	AsaanApplication appInstance;
 
@@ -107,18 +99,16 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 			// load from local db
 			Log.e("status", "loading from local db");
 			loadStoresFromDatabase();
-			if (mLocation == null) {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
-			} else {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
-			}
+			
+			storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
+			
 			storeListView.setAdapter(storeListAdapter);
 
 		} else {
 			Log.e("status", "loading from from server");
 			new GetStroreInfoFromServer().execute();
 		}
-		//updateLocation();
+		
 
 	}
 
@@ -230,11 +220,9 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 		protected void onPostExecute(Void result) {
 			// setting list
 			storeList = storeCollection.getItems();
-			if (mLocation == null) {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
-			} else {
-				storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList, mLocation);
-			}
+			
+			storeListAdapter = new StoreListAdapter(StoreListActivity.this, storeList);
+			
 			storeListView.setAdapter(storeListAdapter);
 			saveStoreToDatabase();
 			super.onPostExecute(result);
@@ -293,79 +281,9 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 
 	}
 
-	private void updateLocation() {
+	
 
-		// if (mMap == null) {
-		// // Try to obtain the map from the SupportMapFragment.
-		// mMap = ((SupportMapFragment)
-		// getSupportFragmentManager().findFragmentById(R.id.map))
-		// .getMap();
-		// // Check if we were successful in obtaining the map.
-		// if (mMap != null) {
-		// setUpMap();
-		// }
-		// }
-
-		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
-			locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-			boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-			if (isNetworkEnabled)
-				startLocationTracking();
-			else {
-				showSettingsAlert();
-			}
-		} else
-			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
-
-		// locationManager = (LocationManager)
-		// getSystemService(Context.LOCATION_SERVICE);
-		// locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-		// MIN_TIME, MIN_DISTANCE, this);
-
-	}
-
-	public void showSettingsAlert() {
-		Log.d(">>>> GPS TRACKER <<<<<<", "in showSettingsAlert method - TRYING TO ACTIVATE LOCATION SETTINGS");
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(StoreListActivity.this);
-
-		// Setting Dialog Title
-		alertDialog.setTitle("Location Settings");
-
-		// Setting Dialog Message
-		alertDialog.setMessage("Google's Location Service is not enabled. Do you want to go to settings menu?");
-
-		// On pressing Settings button
-		alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-				startActivityForResult(intent, 1);
-			}
-		});
-
-		// on pressing cancel button
-		alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-
-	private void startLocationTracking() {
-		locationClient = new LocationClient(this, this, this);
-		locationRequest = LocationRequest.create();
-		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		// Set the update interval to 10 seconds
-		locationRequest.setInterval(10000);
-		// Set the fastest update interval to 3 second
-		locationRequest.setFastestInterval(3000);
-		// locationRequest.setSmallestDisplacement(MIN_DISTANCE);
-		locationClient.connect();
-
-	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -373,88 +291,4 @@ public class StoreListActivity extends FragmentActivity implements GooglePlaySer
 		// setupMap();
 
 	}
-
-	private boolean setUserLocation() {
-		if (AsaanUtility.hasInternet(StoreListActivity.this)) {
-			AsaanUtility.checkLocationAccess(StoreListActivity.this);
-			if (AsaanUtility.getLocation()) {
-				mLocation = AsaanUtility.mLocation;
-				if (mLocation != null) {
-					Log.d(">>>>", "location=" + mLocation.getLatitude());
-					// LatLng mlatLong = new LatLng(mLocation.getLatitude(),
-					// mLocation.getLongitude());
-					// mMarker = mMap.addMarker(new
-					// MarkerOptions().position(mlatLong).title("Hey!"));
-					//
-					// mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mlatLong,
-					// 14));
-					return true;
-				} else {
-					Log.d(">>>>>", "Couldn't get location");
-					return false;
-				}
-			}
-		} else
-			AsaanUtility.simpleAlert(StoreListActivity.this, "Please check your internet connection");
-		return false;
-	}
-
-	public float getDistance(Location storeLocation) {
-		return mLocation.distanceTo(storeLocation);
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-
-		test_count = test_count + 1;
-		Toast.makeText(StoreListActivity.this, "location changed.", Toast.LENGTH_SHORT).show();
-		AsaanUtility.mLocation = location;
-
-		mLocation = location;
-		if (storeListAdapter != null) {
-			storeListAdapter.setLocation(mLocation);
-
-			storeListAdapter.notifyDataSetChanged();
-		}
-
-	}
-
-	@Override
-	public void onConnectionFailed(ConnectionResult result) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onDestroy() {
-		if (locationClient != null && locationRequest != null) {
-			Log.e("MSG", "on destroy cond");
-			locationClient.removeLocationUpdates(this);
-			if (locationClient.isConnected())
-				locationClient.disconnect();
-		}
-		super.onDestroy();
-	}
-
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		locationClient.requestLocationUpdates(locationRequest, this);
-
-	}
-
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if (requestCode == 1) {
-			Log.e("MSG", "onactivity result");
-			updateLocation();
-		}
-	}
-
 }
