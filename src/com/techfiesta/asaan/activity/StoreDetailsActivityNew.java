@@ -121,10 +121,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.my_cart) {
-			Intent intent = new Intent(StoreDetailsActivityNew.this, OrderDetailsActivity.class);
-			startActivity(intent);
-		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 

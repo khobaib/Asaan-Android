@@ -8,18 +8,25 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import asaan.dao.DStore;
@@ -39,7 +46,9 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.NavDrawerAdapter;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
+import com.techfiesta.asaan.model.NavMenuItem;
 import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
@@ -62,18 +71,64 @@ public class StoreListActivity extends FragmentActivity {
 	private DaoSession daoSession;
 	private DStoreDao dStoreDao;
 	private TrophiesDao trophiesDao;
+	
+	private ActionBarDrawerToggle mDrawerToggle;
+	private NavDrawerAdapter navDrawerAdapter;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ArrayList<NavMenuItem> drawerItemList;
 
 	AsaanApplication appInstance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		 getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		
+		setContentView(R.layout.activity_store_list);
+		
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+		if(getActionBar()!=null)
+		{
+		getActionBar().setTitle("");
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		ImageView imageView = (ImageView) findViewById(android.R.id.home);
+		imageView.setPadding(-12,-12,-12,-12);
+		}
+		
+		setDrawerListItems();
+		navDrawerAdapter=new NavDrawerAdapter(StoreListActivity.this,R.layout.nav_menu_row,drawerItemList);
+		mDrawerList.setAdapter(navDrawerAdapter);
+		
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.slidingmenu, // nav menu toggle icon
+				R.string.app_name, // nav drawer open - description for
+									// accessibility
+				R.string.app_name // nav drawer close - description for
+									// accessibility
+		) {
+			public void onDrawerClosed(View view) {
+				
+				// calling onPrepareOptionsMenu() to show action bar icons
+				invalidateOptionsMenu();
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				// calling onPrepareOptionsMenu() to hide action bar icons
+				invalidateOptionsMenu();
+			}
+		};
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		
 		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		// getActionBar().hide();
 		// init database
-		initDatabase();
+		/*initDatabase();
 		Log.e("stop", "oncreate");
-		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.activity_store_list, null);
+		View viewToLoad = LayoutInflater.from(StoreListActivity.this).inflate(R.layout.fragment_store_list, null);
 		StoreListActivity.this.setContentView(viewToLoad);
 
 		appInstance = (AsaanApplication) getApplication();
@@ -107,7 +162,7 @@ public class StoreListActivity extends FragmentActivity {
 		} else {
 			Log.e("status", "loading from from server");
 			new GetStroreInfoFromServer().execute();
-		}
+		}*/
 		
 
 	}
@@ -291,4 +346,50 @@ public class StoreListActivity extends FragmentActivity {
 		// setupMap();
 
 	}
+	private void setDrawerListItems()
+	{
+		drawerItemList=new ArrayList<NavMenuItem>();
+		drawerItemList.add(new NavMenuItem("Stores",R.drawable.stores));
+		drawerItemList.add(new NavMenuItem("Profile",R.drawable.profile));
+		drawerItemList.add(new NavMenuItem("Chat History",R.drawable.chathistory));
+		drawerItemList.add(new NavMenuItem("Wait List Status",R.drawable.tableseated));
+		drawerItemList.add(new NavMenuItem("Pending Orders",R.drawable.pendingorders));
+		drawerItemList.add(new NavMenuItem("Order History",R.drawable.orderhistory));
+		drawerItemList.add(new NavMenuItem("Logout",R.drawable.logout));
+		
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// if nav drawer is opened, hide the action items
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggls
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// toggle nav drawer on selecting action bar app icon/title
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return true;
+	}
+
 }
