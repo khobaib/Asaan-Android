@@ -6,37 +6,34 @@ package asaan.dao;
  */
 public class Trophies {
 
-	/** Not-null value. */
-	private String name;
-	private Long store_id;
+    /** Not-null value. */
+    private String name;
+    private Long store_id;
 
-	public Trophies() {
-	}
+    public Trophies() {
+    }
 
-	public Trophies(String name, Long store_id) {
-		this.name = name;
-		this.store_id = store_id;
-	}
+    public Trophies(String name, Long store_id) {
+        this.name = name;
+        this.store_id = store_id;
+    }
 
-	/** Not-null value. */
-	public String getName() {
-		return name;
-	}
+    /** Not-null value. */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Not-null value; ensure this value is available before it is saved to the
-	 * database.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Long getStore_id() {
-		return store_id;
-	}
+    public Long getStore_id() {
+        return store_id;
+    }
 
-	public void setStore_id(Long store_id) {
-		this.store_id = store_id;
-	}
+    public void setStore_id(Long store_id) {
+        this.store_id = store_id;
+    }
 
 }

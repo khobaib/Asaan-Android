@@ -61,10 +61,10 @@ public class MenuItemsFragment extends ListFragment {
 		if (bundle != null)
 			menuPOSId = bundle.getLong(BUNDLE_KEY_MENU_ID);
 		List<StoreMenuItem> allItems = new ArrayList<StoreMenuItem>();
-		for (StoreMenuItem item : MenuActivity.menusAndMenuItems.getMenuItems()) {
+		/*for (StoreMenuItem item : MenuActivity.menusAndMenuItems.getMenuItems()) {
 			if (item.getMenuPOSId() == menuPOSId)
 				allItems.add(item);
-		}
+		}*/
 		final MenuFragmentAdapter adapter = new MenuFragmentAdapter(getActivity(), allItems);
 		setListAdapter(adapter);
 	}

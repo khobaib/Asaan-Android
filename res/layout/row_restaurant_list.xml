@@ -10,41 +10,10 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter" />
 
-    <!--
-         <com.parse.ParseImageView
-        android:id="@+id/restaurant_bg_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/resturant_detail_demo" />
-    -->
-
-
-    <!--
-         <RelativeLayout
-        android:id="@+id/ll_rest_details_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-         >
-    -->
-
-
-    <!--
-        <RelativeLayout
-            android:id="@+id/rl_blanktop"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
-        </RelativeLayout>
-    -->
-
     <RelativeLayout
         android:id="@+id/rl_rest_details_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" >
 
@@ -96,6 +65,7 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>
+    
 
     <!-- </RelativeLayout> -->
 
@@ -120,6 +90,20 @@
             android:textColor="@color/text_golden_color"
             android:textStyle="bold" />
 
+        
+        <Button
+            android:id="@+id/b_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="Chat"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_golden_color"
+            android:textStyle="bold" />
+        
         <Button
             android:id="@+id/b_menu"
             android:layout_width="0dp"
@@ -141,7 +125,7 @@
             android:background="@android:color/transparent"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:text="Online Order"
+            android:text="Online\nOrder"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_golden_color"
             android:textStyle="bold" />
@@ -159,5 +143,52 @@
             android:textColor="@color/text_golden_color"
             android:textStyle="bold" />
     </LinearLayout>
+     <RelativeLayout
+        android:id="@+id/rl_stats"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#cc230000"
+        android:layout_above="@+id/ll_event_handlers" >
+
+         <ImageView
+             android:id="@+id/iv_visitors"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:layout_alignParentLeft="true"
+             android:layout_margin="5dp" 
+             android:src="@drawable/numbervisitors"/>
+        <TextView
+            android:id="@+id/tv_visitors"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/iv_visitors"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="7" />
+    
+        <TextView
+            android:id="@+id/tv_likes"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="7" />
+         <ImageView
+             android:id="@+id/iv_likes"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:layout_marginTop="4dp"
+             android:layout_marginRight="3dp"
+             android:layout_toLeftOf="@+id/tv_likes" 
+             android:src="@drawable/numberlikes"/>
+    </RelativeLayout>
 
 </RelativeLayout>

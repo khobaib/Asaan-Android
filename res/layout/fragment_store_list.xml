@@ -5,19 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg_color"
     tools:ignore="HardcodedText" >  
-    <TextView 
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:textColor="@color/text_golden_color"
-        android:text="ASAAN"/>
+
     <ListView
         android:id="@+id/lvRestaurantList"
-        android:layout_below="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"  
         android:background="@color/app_bg_color"

@@ -224,7 +224,7 @@ public class MyCartActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(String... params) {
-			String strOrderFor = "Khobaib";
+			/*String strOrderFor = "Khobaib";
 			String strOrderReadyTime = "4:45PM";
 			String strNote = "Please make it spicy - no Peanuts Please";
 			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
@@ -247,7 +247,7 @@ public class MyCartActivity extends Activity {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			return null;
 		}

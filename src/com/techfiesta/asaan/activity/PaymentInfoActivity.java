@@ -206,7 +206,7 @@ public class PaymentInfoActivity extends Activity {
 		userCard = new UserCard();
 		userCard.setAccessToken(token.getId());
 		userCard.setAddress(card.getAddressLine1());
-		userCard.setBrand(card.getType());
+		//userCard.setBrand(card.getType());
 		userCard.setCity(card.getAddressCity());
 		userCard.setCountry(card.getAddressCountry());
 		userCard.setExpMonth(card.getExpMonth());
