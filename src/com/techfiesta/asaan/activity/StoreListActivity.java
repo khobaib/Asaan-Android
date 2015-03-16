@@ -94,8 +94,6 @@ public class StoreListActivity extends FragmentActivity {
 		getActionBar().setTitle("");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		ImageView imageView = (ImageView) findViewById(android.R.id.home);
-		imageView.setPadding(-12,-12,-12,-12);
 		}
 		
 		setDrawerListItems();
@@ -103,7 +101,7 @@ public class StoreListActivity extends FragmentActivity {
 		mDrawerList.setAdapter(navDrawerAdapter);
 		
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.slidingmenu, // nav menu toggle icon
+				R.drawable.sliding_menu_bg, // nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for
 									// accessibility
 				R.string.app_name // nav drawer close - description for
