@@ -37,6 +37,7 @@ public class MenuActivity extends Activity {
 	private long INITIAL_POSITION = 0;
 	private int MAX_RESULT = 20;
 	private long storeId = -1;
+	private Bundle bundle=new Bundle();
 
 	ActionBar actionBar = null;
 

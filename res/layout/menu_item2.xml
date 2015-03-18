@@ -103,13 +103,12 @@
         android:visibility="gone"
         android:src="@drawable/menu_glutenfree" />
 
-    <!-- <View
+     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/txt_item_ordered_today"
-        android:layout_alignParentLeft="true"
+       android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/margin_5dp"
-        android:background="@color/txtGrey" /> -->
-    
+        android:background="@color/khaki_text" />
+   
 </RelativeLayout>

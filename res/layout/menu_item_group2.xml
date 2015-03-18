@@ -3,7 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/app_bg_color"
+    android:background="@color/actionbar_bg"
     android:orientation="vertical" >
     
     <TextView
@@ -12,22 +12,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/margin_5dp"
-        android:layout_marginBottom="@dimen/margin_5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         
         android:text="@string/menu_category_title"
         android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/txtWhite" />
-
-    <!-- <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/menu_category_title"
-        android:layout_toRightOf="@+id/menu_category_title" /> -->
 
 </RelativeLayout>

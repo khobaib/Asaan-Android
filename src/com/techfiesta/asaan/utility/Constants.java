@@ -10,9 +10,9 @@ public class Constants {
 	public static Map<Long, MenuHierarchy.ModifierGroup> modGrpMap = new HashMap<Long, MenuHierarchy.ModifierGroup>();
 	public static Map<Long, MenuHierarchy.MenuTax> menuTaxMap = new HashMap<Long, MenuHierarchy.MenuTax>();
 
-	public static final Long ROW_TYPE_MENU = 0L;
-	public static final Long ROW_TYPE_SUBMENU = 1L;
-	public static final Long ROW_TYPE_MENUITEM = 2L;
+	public static final int ROW_TYPE_MENU = 0;
+	public static final int ROW_TYPE_SUBMENU = 1;
+	public static final int ROW_TYPE_MENUITEM = 2;
 
 	public static final int MENU_TYPE_DINE_IN = 0; // 0 = dine-in, 1 =
 													// carry-out

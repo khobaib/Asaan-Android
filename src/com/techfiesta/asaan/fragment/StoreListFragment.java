@@ -41,7 +41,7 @@ public class StoreListFragment extends Fragment {
 	private StoreStatsCollection storeStatsCollection;
 	private List<Store> storeList;
 	private int INITIAL_POSITION = 0;
-	private int MAX_RESULT = 10;
+	private int MAX_RESULT = 50;
 	private int ONE_DAY_DELAY = 24 * 60 * 60 * 1000;
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
