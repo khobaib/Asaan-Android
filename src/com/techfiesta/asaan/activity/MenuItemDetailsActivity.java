@@ -57,7 +57,7 @@ public class MenuItemDetailsActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				final Intent intent = new Intent(MenuItemDetailsActivity.this, PlaceOrderActivity.class);
+				final Intent intent = new Intent(MenuItemDetailsActivity.this, OrderItemActivity.class);
 				intent.putExtra(BUNDLE_KEY_MENUITEM_POS_ID, item.getMenuItemPOSId());
 				intent.putExtra(BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION, item.getShortDescription());
 				intent.putExtra(BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION, item.getLongDescription());

@@ -42,33 +42,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	   imageLoader=new ImageLoader((Activity)context);
 		
 	}
-	/*private ArrayList<MenuItemAndStats> createSections()
-	{
-		ArrayList<MenuItemAndStats> sections=new ArrayList<>();
-		for(int i=0;i<menuItemAndStats.size();i++)
-	       if(menuItemAndStats.get(i).getMenuItem().getLevel()==Constants.ROW_TYPE_SUBMENU)
-	       {
-	    	   sections.add(menuItemAndStats.get(i));
-	    	  
-	       }
-		 Log.e("Sections",""+sections.size());
-		return sections;
-	}
-	private ArrayList<Integer> createSectionIndex()
-	{
-		ArrayList<Integer> list=new ArrayList<Integer>();
-		list.add(0);
-		int subMenuPosId=menuItemAndStats.get(0).getMenuItem().getSubMenuPOSId();
-		for(int i=1;i<menuItemAndStats.size();i++)
-			if(menuItemAndStats.get(i).getMenuItem().getSubMenuPOSId()!=subMenuPosId)
-			{
-				list.add(i);
-				subMenuPosId=menuItemAndStats.get(i).getMenuItem().getSubMenuPOSId();
-			}
-		return list;
-			
-	
-	}*/
+
 	@Override
 	public Object[] getSections() {
 		ArrayList<String> list=new ArrayList<String>();
@@ -135,7 +109,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 				viewHolder = new ViewHolder();
 				viewHolder.imgFood = (ImageView) rowView.findViewById(R.id.image_food_item);
 				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
-				viewHolder.txtPrice = (TextView) rowView.findViewById(R.id.txt_item_price);
+				viewHolder.txtPrice = (TextView) rowView.findViewById(R.id.tv_item_price);
 				viewHolder.txtDesc = (TextView) rowView.findViewById(R.id.txt_item_desc);
 				viewHolder.imgVegetarian = (ImageView) rowView.findViewById(R.id.image_vegetarian);
 				viewHolder.imgSpicy = (ImageView) rowView.findViewById(R.id.image_spicy);
@@ -154,7 +128,8 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 			
 			viewHolder.txtName.setText(storeMenuItem.getShortDescription());
 			viewHolder.txtDesc.setText(storeMenuItem.getLongDescription());
-			viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
+			if( viewHolder.txtPrice!=null)
+				viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
 			imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), viewHolder.imgFood);
 			if(storeItemStats!=null)
 			{

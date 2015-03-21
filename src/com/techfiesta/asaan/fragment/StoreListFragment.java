@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetStatsForAllStores;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection;

@@ -37,7 +37,8 @@ import com.google.android.gms.internal.ml;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
-import com.techfiesta.asaan.activity.PlaceOrderActivity;
+import com.techfiesta.asaan.activity.OrderItemActivity;
+import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.adapter.MenuItemsAdapter;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
@@ -62,6 +63,7 @@ public class MenuItemsFragment extends Fragment {
 	// protected boolean pauseOnScroll = false;
 	// protected boolean pauseOnFling = false;
 	private StickyListHeadersListView mListView;
+	List<MenuItemAndStats> allItems ;
 	private int order_type=-1;
 
 	// protected static ImageLoader imageLoader = ImageLoader.getInstance();
@@ -84,13 +86,16 @@ public class MenuItemsFragment extends Fragment {
 				menuPOSId = bundle.getLong(BUNDLE_KEY_MENU_ID);
 				order_type=bundle.getInt(Constants.ORDER_TYPE);
 			}
-			List<MenuItemAndStats> allItems = new ArrayList<MenuItemAndStats>();
+			allItems = new ArrayList<MenuItemAndStats>();
 			List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
 			ArrayList<Integer> indexList=new ArrayList<Integer>();
 			for (int i=0;i<MenuActivityNew.menusAndMenuItems.getMenuItems().size();i++) {
 				MenuItemAndStats item=MenuActivityNew.menusAndMenuItems.getMenuItems().get(i);
 				if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==2)
+				{
 					allItems.add(item);
+					Log.e("name",item.getMenuItem().getShortDescription());
+				}
 				if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==1)
 				{
 					indexList.add(i-allsections.size());
@@ -114,12 +119,20 @@ public class MenuItemsFragment extends Fragment {
 					{
 						toast("Please start a order from the \"online order\" button on the Store List." );
 					}
+					else
 					{
-						//go to order details activity.
+						//go to orderItem activity.
+						StoreMenuItem sItem=allItems.get(position).getMenuItem();
+						Intent intent=new Intent(getActivity(),OrderItemActivity.class);
+						intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_POS_ID, sItem.getMenuItemPOSId());
+						intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_PRICE,sItem.getPrice());
+						intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, sItem.getHasModifiers());
+						intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,sItem.getShortDescription());
+						intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION, sItem.getLongDescription());
+						startActivity(intent);
 					}
 				}
 			});
-			
 			
 		}
 		public String getName(int subMenuPosId)

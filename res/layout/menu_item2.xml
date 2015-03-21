@@ -34,7 +34,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txt_item_price"
+        android:id="@+id/tv_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/txt_item_name"

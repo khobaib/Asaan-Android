@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import lombok.Getter;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -47,8 +48,9 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuI
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
-public class PlaceOrderActivity extends Activity {
+public class OrderItemActivity extends Activity {
 	ListView mListView = null;
 	int menuItemPOSId = 0;
 	int menuItemPrice = 0;
@@ -65,7 +67,7 @@ public class PlaceOrderActivity extends Activity {
 
 	private boolean menuItemHasModifiers;
 
-	private static final Logger logger = Logger.getLogger(PlaceOrderActivity.class.getName());
+	private static final Logger logger = Logger.getLogger(OrderItemActivity.class.getName());
 	public static final int SELECTED_MODIFIERS_RESULT_CODE = 9600;
 	public static final String SELECTED_MODIFIERS = "SELECTED_MODIFIERS";
 	public static final String SELECTED_MODIFIERS_DESC = "SELECTED_MODIFIERS_DESC";
@@ -73,18 +75,16 @@ public class PlaceOrderActivity extends Activity {
 
 	public static MenuItemModifiersAndGroups menuItemModifiersAndGroups;
 
-	// ImageView imgFood = null;
+	
 	TextView txtName = null;
 	TextView txtPrice = null;
-	// TextView txtDesc = null;
 	TextView txtPlus = null;
 	TextView txtMinus = null;
 	TextView txtQuantity = null;
 	TextView Title;
-	// TextView txtSpecialInstructions = null;
 	EditText txtSpecialInstructions;
 	Button btnPlaceOrder = null;
-
+    private ActionBar actionBar;
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
@@ -94,64 +94,29 @@ public class PlaceOrderActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu_modifier_group2);
-
-		Bundle bundle = this.getIntent().getExtras();
-		menuItemPOSId = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_POS_ID);
-		menuItemPrice = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MENUITEM_PRICE);
-		Log.e("PRICE", "" + menuItemPrice + "  " + menuItemPOSId);
-		menuItemShortDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
-		menuItemLongDesc = bundle.getString(MenuItemsFragment.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
-		menuItemHasModifiers = bundle.getBoolean(MenuItemsFragment.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
-
+		setContentView(R.layout.activity_order_item);
+		actionBar=getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+		getIntentData();
 		initUI();
-
-		if (menuItemHasModifiers == false)
-			return;
-		new RemoteLoadMenuTask().execute();
-		// try {
-		// Task.callInBackground(new Callable<MenuItemModifiersAndGroups>() {
-		// @Override
-		// public MenuItemModifiersAndGroups call() throws IOException
-		// {
-		// return MainActivity.mStoreendpoint
-		// .getStoreMenuItemModifiers(MainActivity.STORE_ID,
-		// menuItemPOSId).execute();
-		// }
-		// }).continueWith(new Continuation<MenuItemModifiersAndGroups, Void>()
-		// {
-		// @Override
-		// public Void then(Task<MenuItemModifiersAndGroups> task) throws
-		// Exception
-		// {
-		// if (task.isCancelled()) {
-		// logger.log(Level.WARNING, "Cancelled: Get Modifiers for Menu " +
-		// menuItemPOSId);
-		// // the save was cancelled.
-		// } else if (task.isFaulted()) {
-		// // the save failed.
-		// Exception error = task.getError();
-		// logger.log(Level.SEVERE, "FAILED: Get Modifiers for Menu " +
-		// menuItemPOSId + ". Error Message = " + error.getLocalizedMessage());
-		// error.printStackTrace();
-		// } else {
-		// // the object was saved successfully.
-		// menuItemModifiersAndGroups = task.getResult();
-		//
-		// mAdapter = new MenuModGrpsAdapter();
-		// mAdapter.setup(MenuModGrpActivity.this, menuItemPOSId);
-		// mListView.setAdapter(mAdapter);
-		// mListView.invalidate();
-		// }
-		// return null;
-		// }
-		// });
-		// } catch (Exception e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+		if (menuItemHasModifiers)
+		   new RemoteLoadMenuTask().execute();
+		
 	}
-
+	private void getIntentData()
+	{
+		Bundle bundle = getIntent().getExtras();
+		menuItemPOSId = bundle.getInt(Constants.BUNDLE_KEY_MENUITEM_POS_ID);
+		menuItemPrice = bundle.getInt(Constants.BUNDLE_KEY_MENUITEM_PRICE);
+		Log.e("PRICE", "" + menuItemPrice + "  " + menuItemPOSId);
+		menuItemShortDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
+		menuItemLongDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
+		menuItemHasModifiers = bundle.getBoolean(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
+		
+		actionBar.setTitle(menuItemLongDesc);
+	
+	}
 	private void initDatabase() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
@@ -178,22 +143,19 @@ public class PlaceOrderActivity extends Activity {
 	}
 
 	private void initUI() {
-		Title = (TextView) findViewById(R.id.tv_menu_modifier_title);
-		// imgFood = (ImageView) findViewById(R.id.image_food_item);
+	
 		txtName = (TextView) findViewById(R.id.txt_item_name);
 		txtPrice = (TextView) findViewById(R.id.txt_item_price);
-		// txtDesc = (TextView) findViewById(R.id.txt_item_desc);
+		
 
 		txtPlus = (TextView) findViewById(R.id.txt_plus);
 		txtMinus = (TextView) findViewById(R.id.txt_minus);
 		txtQuantity = (TextView) findViewById(R.id.txt_quantity);
-		// txtSpecialInstructions = (TextView)
-		// findViewById(R.id.txt_special_instructions);
+		
 		txtSpecialInstructions = (EditText) findViewById(R.id.et_special_instructions);
 		mListView = (ListView) findViewById(R.id.list_menu_options);
 		btnPlaceOrder = (Button) findViewById(R.id.btn_place_order);
 
-		Title.setText(Title.getText() + " " + menuItemShortDesc);
 		btnPlaceOrder.setText(btnPlaceOrder.getText() + " " + AsaanUtility.formatCentsToCurrency(menuItemPrice));
 
 		txtPlus.setOnClickListener(new View.OnClickListener() {
@@ -229,9 +191,6 @@ public class PlaceOrderActivity extends Activity {
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(menuItemPrice));
 		String strQuantity = String.format(Locale.US, "%d", 1);
 		txtQuantity.setText(strQuantity);
-		// txtDesc.setText("");
-		// txtSpecialInstructions.setText("");
-
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -244,28 +203,8 @@ public class PlaceOrderActivity extends Activity {
 		btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TextView txtPrice = (TextView)
-				// findViewById(R.id.txt_item_price);
-				// TextView txtDesc = (TextView)
-				// findViewById(R.id.txt_item_desc);
-				// TextView txtQuantity = (TextView)
-				// findViewById(R.id.txt_quantity);
-				// String strPrice = txtPrice.getText().toString();
-				// MainActivity.OrderItem oi = new MainActivity.OrderItem();
-				// oi.mi = mMenuItem;
-				// oi.basePrice = menuItemPriceFromSubMenu != 0 ?
-				// menuItemPriceFromSubMenu : mMenuItem.getPrice();
-				// String strQuantity = (String) txtQuantity.getText();
-				// oi.quantity = Long.parseLong(strQuantity);
-				// oi.finalPrice =
-				// AmountConversionUtils.parseAmountToCents(strPrice);
-				// oi.description = txtDesc.getText().toString();
-				// oi.selectedMods = mAdapter.getSelectedModifiers();
-				// oi.specialInstructions =
-				// txtSpecialInstructions.getText().toString();
-				// MainActivity.orderedItems.add(oi);
-				// finish();
-				int current = AsaanUtility.getCurrentOrderedStoredId(PlaceOrderActivity.this);
+				
+				int current = AsaanUtility.getCurrentOrderedStoredId(OrderItemActivity.this);
 				if (current == AsaanUtility.selectedStore.getId().intValue() || current == -1) {
 					initDatabase();
 					long count = addItemDao.count();
@@ -298,11 +237,11 @@ public class PlaceOrderActivity extends Activity {
 						}
 					}
 					toast("Order saved");
-					AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this, AsaanUtility.selectedStore.getId()
+					AsaanUtility.setCurrentOrderdStoreId(OrderItemActivity.this, AsaanUtility.selectedStore.getId()
 							.intValue());
 					finish();
 				} else
-					alert(PlaceOrderActivity.this,
+					alert(OrderItemActivity.this,
 							"Already have saved order from other restaurant.Delete previous entries?");
 
 				// code for adding sub items;
@@ -312,7 +251,7 @@ public class PlaceOrderActivity extends Activity {
 	}
 
 	private void toast(String str) {
-		Toast.makeText(PlaceOrderActivity.this, str, Toast.LENGTH_LONG).show();
+		Toast.makeText(OrderItemActivity.this, str, Toast.LENGTH_LONG).show();
 	}
 	private long getMaxID()
 	{
@@ -352,7 +291,7 @@ public class PlaceOrderActivity extends Activity {
 	}
 
 	public static class MenuModGrpsAdapter extends BaseAdapter {
-		WeakReference<PlaceOrderActivity> weakActivity;
+		WeakReference<OrderItemActivity> weakActivity;
 		List<ModifierGroup> modifierGroups = new ArrayList<ModifierGroup>();
 
 		int listItemClickPosition = 0;
@@ -372,19 +311,19 @@ public class PlaceOrderActivity extends Activity {
 		}
 
 		@SuppressLint("UseSparseArrays")
-		public void setup(PlaceOrderActivity menuModGrpActivity, long menuItemPOSId) {
-			weakActivity = new WeakReference<PlaceOrderActivity>(menuModGrpActivity);
-			if (PlaceOrderActivity.menuItemModifiersAndGroups == null
-					|| PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups() == null
-					|| PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers() == null)
+		public void setup(OrderItemActivity menuModGrpActivity, long menuItemPOSId) {
+			weakActivity = new WeakReference<OrderItemActivity>(menuModGrpActivity);
+			if (OrderItemActivity.menuItemModifiersAndGroups == null
+					|| OrderItemActivity.menuItemModifiersAndGroups.getModifierGroups() == null
+					|| OrderItemActivity.menuItemModifiersAndGroups.getModifiers() == null)
 				return;
-			for (StoreMenuItemModifierGroup storeMenuItemModifierGroup : PlaceOrderActivity.menuItemModifiersAndGroups
+			for (StoreMenuItemModifierGroup storeMenuItemModifierGroup : OrderItemActivity.menuItemModifiersAndGroups
 					.getModifierGroups()) {
 				if (storeMenuItemModifierGroup.getMenuItemPOSId() == menuItemPOSId) {
 					ModifierGroup modifierGroup = new ModifierGroup();
 					modifierGroup.posId = storeMenuItemModifierGroup.getModifierGroupPOSId();
 					modifierGroup.selectedModifiers = new ArrayList<Integer>();
-					for (StoreMenuItemModifier modifier : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
+					for (StoreMenuItemModifier modifier : OrderItemActivity.menuItemModifiersAndGroups.getModifiers()) {
 						if (modifier.getModifierGroupPOSId() == modifierGroup.posId) {
 							modifierGroup.posShortDesc = modifier.getShortDescription();
 							modifierGroup.posLongDesc = modifier.getLongDescription();
@@ -439,12 +378,12 @@ public class PlaceOrderActivity extends Activity {
 			Intent intent = new Intent(getActivity(), MenuModifierActivity.class);
 			intent.putExtra(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID, selectedModGrpId);
 			ModifierGroup modifierGroup = modifierGroups.get(listItemClickPosition);
-			intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, modifierGroup.selectedModifiers);
+			intent.putIntegerArrayListExtra(OrderItemActivity.SELECTED_MODIFIERS, modifierGroup.selectedModifiers);
 			getActivity().startActivityForResult(intent, SELECTED_MODIFIERS_RESULT_CODE);
 
 		}
 
-		PlaceOrderActivity getActivity() {
+		OrderItemActivity getActivity() {
 			return weakActivity.get();
 		}
 
@@ -517,7 +456,7 @@ public class PlaceOrderActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			mAdapter = new MenuModGrpsAdapter();
-			mAdapter.setup(PlaceOrderActivity.this, menuItemPOSId);
+			mAdapter.setup(OrderItemActivity.this, menuItemPOSId);
 			mListView.setAdapter(mAdapter);
 			// mListView.invalidate();
 			super.onPostExecute(result);
@@ -554,6 +493,6 @@ public class PlaceOrderActivity extends Activity {
 		initDatabase();
 		addItemDao.deleteAll();
 		modItemDao.deleteAll();
-		AsaanUtility.setCurrentOrderdStoreId(PlaceOrderActivity.this, -1);
+		AsaanUtility.setCurrentOrderdStoreId(OrderItemActivity.this, -1);
 	}
 }

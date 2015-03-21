@@ -127,6 +127,7 @@
         <activity android:name=".activity.OnlineOrderActivity"
             android:theme="@style/AppTheme"></activity>
         <activity android:name=".activity.MenuActivityNew"></activity>
+        <activity android:name=".activity.OrderItemActivity"></activity>
     </application>
 
 </manifest>

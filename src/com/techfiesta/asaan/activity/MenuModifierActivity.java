@@ -45,16 +45,16 @@ public class MenuModifierActivity extends ListActivity {
 		selectedModGrpId = bundle.getLong(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_ID);
 		selectedModGrpIndex = bundle.getInt(MenuItemsFragment.BUNDLE_KEY_MODIFIERGRP_INDEX);
 		ArrayList<Integer> modOrigSelections = this.getIntent().getIntegerArrayListExtra(
-				PlaceOrderActivity.SELECTED_MODIFIERS);
+				OrderItemActivity.SELECTED_MODIFIERS);
 
 		modifiersWithSelection = new ArrayList<ModifierWithSelection>();
 		ArrayList<String> modTitles = new ArrayList<String>();
-		StoreMenuItemModifierGroup mg = PlaceOrderActivity.menuItemModifiersAndGroups.getModifierGroups().get(
+		StoreMenuItemModifierGroup mg = OrderItemActivity.menuItemModifiersAndGroups.getModifierGroups().get(
 				selectedModGrpIndex);
 
 		selectedModGrpMax = mg.getModifierGroupMaximum();
 		selectedModGrpMin = mg.getModifierGroupMinimum();
-		for (StoreMenuItemModifier m : PlaceOrderActivity.menuItemModifiersAndGroups.getModifiers()) {
+		for (StoreMenuItemModifier m : OrderItemActivity.menuItemModifiersAndGroups.getModifiers()) {
 			if (m.getModifierGroupPOSId().longValue() == selectedModGrpId) {
 				// selectedModGrpMax = m.getModifierGroupMaximum();
 				// selectedModGrpMin = m.getModifierGroupMinimum();
@@ -172,9 +172,9 @@ public class MenuModifierActivity extends ListActivity {
 
 				Intent intent = new Intent();
 
-				intent.putIntegerArrayListExtra(PlaceOrderActivity.SELECTED_MODIFIERS, finalSelections);
-				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_DESC, strDesc);
-				intent.putExtra(PlaceOrderActivity.SELECTED_MODIFIERS_PRICE, price);
+				intent.putIntegerArrayListExtra(OrderItemActivity.SELECTED_MODIFIERS, finalSelections);
+				intent.putExtra(OrderItemActivity.SELECTED_MODIFIERS_DESC, strDesc);
+				intent.putExtra(OrderItemActivity.SELECTED_MODIFIERS_PRICE, price);
 				setResult(RESULT_OK, intent);
 				finish();
 			}
