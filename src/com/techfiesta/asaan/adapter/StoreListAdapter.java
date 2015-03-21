@@ -29,6 +29,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
+import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -131,7 +132,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 					if (AsaanUtility.getCurrentOrderedStoredId(mContext) == selectedStore.getId().intValue()
 							|| AsaanUtility.getCurrentOrderedStoredId(mContext) == -1) {
 						AsaanUtility.selectedStore = selectedStore;
-						Intent intent = new Intent(mContext, MenuActivity.class);
+						Intent intent = new Intent(mContext, MenuActivityNew.class);
 						mContext.startActivity(intent);
 					} else {
 						alert(mContext, "Already have saved order from other restaurant.Delete all orders?");

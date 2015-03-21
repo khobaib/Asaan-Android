@@ -3,6 +3,7 @@ package com.techfiesta.asaan.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.techfiesta.asaan.R;
@@ -30,13 +32,18 @@ public class OnlineOrderActivity extends Activity {
 
 	TextView DeliveryTime;
 	TextView People;
+	
+	RelativeLayout rl_carryout;
+	RelativeLayout rl_delivary;
 
 	Long currentTime;
 	static Long deliverTime;
 	static int numPeople = 1;
 
 	AsaanApplication appInstance;
-
+    private ActionBar actionBar;
+    private long one_hour=60*60*1000;
+    private long fifteen_min=15*60*1000;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -45,6 +52,12 @@ public class OnlineOrderActivity extends Activity {
 
 		appInstance = (AsaanApplication) getApplication();
 
+		actionBar=getActionBar();
+		actionBar.setTitle("Back");
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+
+		
 		DeliveryTime = (TextView) findViewById(R.id.tv_delivery_time);
 		People = (TextView) findViewById(R.id.tv_num_of_people);
 		plusTime = (Button) findViewById(R.id.tv_time_greater);
@@ -54,6 +67,9 @@ public class OnlineOrderActivity extends Activity {
 
 		carryoutNext = (Button) findViewById(R.id.tv_carry_out_next);
 		deliverNext = (Button) findViewById(R.id.tv_delivery_next);
+		
+		rl_carryout=(RelativeLayout)findViewById(R.id.rl_carryout);
+		rl_delivary=(RelativeLayout)findViewById(R.id.rl_delivery);
 
 		// plusTime.setOnClickListener(this);
 		// minusTime.setOnClickListener(this);
@@ -61,7 +77,7 @@ public class OnlineOrderActivity extends Activity {
 		// minusPeople.setOnClickListener(this);
 
 		currentTime = System.currentTimeMillis();
-		deliverTime = currentTime + 60 * 60 * 1000;
+		deliverTime = currentTime + one_hour;
 
 		DeliveryTime.setText(getFormattedTime(deliverTime));
 
@@ -71,6 +87,13 @@ public class OnlineOrderActivity extends Activity {
 			public void onClick(View v) {
 				onClickTimePlus(v);
 
+			}
+		});
+		minusTime.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onClickTimeMinus(v);
 			}
 		});
 
@@ -95,6 +118,28 @@ public class OnlineOrderActivity extends Activity {
 
 			}
 		});
+		
+		rl_carryout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
+				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_CARRYOUT);
+				startActivity(intent);
+				
+			}
+		});
+		rl_delivary.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
+				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_DELIVERY);
+				startActivity(intent);
+			}
+		});
+		
 	}
 
 	public String getFormattedTime(Long rawTime) {
@@ -105,17 +150,17 @@ public class OnlineOrderActivity extends Activity {
 
 	public void onClickTimeMinus(View v) {
 		Log.d(">>>", "onClickTimeMinus");
-		if (deliverTime <= System.currentTimeMillis()) {
+		if ((deliverTime-fifteen_min) < (System.currentTimeMillis()+one_hour)) {
 			// do nothing
 		} else {
-			deliverTime -= 60 * 1000;
+			deliverTime -= fifteen_min;
 			DeliveryTime.setText(getFormattedTime(deliverTime));
 		}
 	}
 
 	public void onClickTimePlus(View v) {
 		Log.d(">>>", "onClickTimePlus");
-		deliverTime += 60 * 1000;
+		deliverTime += fifteen_min;
 		DeliveryTime.setText(getFormattedTime(deliverTime));
 
 	}

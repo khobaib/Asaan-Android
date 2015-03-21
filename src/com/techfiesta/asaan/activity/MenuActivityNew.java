@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class MenuActivityNew  extends Activity{
 	public static MenusAndMenuItems menusAndMenuItems;
 	private ActionBar actionBar;
 	private ProgressDialog pdDialog;
+	private int order_type=-1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +38,16 @@ public class MenuActivityNew  extends Activity{
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		pdDialog=new ProgressDialog(MenuActivityNew.this);
+		getOrderType();
 		new GetMenu().execute();
+	}
+	private void getOrderType()
+	{
+		Intent intent=getIntent();
+		if(intent!=null)
+		{
+			order_type=intent.getIntExtra(Constants.ORDER_TYPE,-1);
+		}
 	}
 	private class GetMenu extends AsyncTask<Void, Void, Void> {
 
@@ -66,6 +77,7 @@ public class MenuActivityNew  extends Activity{
 				{
 					Bundle bundle = new Bundle();
 					bundle.putLong(Constants.BUNDLE_KEY_MENU_ID, smh.getMenuPOSId());
+					bundle.putInt(Constants.ORDER_TYPE,order_type);
 					MyTabListener<MenuItemsFragment> tabListener = new MyTabListener<MenuItemsFragment>(
 							MenuActivityNew.this,smh.getName(), MenuItemsFragment.class, bundle);
 					Tab tab = actionBar.newTab().setText(smh.getName()).setTabListener(tabListener);

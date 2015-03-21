@@ -125,7 +125,7 @@
             android:theme="@style/AppThemeNoBar" >
         </activity>        
         <activity android:name=".activity.OnlineOrderActivity"
-            android:theme="@style/AppThemeNoBar"></activity>
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".activity.MenuActivityNew"></activity>
     </application>
 

@@ -22,10 +22,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
@@ -59,6 +62,7 @@ public class MenuItemsFragment extends Fragment {
 	// protected boolean pauseOnScroll = false;
 	// protected boolean pauseOnFling = false;
 	private StickyListHeadersListView mListView;
+	private int order_type=-1;
 
 	// protected static ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -76,7 +80,10 @@ public class MenuItemsFragment extends Fragment {
 			final Bundle bundle = this.getArguments();
 			long menuPOSId = 0;
 			if (bundle != null)
+			{
 				menuPOSId = bundle.getLong(BUNDLE_KEY_MENU_ID);
+				order_type=bundle.getInt(Constants.ORDER_TYPE);
+			}
 			List<MenuItemAndStats> allItems = new ArrayList<MenuItemAndStats>();
 			List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
 			ArrayList<Integer> indexList=new ArrayList<Integer>();
@@ -99,6 +106,19 @@ public class MenuItemsFragment extends Fragment {
 			mListView.setAdapter(adapter);
 			mListView.invalidate();
 			mListView.invalidateViews();
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					if(order_type==-1)
+					{
+						toast("Please start a order from the \"online order\" button on the Store List." );
+					}
+					{
+						//go to order details activity.
+					}
+				}
+			});
 			
 			
 		}
@@ -119,6 +139,10 @@ public class MenuItemsFragment extends Fragment {
 		// don't reload the current page when the orientation is changed
 		logger.log(Level.WARNING, "onConfigurationChanged() Called");
 		super.onConfigurationChanged(newConfig);
+	}
+	private void toast(String str)
+	{
+		Toast.makeText(getActivity(),str,Toast.LENGTH_LONG).show();
 	}
 
 }

@@ -24,7 +24,7 @@ public class Constants {
 	public static final long STORE_ID = 1L;
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
-
+	public static final String ORDER_TYPE = "order_type";
 	public static final String BUNDLE_KEY_MENU_ID = "BUNDLE_KEY_MENU_ID";
 	public static final String BUNDLE_KEY_MENUITEM_POS_ID = "BUNDLE_KEY_MENUITEM_POS_ID";
 	public static final String BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION = "BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION";

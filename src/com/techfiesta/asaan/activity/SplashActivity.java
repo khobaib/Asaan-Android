@@ -76,7 +76,7 @@ public class SplashActivity extends Activity {
 				if (currentUser == null) {
 					i = new Intent(SplashActivity.this, LoginChooserActivity.class);
 				} else {
-					i = new Intent(SplashActivity.this,MenuActivityNew.class);
+					i = new Intent(SplashActivity.this,StoreListActivity.class);
 				}
 
 				startActivity(i);
