@@ -14,6 +14,7 @@ import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class MenuActivityNew  extends Activity{
 	private long  storeId=11;
 	public static MenusAndMenuItems menusAndMenuItems;
 	private ActionBar actionBar;
+	private ProgressDialog pdDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,10 +35,17 @@ public class MenuActivityNew  extends Activity{
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		pdDialog=new ProgressDialog(MenuActivityNew.this);
 		new GetMenu().execute();
 	}
 	private class GetMenu extends AsyncTask<Void, Void, Void> {
 
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pdDialog.setMessage("loading......");
+			pdDialog.show();
+		}
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
@@ -62,6 +71,8 @@ public class MenuActivityNew  extends Activity{
 					Tab tab = actionBar.newTab().setText(smh.getName()).setTabListener(tabListener);
 					actionBar.addTab(tab);
 				}
+				if(pdDialog.isShowing())
+				   pdDialog.dismiss();
 			}
 			super.onPostExecute(result);
 		}

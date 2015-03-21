@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
+import com.google.android.gms.internal.ml;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
@@ -65,6 +66,7 @@ public class MenuItemsFragment extends Fragment {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View v=inflater.inflate(R.layout.menuitems_fragment,null,false);
 			mListView=(StickyListHeadersListView)v.findViewById(R.id.sticky_list);
+			
 			return v;
 		}
 			
@@ -93,7 +95,11 @@ public class MenuItemsFragment extends Fragment {
 				
 			}
 			MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList);
+			adapter.notifyDataSetChanged();
 			mListView.setAdapter(adapter);
+			mListView.invalidate();
+			mListView.invalidateViews();
+			
 			
 		}
 		public String getName(int subMenuPosId)

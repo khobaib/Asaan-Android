@@ -6,6 +6,7 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreItemStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.lazylist.ImageLoader;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -101,12 +103,15 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 		public TextView txtName;
 		public TextView txtPrice;
 		public TextView txtDesc;
-		// public TextView txtLike;
-		// public TextView txtOrderedToday;
-		// public ImageView imgLike;
 		public ImageView imgVegetarian;
 		public ImageView imgSpicy;
 		public ImageView imgGlutenFree;
+		
+		TextView tvLikes;
+		TextView tvVisitors;
+		ImageView ivLikes;
+		ImageView ivVisitors;
+		RelativeLayout rl_stats;
 	}
 
 	static class ViewHolder2 {
@@ -118,12 +123,16 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		View rowView = convertView;
-		final MenuItemAndStats  menuItemAndStat = menuItemAndStats.get(position);
+		MenuItemAndStats  menuItemAndStat = menuItemAndStats.get(position);
 		StoreMenuItem storeMenuItem=menuItemAndStat.getMenuItem();
+		StoreItemStats storeItemStats=menuItemAndStat.getStats();
+		ViewHolder viewHolder = null;
+		Log.e("ItemName",""+ storeMenuItem.getShortDescription());
+		
 		if (rowView == null )
 		{
 				rowView = View.inflate(getContext(), R.layout.menu_item2, null);
-				final ViewHolder viewHolder = new ViewHolder();
+				viewHolder = new ViewHolder();
 				viewHolder.imgFood = (ImageView) rowView.findViewById(R.id.image_food_item);
 				viewHolder.txtName = (TextView) rowView.findViewById(R.id.txt_item_name);
 				viewHolder.txtPrice = (TextView) rowView.findViewById(R.id.txt_item_price);
@@ -131,20 +140,63 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 				viewHolder.imgVegetarian = (ImageView) rowView.findViewById(R.id.image_vegetarian);
 				viewHolder.imgSpicy = (ImageView) rowView.findViewById(R.id.image_spicy);
 				viewHolder.imgGlutenFree = (ImageView) rowView.findViewById(R.id.image_glutenfree);
+				viewHolder.rl_stats=(RelativeLayout)rowView.findViewById(R.id.rl_stats);
+				viewHolder.tvLikes=(TextView)rowView.findViewById(R.id.tv_likes);
+				viewHolder.tvVisitors=(TextView)rowView.findViewById(R.id.tv_visitors);
+				viewHolder.ivVisitors=(ImageView)rowView.findViewById(R.id.iv_visitors);
+				viewHolder.ivLikes=(ImageView)rowView.findViewById(R.id.iv_likes);
 				rowView.setTag(viewHolder);
-			}
+		}
 		
-		else {
-			final ViewHolder holder = (ViewHolder) rowView.getTag();
+		else
+			viewHolder = (ViewHolder) rowView.getTag();
 
-			Log.e("short descriptipn",""+ storeMenuItem.getMenuName());
-			holder.txtName.setText(storeMenuItem.getShortDescription());
-			holder.txtDesc.setText(storeMenuItem.getLongDescription());
-			holder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
-			imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), holder.imgFood);
+			
+			viewHolder.txtName.setText(storeMenuItem.getShortDescription());
+			viewHolder.txtDesc.setText(storeMenuItem.getLongDescription());
+			viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
+			imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), viewHolder.imgFood);
+			if(storeItemStats!=null)
+			{
+				viewHolder.rl_stats.setVisibility(View.VISIBLE);
+				Log.e("null check","storestats not null");
+				if(storeItemStats.getOrders()>0)
+				{
+					viewHolder.tvVisitors.setVisibility(View.VISIBLE);
+					viewHolder.ivVisitors.setVisibility(View.VISIBLE);
+					viewHolder.tvVisitors.setText(""+storeItemStats.getOrders());
+				}
+				else
+				{
+					viewHolder.tvVisitors.setVisibility(View.GONE);
+					viewHolder.ivVisitors.setVisibility(View.GONE);
+				}
+				long count=storeItemStats.getDislikes()+storeItemStats.getLikes();
+				if(count>0)
+				{
+					viewHolder.tvLikes.setVisibility(View.VISIBLE);
+					viewHolder.ivLikes.setVisibility(View.VISIBLE);
+				   long percent=((storeItemStats.getLikes())*100)/count;
+				   viewHolder.tvLikes.setText(percent+"%"+"("+count+")");
+					
+				}
+				else
+				{
+					viewHolder.tvLikes.setVisibility(View.GONE);
+					viewHolder.ivLikes.setVisibility(View.GONE);
+				}
+			}
+			else
+			{
+				viewHolder.tvVisitors.setVisibility(View.GONE);
+				viewHolder.ivVisitors.setVisibility(View.GONE);
+				viewHolder.tvLikes.setVisibility(View.GONE);
+				viewHolder.ivLikes.setVisibility(View.GONE);
+				
+			}
 			// holder.imgFood.setVisibility(View.GONE);
 
-			holder.imgFood.setOnClickListener(new OnClickListener() {
+			viewHolder.imgFood.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -156,7 +208,6 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 */
 				}
 			});
-		}
 
 		return rowView;
 	}

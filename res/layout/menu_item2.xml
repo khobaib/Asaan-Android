@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/margin_10dp"
-    android:paddingRight="@dimen/margin_10dp"
-    android:paddingTop="@dimen/margin_5dp"
-    android:paddingBottom="@dimen/margin_5dp"
-    android:orientation="vertical"
     android:background="@color/app_bg_color" >
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/app_bg_color" 
+    android:id="@+id/rl_1" >
     <ImageView
         android:id="@+id/image_food_item"
         android:layout_width="80dp"
         android:layout_height="65dp"
         android:padding="1dp"
         android:contentDescription="@string/menu_category_title"
+        android:layout_marginLeft="10dp"
         
          />
 
@@ -41,6 +41,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/food_menu_item_price"
         android:textStyle="bold" />
 
@@ -102,13 +103,62 @@
         android:contentDescription="@string/food_is_gluten_free"
         android:visibility="gone"
         android:src="@drawable/menu_glutenfree" />
+    </RelativeLayout>
 
      <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-       android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
         android:background="@color/khaki_text" />
+     <RelativeLayout
+        android:id="@+id/rl_stats"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/app_bg_color"
+        android:layout_below="@id/rl_1"
+       android:layout_margin="10dp">
+
+         <ImageView
+             android:id="@+id/iv_visitors"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:layout_alignParentLeft="true"
+             android:layout_margin="5dp" 
+             android:src="@drawable/numbervisitors"/>
+        <TextView
+            android:id="@+id/tv_visitors"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/iv_visitors"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="7" />
+    
+        <TextView
+            android:id="@+id/tv_likes"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textSize="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:text="7" />
+         <ImageView
+             android:id="@+id/iv_likes"
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:layout_marginTop="4dp"
+             android:layout_marginRight="3dp"
+             android:layout_toLeftOf="@+id/tv_likes" 
+             android:src="@drawable/numberlikes"/>
+    </RelativeLayout>
    
 </RelativeLayout>
