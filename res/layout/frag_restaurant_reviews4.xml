@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/txtViewResName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Restaurant Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/txtViewResName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/txtViewLblSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/viewBar1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:text="SUMMARY"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/txtViewLblSummary"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar2"
+       	android:layout_marginTop="10dp"    
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblGServed"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="Guests Served"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewGServed"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblGServed"
+        	android:layout_toRightOf="@+id/txtViewLblGServed"
+        	android:layout_toEndOf="@+id/txtViewLblGServed"
+        	android:text="7 Every Week"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay1"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblFood"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="Food"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewFoodRvw"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblFood"
+        	android:layout_toRightOf="@+id/txtViewLblFood"
+        	android:layout_toEndOf="@+id/txtViewLblFood"
+        	android:text="100% Like It (2 Reviews)"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay2"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblService"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="Service"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewServiceRvw"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblService"
+        	android:layout_toRightOf="@+id/txtViewLblService"
+        	android:layout_toEndOf="@+id/txtViewLblService"
+        	android:text="100% Like It (2 Reviews)"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" />
+
+    <TextView
+        android:id="@+id/txtViewLblRvws"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/viewBar3"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:text="REVIEWS"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/viewBar4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/txtViewLblRvws"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" />
+
+    <ListView
+        android:id="@+id/lstViewRvws"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/viewBar4"
+        android:layout_centerHorizontal="true" >
+    </ListView>
+
+</RelativeLayout>

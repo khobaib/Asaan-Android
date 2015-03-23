@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<TextView
+        android:id="@+id/txtViewResName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Restaurant Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtViewLblWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtViewResName"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Welcome. Let's find a table for you."
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/txtViewLblWelcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" />
+    
+    <RelativeLayout
+        android:id="@+id/relLay1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/viewBar1"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblReserve"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Reserve"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtViewLblArrow1"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@id/txtViewLblReserve"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="end|center_vertical"
+            android:text=">"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay1"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white" />
+    
+    <RelativeLayout
+        android:id="@+id/relLay2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/viewBar2"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblWaitLst"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Wait-list"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtViewLblArrow2"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@id/txtViewLblWaitLst"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="end|center_vertical"
+            android:text=">"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white" />
+    
+</RelativeLayout>
