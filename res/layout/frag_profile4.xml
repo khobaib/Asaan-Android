@@ -53,7 +53,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblFirstName"
             android:layout_toRightOf="@id/txtViewLblFirstName"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="First Name"
             android:textSize="14sp" />
 
@@ -97,7 +97,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblLastName"
             android:layout_toRightOf="@id/txtViewLblLastName"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Last Name"
             android:textSize="14sp" />
 
@@ -141,7 +141,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblEmail"
             android:layout_toRightOf="@id/txtViewLblEmail"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Email"
             android:textSize="14sp" />
 
@@ -185,7 +185,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblPhone"
             android:layout_toRightOf="@id/txtViewLblPhone"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Phone"
             android:textSize="14sp" />
 
@@ -229,7 +229,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblTip"
             android:layout_toRightOf="@id/txtViewLblTip"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Tip"
             android:textSize="14sp" />
 
@@ -273,7 +273,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblPayInfo"
             android:layout_toRightOf="@id/txtViewLblPayInfo"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Payment Info"
             android:textSize="14sp" />
 
@@ -317,7 +317,7 @@
             android:layout_marginRight="5dp"
             android:layout_toEndOf="@id/txtViewLblFbProf"
             android:layout_toRightOf="@id/txtViewLblFbProf"
-            android:gravity="left|center_vertical|start"
+            android:gravity="center_vertical|start"
             android:text="Facebook Profile"
             android:textSize="14sp" />
 
