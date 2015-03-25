@@ -26,11 +26,6 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	ReviewFragment reviewFragment;
 	FragmentMenu fragmentMenu;
 	public static boolean isBackButtonPressed = false;
-
-	public StoreDetailsActivityNew() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,36 +35,33 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		infoFragment = new InfoFragment();
 		reviewFragment = new ReviewFragment();
-		fragmentMenu = new FragmentMenu();
 
 		isBackButtonPressed = false;
 
 		setTabs();
+		
 		// setInitialInfoFragment();
 
 	}
 
 	private void setTabs() {
-		Tab infoTab = actionBar.newTab();
-		infoTab.setText("Info");
-		infoTab.setTabListener(this);
-
-		Tab menuab = actionBar.newTab();
-		menuab.setText("Menu");
-		menuab.setTabListener(this);
-
-		Tab reviewTab = actionBar.newTab();
-		reviewTab.setText("Reviews");
-		reviewTab.setTabListener(this);
-
 		Tab historyTab = actionBar.newTab();
 		historyTab.setText("History");
 		historyTab.setTabListener(this);
 
-		actionBar.addTab(infoTab);
-		actionBar.addTab(historyTab);
-		actionBar.addTab(menuab);
-		actionBar.addTab(reviewTab);
+		Tab infoTab= actionBar.newTab();
+		infoTab.setText("Info");
+		infoTab.setTabListener(this);
+
+		Tab reviewTab = actionBar.newTab();
+		reviewTab.setText("Reviews");
+		reviewTab.setTabListener(this);
+		
+		actionBar.addTab(historyTab,0,false);
+		actionBar.addTab(infoTab,1,true);
+		actionBar.addTab(reviewTab,2,false);
+		
+		
 
 	}
 
@@ -77,14 +69,11 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		int position = tab.getPosition();
 		if (position == 0) {
-			ft.replace(R.id.content_frame, infoFragment);
+			//ft.replace(R.id.content_frame, );
 			// ft.commit();
 		} else if (position == 1) {
-			ft.replace(R.id.content_frame, fragmentMenu);
-		} else if (position == 2) {
-			Intent intent = new Intent(StoreDetailsActivityNew.this, MenuActivity.class);
-			startActivity(intent);
-		} else if (position == 3) {
+			ft.replace(R.id.content_frame, infoFragment);
+		} else  if (position == 2) {
 			ft.replace(R.id.content_frame, reviewFragment);
 		}
 

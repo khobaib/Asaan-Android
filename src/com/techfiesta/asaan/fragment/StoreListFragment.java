@@ -10,6 +10,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreColle
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.SplashActivity;
+import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -74,8 +75,8 @@ public class StoreListFragment extends Fragment {
 				
 				 AsaanUtility.selectedStore = store;
 				
-				// Intent intent = new Intent(getActivity(),);
-				 //startActivity(intent);
+				Intent intent = new Intent(getActivity(),StoreDetailsActivityNew.class);
+				 startActivity(intent);
 				 
 
 			}
