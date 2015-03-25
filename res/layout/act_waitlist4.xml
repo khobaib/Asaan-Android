@@ -13,21 +13,12 @@
         android:text="Wait-list Summary"
         android:textSize="18sp"
         android:textStyle="bold" />
-	
-	<View
-        android:id="@+id/viewBar1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/txtViewLblSummary"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@color/white" />
 
 	<LinearLayout
 	    android:id="@+id/linLay1"
 	    android:layout_width="match_parent"
 	    android:layout_height="60dp"
-	    android:layout_below="@+id/viewBar1"
+	    android:layout_below="@+id/txtViewLblSummary"
 	    android:layout_centerHorizontal="true" >
 
 		<TextView
@@ -76,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/linLay1"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:background="@color/white" />
 	
 	<LinearLayout
@@ -93,7 +84,7 @@
 		    android:layout_gravity="center"
 		    android:layout_weight="2"
 		    android:gravity="center"
-		    android:text="Parties ahead of you" />
+		    android:text="Parties ahead\n of you" />
 
 		<TextView
 		    android:id="@+id/txtViewPAheadSize1"
@@ -129,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/linLay2"
-        android:layout_centerHorizontal="true"
+       android:layout_marginLeft="20dp"
         android:background="@color/white" />
 	
 	<LinearLayout
@@ -177,19 +168,13 @@
 
 	</LinearLayout>
 	
-	<View
-        android:id="@+id/viewBar4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/linLay3"
-        android:layout_centerHorizontal="true"
-        android:background="@color/white" />
+
 	
 	<TextView
 	    android:id="@+id/txtViewLblJoin"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/viewBar4"
+	    android:layout_below="@+id/linLay3"
 	    android:layout_marginLeft="5dp"
 	    android:layout_marginStart="5dp"
 	    android:layout_marginTop="15dp"
@@ -197,20 +182,13 @@
 	    android:textSize="18sp"
 	    android:textStyle="bold" />
 	
-	<View
-        android:id="@+id/viewBar5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/txtViewLblJoin"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:background="@color/white" />
+
 	
 	<RelativeLayout
 	    android:id="@+id/relLay1"
 	    android:layout_width="match_parent"
 	    android:layout_height="60dp"
-	    android:layout_below="@+id/viewBar5"
+	    android:layout_below="@+id/txtViewLblJoin"
 	    android:layout_centerHorizontal="true" >
 
         <Button
@@ -268,7 +246,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/relLay1"
-        android:layout_centerHorizontal="true"
+       android:layout_marginLeft="20dp"
         android:background="@color/white" />
     
     <RelativeLayout
@@ -296,7 +274,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/relLay2"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:background="@color/white" />
     
 </RelativeLayout>

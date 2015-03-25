@@ -31,6 +31,7 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
+import com.techfiesta.asaan.activity.ReserveActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
@@ -72,7 +73,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		 ViewHolder holder = null;
 		LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
 		if (convertView == null) {
@@ -96,7 +97,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Store store = storeList.get(position);
+		final Store store = storeList.get(position);
 
 		// Log.e("url", "image url for id " + store.getId() + " = "
 		// + ((store.getBackgroundImageUrl() == null) ? "null" :
@@ -121,6 +122,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			holder.btnChat.setText("Chat");
 			holder.btnMenu.setText("Menu");
 			holder.btnorder.setText("Online\nOrder");
+			holder.btnReserve.setText("Reserve");
 			
 
 			holder.btnMenu.setOnClickListener(new OnClickListener() {
@@ -170,6 +172,22 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 					// alert(mContext,
 					// "Already have saved order from other restaurant.Delete all orders?");
 	
+				}
+			});
+			
+			holder.btnReserve.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if(((Button)v).getText().equals("Reserve"))
+					{
+						Intent intent=new Intent(mContext,ReserveActivity.class);
+						AsaanUtility.selectedStore=store;
+						mContext.startActivity(intent);
+						
+					}
+						
+					
 				}
 			});
 		}

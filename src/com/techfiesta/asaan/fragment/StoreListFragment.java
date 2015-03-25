@@ -15,6 +15,7 @@ import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -70,16 +71,12 @@ public class StoreListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				Store store = storeList.get(position);
-				/*
-				 * // String json=convertModelStoreToJsonStrig(store);
-				 * AsaanUtility.selectedStore = store;
-				 * appInstance.setPARENT_PAGE(Constants.FROM_STORE_LIST); Intent
-				 * intent = new Intent(StoreListActivity.this,
-				 * StoreDetailsActivityNew.class); //
-				 * intent.putExtra("store",json);
-				 * 
-				 * startActivity(intent);
-				 */
+				
+				 AsaanUtility.selectedStore = store;
+				
+				// Intent intent = new Intent(getActivity(),);
+				 //startActivity(intent);
+				 
 
 			}
 		});

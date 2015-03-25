@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:background="@color/app_bg">
     
 	<TextView
         android:id="@+id/txtViewResName"
@@ -23,7 +24,7 @@
         android:layout_below="@+id/txtViewResName"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Welcome. Let's find a table for you."
         android:textSize="16sp" />
 
@@ -39,7 +40,7 @@
     <RelativeLayout
         android:id="@+id/relLay1"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/viewBar1"
         android:layout_centerHorizontal="true" >
 
@@ -77,13 +78,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/relLay1"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:background="@color/white" />
     
     <RelativeLayout
         android:id="@+id/relLay2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/viewBar2"
         android:layout_centerHorizontal="true" >
 
@@ -121,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/relLay2"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:background="@color/white" />
     
 </RelativeLayout>
