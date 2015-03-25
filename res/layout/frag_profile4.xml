@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgViewProfPic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Profile Picture"
+        android:scaleType="fitCenter"
+        android:src="@drawable/profile" />
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/imgViewProfPic"
+        android:layout_marginTop="20dp"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar1"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblFirstName"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="First Name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblFirstName"
+            android:layout_toRightOf="@id/txtViewLblFirstName"
+            android:gravity="center_vertical|start"
+            android:text="First Name"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay1"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar2"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblLastName"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Last Name"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblLastName"
+            android:layout_toRightOf="@id/txtViewLblLastName"
+            android:gravity="center_vertical|start"
+            android:text="Last Name"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay2"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar3"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblEmail"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Email"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblEmail"
+            android:layout_toRightOf="@id/txtViewLblEmail"
+            android:gravity="center_vertical|start"
+            android:text="Email"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay3"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar4"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblPhone"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Phone"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblPhone"
+            android:layout_toRightOf="@id/txtViewLblPhone"
+            android:gravity="center_vertical|start"
+            android:text="Phone"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay4"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar5"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblTip"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Tip"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewTip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblTip"
+            android:layout_toRightOf="@id/txtViewLblTip"
+            android:gravity="center_vertical|start"
+            android:text="Tip"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay5"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar6"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblPayInfo"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Payment Info"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewPayInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblPayInfo"
+            android:layout_toRightOf="@id/txtViewLblPayInfo"
+            android:gravity="center_vertical|start"
+            android:text="Payment Info"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay6"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay7"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar7"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblFbProf"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Facebook Profile"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtViewFbProf"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@id/txtViewLblFbProf"
+            android:layout_toRightOf="@id/txtViewLblFbProf"
+            android:gravity="center_vertical|start"
+            android:text="Facebook Profile"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/relLay7"
+        android:background="@color/white" />
+    
+</RelativeLayout>

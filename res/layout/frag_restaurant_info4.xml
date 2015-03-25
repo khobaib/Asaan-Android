@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imgViewResImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="Restaurant Image"
+        android:scaleType="fitXY"
+        android:src="@drawable/resturant_detail_demo" />
+
+    <View
+        android:id="@+id/viewBar1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/imgViewResImg"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar1"
+       	android:layout_marginTop="10dp"    
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblRes"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="RESTAURANT:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewResName"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblRes"
+        	android:layout_toRightOf="@+id/txtViewLblRes"
+        	android:layout_toEndOf="@+id/txtViewLblRes"
+        	android:text="Restaurant Name"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay1"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblCuiType"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="CUISINE TYPE:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewCuiType"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblCuiType"
+        	android:layout_toRightOf="@+id/txtViewLblCuiType"
+        	android:layout_toEndOf="@+id/txtViewLblCuiType"
+        	android:text="Cuisine type"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+
+	<RelativeLayout
+        android:id="@+id/relLay3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay2"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblExChef"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="EXECUTIVE CHEF:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewExChef"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblExChef"
+        	android:layout_toRightOf="@+id/txtViewLblExChef"
+        	android:layout_toEndOf="@+id/txtViewLblExChef"
+        	android:text="Chef Name"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+    
+	<RelativeLayout
+        android:id="@+id/relLay4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay3"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblTrophies"
+        	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+        	android:text="TROPHIES:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewTrophies"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblTrophies"
+        	android:layout_toRightOf="@+id/txtViewLblTrophies"
+        	android:layout_toEndOf="@+id/txtViewLblTrophies"
+        	android:text="Trophies List"
+        	android:textSize="12sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/relLay4"
+        android:layout_marginTop="20dp"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay5"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar2"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewLblViewMap"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="View Map With Store Location"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtViewLblArrow"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@id/txtViewLblViewMap"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="end|center_vertical"
+            android:text=">"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/relLay5"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relLay6"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/viewBar3"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:id="@+id/txtViewResSpecial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="start|center_vertical"
+            android:text="Restaurant Speciality"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+    
+    <View
+        android:id="@+id/viewBar4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/relLay6"
+        android:background="@color/white" />
+    
+    <RelativeLayout
+        android:id="@+id/relLay7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewBar4"
+       	android:layout_marginTop="10dp"    
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblAddress"
+       	 	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+       	 	android:text="Address:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+    	    android:id="@+id/txtViewAddress"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignBaseline="@+id/txtViewLblAddress"
+    	    android:layout_toEndOf="@+id/txtViewLblAddress"
+    	    android:layout_toRightOf="@id/txtViewLblAddress"
+    	    android:text="Address" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay7"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblPhone"
+       	 	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+       	 	android:text="Phone:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewPhone"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblPhone"
+        	android:layout_toRightOf="@id/txtViewLblPhone"
+        	android:layout_toEndOf="@+id/txtViewLblPhone"
+        	android:text="Phone" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay8"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblWeb"
+       	 	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+       	 	android:text="Web:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewWebURL"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblWeb"
+        	android:layout_toRightOf="@id/txtViewLblWeb"
+        	android:layout_toEndOf="@+id/txtViewLblWeb"
+        	android:text="Web URL" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay9"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblFb"
+       	 	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+       	 	android:text="Facebook:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewFbURL"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblFb"
+        	android:layout_toRightOf="@id/txtViewLblFb"
+        	android:layout_toEndOf="@+id/txtViewLblFb"
+        	android:text="Facebook URL" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relLay11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relLay10"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+        	android:id="@+id/txtViewLblTw"
+       	 	android:layout_width="150dp"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_alignParentStart="true"
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginStart="5dp"
+       	 	android:text="Twitter:"
+        	android:textColor="@color/khaki"
+        	android:textSize="14sp"
+        	android:textStyle="bold" />
+
+    	<TextView
+        	android:id="@+id/txtViewTwURL"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignBaseline="@+id/txtViewLblTw"
+        	android:layout_toRightOf="@id/txtViewLblTw"
+        	android:layout_toEndOf="@+id/txtViewLblTw"
+        	android:text="Twitter URL" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
