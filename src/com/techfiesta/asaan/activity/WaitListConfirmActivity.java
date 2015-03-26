@@ -15,7 +15,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.act_waitlist4);
+		setContentView(R.layout.activity_waitlist4);
 		btnPeoplePlus=(Button)findViewById(R.id.btnIncPeople);
 		btnPeopleMinus=(Button)findViewById(R.id.btnDecPeople);	
 		

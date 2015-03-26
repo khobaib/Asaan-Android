@@ -21,7 +21,7 @@ public class ReserveActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.act_reserve_waitlist4);
+		setContentView(R.layout.activity_reserve_waitlist4);
 		actionBar=getActionBar();
 		actionBar.setTitle("Back");
 		actionBar.setDisplayHomeAsUpEnabled(true);

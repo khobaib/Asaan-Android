@@ -39,3 +39,4 @@ calabash_settings
 
 # Crashlytics
 res/values/com_crashlytics_export_strings.xml
+res/drawable-xhdpi/decrement.png

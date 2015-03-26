@@ -3,21 +3,27 @@ package com.techfiesta.asaan.fragment;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.google.android.gms.maps.MapFragment;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.LocationActivity;
 import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class InfoFragment extends Fragment {
 
-	private TextView tvAddress, tvPhone, tvWebUrl,tvFaceBook,tvTwitter,tvtName,tvCuisineType,tvExecutiveChef,tvTrophies,tvSpeciality;
+	private TextView tvAddress, tvPhone, tvWebUrl,tvFaceBook;
+	private TextView tvTwitter,tvtName,tvCuisineType,tvExecutiveChef,tvTrophies,tvSpeciality;
+	private RelativeLayout rlMapLink;
 	Store store;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,8 +38,16 @@ public class InfoFragment extends Fragment {
 		tvFaceBook=(TextView)v.findViewById(R.id.txtViewFbURL);
 		tvTwitter=(TextView)v.findViewById(R.id.txtViewTwURL);
 		tvSpeciality=(TextView)v.findViewById(R.id.txtViewResSpecial);
+		rlMapLink=(RelativeLayout)v.findViewById(R.id.relLay5);
 		
-		store=AsaanUtility.selectedStore;
+		
+		
+		return v;
+	}
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+      store=AsaanUtility.selectedStore;
 		
 		tvAddress.setText((""+store.getAddress()).equals("null")?"":store.getAddress());
 		tvPhone.setText((""+store.getPhone()).equals("null")?"":store.getPhone());
@@ -45,10 +59,17 @@ public class InfoFragment extends Fragment {
 		tvCuisineType.setText((""+store.getType()).equals("null")?"":store.getType());
 		tvExecutiveChef.setText((""+store.getExecutiveChef()).equals("null")?"":store.getExecutiveChef());
 		tvSpeciality.setText((""+store.getDescription()).equals("null")?"":store.getDescription());
+	    rlMapLink.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(), LocationActivity.class);
+				getActivity().startActivity(intent);
+				
+			}
+		});
 		
 		setTrophiesText();
-		
-		return v;
 	}
 	private void setTrophiesText()
 	{
