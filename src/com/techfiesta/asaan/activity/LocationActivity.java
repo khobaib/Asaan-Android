@@ -30,6 +30,7 @@ public class LocationActivity extends Activity {
 		
 		MapFragment mapFragment=(MapFragment)getFragmentManager().findFragmentById(R.id.mapRestaurantLocation);
 		map=mapFragment.getMap();
+		setUpMap();
 	}
 	private void setUpMap()
 	{

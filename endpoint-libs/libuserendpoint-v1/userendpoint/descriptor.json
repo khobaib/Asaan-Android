@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/userendpoint/v1/20150313231419/java/1.18.0-rc/server.asaan.com-userendpoint-v1-20150313231419-java-1.18.0-rc-sources.jar", 
-      "path": "server.asaan.com-userendpoint-v1-20150313231419-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/userendpoint/v1/20150320194714/java/1.18.0-rc/server.asaan.com-userendpoint-v1-20150320194714-java-1.18.0-rc-sources.jar", 
+      "path": "server.asaan.com-userendpoint-v1-20150320194714-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2015-03-13 23:14"
+      "timestamp": "2015-03-20 19:47"
     }, 
     {
-      "path": "server.asaan.com-userendpoint-v1-20150313231419-java-1.18.0-rc.jar.properties", 
+      "path": "server.asaan.com-userendpoint-v1-20150320194714-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "com.asaan.server.endpoint", 
   "language_version": "1.18.0-rc", 
   "id": "userendpoint:v1", 
-  "revision": 20150313231419
+  "revision": 20150320194714
 }

@@ -7,6 +7,8 @@
     <string name="map_key_dev_khobaib">AIzaSyCIe2Q41ucXLA8HDKyLihSomaIKXcnJ-LM</string>
     <string name="map_key_dev_rishta_home">AIzaSyBXY5mlywRlZ-V1SWrwrIIGUZAzg3iTySo</string>
     <string name="map_key_dev_tanzeer">AIzaSyAqfVbNI2saY9-t6OdGy1bczvJyiKP2h-8</string>
+     <string name="map_key_dev_tanzeer2"> AIzaSyBVQfr1A9wnwffLtN65tkRc6q_c_7YjdkQ</string>
+                  
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="validationErrors">Validation Errors</string>
