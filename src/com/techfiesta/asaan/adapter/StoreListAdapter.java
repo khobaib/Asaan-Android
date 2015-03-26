@@ -28,10 +28,12 @@ import asaan.dao.ModItemDao;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.ChatActivity;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
 import com.techfiesta.asaan.activity.ReserveActivity;
+import com.techfiesta.asaan.activity.StoreListActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
@@ -187,6 +189,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 						
 					}
 						
+					
+				}
+			});
+			holder.btnChat.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(mContext,ChatActivity.class);
+					AsaanUtility.selectedStore=store;
+					mContext.startActivity(intent);
 					
 				}
 			});

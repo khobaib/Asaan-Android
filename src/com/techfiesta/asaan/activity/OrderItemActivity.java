@@ -279,7 +279,7 @@ public class OrderItemActivity extends Activity {
 
 		String strQuantity = (String) txtQuantity.getText();
 		long finalPrice;
-		if (menuItemHasModifiers)
+		if (menuItemHasModifiers && mAdapter!=null)
 			finalPrice = (menuItemPrice + mAdapter.getFinalPrice()) * Long.parseLong(strQuantity);
 		else
 			finalPrice = (menuItemPrice) * Long.parseLong(strQuantity);

@@ -132,6 +132,7 @@
         <activity android:name=".activity.ReserveConfirmActivity"></activity>
         <activity android:name=".activity.WaitListConfirmActivity"></activity>
         <activity android:name=".activity.LocationActivity"></activity>
+        <activity android:name=".activity.ChatActivity"></activity>
     </application>
 
 </manifest>

@@ -78,7 +78,7 @@ public class MyCartActivity extends Activity {
 		tvAmountDue = (TextView) findViewById(R.id.tv_due_amount);
 
 		pDialog = new ProgressDialog(this);
-		pDialog.setMessage("Please wait we are taking your order...");
+		
 
 		bEdit = (Button) findViewById(R.id.b_edit);
 		bEdit.setOnClickListener(new OnClickListener() {
@@ -90,9 +90,9 @@ public class MyCartActivity extends Activity {
 
 			}
 		});
-
-		//tvStoreName.setText(AsaanUtility.selectedStore.getName());
-		initDatabaseAndPopuateList();
+       long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
+       new GetStoreDetails(id).execute();
+	   initDatabaseAndPopuateList();
 
 
 	}
@@ -126,24 +126,7 @@ public class MyCartActivity extends Activity {
 		lvOrder.setAdapter(adapter);
 	}
 
-	private void ConvertToXml() {
-		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		try {
-			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.newDocument();
-
-			Element root = document.createElement("CHECKREQUESTS");
-			root.setAttribute("ADDCHECK EXTCHECKID", "Nirav");
-			root.setAttribute("READYTIME", "4:45PM");
-			root.setAttribute("NOTE", "Please make it spicy - no Peanuts Please");
-			root.setAttribute("ORDERMODE", "1");
-			document.appendChild(root);
-
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 
 	private void initDatabaseAndPopuateList() {
@@ -155,22 +138,7 @@ public class MyCartActivity extends Activity {
 		modItemDao = daoSession.getModItemDao();
 		orderList = addItemDao.queryBuilder().list();
 	}
-  private String getOrderString()
-  {
-	  String orderXML ="";
 
-		for (AddItem addItem : orderList) {
-			orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
-					+ "\">";
-			for (ModItem mod : addItem.getMod_items())
-				orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">";
-			orderXML += "</ADDITEM>";
-		}
-	
-		
-		return orderXML;
-
-  }
 	public void onClickPlaceOrder(View v){
 		showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
@@ -219,6 +187,7 @@ public class MyCartActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			pDialog.setMessage("Please wait we are taking your order...");
 			pDialog.show();
 		}
 
@@ -300,5 +269,36 @@ public class MyCartActivity extends Activity {
 		});
 		bld.create().show();
 	}
-
+	private class GetStoreDetails extends AsyncTask<Void,Void,Void>
+	{
+		long storeId;
+		public GetStoreDetails(long id)
+		{
+			this.storeId=id;
+		}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog.setMessage("please wait....");
+			pDialog.show();
+		}
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				AsaanUtility.selectedStore= SplashActivity.mStoreendpoint.getStore(storeId).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			tvStoreName.setText(AsaanUtility.selectedStore.getName());
+			if(pDialog.isShowing())
+				pDialog.dismiss();
+		}
+		
+	}
 }

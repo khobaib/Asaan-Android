@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/app_bg_color"
     android:padding="10dp"
     tools:ignore="HardcodedText" >
@@ -86,12 +86,44 @@
                 android:layout_alignLeft="@+id/rl_edit"
                 android:layout_below="@+id/lv_item_list"
                 android:background="@color/white" />
+         <RelativeLayout
+                android:id="@+id/rl_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v1"
+                android:padding="15dp" >
 
+                <TextView
+                    android:id="@+id/tv_discount_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discount(Not specified)"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_dicount_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=">"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+             <View
+                android:id="@+id/v1_1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/rl_edit"
+                android:layout_below="@+id/rl_discount"
+                android:background="@color/white" />
             <RelativeLayout
                 android:id="@+id/rl_subtotal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/v1"
+                android:layout_below="@+id/v1_1"
                 android:padding="15dp" >
 
                 <TextView
@@ -278,6 +310,81 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
             </RelativeLayout>
+             <View
+                android:id="@+id/v7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/rl_edit"
+                android:layout_below="@+id/rl_delivery_time"
+                android:background="@color/white" />
+
+             <RelativeLayout
+                android:id="@+id/rl_payment_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v7"
+                android:padding="15dp" >
+
+                <TextView
+                    android:id="@+id/tv_payment_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Mode"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=">"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+             <View
+                android:id="@+id/v8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/rl_edit"
+                android:layout_below="@+id/rl_payment_mode"
+                android:background="@color/white" />
+
+             <RelativeLayout
+                android:id="@+id/rl_sp_instr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/v8"
+                android:padding="15dp" >
+
+                <TextView
+                    android:id="@+id/tv_special_instructions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Special Instructions"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=">"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+             <View
+                android:id="@+id/v9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignLeft="@+id/rl_edit"
+                android:layout_below="@+id/rl_sp_instr"
+                android:background="@color/white" />
         </RelativeLayout>
     </ScrollView>
 
