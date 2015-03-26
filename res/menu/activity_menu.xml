@@ -3,8 +3,8 @@
     <!-- Search, should appear as action button -->
     <item
         android:id="@+id/action_cart"
-        android:icon="@drawable/action_item_cart"
-        android:showAsAction="ifRoom"
-        android:title="My Cart"/>
+        android:icon="@drawable/cart"
+        android:showAsAction="always"
+        android:title="Cart"/>
 
 </menu>

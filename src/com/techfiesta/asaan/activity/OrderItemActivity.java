@@ -270,7 +270,7 @@ public class OrderItemActivity extends Activity {
 	}
 
 	public void setDescAndPriceWithChoices() {
-		if (menuItemHasModifiers)
+		if (menuItemHasModifiers && mAdapter!=null)
 			mAdapter.updatePriceAndDesc();
 
 		// TextView txtPrice = (TextView) findViewById(R.id.txt_item_price);

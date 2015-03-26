@@ -31,6 +31,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+import asaan.dao.AddItem;
+import asaan.dao.AddItemDao;
 import asaan.dao.DStore;
 import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
@@ -43,6 +45,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.internal.it;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,7 +68,13 @@ public class StoreListActivity extends FragmentActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ArrayList<NavMenuItem> drawerItemList;
-
+	
+	private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private AddItemDao addItemDao;
+	private AddItem addItem;
+	
 	AsaanApplication appInstance;
 
 	@SuppressLint("NewApi") @Override
@@ -143,10 +152,23 @@ public class StoreListActivity extends FragmentActivity {
 		drawerItemList.add(new NavMenuItem("Logout",R.drawable.logout));
 		
 	}
+	private void initDatabase() {
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		initDatabase();
+		if(addItemDao.count()>0)
+			getMenuInflater().inflate(R.menu.activity_menu, menu);
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
@@ -173,6 +195,11 @@ public class StoreListActivity extends FragmentActivity {
 		// toggle nav drawer on selecting action bar app icon/title
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
+		}
+		if(item.getItemId()==R.id.action_cart)
+		{
+			Intent intent=new Intent(StoreListActivity.this,MyCartActivity.class);
+			startActivity(intent);
 		}
 		return true;
 	}

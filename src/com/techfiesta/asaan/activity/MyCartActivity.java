@@ -91,7 +91,7 @@ public class MyCartActivity extends Activity {
 			}
 		});
 
-		tvStoreName.setText(AsaanUtility.selectedStore.getName());
+		//tvStoreName.setText(AsaanUtility.selectedStore.getName());
 		initDatabaseAndPopuateList();
 
 

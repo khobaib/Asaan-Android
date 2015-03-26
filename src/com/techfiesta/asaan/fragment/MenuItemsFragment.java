@@ -94,7 +94,7 @@ public class MenuItemsFragment extends Fragment {
 				if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==2)
 				{
 					allItems.add(item);
-					Log.e("name",item.getMenuItem().getShortDescription());
+					Log.e("name",""+item.getMenuItem().getShortDescription());
 				}
 				if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==1)
 				{
