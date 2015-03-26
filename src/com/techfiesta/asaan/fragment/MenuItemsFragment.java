@@ -63,8 +63,9 @@ public class MenuItemsFragment extends Fragment {
 	// protected boolean pauseOnScroll = false;
 	// protected boolean pauseOnFling = false;
 	private StickyListHeadersListView mListView;
-	List<MenuItemAndStats> allItems ;
+    private List<MenuItemAndStats> allItems ;
 	private int order_type=-1;
+
 
 	// protected static ImageLoader imageLoader = ImageLoader.getInstance();
 

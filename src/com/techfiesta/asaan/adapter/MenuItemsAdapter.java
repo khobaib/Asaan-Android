@@ -9,12 +9,14 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAn
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreItemStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.MenuFlowActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 import com.techfiesta.asaan.utility.Constants;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,12 +177,11 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 
 				@Override
 				public void onClick(View v) {
-				/*	MenuActivity.selectedMenuItem = storeMenuItem;
-					Intent i = new Intent(context, MenuItemDetailsActivity.class);
-					i.putExtra("selected_menu_item", storeMenuItem.toString());
-					context.startActivity(i);
-					Log.d("???", "Food image clicked" + storeMenuItem.getLongDescription());
-*/
+					Intent i = new Intent(mContext, MenuFlowActivity.class);
+			
+					mContext.startActivity(i);
+					
+
 				}
 			});
 
