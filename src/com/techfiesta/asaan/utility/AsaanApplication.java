@@ -12,8 +12,8 @@ import com.techfiesta.asaan.R;
 public class AsaanApplication extends Application {
 
 	// for parse asaan-server settings
-	private static final String ASAAN_APPLICATION_ID = "uX5Pxp1cPWJUbhl4qp5REJskOqDIp33tfMcSu1Ac";
-	private static final String ASAAN_CLIENT_KEY = "4cad0RAqv53bvlmgiTgnOScuJVk7IY28XeH4Mes5";
+	private static final String ASAAN_APPLICATION_ID = "GXtJ9wg7fm1oMLt36zD5GvbsXyXJW6atbQjQKnin";
+	private static final String ASAAN_CLIENT_KEY = "1MXmqCsvaOKWs2ilTGOL2wvugGrasbZMwukIvn1Q";
 
 	// fb settings
 	private static final String FB_APP_ID = "1460267094262357";

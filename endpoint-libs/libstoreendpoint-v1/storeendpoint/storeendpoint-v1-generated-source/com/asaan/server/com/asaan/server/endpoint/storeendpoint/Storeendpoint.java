@@ -18,6 +18,8 @@
 
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint;
 
+import android.util.Log;
+
 /**
  * Service definition for Storeendpoint (v1).
  *
@@ -57,7 +59,7 @@ public class Storeendpoint extends com.google.api.client.googleapis.services.jso
    *
    * @since 1.7
    */
-  public static final String DEFAULT_ROOT_URL = "https://asaan-server.appspot.com/_ah/api/";
+  public static final String DEFAULT_ROOT_URL = "https://blissful-mantis-89513.appspot.com/_ah/api/";
 
   /**
    * The default encoded service path of the service. This is determined when the library is
@@ -4921,6 +4923,7 @@ public class Storeendpoint extends com.google.api.client.googleapis.services.jso
           DEFAULT_SERVICE_PATH,
           httpRequestInitializer,
           false);
+      Log.e("Sever",DEFAULT_ROOT_URL+DEFAULT_BASE_URL);
     }
 
     /** Builds a new instance of {@link Storeendpoint}. */
