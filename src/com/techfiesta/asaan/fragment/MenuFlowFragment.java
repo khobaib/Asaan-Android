@@ -3,13 +3,19 @@ package com.techfiesta.asaan.fragment;
 import java.net.InterfaceAddress;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuFlowActivity;
+import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.interfaces.ForwardBackWardClickListner;
+import com.techfiesta.asaan.lazylist.ImageLoader;
+import com.techfiesta.asaan.utility.AmountConversionUtils;
+import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +28,17 @@ import android.widget.TextView;
 
 public class MenuFlowFragment extends Fragment{
 	private ImageView ivIteImage;
-	private TextView tvLongDes,tvShortDes,tvPrice;
+	private TextView tvLongDes,tvShortDes,tvPrice,tvOrders,tvLikes,tvAddOrder;
 	private Button btnForward,btnBackWard;
 	ForwardBackWardClickListner forwardBackWardClickListner=null;
 	
 	int menuItemPrice = 0;
-	String menuItemShortDesc, menuItemLongDesc;
+	String menuItemShortDesc, menuItemLongDesc,numLikes;
+	long numOrders;
+	int menuItemPosId;
+	int orderType=-1;
+	boolean hasModifiers;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
            View v=inflater.inflate(R.layout.fragment_menu_flow,null,false);
@@ -37,6 +48,9 @@ public class MenuFlowFragment extends Fragment{
            tvPrice=(TextView)v.findViewById(R.id.tv_item_price);
            btnForward=(Button)v.findViewById(R.id.btn_forward);
            btnBackWard=(Button)v.findViewById(R.id.btn_backward);
+           tvOrders=(TextView)v.findViewById(R.id.tv_num_of_order_title);
+           tvLikes=(TextView)v.findViewById(R.id.tv_num_of_like);
+           tvAddOrder=(TextView)v.findViewById(R.id.tv_add_order);
            
           
     
@@ -51,13 +65,25 @@ public class MenuFlowFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				int counter=getArguments().getInt("item_position");
-				Log.e("MSG", "clicked"+(counter+1));
+				int counter=getArguments().getInt(Constants.BUNDLE_KEY_ITEM_POSITION);
+				Log.e("MSG", "forward clicked"+(counter+1));
 				forwardBackWardClickListner.moveForward(counter+1);
 				
 				
 			}
 		});
+		btnBackWard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int counter=getArguments().getInt(Constants.BUNDLE_KEY_ITEM_POSITION);
+				Log.e("MSG", counter+"backward clicked"+(counter-1));
+				forwardBackWardClickListner.moveBackward(counter-1);
+				
+				
+			}
+		});
+		
 		getIntentDataAndSetTexts();
 	}
 	private void getIntentDataAndSetTexts()
@@ -68,8 +94,61 @@ public class MenuFlowFragment extends Fragment{
 		
 		menuItemShortDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
 		menuItemLongDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
-		
+		menuItemPosId=bundle.getInt(Constants.BUNDLE_KEY_MENUITEM_POS_ID,-1);
+		hasModifiers=bundle.getBoolean(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS,false);
+		String imageUrl=bundle.getString(Constants.BUNDLE_KEY_IMAGE_URL,"");
+		boolean hasStats=bundle.getBoolean(Constants.BUNDLE_KEY_HAS_STATS,false);
+		if(hasStats)
+		{
+			numLikes=bundle.getString(Constants.BUNDLE_KEY_NUMBER_OF_LIKES);
+			tvLikes.setText(numLikes);
+			numOrders=bundle.getLong(Constants.BUNDLE_KEY_NUMBER_OF_ORDER);
+			if(numOrders>0)
+			{
+				tvOrders.setText(""+numOrders+"people ordered today");
+			}
+			else
+				tvOrders.setVisibility(View.GONE);
+			
+		}
+		else
+		{
+			tvOrders.setVisibility(View.GONE);
+			tvLikes.setVisibility(View.GONE);
+		}
+		if(!imageUrl.equals(""))
+		{
+			ImageLoader imageLoader=new ImageLoader(getActivity());
+			imageLoader.DisplayImage(imageUrl,ivIteImage);
+		}
+		tvPrice.setText(AmountConversionUtils.formatCentsToCurrency(menuItemPrice));
 		tvShortDes.setText(menuItemShortDesc);
+		tvLongDes.setText(menuItemLongDesc);
+		orderType=bundle.getInt(Constants.ORDER_TYPE,-1);
+		if(orderType==-1)
+		{
+			tvAddOrder.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			tvAddOrder.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					
+					Intent intent=new Intent(getActivity(),OrderItemActivity.class);
+					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_POS_ID,menuItemPosId);
+					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_PRICE,menuItemPrice);
+					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, hasModifiers);
+					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,menuItemShortDesc);
+					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,menuItemLongDesc);
+					startActivity(intent);
+				}
+			});
+		}
+		
+		
 		
 	}
 

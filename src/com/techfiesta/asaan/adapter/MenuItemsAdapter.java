@@ -17,6 +17,7 @@ import com.techfiesta.asaan.utility.Constants;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,8 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	List<MenuItemAndStats> sectionsList;
 	ArrayList<Integer> sectionIndexList;
 	ImageLoader imageLoader;
-	public MenuItemsAdapter(Context context,List<MenuItemAndStats> objects,List<MenuItemAndStats> allsections,ArrayList<Integer> indexList)
+	private int orderType;
+	public MenuItemsAdapter(Context context,List<MenuItemAndStats> objects,List<MenuItemAndStats> allsections,ArrayList<Integer> indexList,int order_type)
 	{		super(context,R.layout.menu_item2,objects);
 	   this.mContext=context;
 	   this.menuItemAndStats=objects;
@@ -42,6 +44,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	   this.sectionIndexList=indexList;
 	   Log.e("indexlist",""+sectionIndexList.size());
 	   imageLoader=new ImageLoader((Activity)context);
+	   this.orderType=order_type;
 		
 	}
 
@@ -96,7 +99,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		
 		View rowView = convertView;
 		MenuItemAndStats  menuItemAndStat = menuItemAndStats.get(position);
@@ -178,7 +181,8 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 				@Override
 				public void onClick(View v) {
 					Intent i = new Intent(mContext, MenuFlowActivity.class);
-			
+					i.putExtra(Constants.BUNDLE_KEY_ITEM_POSITION,position);
+					i.putExtra(Constants.ORDER_TYPE,orderType);
 					mContext.startActivity(i);
 					
 
