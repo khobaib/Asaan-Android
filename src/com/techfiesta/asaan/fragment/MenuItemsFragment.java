@@ -85,7 +85,7 @@ public class MenuItemsFragment extends Fragment {
 			if (bundle != null)
 			{
 				menuPOSId = bundle.getLong(BUNDLE_KEY_MENU_ID);
-				order_type=bundle.getInt(Constants.ORDER_TYPE);
+				order_type=bundle.getInt(Constants.ORDER_TYPE,-1);
 			}
 			allItems = new ArrayList<MenuItemAndStats>();
 			List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
@@ -107,7 +107,7 @@ public class MenuItemsFragment extends Fragment {
 				}
 				
 			}
-			MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList);
+			MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type);
 			adapter.notifyDataSetChanged();
 			mListView.setAdapter(adapter);
 			mListView.invalidate();

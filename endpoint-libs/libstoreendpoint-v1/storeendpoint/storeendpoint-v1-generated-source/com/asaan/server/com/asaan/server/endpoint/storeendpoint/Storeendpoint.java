@@ -59,6 +59,7 @@ public class Storeendpoint extends com.google.api.client.googleapis.services.jso
    *
    * @since 1.7
    */
+ // public static final String DEFAULT_ROOT_URL = "https://asaan-server.appspot.com/_ah/api/";
   public static final String DEFAULT_ROOT_URL = "https://blissful-mantis-89513.appspot.com/_ah/api/";
 
   /**
