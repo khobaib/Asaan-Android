@@ -21,6 +21,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,9 +50,11 @@ import com.google.android.gms.internal.it;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
+import com.techfiesta.asaan.fragment.ProfileFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.model.NavMenuItem;
 import com.techfiesta.asaan.utility.AsaanApplication;
@@ -86,6 +89,7 @@ public class StoreListActivity extends FragmentActivity {
 		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+		mDrawerList.setFitsSystemWindows(true);
 		if(getActionBar()!=null)
 		{
 		getActionBar().setTitle("");
@@ -101,8 +105,30 @@ public class StoreListActivity extends FragmentActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
-				
+				FragmentTransaction  ft=getFragmentManager().beginTransaction();
+				if(position==0)
+				{
+					StoreListFragment strFragment=new StoreListFragment();
+					ft.replace(R.id.frame_container,strFragment);
+				}
+				else
+				 if(position==1)
+				{
+					ProfileFragment profileFragment=new ProfileFragment();
+					ft.replace(R.id.frame_container,profileFragment);
+					
+				}
+				if(position==6)
+					{
+						
+						ParseUser.logOut();
+						Intent intent=new Intent(StoreListActivity.this,LoginActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent);
+					}
+				ft.addToBackStack(null);
+				ft.commit();
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			}
 		});
 		

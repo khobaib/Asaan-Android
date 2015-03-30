@@ -16,9 +16,16 @@ import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import asaan.dao.AddItemDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoSession;
+import asaan.dao.DaoMaster.OpenHelper;
 
 public class MenuActivityNew  extends Activity{
 	
@@ -28,6 +35,11 @@ public class MenuActivityNew  extends Activity{
 	private ActionBar actionBar;
 	private ProgressDialog pdDialog;
 	private int order_type=-1;
+	
+	private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private AddItemDao addItemDao;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +102,34 @@ public class MenuActivityNew  extends Activity{
 		}
 
 	}
+	private void initDatabase() {
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		initDatabase();
+		if(addItemDao.count()>0)
+			getMenuInflater().inflate(R.menu.activity_menu, menu);
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getItemId()==R.id.action_cart)
+		{
+			Intent intent=new Intent(MenuActivityNew.this,MyCartActivity.class);
+			startActivity(intent);
+		}
+		return true;
+	}
 
 }
