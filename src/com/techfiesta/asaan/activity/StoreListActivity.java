@@ -43,6 +43,7 @@ import asaan.dao.Trophies;
 import asaan.dao.TrophiesDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeamCollection;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -157,6 +158,7 @@ public class StoreListActivity extends FragmentActivity {
 		ft.replace(R.id.frame_container,strFragment);
 		ft.addToBackStack(null);
 		ft.commit();
+		
 	}
 
 	@Override

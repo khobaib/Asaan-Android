@@ -250,11 +250,14 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 
 	private StoreStats getStats(long id)
 	{
+		if(storeStatsList!=null)
+		{
 		int size=storeStatsList.size();
 		for(int i=0;i<size;i++)
 		{
 			if(storeStatsList.get(i).getStoreId()==id)
 			     return storeStatsList.get(i);
+		}
 		}
 		return null;
 	}

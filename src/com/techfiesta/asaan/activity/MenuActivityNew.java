@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
+import com.google.android.gms.maps.model.Tile;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.Constants;
@@ -22,6 +23,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoSession;
@@ -44,14 +51,51 @@ public class MenuActivityNew  extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_new);
+		//setUpCustomActionBar();
 		actionBar=getActionBar();
-		actionBar.setTitle("Back");
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setCustomView(R.layout.custom_action_bar);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		pdDialog=new ProgressDialog(MenuActivityNew.this);
 		getOrderType();
 		new GetMenu().execute();
+	}
+	private void setUpCustomActionBar()
+	{
+		initDatabase();
+		actionBar=getActionBar();
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		actionBar.setDisplayShowCustomEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setCustomView(R.layout.custom_action_bar);
+		RelativeLayout relBack=(RelativeLayout)findViewById(R.id.rellay1);
+		relBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				
+			}
+		});
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		ImageView ivCart=(ImageView)findViewById(R.id.iv_cart);
+		ivCart.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MenuActivityNew.this,MyCartActivity.class);
+				startActivity(intent);
+				
+			}
+		});
+		if(addItemDao.count()<=0)
+			ivCart.setVisibility(View.GONE);
+		TextView tvTitle=(TextView)findViewById(R.id.tv_title);
+		tvTitle.setVisibility(View.GONE);
+			
+			
 	}
 	private void getOrderType()
 	{
@@ -111,17 +155,7 @@ public class MenuActivityNew  extends Activity{
 		
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		initDatabase();
-		if(addItemDao.count()>0)
-			getMenuInflater().inflate(R.menu.activity_menu, menu);
-		else
-			getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
+	
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if(item.getItemId()==R.id.action_cart)

@@ -1,15 +1,24 @@
 package com.techfiesta.asaan.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import lombok.core.Main;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeamCollection;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
+import android.R.bool;
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,8 +59,79 @@ public class ChatActivity extends Activity{
 				
 			}
 		});
+		new GetStoreChatRoomsAndMemberships().execute();
 	}
-	
+	private class GetStoreChatRoomsAndMemberships extends AsyncTask<Void,Void,Void>
+	{
+     private ChatRoomsAndStoreChatMemberships chMemberships;
+     @Override
+    	protected void onPreExecute() {
+    		super.onPreExecute();
+    		Log.e("chat","executing");
+    	}
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				chMemberships=SplashActivity.mStoreendpoint.getChatRoomsAndMembershipsForUser().execute();
+				Log.e("chat","executing doInBackGround....");
+				if(chMemberships!=null)
+				  Log.e("chats","not null");
+				else 
+					Log.e("chats","null");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			Log.e("chat","executing onpostExecute");
+			if(chMemberships!=null)
+			{  boolean matchFound=false;
+				for(int i=0;i<chMemberships.getStoreChatMemberships().size();i++)
+				{
+					if(chMemberships.getStoreChatMemberships().get(i).getStoreId()==AsaanUtility.selectedStore.getId())
+					{
+						matchFound=true;
+						break;
+					}
+				}
+				if(!matchFound)
+				{
+					new SaveChatRoom().execute();
+				}
+			}
+			else
+				new SaveChatRoom().execute();
+					
+		}
+		
+	}
+	private class SaveChatRoom extends AsyncTask<Void,Void,Void>
+	{
+		private ChatRoom chatRoom;
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			ChatRoom chatRoom=new ChatRoom();
+			chatRoom.setStoreId(AsaanUtility.selectedStore.getId());
+			chatRoom.setName(AsaanUtility.selectedStore.getName());
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				chatRoom=SplashActivity.mStoreendpoint.saveChatRoom(chatRoom).execute();
+				Log.e("response","date"+chatRoom.getModifiedDate()+"id"+chatRoom.getId());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	}
 	private void  showAttachmentDialog()
 	{
 		final Dialog dialog=new Dialog(ChatActivity.this);

@@ -1,6 +1,8 @@
 package com.techfiesta.asaan.adapter;
 
+import java.nio.channels.NonReadableChannelException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -8,8 +10,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreItemStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
+import com.google.android.gms.internal.ms;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.MenuFlowActivity;
+import com.techfiesta.asaan.fragment.MenuItemsFragment;
+import com.techfiesta.asaan.interfaces.ScrollToIndexListener;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 import com.techfiesta.asaan.utility.Constants;
@@ -22,10 +28,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements StickyListHeadersAdapter,SectionIndexer{
@@ -36,7 +46,8 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	ArrayList<Integer> sectionIndexList;
 	ImageLoader imageLoader;
 	private int orderType;
-	public MenuItemsAdapter(Context context,List<MenuItemAndStats> objects,List<MenuItemAndStats> allsections,ArrayList<Integer> indexList,int order_type)
+	ScrollToIndexListener scrollToIndexListener=null;
+	public MenuItemsAdapter(Context context,List<MenuItemAndStats> objects,List<MenuItemAndStats> allsections,ArrayList<Integer> indexList,int order_type,MenuItemsFragment menuItemsFragment)
 	{		super(context,R.layout.menu_item2,objects);
 	   this.mContext=context;
 	   this.menuItemAndStats=objects;
@@ -45,6 +56,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	   Log.e("indexlist",""+sectionIndexList.size());
 	   imageLoader=new ImageLoader((Activity)context);
 	   this.orderType=order_type;
+	   scrollToIndexListener=menuItemsFragment;
 		
 	}
 
@@ -58,7 +70,15 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 		}
 		return list.toArray();
 	}
-
+	public ArrayList<String> getSectionsHeaders() {
+		ArrayList<String> list=new ArrayList<String>();
+		for(int i=0;i<sectionsList.size();i++)
+		{
+			list.add(sectionsList.get(i).getMenuItem().getShortDescription());
+			Log.e("SECTION",sectionsList.get(i).getMenuItem().getShortDescription());
+		}
+		return list;
+	}
 	@Override
 	public int getPositionForSection(int sectionIndex) {
 		
@@ -96,6 +116,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	static class ViewHolder2 {
 		// public ImageView imgGroup;
 		public TextView txtGroupName;
+		public Spinner spinner;
 	}
 
 	@Override
@@ -204,7 +225,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 			rowView = View.inflate(getContext(), R.layout.menu_item_group2, null);
 			 viewHolder = new ViewHolder2();
 			viewHolder.txtGroupName = (TextView) rowView.findViewById(R.id.menu_category_title);
-
+            viewHolder.spinner=(Spinner)rowView.findViewById(R.id.sp_submenu);
 			rowView.setTag(viewHolder);	
 		}
 		else{
@@ -212,7 +233,28 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 		}
 		
 		viewHolder.txtGroupName.setText(storeMenuItem.getShortDescription());
-         
+		
+		SimpleSpinnerAdapter simpleAdapter=new SimpleSpinnerAdapter(mContext,R.layout.row_spinner_submenu,getSectionsHeaders());
+        viewHolder.spinner.setAdapter(new NothingSelectedSpinnerAdapter(simpleAdapter,R.layout.row_simple_list, mContext));
+       viewHolder.spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				if(position>0)
+				{
+				int moveToPosition=getPositionForSection(position-1);
+				Log.e("move to position", ""+moveToPosition);
+				scrollToIndexListener.scrollToPosition(moveToPosition);
+				}
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
     
 		return rowView;
 	}

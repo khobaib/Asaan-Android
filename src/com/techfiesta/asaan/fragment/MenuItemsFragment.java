@@ -40,13 +40,14 @@ import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
 import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.adapter.MenuItemsAdapter;
+import com.techfiesta.asaan.interfaces.ScrollToIndexListener;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.MenuHierarchy.MenuItem;
 
 @SuppressLint("NewApi")
-public class MenuItemsFragment extends Fragment {
+public class MenuItemsFragment extends Fragment implements ScrollToIndexListener{
 	private static final Logger logger = Logger.getLogger(MenuItemsFragment.class.getName());
 
 	public static final String BUNDLE_KEY_MENU_ID = "BUNDLE_KEY_MENU_ID";
@@ -107,7 +108,7 @@ public class MenuItemsFragment extends Fragment {
 				}
 				
 			}
-			MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type);
+			MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type,this);
 			adapter.notifyDataSetChanged();
 			mListView.setAdapter(adapter);
 			mListView.invalidate();
@@ -157,6 +158,12 @@ public class MenuItemsFragment extends Fragment {
 	private void toast(String str)
 	{
 		Toast.makeText(getActivity(),str,Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void scrollToPosition(int position) {
+		mListView.smoothScrollToPosition(position);
+		
 	}
 
 }
