@@ -107,9 +107,15 @@ public class ProfileActivity extends Activity {
 
 			}
 		});
-
+    setUpUI();
 	}
-
+  private void setUpUI()
+  {
+	  ParseUser user=ParseUser.getCurrentUser();
+	  FirstName.setText(user.getString("firstName"));
+	  LastName.setText(user.getString("lastName"));
+	  
+  }
 	private void saveUserData() {
 		ParseUser user = ParseUser.getCurrentUser();
 		user.put("firstName", firstName);

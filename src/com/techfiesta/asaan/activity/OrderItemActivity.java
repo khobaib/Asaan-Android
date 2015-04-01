@@ -23,6 +23,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -488,11 +490,41 @@ public class OrderItemActivity extends Activity {
 
 		bld.create().show();
 	}
-
+	@Override
+	protected void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
 	private void deleteDatabase() {
 		initDatabase();
 		addItemDao.deleteAll();
 		modItemDao.deleteAll();
 		AsaanUtility.setCurrentOrderdStoreId(OrderItemActivity.this, -1);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		initDatabase();
+		if(addItemDao.count()>0)
+			getMenuInflater().inflate(R.menu.activity_menu, menu);
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getItemId()==R.id.action_cart)
+		{
+			Intent intent=new Intent(OrderItemActivity.this,MyCartActivity.class);
+			startActivity(intent);
+		}
+		else if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 }

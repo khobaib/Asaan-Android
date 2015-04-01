@@ -7,15 +7,22 @@ import java.util.Date;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import asaan.dao.AddItemDao;
+import asaan.dao.DaoMaster;
+import asaan.dao.DaoSession;
+import asaan.dao.DaoMaster.OpenHelper;
 
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanApplication;
@@ -47,6 +54,12 @@ public class OnlineOrderActivity extends Activity {
     private ActionBar actionBar;
     private long one_hour=60*60*1000;
     private long fifteen_min=15*60*1000;
+    
+    private SQLiteDatabase db;
+	private DaoMaster daoMaster;
+	private DaoSession daoSession;
+	private AddItemDao addItemDao;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -186,6 +199,45 @@ public class OnlineOrderActivity extends Activity {
 		numPeople++;
 		People.setText("" + numPeople);
 
+	}
+	private void initDatabase() {
+		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
+		db = helper.getWritableDatabase();
+		daoMaster = new DaoMaster(db);
+		daoSession = daoMaster.newSession();
+		addItemDao = daoSession.getAddItemDao();
+		
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		initDatabase();
+		if(addItemDao.count()>0)
+			getMenuInflater().inflate(R.menu.activity_menu, menu);
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getItemId()==R.id.action_cart)
+		{
+			Intent intent=new Intent(OnlineOrderActivity.this,MyCartActivity.class);
+			startActivity(intent);
+		}
+		else if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 	
 
