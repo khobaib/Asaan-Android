@@ -55,6 +55,7 @@ import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
+import com.techfiesta.asaan.fragment.PendingOrderFragment;
 import com.techfiesta.asaan.fragment.ProfileFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.model.NavMenuItem;
@@ -106,30 +107,34 @@ public class StoreListActivity extends FragmentActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				FragmentTransaction  ft=getFragmentManager().beginTransaction();
-				if(position==0)
-				{
-					StoreListFragment strFragment=new StoreListFragment();
-					ft.replace(R.id.frame_container,strFragment);
-				}
-				else
-				 if(position==1)
-				{
-					ProfileFragment profileFragment=new ProfileFragment();
-					ft.replace(R.id.frame_container,profileFragment);
-					
-				}
-				if(position==6)
+				boolean closeDrawer=true;
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				if (position == 0) {
+					StoreListFragment strFragment = new StoreListFragment();
+					ft.replace(R.id.frame_container, strFragment);
+				} else if (position == 1) {
+					ProfileFragment profileFragment = new ProfileFragment();
+					ft.replace(R.id.frame_container, profileFragment);
+
+				} else if (position == 4) {
+					closeDrawer=checkPendingOrders();
+					if(closeDrawer)
 					{
-						
-						ParseUser.logOut();
-						Intent intent=new Intent(StoreListActivity.this,LoginActivity.class);
-						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(intent);
+					PendingOrderFragment pFragment=new PendingOrderFragment();
+					ft.replace(R.id.frame_container, pFragment);
 					}
+
+				} else if (position == 6) {
+
+					ParseUser.logOut();
+					Intent intent = new Intent(StoreListActivity.this, LoginActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+				}
 				ft.addToBackStack(null);
 				ft.commit();
-				mDrawerLayout.closeDrawer(Gravity.LEFT);
+				if(closeDrawer)
+				   mDrawerLayout.closeDrawer(Gravity.LEFT);
 			}
 		});
 		
@@ -159,6 +164,13 @@ public class StoreListActivity extends FragmentActivity {
 		ft.addToBackStack(null);
 		ft.commit();
 		
+	}
+	private boolean checkPendingOrders()
+	{
+		if(addItemDao.count()>0)
+			 return true;
+		else
+			return false;
 	}
 
 	@Override

@@ -88,6 +88,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 				menuPOSId = bundle.getLong(BUNDLE_KEY_MENU_ID);
 				order_type=bundle.getInt(Constants.ORDER_TYPE,-1);
 			}
+			Log.e("MENUPOSID",""+ menuPOSId);
 			allItems = new ArrayList<MenuItemAndStats>();
 			List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
 			ArrayList<Integer> indexList=new ArrayList<Integer>();

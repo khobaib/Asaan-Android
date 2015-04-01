@@ -24,5 +24,8 @@
     <color name="blueberry_blue">#0041C2</color>
     <color name="actionbar_bg">#230000</color>
      <color name="app_bg">#180000</color>
+     <color name="ash">#B2BEB5</color>
+     
+     
 
 </resources>

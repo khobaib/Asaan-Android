@@ -29,6 +29,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.ChatActivity;
+import com.techfiesta.asaan.activity.ClaimStoreActivity;
 import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
@@ -209,6 +210,17 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 			holder.btnMenu.setText("");
 			holder.btnorder.setText("");
 			holder.btnReserve.setText("Claim\nStore");
+			holder.btnReserve.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent=new Intent(mContext,ClaimStoreActivity.class);
+					AsaanUtility.selectedStore=store;
+					mContext.startActivity(intent);
+					((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					
+				}
+			});
 		}
 
 		StoreStats storeStats=getStats(store.getId());

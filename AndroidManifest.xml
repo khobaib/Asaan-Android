@@ -134,6 +134,8 @@
         <activity android:name=".activity.LocationActivity"></activity>
         <activity android:name=".activity.ChatActivity"></activity>
         <activity android:name=".activity.MenuFlowActivity"></activity>
+        <activity android:name=".activity.ClaimStoreActivity"></activity>
+        <activity android:name=".activity.SearchEmployeeActivity"></activity>
     </application>
 
 </manifest>

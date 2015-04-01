@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
+import com.google.android.gms.internal.it;
 import com.google.android.gms.maps.model.Tile;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
+import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.MyTabListener;
 
@@ -55,7 +57,6 @@ public class MenuActivityNew  extends Activity{
 		actionBar=getActionBar();
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setCustomView(R.layout.custom_action_bar);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		pdDialog=new ProgressDialog(MenuActivityNew.this);
 		getOrderType();
@@ -116,6 +117,7 @@ public class MenuActivityNew  extends Activity{
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
+				storeId=AsaanUtility.selectedStore.getId();
 				menusAndMenuItems = SplashActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(storeId,
 						Constants.MENU_TYPE_DINE_IN, MAX_RESULT).execute();
 				Log.e("menu_size", "" + menusAndMenuItems.size());
@@ -136,6 +138,7 @@ public class MenuActivityNew  extends Activity{
 					bundle.putInt(Constants.ORDER_TYPE,order_type);
 					MyTabListener<MenuItemsFragment> tabListener = new MyTabListener<MenuItemsFragment>(
 							MenuActivityNew.this,smh.getName(), MenuItemsFragment.class, bundle);
+					Log.e("MENU",smh.getName());
 					Tab tab = actionBar.newTab().setText(smh.getName()).setTabListener(tabListener);
 					actionBar.addTab(tab);
 				}
@@ -154,7 +157,17 @@ public class MenuActivityNew  extends Activity{
 		addItemDao = daoSession.getAddItemDao();
 		
 	}
-	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		initDatabase();
+		if(addItemDao.count()>0)
+			getMenuInflater().inflate(R.menu.activity_menu, menu);
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -162,6 +175,11 @@ public class MenuActivityNew  extends Activity{
 		{
 			Intent intent=new Intent(MenuActivityNew.this,MyCartActivity.class);
 			startActivity(intent);
+		}
+		else if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
 		}
 		return true;
 	}
