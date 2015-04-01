@@ -179,7 +179,7 @@ public class MenuActivityNew  extends Activity{
 		else if(item.getItemId()==android.R.id.home)
 		{
 			finish();
-			overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 		}
 		return true;
 	}
