@@ -2,12 +2,18 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.core.Main;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatMessagesForStoreOrRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeamCollection;
+import com.google.android.gms.internal.ms;
+import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
@@ -36,10 +42,15 @@ public class ChatActivity extends Activity{
 	private ImageView ivAttach;
 	private EditText edtChatBox;
 	private TextView tvSend;
+	private ListView lvChat;
+	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
+	ArrayList<String> chatList=new ArrayList<String>();
+	SimpleListAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
+		lvChat=(ListView)findViewById(R.id.lv_chats);
 		ivAttach=(ImageView)findViewById(R.id.iv_attatch);
 		edtChatBox=(EditText)findViewById(R.id.et_chatbox);
 		tvSend=(TextView)findViewById(R.id.tv_send);
@@ -55,10 +66,12 @@ public class ChatActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				
+				sendMessage(edtChatBox.getText().toString());
 				
 			}
 		});
+		adapter=new SimpleListAdapter(getApplicationContext(),R.layout.row_simple_list,chatList);
+		lvChat.setAdapter(adapter);
 		new GetStoreChatRoomsAndMemberships().execute();
 	}
 	private class GetStoreChatRoomsAndMemberships extends AsyncTask<Void,Void,Void>
@@ -71,13 +84,14 @@ public class ChatActivity extends Activity{
     	}
 		@Override
 		protected Void doInBackground(Void... params) {
+			GetChatRoomsAndMembershipsForUser getChatRoomsAndMembershipsForUser;
 			try {
-				chMemberships=SplashActivity.mStoreendpoint.getChatRoomsAndMembershipsForUser().execute();
+				 getChatRoomsAndMembershipsForUser=SplashActivity.mStoreendpoint.getChatRoomsAndMembershipsForUser();
+				 HttpHeaders httpHeaders=getChatRoomsAndMembershipsForUser.getRequestHeaders();
+				 httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				ChatRoomsAndStoreChatMemberships chatRoomsAndStoreChatMemberships= getChatRoomsAndMembershipsForUser.execute();
 				Log.e("chat","executing doInBackGround....");
-				if(chMemberships!=null)
-				  Log.e("chats","not null");
-				else 
-					Log.e("chats","null");
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -99,31 +113,37 @@ public class ChatActivity extends Activity{
 				}
 				if(!matchFound)
 				{
-					new SaveChatRoom().execute();
+					new SaveChatRoomInServer().execute();
 				}
 			}
 			else
-				new SaveChatRoom().execute();
+				new SaveChatRoomInServer().execute();
 					
 		}
 		
 	}
-	private class SaveChatRoom extends AsyncTask<Void,Void,Void>
+	private class SaveChatRoomInServer extends AsyncTask<Void,Void,Void>
 	{
 		private ChatRoom chatRoom;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			ChatRoom chatRoom=new ChatRoom();
+			chatRoom=new ChatRoom();
 			chatRoom.setStoreId(AsaanUtility.selectedStore.getId());
 			chatRoom.setName(AsaanUtility.selectedStore.getName());
+			
+		
 		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
+			SaveChatRoom saveChatRoom;
 			try {
-				chatRoom=SplashActivity.mStoreendpoint.saveChatRoom(chatRoom).execute();
-				Log.e("response","date"+chatRoom.getModifiedDate()+"id"+chatRoom.getId());
+				saveChatRoom=SplashActivity.mStoreendpoint.saveChatRoom(chatRoom);
+				HttpHeaders httpHeaders=saveChatRoom.getRequestHeaders();
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				chatRoom=saveChatRoom.execute();
+				Log.e("response",chatRoom.toPrettyString()+"date"+chatRoom.getModifiedDate()+"id"+chatRoom.getId());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -158,6 +178,7 @@ public class ChatActivity extends Activity{
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Log.e("HLW",""+position);
 				if (position == 0) {
 
 				} else if (position == 1) {
@@ -168,6 +189,17 @@ public class ChatActivity extends Activity{
 			}
 		});
 		
+	}
+	private void sendMessage(String msg)
+	{
+		if(!msg.equals(""))
+		{
+			chatList.add(msg);
+			adapter.notifyDataSetChanged();
+			edtChatBox.setText("");
+			lvChat.smoothScrollByOffset(chatList.size()-1);
+		}
+			
 	}
 
 }

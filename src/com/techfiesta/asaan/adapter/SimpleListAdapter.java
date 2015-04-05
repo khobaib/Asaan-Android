@@ -1,5 +1,6 @@
 package com.techfiesta.asaan.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.internal.mc;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 public class SimpleListAdapter extends ArrayAdapter<String> {
 
 	private Context mContext;
-	public SimpleListAdapter(Context context, int resource, List<String> objects) {
+	public SimpleListAdapter(Context context, int resource, ArrayList<String> objects) {
 		super(context, resource, objects);
 		this.mContext=context;
 	}
