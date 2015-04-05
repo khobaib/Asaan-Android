@@ -141,6 +141,7 @@ public class OnlineOrderActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
 				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_CARRYOUT);
+				intent.putExtra(Constants.ESTIMATED_TIME,deliverTime);
 				startActivity(intent);
 				
 			}
@@ -152,6 +153,7 @@ public class OnlineOrderActivity extends Activity {
 				
 				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
 				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_DELIVERY);
+				intent.putExtra(Constants.ESTIMATED_TIME,deliverTime);
 				startActivity(intent);
 			}
 		});

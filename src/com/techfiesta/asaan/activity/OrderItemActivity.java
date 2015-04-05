@@ -87,6 +87,7 @@ public class OrderItemActivity extends Activity {
 	EditText txtSpecialInstructions;
 	Button btnPlaceOrder = null;
     private ActionBar actionBar;
+    private long curTime=-1;
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
@@ -115,7 +116,7 @@ public class OrderItemActivity extends Activity {
 		menuItemShortDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION);
 		menuItemLongDesc = bundle.getString(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION);
 		menuItemHasModifiers = bundle.getBoolean(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
-		
+		curTime=bundle.getLong(Constants.ESTIMATED_TIME,-1);
 		actionBar.setTitle(menuItemLongDesc);
 	
 	}
@@ -220,11 +221,13 @@ public class OrderItemActivity extends Activity {
 					
 					addItem=new AddItem();
 					addItem.setStore_id(AsaanUtility.selectedStore.getId().intValue());
+					addItem.setStore_name(AsaanUtility.selectedStore.getName());
 					addItem.setPrice(total_cost);
 					addItem.setQuantity(quantity);
 					addItem.setItem_name(menuItemShortDesc);
 					addItem.setItem_id(menuItemPOSId);
-					addItem.setOrder_for(txtSpecialInstructions.getText().toString());
+					addItem.setNotes(txtSpecialInstructions.getText().toString());
+					addItem.setEstimated_time(curTime);
 					//addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
 						//	menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
 					addItemDao.insert(addItem);

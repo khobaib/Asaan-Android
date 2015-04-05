@@ -72,6 +72,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
     private List<MenuItemAndStats> allItems ;
     MenuItemAndStatsCollection menuItemAndStatsCollection=null;
 	private int order_type=-1;
+	private long curTime=-1;
 	int menuPOSId = 0;
 	int MAX_RESULT=50;
 
@@ -95,6 +96,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 			{
 				menuPOSId = (int)bundle.getLong(BUNDLE_KEY_MENU_ID);
 				order_type=bundle.getInt(Constants.ORDER_TYPE,-1);
+				curTime=bundle.getLong(Constants.ESTIMATED_TIME,-1);
 			}
 			Log.e("MENUPOSID",""+ menuPOSId);
 			if(menuItemAndStatsCollection==null)
@@ -148,7 +150,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		@Override
 		protected Void doInBackground(Void... params) {
 			 try { 
-				 Log.e("params", "jjj"+AsaanUtility.selectedStore.getId()+" "+menuPOSId);
+				 Log.e("params", ""+AsaanUtility.selectedStore.getId()+" "+menuPOSId);
 			menuItemAndStatsCollection=SplashActivity.mStoreendpoint.getMenuItemAndStatsForMenu(AsaanUtility.selectedStore.getId(), menuPOSId,0,MAX_RESULT).execute();
 			Log.e("SIZE", "jjj"+menuItemAndStatsCollection.getItems().size());
 			
@@ -210,6 +212,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, sItem.getHasModifiers());
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,sItem.getShortDescription());
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION, sItem.getLongDescription());
+					intent.putExtra(Constants.ESTIMATED_TIME,curTime);
 					startActivity(intent);
 				}
 			}

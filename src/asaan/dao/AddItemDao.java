@@ -32,6 +32,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         public final static Property Item_id = new Property(6, int.class, "item_id", false, "ITEM_ID");
         public final static Property Notes = new Property(7, String.class, "notes", false, "NOTES");
         public final static Property Order_type = new Property(8, int.class, "order_type", false, "ORDER_TYPE");
+        public final static Property Estimated_time = new Property(9, long.class, "estimated_time", false, "ESTIMATED_TIME");
     };
 
     private DaoSession daoSession;
@@ -58,7 +59,8 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
                 "'QUANTITY' INTEGER NOT NULL ," + // 5: quantity
                 "'ITEM_ID' INTEGER NOT NULL ," + // 6: item_id
                 "'NOTES' TEXT NOT NULL ," + // 7: notes
-                "'ORDER_TYPE' INTEGER NOT NULL );"); // 8: order_type
+                "'ORDER_TYPE' INTEGER NOT NULL ," + // 8: order_type
+                "'ESTIMATED_TIME' INTEGER NOT NULL );"); // 9: estimated_time
     }
 
     /** Drops the underlying database table. */
@@ -84,6 +86,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         stmt.bindLong(7, entity.getItem_id());
         stmt.bindString(8, entity.getNotes());
         stmt.bindLong(9, entity.getOrder_type());
+        stmt.bindLong(10, entity.getEstimated_time());
     }
 
     @Override
@@ -110,7 +113,8 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
             cursor.getInt(offset + 5), // quantity
             cursor.getInt(offset + 6), // item_id
             cursor.getString(offset + 7), // notes
-            cursor.getInt(offset + 8) // order_type
+            cursor.getInt(offset + 8), // order_type
+            cursor.getLong(offset + 9) // estimated_time
         );
         return entity;
     }
@@ -127,6 +131,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         entity.setItem_id(cursor.getInt(offset + 6));
         entity.setNotes(cursor.getString(offset + 7));
         entity.setOrder_type(cursor.getInt(offset + 8));
+        entity.setEstimated_time(cursor.getLong(offset + 9));
      }
     
     /** @inheritdoc */

@@ -155,12 +155,12 @@ public class OrderDetailsActivity extends Activity {
 			holder.txtPrice.setText(AsaanUtility.formatCentsToCurrency(addItem.getPrice()));
 			holder.txtQuantity.setText("" + addItem.getQuantity());
 
-			if (addItem.getOrder_for().equals("")) {
+			if (addItem.getNotes().equals("")) {
 				holder.txtInstructions.setText("");
 				holder.txtInstructions.setVisibility(View.GONE);
 
 			} else {
-				holder.txtInstructions.setText(addItem.getOrder_for());
+				holder.txtInstructions.setText(addItem.getNotes());
 				holder.txtInstructions.setVisibility(View.VISIBLE);
 			}
 			return rowView;
