@@ -25,11 +25,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Store_id = new Property(1, int.class, "store_id", false, "STORE_ID");
-        public final static Property Price = new Property(2, int.class, "price", false, "PRICE");
-        public final static Property Item_name = new Property(3, String.class, "item_name", false, "ITEM_NAME");
-        public final static Property Quantity = new Property(4, int.class, "quantity", false, "QUANTITY");
-        public final static Property Item_id = new Property(5, int.class, "item_id", false, "ITEM_ID");
-        public final static Property Order_for = new Property(6, String.class, "order_for", false, "ORDER_FOR");
+        public final static Property Store_name = new Property(2, String.class, "store_name", false, "STORE_NAME");
+        public final static Property Price = new Property(3, int.class, "price", false, "PRICE");
+        public final static Property Item_name = new Property(4, String.class, "item_name", false, "ITEM_NAME");
+        public final static Property Quantity = new Property(5, int.class, "quantity", false, "QUANTITY");
+        public final static Property Item_id = new Property(6, int.class, "item_id", false, "ITEM_ID");
+        public final static Property Notes = new Property(7, String.class, "notes", false, "NOTES");
+        public final static Property Order_type = new Property(8, int.class, "order_type", false, "ORDER_TYPE");
     };
 
     private DaoSession daoSession;
@@ -50,11 +52,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'ADD_ITEM' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'STORE_ID' INTEGER NOT NULL ," + // 1: store_id
-                "'PRICE' INTEGER NOT NULL ," + // 2: price
-                "'ITEM_NAME' TEXT NOT NULL ," + // 3: item_name
-                "'QUANTITY' INTEGER NOT NULL ," + // 4: quantity
-                "'ITEM_ID' INTEGER NOT NULL ," + // 5: item_id
-                "'ORDER_FOR' TEXT NOT NULL );"); // 6: order_for
+                "'STORE_NAME' TEXT NOT NULL ," + // 2: store_name
+                "'PRICE' INTEGER NOT NULL ," + // 3: price
+                "'ITEM_NAME' TEXT NOT NULL ," + // 4: item_name
+                "'QUANTITY' INTEGER NOT NULL ," + // 5: quantity
+                "'ITEM_ID' INTEGER NOT NULL ," + // 6: item_id
+                "'NOTES' TEXT NOT NULL ," + // 7: notes
+                "'ORDER_TYPE' INTEGER NOT NULL );"); // 8: order_type
     }
 
     /** Drops the underlying database table. */
@@ -73,11 +77,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindLong(2, entity.getStore_id());
-        stmt.bindLong(3, entity.getPrice());
-        stmt.bindString(4, entity.getItem_name());
-        stmt.bindLong(5, entity.getQuantity());
-        stmt.bindLong(6, entity.getItem_id());
-        stmt.bindString(7, entity.getOrder_for());
+        stmt.bindString(3, entity.getStore_name());
+        stmt.bindLong(4, entity.getPrice());
+        stmt.bindString(5, entity.getItem_name());
+        stmt.bindLong(6, entity.getQuantity());
+        stmt.bindLong(7, entity.getItem_id());
+        stmt.bindString(8, entity.getNotes());
+        stmt.bindLong(9, entity.getOrder_type());
     }
 
     @Override
@@ -98,11 +104,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         AddItem entity = new AddItem( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // store_id
-            cursor.getInt(offset + 2), // price
-            cursor.getString(offset + 3), // item_name
-            cursor.getInt(offset + 4), // quantity
-            cursor.getInt(offset + 5), // item_id
-            cursor.getString(offset + 6) // order_for
+            cursor.getString(offset + 2), // store_name
+            cursor.getInt(offset + 3), // price
+            cursor.getString(offset + 4), // item_name
+            cursor.getInt(offset + 5), // quantity
+            cursor.getInt(offset + 6), // item_id
+            cursor.getString(offset + 7), // notes
+            cursor.getInt(offset + 8) // order_type
         );
         return entity;
     }
@@ -112,11 +120,13 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
     public void readEntity(Cursor cursor, AddItem entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setStore_id(cursor.getInt(offset + 1));
-        entity.setPrice(cursor.getInt(offset + 2));
-        entity.setItem_name(cursor.getString(offset + 3));
-        entity.setQuantity(cursor.getInt(offset + 4));
-        entity.setItem_id(cursor.getInt(offset + 5));
-        entity.setOrder_for(cursor.getString(offset + 6));
+        entity.setStore_name(cursor.getString(offset + 2));
+        entity.setPrice(cursor.getInt(offset + 3));
+        entity.setItem_name(cursor.getString(offset + 4));
+        entity.setQuantity(cursor.getInt(offset + 5));
+        entity.setItem_id(cursor.getInt(offset + 6));
+        entity.setNotes(cursor.getString(offset + 7));
+        entity.setOrder_type(cursor.getInt(offset + 8));
      }
     
     /** @inheritdoc */

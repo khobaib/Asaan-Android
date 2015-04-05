@@ -12,13 +12,16 @@ public class AddItem {
 
     private Long id;
     private int store_id;
+    /** Not-null value. */
+    private String store_name;
     private int price;
     /** Not-null value. */
     private String item_name;
     private int quantity;
     private int item_id;
     /** Not-null value. */
-    private String order_for;
+    private String notes;
+    private int order_type;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -35,14 +38,16 @@ public class AddItem {
         this.id = id;
     }
 
-    public AddItem(Long id, int store_id, int price, String item_name, int quantity, int item_id, String order_for) {
+    public AddItem(Long id, int store_id, String store_name, int price, String item_name, int quantity, int item_id, String notes, int order_type) {
         this.id = id;
         this.store_id = store_id;
+        this.store_name = store_name;
         this.price = price;
         this.item_name = item_name;
         this.quantity = quantity;
         this.item_id = item_id;
-        this.order_for = order_for;
+        this.notes = notes;
+        this.order_type = order_type;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -65,6 +70,16 @@ public class AddItem {
 
     public void setStore_id(int store_id) {
         this.store_id = store_id;
+    }
+
+    /** Not-null value. */
+    public String getStore_name() {
+        return store_name;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
     public int getPrice() {
@@ -102,13 +117,21 @@ public class AddItem {
     }
 
     /** Not-null value. */
-    public String getOrder_for() {
-        return order_for;
+    public String getNotes() {
+        return notes;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setOrder_for(String order_for) {
-        this.order_for = order_for;
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public int getOrder_type() {
+        return order_type;
+    }
+
+    public void setOrder_type(int order_type) {
+        this.order_type = order_type;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
