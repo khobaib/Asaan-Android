@@ -9,6 +9,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.ChatActivity;
+import com.techfiesta.asaan.activity.PaymentInfoActivity;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.model.UserPicture;
 
@@ -38,7 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;
 	private static final int CAMERA_REQUEST=2;
-	private TextView tvSave;
+	private TextView tvSave,tvPayment;
 	private EditText etFirstName,etLastName,etEmail,etTip,etPhone,etPaymentInfo,etFacebookProfile;
 	private ProgressDialog pdDialog;
 	private ImageView ivProfilePic;
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment{
 		etTip=(EditText)v.findViewById(R.id.etViewTip);
 		etFacebookProfile=(EditText)v.findViewById(R.id.etViewFbProf);
 		ivProfilePic=(ImageView)v.findViewById(R.id.imgViewProfPic);
+		tvPayment=(TextView)v.findViewById(R.id.txtViewPayInfo);
 		pdDialog=new ProgressDialog(getActivity());
 		
 		return v;
@@ -105,6 +107,15 @@ public class ProfileFragment extends Fragment{
 				intent.setAction(Intent.ACTION_GET_CONTENT);
 				startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 				
+				
+			}
+		});
+		tvPayment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(),PaymentInfoActivity.class);
+				startActivity(intent);
 				
 			}
 		});

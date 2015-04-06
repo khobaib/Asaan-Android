@@ -97,6 +97,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 				menuPOSId = (int)bundle.getLong(BUNDLE_KEY_MENU_ID);
 				order_type=bundle.getInt(Constants.ORDER_TYPE,-1);
 				curTime=bundle.getLong(Constants.ESTIMATED_TIME,-1);
+				
 			}
 			Log.e("MENUPOSID",""+ menuPOSId);
 			if(menuItemAndStatsCollection==null)
@@ -212,6 +213,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, sItem.getHasModifiers());
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,sItem.getShortDescription());
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION, sItem.getLongDescription());
+					intent.putExtra(Constants.ORDER_TYPE,order_type);
 					intent.putExtra(Constants.ESTIMATED_TIME,curTime);
 					startActivity(intent);
 				}
