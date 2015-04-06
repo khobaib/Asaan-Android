@@ -46,6 +46,7 @@ public class MenuActivityNew  extends Activity{
 	private int order_type=-1;
 	private long curTime=1;
 	
+	
 	private SQLiteDatabase db;
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
@@ -106,6 +107,7 @@ public class MenuActivityNew  extends Activity{
 		{
 			order_type=intent.getIntExtra(Constants.ORDER_TYPE,-1);
 			curTime=intent.getLongExtra(Constants.ESTIMATED_TIME,-1);
+			
 		}
 	}
 	private class GetMenu extends AsyncTask<Void, Void, Void> {
@@ -139,6 +141,7 @@ public class MenuActivityNew  extends Activity{
 					bundle.putLong(Constants.BUNDLE_KEY_MENU_ID, smh.getMenuPOSId());
 					bundle.putInt(Constants.ORDER_TYPE,order_type);
 					bundle.putLong(Constants.ESTIMATED_TIME,curTime);
+					
 					MyTabListener<MenuItemsFragment> tabListener = new MyTabListener<MenuItemsFragment>(
 							MenuActivityNew.this,smh.getName(), MenuItemsFragment.class, bundle);
 					Log.e("MENU",smh.getName());

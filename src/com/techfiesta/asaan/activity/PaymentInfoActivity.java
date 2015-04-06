@@ -35,7 +35,8 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 public class PaymentInfoActivity extends Activity {
 
 	UserCard userCard;
-	public static final String PUBLISHABLE_KEY = "pk_test_hlpADPUOWaxn6uN0aATgLivW";
+	//public static final String PUBLISHABLE_KEY = "pk_test_hlpADPUOWaxn6uN0aATgLivW";
+	public static final String PUBLISHABLE_KEY = "pk_test_4Ns4Xp8GtdBUxhiUKDi4RMTa";
 	EditText CardNumber;
 	EditText CVC;
 	EditText Zip;
@@ -75,7 +76,7 @@ public class PaymentInfoActivity extends Activity {
 		btnSkip=(Button)findViewById(R.id.b_skip);
 		
 		pDialog = new ProgressDialog(PaymentInfoActivity.this);
-		pDialog.setMessage("Loading...");
+		pDialog.setMessage("Please Wait...");
 		
 		defaultTipSpinner = (Spinner) findViewById(R.id.s_tip_selector);
 		createDefaultTipSpinner();
@@ -86,8 +87,9 @@ public class PaymentInfoActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
+                 pDialog.show();
 				if (ParseUser.getCurrentUser() != null) {
+					
 
 					Log.e("MSG", "SIGNED UP" + ParseUser.getCurrentUser().getString("authToken"));
 					cardNumber = CardNumber.getText().toString();
@@ -142,6 +144,8 @@ public class PaymentInfoActivity extends Activity {
 	}
 
 	public void saveCreditCard() {
+		
+		
 		Log.e(">>>>>", "cardnumber = " + cardNumber);
 		Log.e(">>>>>", "expMonth = " + expMonth);
 		Log.e(">>>>>", "expYear = " + expYear);
@@ -149,13 +153,13 @@ public class PaymentInfoActivity extends Activity {
 		Card card = new Card(cardNumber, expMonth, expYear, cardCVC);
 
 		boolean validation = card.validateCard();
-		Log.e(">>>", "valication = " + validation);
+		Log.e(">>>", "validation = " + validation);
 		if (validation) {
 			// startProgress();
 			new Stripe().createToken(card, PUBLISHABLE_KEY, new TokenCallback() {
 				public void onSuccess(Token token) {
 
-					System.out.println("" + token.getId());
+					Log.e("MSG",""+ token.getId());
 					saveTokenInGAE(token);
 					// saveToken(token);
 				}
@@ -180,7 +184,7 @@ public class PaymentInfoActivity extends Activity {
 
 	private void saveTokenInGAE(Token token) {
 		Log.e("state", "inside GAE");
-		pDialog.show();
+		
 		Card card = token.getCard();
 		/*
 		 * JsonObject cardObj=new JsonObject();
@@ -228,6 +232,7 @@ public class PaymentInfoActivity extends Activity {
 
 	private class PostCardInfo extends AsyncTask<Void, Void, Void> {
 
+		private boolean exceptionStatus=false;
 		@Override
 		protected Void doInBackground(Void... arg0) {
 
@@ -238,26 +243,38 @@ public class PaymentInfoActivity extends Activity {
 				HttpHeaders httpHeaders = saveUserCard.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
 				responseUserCard = saveUserCard.execute();
-				Log.e("MSG", "created_date" + responseUserCard.getCreatedDate() + "mod_date" + responseUserCard.getModifiedDate());
-				pDialog.dismiss();
-				if(responseUserCard != null)
+				Log.e("MSG", responseUserCard.toPrettyString()+"created_date" + responseUserCard.getCreatedDate() + "mod_date" + responseUserCard.getModifiedDate());
+				//pDialog.dismiss();
+				if(responseUserCard.getId() != null)
 				{
-					Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
+					/*Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
-					finish();
+					finish();*/
 				}
 				else
 				{
-					Log.e("error", "error in savig card");
-					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "Updating Payment ingo failed");
+					Log.e("error", "error in saving card");
+					//AsaanUtility.simpleAlert(PaymentInfoActivity.this, "Updating Payment info failed");
 				}
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+				exceptionStatus=true;
 				e1.printStackTrace();
+				
 			}
+			
 
 			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if(exceptionStatus)
+			{
+				if(pDialog!=null && pDialog.isShowing())
+					pDialog.dismiss();
+				AsaanUtility.simpleAlert(PaymentInfoActivity.this, "An error occured.");
+			}
 		}
 
 	}

@@ -15,7 +15,10 @@ import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -81,18 +84,30 @@ public class StoreListFragment extends Fragment {
 
 			}
 		});
+  
+		loadStores();
+		
 
+	}
+	private void loadStores()
+	{
 		if (isUpDatedInLast24Hours()) {
 			// load from local db
 			Log.e("status", "loading from local db");
-			loadStoresFromDatabase();
-            new GetStoreStatsFromServer().execute();
+			loadStoresFromDatabase(); 
+			if(AsaanUtility.hasInternet(getActivity()))
+                   new GetStoreStatsFromServer().execute();
+			else
+				internetAvailabilityAlert(getActivity(),"Please Check your internet connection.");
+				
 
 		} else {
 			Log.e("status", "loading from from server");
-			new GetStroreInfoFromServer().execute();
+			if(AsaanUtility.hasInternet(getActivity()))
+			    new GetStroreInfoFromServer().execute();
+			else
+				internetAvailabilityAlert(getActivity(),"Please Check your internet connection.");
 		}
-
 	}
 
 	private void initDatabase() {
@@ -102,6 +117,10 @@ public class StoreListFragment extends Fragment {
 		daoSession = daoMaster.newSession();
 		dStoreDao = daoSession.getDStoreDao();
 		trophiesDao = daoSession.getTrophiesDao();
+	}
+	private void closeDatabase()
+	{
+		daoSession.getDatabase().close();
 	}
 
 	private boolean isUpDatedInLast24Hours() {
@@ -114,6 +133,7 @@ public class StoreListFragment extends Fragment {
 	}
 
 	private void loadStoresFromDatabase() {
+		
 		List<Store> tempStoreList = new ArrayList<Store>();
 		List<DStore> dstList = dStoreDao.queryBuilder().list();
 		for (int i = 0; i < dstList.size(); i++) {
@@ -283,8 +303,34 @@ public class StoreListFragment extends Fragment {
 			super.onPostExecute(result);
 			storeListAdapter = new StoreListAdapter(getActivity(), storeList,storeStatsCollection.getItems());
 			storeListView.setAdapter(storeListAdapter);
+			closeDatabase();
 		}
 		
+	}
+	private void internetAvailabilityAlert(Context context, String message) {
+		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+		// bld.setTitle(context.getResources().getText(R.string.app_name));
+		bld.setTitle(R.string.app_name);
+		bld.setMessage(message);
+		bld.setCancelable(false);
+		bld.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				getActivity().finish();
+			}
+		});
+		bld.setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				loadStores();
+			}
+		});
+
+		bld.create().show();
 	}
 
 }

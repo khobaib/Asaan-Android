@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
 import com.techfiesta.asaan.R;
 
 import android.app.AlertDialog;
@@ -25,6 +26,7 @@ public class AsaanUtility {
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
 	public static Store selectedStore = null;
+	public static UserCard defCard=null;
 
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -108,7 +110,14 @@ public class AsaanUtility {
 		editor.putInt(CURRENT_ORDERED_STORE_ID, id);
 		editor.commit();
 	}
-
+	public static void setPartySize(Context context, int size) {
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+		editor.putInt(Constants.PARTY_SIZE, size);
+		editor.commit();
+	}
+	public static int getCurrentPartySize(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getInt(Constants.PARTY_SIZE, 1);
+	}
 	public static int getCurrentOrderedStoredId(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getInt(CURRENT_ORDERED_STORE_ID, -1);
 	}

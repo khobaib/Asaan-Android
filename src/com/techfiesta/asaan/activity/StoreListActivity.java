@@ -58,6 +58,7 @@ import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.fragment.PendingOrderFragment;
 import com.techfiesta.asaan.fragment.ProfileFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
+import com.techfiesta.asaan.fragment.WaitListStatusFragment;
 import com.techfiesta.asaan.model.NavMenuItem;
 import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -116,12 +117,15 @@ public class StoreListActivity extends FragmentActivity {
 					ProfileFragment profileFragment = new ProfileFragment();
 					ft.replace(R.id.frame_container, profileFragment);
 
+				} else if (position == 3) {
+
+					WaitListStatusFragment waitListStatusFragment=new WaitListStatusFragment();
+					ft.replace(R.id.frame_container, waitListStatusFragment);
 				} else if (position == 4) {
-					closeDrawer=checkPendingOrders();
-					if(closeDrawer)
-					{
-					PendingOrderFragment pFragment=new PendingOrderFragment();
-					ft.replace(R.id.frame_container, pFragment);
+					closeDrawer = checkPendingOrders();
+					if (closeDrawer) {
+						PendingOrderFragment pFragment = new PendingOrderFragment();
+						ft.replace(R.id.frame_container, pFragment);
 					}
 
 				} else if (position == 6) {

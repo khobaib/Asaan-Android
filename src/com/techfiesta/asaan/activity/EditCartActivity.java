@@ -3,6 +3,7 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -12,7 +13,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,6 +29,7 @@ import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
@@ -54,15 +59,20 @@ public class EditCartActivity extends Activity {
 	List<AddItem> orderList;
 	
 	private ProgressDialog pDialog;
-	private Button bDone;
+	private Button bDone,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
-
+    private ActionBar actionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
+		
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		bDone = (Button) findViewById(R.id.b_edit);
+		
 		bDone.setText("Done");
 		bDone.setOnClickListener(new OnClickListener() {
 
@@ -71,7 +81,27 @@ public class EditCartActivity extends Activity {
 				finish();
 				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 			}
-		});		
+		});
+		btnPlus=(Button)findViewById(R.id.b_add);
+		btnPlus.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(EditCartActivity.this,MenuActivityNew.class);
+				long id=AsaanUtility.getCurrentOrderedStoredId(EditCartActivity.this);
+				Store store=new Store();
+				store.setId(id);
+				if(orderList.size()!=0)
+				{
+					store.setName(orderList.get(0).getStore_name());
+					int order_type=orderList.get(0).getOrder_type();
+					intent.putExtra(Constants.ORDER_TYPE,order_type);
+				}
+				AsaanUtility.selectedStore=store;
+				startActivity(intent);
+				
+			}
+		});
 		lvOrder = (NestedListView) findViewById(R.id.lv_item_list);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
@@ -86,7 +116,7 @@ public class EditCartActivity extends Activity {
 
 		initDatabaseAndPopuateList();
 
-		tvStoreName.setText(AsaanUtility.selectedStore.getName());
+
 	}
 
 	@Override
@@ -116,7 +146,13 @@ public class EditCartActivity extends Activity {
 	  }
 	public void updateCartInfo(){
 		orderList = addItemDao.queryBuilder().list();
+		if(orderList.size()==0)
+		{
+		       finish();
+		       return;
+		}
 		
+		setStorName();
 		int subtotalAmount = 0;
 		for (AddItem item : orderList) {
 			subtotalAmount += item.getPrice();
@@ -138,7 +174,12 @@ public class EditCartActivity extends Activity {
 		adapter = new MyCartListAdapter(EditCartActivity.this, orderList, Constants.EDIT_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
 	}
-	
+	private void setStorName()
+	{
+		String shopName=orderList.get(0).getStore_name();
+		tvStoreName.setText(shopName);
+		
+	}
 	private void initDatabaseAndPopuateList() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
@@ -269,6 +310,19 @@ public class EditCartActivity extends Activity {
 			}
 		});
 		bld.create().show();
+	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 
 }

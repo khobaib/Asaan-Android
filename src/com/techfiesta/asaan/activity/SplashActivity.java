@@ -9,10 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetUserCards;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -28,7 +32,7 @@ public class SplashActivity extends Activity {
 	public static Userendpoint mUserendpoint;
 	Context mContext;
 	ParseUser currentUser;
-
+	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,21 +79,66 @@ public class SplashActivity extends Activity {
 				Intent i = null;
 				if (currentUser == null) {
 					i = new Intent(SplashActivity.this, LoginChooserActivity.class);
+					startActivity(i);
+					finish();
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				} else {
-					i = new Intent(SplashActivity.this,StoreListActivity.class);
+					//i = new Intent(SplashActivity.this,StoreListActivity.class);
+					new GetUserCardsFromServer().execute();
 				}
 
-				startActivity(i);
+				
 
 				// close this activity
-				finish();
-				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				
 
 			}
 
 		}
 	}
+private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
+{
+	
+	@Override
+	protected void onPreExecute() {
+		
+		super.onPreExecute();
+	}
 
+	@Override
+	protected Void doInBackground(Void... params) {
+		GetUserCards getUserCards;
+		try {
+			getUserCards=SplashActivity.mUserendpoint.getUserCards();
+			HttpHeaders httpHeaders = getUserCards.getRequestHeaders();
+			httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+			UserCardCollection userCardCollection= getUserCards.execute();
+			if(userCardCollection!=null)
+			{
+				Log.e("Response",userCardCollection.toPrettyString());
+				if(userCardCollection.getItems().size()>=0)
+				{
+					AsaanUtility.defCard=userCardCollection.getItems().get(0);
+				}
+			}
+			else
+				AsaanUtility.defCard=null;
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	protected void onPostExecute(Void result) {
+		super.onPostExecute(result);
+		Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
+		startActivity(i);
+		finish();
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+	}
+}
 	private void buildStoreEndpoint() {
 		Storeendpoint.Builder storeEndpointBuilder;
 		storeEndpointBuilder = new Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),

@@ -22,6 +22,7 @@ import asaan.dao.DaoSession;
 
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.EditCartActivity;
+import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
 public class MyCartListAdapter extends ArrayAdapter<AddItem> {
@@ -114,6 +115,8 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 		AddItem item = getItem(position);
 		remove(item);
 		notifyDataSetChanged();
+		AsaanUtility.setCurrentOrderdStoreId(mContext, -1);
+		AsaanUtility.setPartySize(mContext,1);
 
 		OpenHelper helper = new DaoMaster.DevOpenHelper(mContext, "asaan-db", null);
 		SQLiteDatabase db = helper.getWritableDatabase();

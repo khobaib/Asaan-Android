@@ -12,21 +12,28 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
+import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
@@ -34,6 +41,7 @@ import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.google.android.gms.internal.dd;
 import com.google.android.gms.internal.it;
@@ -45,6 +53,8 @@ import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.NestedListView;
+
+import de.greenrobot.dao.query.WhereCondition;
 
 public class MyCartActivity extends Activity {
 
@@ -59,16 +69,19 @@ public class MyCartActivity extends Activity {
 	private AddItem addItem;
 	private ModItem modItem;
 	 private ModItemDao modItemDao;
+	 
+	 private ActionBar actionBar;
 
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
 	List<AddItem> orderList;
 
 	private ProgressDialog pDialog;
-	private Button bEdit,btnPlaceOrde,btnCancelOrder;
+	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
 	private int subtotalAmount;
 	private String endString="";
+	private RelativeLayout rlDiscount;
 	
 	private String beginingString = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" " +
 			"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\">" +
@@ -109,6 +122,10 @@ public class MyCartActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
+		
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		lvOrder = (NestedListView) findViewById(R.id.lv_item_list);
 
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
@@ -134,6 +151,26 @@ public class MyCartActivity extends Activity {
 
 			}
 		});
+		btnPlus=(Button)findViewById(R.id.b_add);
+		btnPlus.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MyCartActivity.this,MenuActivityNew.class);
+				long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
+				Store store=new Store();
+				store.setId(id);
+				if(orderList.size()!=0)
+				{
+					store.setName(orderList.get(0).getStore_name());
+					int order_type=orderList.get(0).getOrder_type();
+					intent.putExtra(Constants.ORDER_TYPE,order_type);
+				}
+				AsaanUtility.selectedStore=store;
+				startActivity(intent);
+				
+			}
+		});
 		btnPlaceOrde.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -150,6 +187,17 @@ public class MyCartActivity extends Activity {
 				
 			}
 		});
+		rlDiscount=(RelativeLayout)findViewById(R.id.rl_discount);
+		rlDiscount.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(MyCartActivity.this,DiscountActivity.class);
+				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				
+			}
+		});
        long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
 	   initDatabaseAndPopuateList();
 
@@ -159,9 +207,14 @@ public class MyCartActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		orderList = addItemDao.queryBuilder().list();
 		Log.e(">>>", "List count" + addItemDao.count());
+		if(orderList.size()==0)
+		{
+		       finish();
+		       return;
+		}
+		
         setStorName();
 		subtotalAmount = 0;
 		for (AddItem item : orderList) {
@@ -227,7 +280,13 @@ public class MyCartActivity extends Activity {
 					finish();
 
 				} else {
-					new RemotePlaceOrderTask().execute();
+					if(AsaanUtility.defCard==null)
+					{
+						Intent intent=new Intent(MyCartActivity.this,PaymentInfoActivity.class);
+						startActivity(intent);
+					}
+					else
+					   new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
@@ -247,6 +306,13 @@ public class MyCartActivity extends Activity {
 		Alert.show();
 	}
 
+	private long getStoreId() {
+		return AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
+	}
+	private int getOrderType()
+	{
+		return orderList.get(0).getOrder_type();
+	}
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
 		@Override
@@ -259,6 +325,22 @@ public class MyCartActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(String... params) {
+			
+			StoreOrder storeOrder=new StoreOrder();
+			
+			storeOrder.setGuestCount(AsaanUtility.getCurrentPartySize(getApplicationContext()));
+			storeOrder.setOrderMode(getOrderType());
+			storeOrder.setStoreId(getStoreId());
+			storeOrder.setStoreName(orderList.get(0).getStore_name());
+			storeOrder.setSubTotal((long)subtotalAmount);
+			long tax=0;
+			storeOrder.setTax(tax);
+			double gratuity =  (subtotalAmount * 0.15) / 100;
+			storeOrder.setDeliveryFee((long)gratuity);
+			storeOrder.setServiceCharge((long)0);
+			storeOrder.setFinalTotal(subtotalAmount+(long)gratuity+tax);
+			
+			
 			/*String strOrderFor = "Khobaib";
 			String strOrderReadyTime = "4:45PM";
 			String strNote = "Please make it spicy - no Peanuts Please";
@@ -395,5 +477,19 @@ public class MyCartActivity extends Activity {
 		tvStoreName.setText(shopName);
 		
 	}
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
+	}
+
 	
 }
