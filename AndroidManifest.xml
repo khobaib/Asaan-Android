@@ -98,7 +98,7 @@
         </activity>
         <activity
             android:name=".activity.MyCartActivity"
-            android:theme="@style/AppThemeNoBar" >
+            android:theme="@style/AppThemeBar" >
         </activity>
         <activity
             android:name=".activity.MenuModifierActivity"
@@ -120,7 +120,7 @@
         </activity>
         <activity
             android:name=".activity.EditCartActivity"
-            android:theme="@style/AppThemeNoBar" >
+            android:theme="@style/AppThemeBar" >
         </activity>
         <activity
             android:name=".activity.MenuItemDetailsActivity"
@@ -138,6 +138,7 @@
         <activity android:name=".activity.MenuFlowActivity"></activity>
         <activity android:name=".activity.ClaimStoreActivity"></activity>
         <activity android:name=".activity.SearchEmployeeActivity"></activity>
+        <activity android:name=".activity.DiscountActivity"></activity>
     </application>
 
 </manifest>
