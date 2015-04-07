@@ -168,8 +168,10 @@ public class StoreListFragment extends Fragment {
 			store.setPhone(dStore.getPhone());
 			store.setPriceRange(dStore.getPriceRange());
 			store.setProvidesCarryout(dStore.getProvidesCarryout());
+			store.setProvidesChat(dStore.getProvidesChat());
 			store.setProvidesDelivery(dStore.getProvidesDelivery());
 			store.setProvidesPreOrder(dStore.getProvidesPreOrder());
+			store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
 			store.setProvidesReservation(dStore.getProvidesReservation());
 			store.setProvidesWaitlist(dStore.getProvidesWaitlist());
 			store.setRewardsDescription(dStore.getRewardsDescription());
@@ -262,8 +264,10 @@ public class StoreListFragment extends Fragment {
 				dStore.setPhone(store.getPhone());
 				dStore.setPriceRange(store.getPriceRange());
 				dStore.setProvidesCarryout(store.getProvidesCarryout());
+				dStore.setProvidesChat(store.getProvidesChat());
 				dStore.setProvidesDelivery(store.getProvidesDelivery());
 				dStore.setProvidesPreOrder(store.getProvidesPreOrder());
+				dStore.setProvidesPosIntegration(store.getProvidesPosIntegration());
 				dStore.setProvidesReservation(store.getProvidesReservation());
 				dStore.setProvidesWaitlist(store.getProvidesWaitlist());
 				dStore.setRewardsDescription(store.getRewardsDescription());

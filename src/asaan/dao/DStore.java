@@ -37,7 +37,9 @@ public class DStore {
     private String phone;
     private Integer priceRange;
     private Boolean providesCarryout;
+    private Boolean providesChat;
     private Boolean providesDelivery;
+    private Boolean providesPosIntegration;
     private Boolean providesPreOrder;
     private Boolean providesReservation;
     private Boolean providesWaitlist;
@@ -68,7 +70,7 @@ public class DStore {
         this.id = id;
     }
 
-    public DStore(String address, String backgroundImageUrl, String backgroundThumbnailUrl, Long beaconId, String bssid, String city, Boolean claimed, Double cosineLat, Double cosineLng, Long createdDate, Integer deliveryDistance, Integer deliveryFee, String executiveChef, String description, String fbUrl, String gplusUrl, String hours, long id, Boolean isActive, Double lat, Double lng, Integer minOrderAmtForDelivery, Long modifiedDate, String name, String phone, Integer priceRange, Boolean providesCarryout, Boolean providesDelivery, Boolean providesPreOrder, Boolean providesReservation, Boolean providesWaitlist, String rewardsDescription, Integer rewardsRate, Double sinLat, Double sinLng, String ssid, String state, String subType, String twitterUrl, String type, String webSiteUrl, String zip) {
+    public DStore(String address, String backgroundImageUrl, String backgroundThumbnailUrl, Long beaconId, String bssid, String city, Boolean claimed, Double cosineLat, Double cosineLng, Long createdDate, Integer deliveryDistance, Integer deliveryFee, String executiveChef, String description, String fbUrl, String gplusUrl, String hours, long id, Boolean isActive, Double lat, Double lng, Integer minOrderAmtForDelivery, Long modifiedDate, String name, String phone, Integer priceRange, Boolean providesCarryout, Boolean providesChat, Boolean providesDelivery, Boolean providesPosIntegration, Boolean providesPreOrder, Boolean providesReservation, Boolean providesWaitlist, String rewardsDescription, Integer rewardsRate, Double sinLat, Double sinLng, String ssid, String state, String subType, String twitterUrl, String type, String webSiteUrl, String zip) {
         this.address = address;
         this.backgroundImageUrl = backgroundImageUrl;
         this.backgroundThumbnailUrl = backgroundThumbnailUrl;
@@ -96,7 +98,9 @@ public class DStore {
         this.phone = phone;
         this.priceRange = priceRange;
         this.providesCarryout = providesCarryout;
+        this.providesChat = providesChat;
         this.providesDelivery = providesDelivery;
+        this.providesPosIntegration = providesPosIntegration;
         this.providesPreOrder = providesPreOrder;
         this.providesReservation = providesReservation;
         this.providesWaitlist = providesWaitlist;
@@ -335,12 +339,28 @@ public class DStore {
         this.providesCarryout = providesCarryout;
     }
 
+    public Boolean getProvidesChat() {
+        return providesChat;
+    }
+
+    public void setProvidesChat(Boolean providesChat) {
+        this.providesChat = providesChat;
+    }
+
     public Boolean getProvidesDelivery() {
         return providesDelivery;
     }
 
     public void setProvidesDelivery(Boolean providesDelivery) {
         this.providesDelivery = providesDelivery;
+    }
+
+    public Boolean getProvidesPosIntegration() {
+        return providesPosIntegration;
+    }
+
+    public void setProvidesPosIntegration(Boolean providesPosIntegration) {
+        this.providesPosIntegration = providesPosIntegration;
     }
 
     public Boolean getProvidesPreOrder() {

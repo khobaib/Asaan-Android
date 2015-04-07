@@ -50,21 +50,23 @@ public class DStoreDao extends AbstractDao<DStore, Long> {
         public final static Property Phone = new Property(24, String.class, "phone", false, "PHONE");
         public final static Property PriceRange = new Property(25, Integer.class, "priceRange", false, "PRICE_RANGE");
         public final static Property ProvidesCarryout = new Property(26, Boolean.class, "providesCarryout", false, "PROVIDES_CARRYOUT");
-        public final static Property ProvidesDelivery = new Property(27, Boolean.class, "providesDelivery", false, "PROVIDES_DELIVERY");
-        public final static Property ProvidesPreOrder = new Property(28, Boolean.class, "providesPreOrder", false, "PROVIDES_PRE_ORDER");
-        public final static Property ProvidesReservation = new Property(29, Boolean.class, "providesReservation", false, "PROVIDES_RESERVATION");
-        public final static Property ProvidesWaitlist = new Property(30, Boolean.class, "providesWaitlist", false, "PROVIDES_WAITLIST");
-        public final static Property RewardsDescription = new Property(31, String.class, "rewardsDescription", false, "REWARDS_DESCRIPTION");
-        public final static Property RewardsRate = new Property(32, Integer.class, "rewardsRate", false, "REWARDS_RATE");
-        public final static Property SinLat = new Property(33, Double.class, "sinLat", false, "SIN_LAT");
-        public final static Property SinLng = new Property(34, Double.class, "sinLng", false, "SIN_LNG");
-        public final static Property Ssid = new Property(35, String.class, "ssid", false, "SSID");
-        public final static Property State = new Property(36, String.class, "state", false, "STATE");
-        public final static Property SubType = new Property(37, String.class, "subType", false, "SUB_TYPE");
-        public final static Property TwitterUrl = new Property(38, String.class, "twitterUrl", false, "TWITTER_URL");
-        public final static Property Type = new Property(39, String.class, "type", false, "TYPE");
-        public final static Property WebSiteUrl = new Property(40, String.class, "webSiteUrl", false, "WEB_SITE_URL");
-        public final static Property Zip = new Property(41, String.class, "zip", false, "ZIP");
+        public final static Property ProvidesChat = new Property(27, Boolean.class, "providesChat", false, "PROVIDES_CHAT");
+        public final static Property ProvidesDelivery = new Property(28, Boolean.class, "providesDelivery", false, "PROVIDES_DELIVERY");
+        public final static Property ProvidesPosIntegration = new Property(29, Boolean.class, "providesPosIntegration", false, "PROVIDES_POS_INTEGRATION");
+        public final static Property ProvidesPreOrder = new Property(30, Boolean.class, "providesPreOrder", false, "PROVIDES_PRE_ORDER");
+        public final static Property ProvidesReservation = new Property(31, Boolean.class, "providesReservation", false, "PROVIDES_RESERVATION");
+        public final static Property ProvidesWaitlist = new Property(32, Boolean.class, "providesWaitlist", false, "PROVIDES_WAITLIST");
+        public final static Property RewardsDescription = new Property(33, String.class, "rewardsDescription", false, "REWARDS_DESCRIPTION");
+        public final static Property RewardsRate = new Property(34, Integer.class, "rewardsRate", false, "REWARDS_RATE");
+        public final static Property SinLat = new Property(35, Double.class, "sinLat", false, "SIN_LAT");
+        public final static Property SinLng = new Property(36, Double.class, "sinLng", false, "SIN_LNG");
+        public final static Property Ssid = new Property(37, String.class, "ssid", false, "SSID");
+        public final static Property State = new Property(38, String.class, "state", false, "STATE");
+        public final static Property SubType = new Property(39, String.class, "subType", false, "SUB_TYPE");
+        public final static Property TwitterUrl = new Property(40, String.class, "twitterUrl", false, "TWITTER_URL");
+        public final static Property Type = new Property(41, String.class, "type", false, "TYPE");
+        public final static Property WebSiteUrl = new Property(42, String.class, "webSiteUrl", false, "WEB_SITE_URL");
+        public final static Property Zip = new Property(43, String.class, "zip", false, "ZIP");
     };
 
     private DaoSession daoSession;
@@ -110,21 +112,23 @@ public class DStoreDao extends AbstractDao<DStore, Long> {
                 "'PHONE' TEXT," + // 24: phone
                 "'PRICE_RANGE' INTEGER," + // 25: priceRange
                 "'PROVIDES_CARRYOUT' INTEGER," + // 26: providesCarryout
-                "'PROVIDES_DELIVERY' INTEGER," + // 27: providesDelivery
-                "'PROVIDES_PRE_ORDER' INTEGER," + // 28: providesPreOrder
-                "'PROVIDES_RESERVATION' INTEGER," + // 29: providesReservation
-                "'PROVIDES_WAITLIST' INTEGER," + // 30: providesWaitlist
-                "'REWARDS_DESCRIPTION' TEXT," + // 31: rewardsDescription
-                "'REWARDS_RATE' INTEGER," + // 32: rewardsRate
-                "'SIN_LAT' REAL," + // 33: sinLat
-                "'SIN_LNG' REAL," + // 34: sinLng
-                "'SSID' TEXT," + // 35: ssid
-                "'STATE' TEXT," + // 36: state
-                "'SUB_TYPE' TEXT," + // 37: subType
-                "'TWITTER_URL' TEXT," + // 38: twitterUrl
-                "'TYPE' TEXT," + // 39: type
-                "'WEB_SITE_URL' TEXT," + // 40: webSiteUrl
-                "'ZIP' TEXT);"); // 41: zip
+                "'PROVIDES_CHAT' INTEGER," + // 27: providesChat
+                "'PROVIDES_DELIVERY' INTEGER," + // 28: providesDelivery
+                "'PROVIDES_POS_INTEGRATION' INTEGER," + // 29: providesPosIntegration
+                "'PROVIDES_PRE_ORDER' INTEGER," + // 30: providesPreOrder
+                "'PROVIDES_RESERVATION' INTEGER," + // 31: providesReservation
+                "'PROVIDES_WAITLIST' INTEGER," + // 32: providesWaitlist
+                "'REWARDS_DESCRIPTION' TEXT," + // 33: rewardsDescription
+                "'REWARDS_RATE' INTEGER," + // 34: rewardsRate
+                "'SIN_LAT' REAL," + // 35: sinLat
+                "'SIN_LNG' REAL," + // 36: sinLng
+                "'SSID' TEXT," + // 37: ssid
+                "'STATE' TEXT," + // 38: state
+                "'SUB_TYPE' TEXT," + // 39: subType
+                "'TWITTER_URL' TEXT," + // 40: twitterUrl
+                "'TYPE' TEXT," + // 41: type
+                "'WEB_SITE_URL' TEXT," + // 42: webSiteUrl
+                "'ZIP' TEXT);"); // 43: zip
     }
 
     /** Drops the underlying database table. */
@@ -269,79 +273,89 @@ public class DStoreDao extends AbstractDao<DStore, Long> {
             stmt.bindLong(27, providesCarryout ? 1l: 0l);
         }
  
+        Boolean providesChat = entity.getProvidesChat();
+        if (providesChat != null) {
+            stmt.bindLong(28, providesChat ? 1l: 0l);
+        }
+ 
         Boolean providesDelivery = entity.getProvidesDelivery();
         if (providesDelivery != null) {
-            stmt.bindLong(28, providesDelivery ? 1l: 0l);
+            stmt.bindLong(29, providesDelivery ? 1l: 0l);
+        }
+ 
+        Boolean providesPosIntegration = entity.getProvidesPosIntegration();
+        if (providesPosIntegration != null) {
+            stmt.bindLong(30, providesPosIntegration ? 1l: 0l);
         }
  
         Boolean providesPreOrder = entity.getProvidesPreOrder();
         if (providesPreOrder != null) {
-            stmt.bindLong(29, providesPreOrder ? 1l: 0l);
+            stmt.bindLong(31, providesPreOrder ? 1l: 0l);
         }
  
         Boolean providesReservation = entity.getProvidesReservation();
         if (providesReservation != null) {
-            stmt.bindLong(30, providesReservation ? 1l: 0l);
+            stmt.bindLong(32, providesReservation ? 1l: 0l);
         }
  
         Boolean providesWaitlist = entity.getProvidesWaitlist();
         if (providesWaitlist != null) {
-            stmt.bindLong(31, providesWaitlist ? 1l: 0l);
+            stmt.bindLong(33, providesWaitlist ? 1l: 0l);
         }
  
         String rewardsDescription = entity.getRewardsDescription();
         if (rewardsDescription != null) {
-            stmt.bindString(32, rewardsDescription);
+            stmt.bindString(34, rewardsDescription);
         }
  
         Integer rewardsRate = entity.getRewardsRate();
         if (rewardsRate != null) {
-            stmt.bindLong(33, rewardsRate);
+            stmt.bindLong(35, rewardsRate);
         }
  
         Double sinLat = entity.getSinLat();
         if (sinLat != null) {
-            stmt.bindDouble(34, sinLat);
+            stmt.bindDouble(36, sinLat);
         }
  
         Double sinLng = entity.getSinLng();
         if (sinLng != null) {
-            stmt.bindDouble(35, sinLng);
+            stmt.bindDouble(37, sinLng);
         }
  
         String ssid = entity.getSsid();
         if (ssid != null) {
-            stmt.bindString(36, ssid);
+            stmt.bindString(38, ssid);
         }
  
         String state = entity.getState();
         if (state != null) {
-            stmt.bindString(37, state);
+            stmt.bindString(39, state);
         }
  
         String subType = entity.getSubType();
         if (subType != null) {
-            stmt.bindString(38, subType);
+            stmt.bindString(40, subType);
         }
  
         String twitterUrl = entity.getTwitterUrl();
         if (twitterUrl != null) {
-            stmt.bindString(39, twitterUrl);
+            stmt.bindString(41, twitterUrl);
         }
  
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(40, type);
+            stmt.bindString(42, type);
         }
  
         String webSiteUrl = entity.getWebSiteUrl();
         if (webSiteUrl != null) {
-            stmt.bindString(41, webSiteUrl);
+            stmt.bindString(43, webSiteUrl);
         }
  
         String zip = entity.getZip();
         if (zip != null) {
-            stmt.bindString(42, zip);
+            stmt.bindString(44, zip);
         }
     }
 
@@ -388,21 +402,23 @@ public class DStoreDao extends AbstractDao<DStore, Long> {
             cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24), // phone
             cursor.isNull(offset + 25) ? null : cursor.getInt(offset + 25), // priceRange
             cursor.isNull(offset + 26) ? null : cursor.getShort(offset + 26) != 0, // providesCarryout
-            cursor.isNull(offset + 27) ? null : cursor.getShort(offset + 27) != 0, // providesDelivery
-            cursor.isNull(offset + 28) ? null : cursor.getShort(offset + 28) != 0, // providesPreOrder
-            cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0, // providesReservation
-            cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0, // providesWaitlist
-            cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31), // rewardsDescription
-            cursor.isNull(offset + 32) ? null : cursor.getInt(offset + 32), // rewardsRate
-            cursor.isNull(offset + 33) ? null : cursor.getDouble(offset + 33), // sinLat
-            cursor.isNull(offset + 34) ? null : cursor.getDouble(offset + 34), // sinLng
-            cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35), // ssid
-            cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36), // state
-            cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37), // subType
-            cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38), // twitterUrl
-            cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39), // type
-            cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40), // webSiteUrl
-            cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41) // zip
+            cursor.isNull(offset + 27) ? null : cursor.getShort(offset + 27) != 0, // providesChat
+            cursor.isNull(offset + 28) ? null : cursor.getShort(offset + 28) != 0, // providesDelivery
+            cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0, // providesPosIntegration
+            cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0, // providesPreOrder
+            cursor.isNull(offset + 31) ? null : cursor.getShort(offset + 31) != 0, // providesReservation
+            cursor.isNull(offset + 32) ? null : cursor.getShort(offset + 32) != 0, // providesWaitlist
+            cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33), // rewardsDescription
+            cursor.isNull(offset + 34) ? null : cursor.getInt(offset + 34), // rewardsRate
+            cursor.isNull(offset + 35) ? null : cursor.getDouble(offset + 35), // sinLat
+            cursor.isNull(offset + 36) ? null : cursor.getDouble(offset + 36), // sinLng
+            cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37), // ssid
+            cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38), // state
+            cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39), // subType
+            cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40), // twitterUrl
+            cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41), // type
+            cursor.isNull(offset + 42) ? null : cursor.getString(offset + 42), // webSiteUrl
+            cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43) // zip
         );
         return entity;
     }
@@ -437,21 +453,23 @@ public class DStoreDao extends AbstractDao<DStore, Long> {
         entity.setPhone(cursor.isNull(offset + 24) ? null : cursor.getString(offset + 24));
         entity.setPriceRange(cursor.isNull(offset + 25) ? null : cursor.getInt(offset + 25));
         entity.setProvidesCarryout(cursor.isNull(offset + 26) ? null : cursor.getShort(offset + 26) != 0);
-        entity.setProvidesDelivery(cursor.isNull(offset + 27) ? null : cursor.getShort(offset + 27) != 0);
-        entity.setProvidesPreOrder(cursor.isNull(offset + 28) ? null : cursor.getShort(offset + 28) != 0);
-        entity.setProvidesReservation(cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0);
-        entity.setProvidesWaitlist(cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0);
-        entity.setRewardsDescription(cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31));
-        entity.setRewardsRate(cursor.isNull(offset + 32) ? null : cursor.getInt(offset + 32));
-        entity.setSinLat(cursor.isNull(offset + 33) ? null : cursor.getDouble(offset + 33));
-        entity.setSinLng(cursor.isNull(offset + 34) ? null : cursor.getDouble(offset + 34));
-        entity.setSsid(cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35));
-        entity.setState(cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36));
-        entity.setSubType(cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37));
-        entity.setTwitterUrl(cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38));
-        entity.setType(cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39));
-        entity.setWebSiteUrl(cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40));
-        entity.setZip(cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41));
+        entity.setProvidesChat(cursor.isNull(offset + 27) ? null : cursor.getShort(offset + 27) != 0);
+        entity.setProvidesDelivery(cursor.isNull(offset + 28) ? null : cursor.getShort(offset + 28) != 0);
+        entity.setProvidesPosIntegration(cursor.isNull(offset + 29) ? null : cursor.getShort(offset + 29) != 0);
+        entity.setProvidesPreOrder(cursor.isNull(offset + 30) ? null : cursor.getShort(offset + 30) != 0);
+        entity.setProvidesReservation(cursor.isNull(offset + 31) ? null : cursor.getShort(offset + 31) != 0);
+        entity.setProvidesWaitlist(cursor.isNull(offset + 32) ? null : cursor.getShort(offset + 32) != 0);
+        entity.setRewardsDescription(cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33));
+        entity.setRewardsRate(cursor.isNull(offset + 34) ? null : cursor.getInt(offset + 34));
+        entity.setSinLat(cursor.isNull(offset + 35) ? null : cursor.getDouble(offset + 35));
+        entity.setSinLng(cursor.isNull(offset + 36) ? null : cursor.getDouble(offset + 36));
+        entity.setSsid(cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37));
+        entity.setState(cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38));
+        entity.setSubType(cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39));
+        entity.setTwitterUrl(cursor.isNull(offset + 40) ? null : cursor.getString(offset + 40));
+        entity.setType(cursor.isNull(offset + 41) ? null : cursor.getString(offset + 41));
+        entity.setWebSiteUrl(cursor.isNull(offset + 42) ? null : cursor.getString(offset + 42));
+        entity.setZip(cursor.isNull(offset + 43) ? null : cursor.getString(offset + 43));
      }
     
     /** @inheritdoc */
