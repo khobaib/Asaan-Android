@@ -31,6 +31,7 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.DefaultTipsSpinnerAdapter;
 import com.techfiesta.asaan.fragment.ErrorDialogFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
 public class PaymentInfoActivity extends Activity {
 
@@ -57,6 +58,7 @@ public class PaymentInfoActivity extends Activity {
 //	int year;
 	int tips;
 	private ProgressDialog pDialog;
+	private int RESPONSE_CODE=2;
 	
 
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
@@ -274,6 +276,18 @@ public class PaymentInfoActivity extends Activity {
 				if(pDialog!=null && pDialog.isShowing())
 					pDialog.dismiss();
 				AsaanUtility.simpleAlert(PaymentInfoActivity.this, "An error occured.");
+			}
+			else{
+				Intent i=getIntent();
+				
+				int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
+				if(code==-1)
+				{
+					setResult(RESPONSE_CODE);
+					finish();
+					overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+				}
+				
 			}
 		}
 

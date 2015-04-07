@@ -200,6 +200,7 @@ public class StoreListFragment extends Fragment {
 
 	private class GetStroreInfoFromServer extends AsyncTask<Void, Void, Void> {
 
+		private boolean error=false;
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			try {
@@ -208,6 +209,7 @@ public class StoreListFragment extends Fragment {
 			} catch (IOException e) {
 
 				e.printStackTrace();
+				error=true;
 			}
 			return null;
 		}
@@ -215,9 +217,14 @@ public class StoreListFragment extends Fragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			// setting list
+			if(error)
+				AsaanUtility.simpleAlert(getActivity(),"An error occured.");
+			else
+			{
 			storeList = storeCollection.getItems();
 			saveStoreToDatabase();
 			new GetStoreStatsFromServer().execute();
+			}
 			super.onPostExecute(result);
 		}
 
@@ -286,6 +293,7 @@ public class StoreListFragment extends Fragment {
 	}
 	private class GetStoreStatsFromServer  extends AsyncTask<Void,Void,Void>
 	{
+		private boolean error=false;
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -295,15 +303,21 @@ public class StoreListFragment extends Fragment {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				error=true;
 			}
 			return null;
 		}
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			if(error)
+				AsaanUtility.simpleAlert(getActivity(),"An error occured.");
+			else
+			{
 			storeListAdapter = new StoreListAdapter(getActivity(), storeList,storeStatsCollection.getItems());
 			storeListView.setAdapter(storeListAdapter);
 			closeDatabase();
+			}
 		}
 		
 	}
@@ -332,5 +346,6 @@ public class StoreListFragment extends Fragment {
 
 		bld.create().show();
 	}
+
 
 }

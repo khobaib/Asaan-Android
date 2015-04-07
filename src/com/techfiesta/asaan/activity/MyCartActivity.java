@@ -2,6 +2,7 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,10 +13,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import android.R.bool;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -33,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
+import asaan.dao.DStore;
 import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
@@ -41,20 +45,19 @@ import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.PlaceOrderArguments;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
-import com.google.android.gms.internal.dd;
-import com.google.android.gms.internal.it;
-import com.google.android.gms.internal.mi;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
+import com.techfiesta.asaan.utility.HTMLFaxOrder;
 import com.techfiesta.asaan.utility.NestedListView;
+import com.techfiesta.asaan.utility.XMLPosOrder;
 
-import de.greenrobot.dao.query.WhereCondition;
 
 public class MyCartActivity extends Activity {
 
@@ -68,7 +71,8 @@ public class MyCartActivity extends Activity {
 	private AddItemDao addItemDao;
 	private AddItem addItem;
 	private ModItem modItem;
-	 private ModItemDao modItemDao;
+	private ModItemDao modItemDao;
+	private DStoreDao dStoreDao;
 	 
 	 private ActionBar actionBar;
 
@@ -80,42 +84,12 @@ public class MyCartActivity extends Activity {
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
 	private int subtotalAmount;
-	private String endString="";
 	private RelativeLayout rlDiscount;
+	private int MYCART_ACTIVITY_INDENTIFIER=100;
+	private int REQUEST_CODE=1;
+	private int RESULT_CODE=2;
 	
-	private String beginingString = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" " +
-			"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\">" +
-			" <head>" +
-			" <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> " +
-			"<title>New Savoir Order</title> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /> " +
-			"</head> " +
-			"<body style=\"margin: 0; padding: 0; \"> <table align=\"center\" border=\"0\" cellpadding=\"10px\" cellspacing=\"0\" width=\"900px\">" +
-			" <tr> <td align=\"right\" style=\"padding: 10px 10px 10px 10px;\">" +
-			"<img src=\"http://static1.squarespace.com/static/54ce8734e4b08a9c05c30098/t/54e545d5e4b052bf9dad58df/1425522195820/?format=1500w\" /> " +
-			"</td> </tr>" +
-			" <tr> <td align=\"center\" style=\"font-family: Arial, sans-serif; font-size: 24px; padding: 10px 10px 10px 10px;\"> <b>New Savoir Order</b> </td>" +
-			" </tr> <tr> <td style=\"font-family: Arial, sans-serif; font-size: 14px;\"> " +
-			"<table border=\"0\" cellpadding=\"10px\" cellspacing=\"0\" width=\"100%%\"> " +
-			"<tr> <td width=\"60%%\" valign=\"top\">Name: <b>%s</b></td> " +
-			"<td width=\"40%%\" valign=\"top\">To: <b>%s</b></td> </tr> " +
-			"<tr> <td width=\"60%%\" valign=\"top\">Phone: <b>%s</b></td>" +
-			" <td width=\"40%%\" valign=\"top\">Order #: <b>%s</b></td> </tr> " +
-			"<tr> <td width=\"60%%\" valign=\"top\">Email: <b>%s</b></td>" +
-			" <td width=\"40%%\" valign=\"top\">Order Type: <b>%s</b></td> </tr>" +
-			" <tr> <td width=\"60%%\" valign=\"top\">Address: <b>%s</b></td> " +
-			"<td width=\"40%%\" valign=\"top\">Placed: <b>%s</b></td> </tr>" +
-			" <tr> <td width=\"60%%\" valign=\"top\"></td> " +
-			"<td width=\"40%%\" valign=\"top\">Prepaid: <b>%s</b></td> </tr> " +
-			"<tr> <td width=\"60%%\" valign=\"top\">" +
-			"</td> <td width=\"40%%\" style=\"font-family: Arial, sans-serif; font-size: 24px;\" valign=\"top\">Expected Time: <b><i><u>%s</u></i></b></td> " +
-			"</tr> </table> </td> </tr> " +
-			"<tr> <td style=\"font-family: Arial, sans-serif; font-size: 14px;\"> <table border=\"1\" cellpadding=\"10px\" cellspacing=\"0\" width=\"100%%\">" +
-			" <tr> <th width=\"35%%\" valign=\"top\">Product</th> <th width=\"20%%\" valign=\"top\">Options</th> <th width=\"20%%\" valign=\"top\">Notes</th> <th width=\"10%%\" valign=\"top\">Quantity</th> <th width=\"15%%\" valign=\"top\">Total</th> </tr>";
-	private String table_row="<tr> <td width=\"35%%\" valign=\"top\"><b></b><br>%s</td>" +
-			" <td width=\"20%%\" valign=\"top\">%s</td> " +
-			"<td width=\"20%%\" valign=\"top\">%s</td>" +
-			" <td width=\"10%%\" valign=\"top\" align=\"right\">%s</td> " +
-			"<td width=\"15%%\" valign=\"top\" align=\"right\">%s</td> </tr>";
+	
 	
 	
 	@Override
@@ -198,15 +172,13 @@ public class MyCartActivity extends Activity {
 				
 			}
 		});
-       long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
-	   initDatabaseAndPopuateList();
-
-
+    
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initDatabase();
 		orderList = addItemDao.queryBuilder().list();
 		Log.e(">>>", "List count" + addItemDao.count());
 		if(orderList.size()==0)
@@ -247,14 +219,16 @@ public class MyCartActivity extends Activity {
 	
 
 
-	private void initDatabaseAndPopuateList() {
+	private void initDatabase() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(this, "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
 		modItemDao = daoSession.getModItemDao();
-		orderList = addItemDao.queryBuilder().list();
+		dStoreDao=daoSession.getDStoreDao();
+		
+		
 	}
 
 	public void onClickPlaceOrder(View v){
@@ -273,7 +247,7 @@ public class MyCartActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
 				if (alertType == ALERT_TYPE_CANCEL_ORDER) {
-					deletefromDatabase();
+					deleteFromDatabase();
 					Intent i = new Intent(MyCartActivity.this, StoreListActivity.class);
 					startActivity(i);
 					overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
@@ -283,7 +257,8 @@ public class MyCartActivity extends Activity {
 					if(AsaanUtility.defCard==null)
 					{
 						Intent intent=new Intent(MyCartActivity.this,PaymentInfoActivity.class);
-						startActivity(intent);
+						intent.putExtra(Constants.KEY_FROM_ACTIVITY,MYCART_ACTIVITY_INDENTIFIER);
+						startActivityForResult(intent,REQUEST_CODE);
 					}
 					else
 					   new RemotePlaceOrderTask().execute();
@@ -306,7 +281,7 @@ public class MyCartActivity extends Activity {
 		Alert.show();
 	}
 
-	private long getStoreId() {
+	private long getOrderedStoreId() {
 		return AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
 	}
 	private int getOrderType()
@@ -315,6 +290,7 @@ public class MyCartActivity extends Activity {
 	}
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
+		private boolean error=false;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -327,44 +303,50 @@ public class MyCartActivity extends Activity {
 		protected Void doInBackground(String... params) {
 			
 			StoreOrder storeOrder=new StoreOrder();
-			
-			storeOrder.setGuestCount(AsaanUtility.getCurrentPartySize(getApplicationContext()));
+			long id=getOrderedStoreId();
+			DStore dStore=getOrderedStoreFromDatabase(id);
+			int guestSize=AsaanUtility.getCurrentPartySize(getApplicationContext());
+			storeOrder.setGuestCount(guestSize);
 			storeOrder.setOrderMode(getOrderType());
-			storeOrder.setStoreId(getStoreId());
+			storeOrder.setStoreId(id);
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
 			storeOrder.setSubTotal((long)subtotalAmount);
 			long tax=0;
 			storeOrder.setTax(tax);
 			double gratuity =  (subtotalAmount * 0.15) / 100;
-			storeOrder.setDeliveryFee((long)gratuity);
-			storeOrder.setServiceCharge((long)0);
-			storeOrder.setFinalTotal(subtotalAmount+(long)gratuity+tax);
+			storeOrder.setDeliveryFee((long)dStore.getDeliveryFee());
+			storeOrder.setServiceCharge((long)gratuity);
+			long total=subtotalAmount+(long)gratuity+tax;
+			storeOrder.setFinalTotal(total);
 			
+			PlaceOrderArguments orderArguments=new PlaceOrderArguments();
+			if(AsaanUtility.defCard!=null)
+			{
+				orderArguments.setUserId(AsaanUtility.defCard.getUserId());
+				orderArguments.setCardid(AsaanUtility.defCard.getCardId());
+				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
+			}
+			//may need to change
 			
-			/*String strOrderFor = "Khobaib";
-			String strOrderReadyTime = "4:45PM";
-			String strNote = "Please make it spicy - no Peanuts Please";
-			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
-					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
-					+ getOrderString()+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
+			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
+			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
 			
-			Log.e("Order String", strOrder);
-
-			PlaceOrder PlaceOrderReq;
+			XMLPosOrder xmlPosOrder=new XMLPosOrder();
+			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			
+			orderArguments.setOrder(storeOrder);
 			try {
-				String token = ParseUser.getCurrentUser().getString("authToken");
-
-				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
-				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
-				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
-				StoreOrder order = PlaceOrderReq.execute();
-				
-
-
+				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
+				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				StoreOrder order=placeOrder.execute();
+				if(order!=null)
+				   Log.e("order Rresponse",order.toPrettyString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
-			}*/
+				error=true;
+			}
 
 			return null;
 		}
@@ -372,85 +354,44 @@ public class MyCartActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			//deleteAllPostedOrders();
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-			
-			showDialogOrderPosted();
-		}
-		private void setUpBeginingString()
-		{
-			String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
-			String to=AsaanUtility.selectedStore.getName();
-			String phone="phone";
-			if(ParseUser.getCurrentUser().get("phone")!=null)
-			   phone=ParseUser.getCurrentUser().get("phone").toString();
-			String order="ORDER ID";
-			String email=ParseUser.getCurrentUser().getEmail();
-			String orderType="TEMP";
-			String address="";
-			if(ParseUser.getCurrentUser().get("address")!=null)
-				address=ParseUser.getCurrentUser().get("address").toString();
-			long mili=System.currentTimeMillis();
-			String placed=getFormattedDate(mili)+" at "+getFormattedTime(mili);
-			String prepaid="YES";
-			String expctedTime="PLACEHOLDER";
-			//Log.e("STRING",userName+to+phone+order+email+orderType+address+placed+expctedTime);
-			
-			beginingString=String.format(beginingString,userName,to,phone,order,email,orderType,address,placed,prepaid,expctedTime);
-			Log.e("STRING",beginingString);
-		}
-		private void createRowsStrings()
-		{
-			int i,size=orderList.size();
-			for(i=0;i<size;i++)
-			{
-				String options="";
-			   if(orderList.get(i).getMod_items()!=null && orderList.get(i).getMod_items().size()>0)
-				   options=orderList.get(i).getMod_items().get(0).getName();
-			   
-				String row=String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
-				beginingString+=row;
+			if (error)
+				AsaanUtility.simpleAlert(MyCartActivity.this, "An error occured");
+			else {
+				deleteFromDatabase();
+				showDialogOrderPosted();
 			}
-			
 		}
-		private String getOrderHTML()
+	}
+	private DStore getOrderedStoreFromDatabase(Long id)
+	{
+		List<DStore> list=dStoreDao.queryBuilder().list();
+		int size=list.size();
+		for(int i=0;i<size;i++)
 		{
-			setUpBeginingString();
-			createRowsStrings();
-			return beginingString+endString;
+			if(list.get(i).getId()==id)
+			 return list.get(i);
 		}
 		
-
+	 return null;
 	}
-	public String getFormattedTime(Long rawTime) {
+	private String getFormattedTime(Long rawTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 		String sTime = sdf.format(new Date(rawTime));
 		return sTime;
 	}
-	public String getFormattedDate(Long rawTime) {
+	private String getFormattedDate(Long rawTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d,yyyy");
 		String sDate = sdf.format(new Date(rawTime));
 		return sDate;
 	}
-
-	private void deletefromDatabase() {
-		addItemDao.deleteAll();
-		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
-		adapter.notifyDataSetChanged();
-	}
-	private void deleteAllPostedOrders()
-	{
-		// deleting all orders
-		OpenHelper helper = new DaoMaster.DevOpenHelper(MyCartActivity.this, "asaan-db", null);
-		SQLiteDatabase db = helper.getWritableDatabase();
-		DaoMaster daoMaster = new DaoMaster(db);
-		DaoSession daoSession = daoMaster.newSession();
-		AddItemDao addItemDao = daoSession.getAddItemDao();
-		ModItemDao modItemDao = daoSession.getModItemDao();
+	
+	private void deleteFromDatabase() {
 		addItemDao.deleteAll();
 		modItemDao.deleteAll();
 		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
+		adapter.notifyDataSetChanged();
 	}
 	private void showDialogOrderPosted() {
 		AlertDialog.Builder bld = new AlertDialog.Builder(MyCartActivity.this);
@@ -476,6 +417,14 @@ public class MyCartActivity extends Activity {
 		String shopName=orderList.get(0).getStore_name();
 		tvStoreName.setText(shopName);
 		
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==REQUEST_CODE && resultCode==RESULT_CODE)
+		{
+			new RemotePlaceOrderTask().execute();
+		}
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
