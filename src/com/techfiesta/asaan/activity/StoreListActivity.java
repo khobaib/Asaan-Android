@@ -53,6 +53,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.ChatHistoryFragment;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
 import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.fragment.PendingOrderFragment;
@@ -117,7 +118,12 @@ public class StoreListActivity extends FragmentActivity {
 					ProfileFragment profileFragment = new ProfileFragment();
 					ft.replace(R.id.frame_container, profileFragment);
 
-				} else if (position == 3) {
+				} 
+				else if (position == 2) {
+					ChatHistoryFragment chatHistoryFragment=new ChatHistoryFragment();
+					ft.replace(R.id.frame_container, chatHistoryFragment);
+
+				}else if (position == 3) {
 
 					WaitListStatusFragment waitListStatusFragment=new WaitListStatusFragment();
 					ft.replace(R.id.frame_container, waitListStatusFragment);
