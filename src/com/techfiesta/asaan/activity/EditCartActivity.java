@@ -91,12 +91,10 @@ public class EditCartActivity extends Activity {
 				long id=AsaanUtility.getCurrentOrderedStoredId(EditCartActivity.this);
 				Store store=new Store();
 				store.setId(id);
-				if(orderList.size()!=0)
-				{
-					store.setName(orderList.get(0).getStore_name());
-					int order_type=orderList.get(0).getOrder_type();
-					intent.putExtra(Constants.ORDER_TYPE,order_type);
-				}
+				
+				int order_type=getOrderType();
+				intent.putExtra(Constants.ORDER_TYPE,order_type);
+				
 				AsaanUtility.selectedStore=store;
 				startActivity(intent);
 				
@@ -119,6 +117,12 @@ public class EditCartActivity extends Activity {
 
 	}
 
+	private int getOrderType()
+	{
+		if(orderList.size()!=0)
+		   return orderList.get(0).getOrder_type();
+		return 1;
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -126,24 +130,6 @@ public class EditCartActivity extends Activity {
 		updateCartInfo();
 	}
 	
-	private String getOrderString()
-	  {
-		  String orderXML = "<POSREQUEST token=\"1234567890\"><CHECKREQUESTS><ADDCHECK ORDERMODE=\""
-					+ Constants.ORDER_TYPE_DELIVERY + "\">" + "<ITEMREQUESTS>";
-
-			for (AddItem addItem : orderList) {
-				orderXML += "<ADDITEM QTY =\"" + addItem.getQuantity() + "\" ITEMID=\"" + addItem.getItem_id()
-						+ "\">";
-
-				for (ModItem mod : addItem.getMod_items())
-					orderXML += "<MODITEM ITEMID=\"" + mod.getItem_id() + "\">"; 
-				orderXML += "</ADDITEM>";
-			}
-			orderXML += "</ITEMREQUESTS></ADDCHECK></CHECKREQUESTS></POSREQUEST>";
-			
-			return orderXML;
-
-	  }
 	public void updateCartInfo(){
 		orderList = addItemDao.queryBuilder().list();
 		if(orderList.size()==0)

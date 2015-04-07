@@ -31,6 +31,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -88,7 +90,7 @@ public class MyCartActivity extends Activity {
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
 	private int RESULT_CODE=2;
-	
+	private long one_hour_in_mili=1000*60*60;
 	
 	
 	
@@ -134,12 +136,10 @@ public class MyCartActivity extends Activity {
 				long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
 				Store store=new Store();
 				store.setId(id);
-				if(orderList.size()!=0)
-				{
-					store.setName(orderList.get(0).getStore_name());
-					int order_type=orderList.get(0).getOrder_type();
-					intent.putExtra(Constants.ORDER_TYPE,order_type);
-				}
+				
+				int order_type=getOrderType();
+				intent.putExtra(Constants.ORDER_TYPE,order_type);
+				
 				AsaanUtility.selectedStore=store;
 				startActivity(intent);
 				
@@ -174,12 +174,13 @@ public class MyCartActivity extends Activity {
 		});
     
 	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		initDatabase();
 		orderList = addItemDao.queryBuilder().list();
+		closeDatabase();
 		Log.e(">>>", "List count" + addItemDao.count());
 		if(orderList.size()==0)
 		{
@@ -205,18 +206,53 @@ public class MyCartActivity extends Activity {
 		tvTotal.setText("$" + String.format("%.2f", total));
 
 		tvAmountDue.setText("$" + String.format("%.2f", total));
-		long max=orderList.get(0).getEstimated_time();
-		
-		for(int i=1;i<orderList.size();i++)
-			if(max<orderList.get(i).getEstimated_time())
-				max=orderList.get(i).getEstimated_time();
-		tvDeliveryTime.setText(getFormattedTime(max));
+		long estimatedtime=getEstimatedTime();
+		tvDeliveryTime.setText(getFormattedTime(estimatedtime));
 
 		adapter = new MyCartListAdapter(MyCartActivity.this, orderList, Constants.MY_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
+		lvOrder.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				AddItem addItem=orderList.get(position);
+				long estimatedtime=getEstimatedTime();
+				Intent intent=new Intent(MyCartActivity.this,OrderItemActivity.class);
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_POS_ID,addItem.getItem_id());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_PRICE,addItem.getPrice());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, convertHasModifiers(addItem.getHasModifiers()));
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,addItem.getItem_name());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,"");
+				intent.putExtra(Constants.ORDER_TYPE,getOrderType());
+				intent.putExtra(Constants.ESTIMATED_TIME,estimatedtime);
+				intent.putExtra(Constants.KEY_FROM_ACTIVITY,1);
+				intent.putExtra(Constants.KEY_QUANTITY,addItem.getQuantity());
+				
+				setSelectedStore(addItem);
+				
+				startActivity(intent);
+			}
+		});
+	}
+	private int getOrderType()
+	{
+		if(orderList.size()!=0)
+		   return orderList.get(0).getOrder_type();
+		return 1;
+	}
+	private boolean convertHasModifiers(int x)
+	{
+		return x==1?true:false;
 	}
 
-	
+	private void setSelectedStore(AddItem addItem)
+	{
+		Store store=new Store();
+		store.setId((long)addItem.getStore_id());
+		store.setName(addItem.getStore_name());
+		AsaanUtility.selectedStore=store;
+	}
 
 
 	private void initDatabase() {
@@ -229,6 +265,10 @@ public class MyCartActivity extends Activity {
 		dStoreDao=daoSession.getDStoreDao();
 		
 		
+	}
+	private void closeDatabase()
+	{
+		daoSession.getDatabase().close();
 	}
 
 	public void onClickPlaceOrder(View v){
@@ -284,10 +324,6 @@ public class MyCartActivity extends Activity {
 	private long getOrderedStoreId() {
 		return AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
 	}
-	private int getOrderType()
-	{
-		return orderList.get(0).getOrder_type();
-	}
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
 		private boolean error=false;
@@ -304,7 +340,12 @@ public class MyCartActivity extends Activity {
 			
 			StoreOrder storeOrder=new StoreOrder();
 			long id=getOrderedStoreId();
+			
+			initDatabase();
 			DStore dStore=getOrderedStoreFromDatabase(id);
+			closeDatabase();
+			
+			
 			int guestSize=AsaanUtility.getCurrentPartySize(getApplicationContext());
 			storeOrder.setGuestCount(guestSize);
 			storeOrder.setOrderMode(getOrderType());
@@ -375,6 +416,20 @@ public class MyCartActivity extends Activity {
 		}
 		
 	 return null;
+	}
+	public long getEstimatedTime()
+	{
+		int size=orderList.size();
+		long max=0;
+		for(int i=0;i<size;i++)
+		{
+			if(orderList.get(i).getEstimated_time()>max)
+				max=orderList.get(i).getEstimated_time();
+		}
+		long curTime=System.currentTimeMillis();
+		if(curTime+one_hour_in_mili>max)
+			max=curTime+one_hour_in_mili;
+	  return max;
 	}
 	private String getFormattedTime(Long rawTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");

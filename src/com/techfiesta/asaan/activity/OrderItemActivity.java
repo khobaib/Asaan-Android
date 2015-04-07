@@ -47,6 +47,7 @@ import asaan.dao.ModItemDao;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemModifiersAndGroups;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifier;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItemModifierGroup;
+import com.google.android.gms.internal.hs;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
@@ -89,6 +90,8 @@ public class OrderItemActivity extends Activity {
     private ActionBar actionBar;
     private long curTime=-1;
     private int order_type=-1;
+    private int from_activity=-1;
+    private int quantity=1;
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
@@ -119,7 +122,9 @@ public class OrderItemActivity extends Activity {
 		menuItemHasModifiers = bundle.getBoolean(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, false);
 		curTime=bundle.getLong(Constants.ESTIMATED_TIME,-1);
 		order_type=bundle.getInt(Constants.ORDER_TYPE,-1);
-		actionBar.setTitle(menuItemLongDesc);
+		from_activity=bundle.getInt(Constants.KEY_FROM_ACTIVITY,-1);
+		quantity=bundle.getInt(Constants.KEY_QUANTITY,1);
+		actionBar.setTitle(menuItemShortDesc);
 	
 	}
 	private void initDatabase() {
@@ -194,7 +199,7 @@ public class OrderItemActivity extends Activity {
 			txtName.setText("");
 
 		txtPrice.setText(AsaanUtility.formatCentsToCurrency(menuItemPrice));
-		String strQuantity = String.format(Locale.US, "%d", 1);
+		String strQuantity = String.format(Locale.US, "%d",quantity);
 		txtQuantity.setText(strQuantity);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -231,6 +236,10 @@ public class OrderItemActivity extends Activity {
 					addItem.setNotes(txtSpecialInstructions.getText().toString());
 					addItem.setEstimated_time(curTime);
 					addItem.setOrder_type(order_type);
+					if(menuItemHasModifiers)
+						addItem.setHasModifiers(1);
+					else
+						addItem.setHasModifiers(0);
 					
 					//addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
 						//	menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
@@ -258,7 +267,14 @@ public class OrderItemActivity extends Activity {
 			}
 		});
 	}
-
+private void saveItem()
+{
+	
+}
+private void updateItem()
+{
+	
+}
 	private void toast(String str) {
 		Toast.makeText(OrderItemActivity.this, str, Toast.LENGTH_LONG).show();
 	}
@@ -295,6 +311,7 @@ public class OrderItemActivity extends Activity {
 
 		// txtPrice.setText(AsaanUtility.formatCentsToCurrency(finalPrice));
 		btnPlaceOrder.setText("Add to Order " + AsaanUtility.formatCentsToCurrency(finalPrice));
+		txtPrice.setText("Add to Order " + AsaanUtility.formatCentsToCurrency(finalPrice));
 		// if (menuItemHasModifiers)
 		// txtDesc.setText(mAdapter.getFinalDesc());
 	}
