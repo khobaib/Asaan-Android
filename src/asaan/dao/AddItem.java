@@ -23,6 +23,7 @@ public class AddItem {
     private String notes;
     private int order_type;
     private long estimated_time;
+    private Integer hasModifiers;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -39,7 +40,7 @@ public class AddItem {
         this.id = id;
     }
 
-    public AddItem(Long id, int store_id, String store_name, int price, String item_name, int quantity, int item_id, String notes, int order_type, long estimated_time) {
+    public AddItem(Long id, int store_id, String store_name, int price, String item_name, int quantity, int item_id, String notes, int order_type, long estimated_time, Integer hasModifiers) {
         this.id = id;
         this.store_id = store_id;
         this.store_name = store_name;
@@ -50,6 +51,7 @@ public class AddItem {
         this.notes = notes;
         this.order_type = order_type;
         this.estimated_time = estimated_time;
+        this.hasModifiers = hasModifiers;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -142,6 +144,14 @@ public class AddItem {
 
     public void setEstimated_time(long estimated_time) {
         this.estimated_time = estimated_time;
+    }
+
+    public Integer getHasModifiers() {
+        return hasModifiers;
+    }
+
+    public void setHasModifiers(Integer hasModifiers) {
+        this.hasModifiers = hasModifiers;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

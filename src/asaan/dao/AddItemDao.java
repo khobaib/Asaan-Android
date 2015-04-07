@@ -33,6 +33,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         public final static Property Notes = new Property(7, String.class, "notes", false, "NOTES");
         public final static Property Order_type = new Property(8, int.class, "order_type", false, "ORDER_TYPE");
         public final static Property Estimated_time = new Property(9, long.class, "estimated_time", false, "ESTIMATED_TIME");
+        public final static Property HasModifiers = new Property(10, Integer.class, "hasModifiers", false, "HAS_MODIFIERS");
     };
 
     private DaoSession daoSession;
@@ -60,7 +61,8 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
                 "'ITEM_ID' INTEGER NOT NULL ," + // 6: item_id
                 "'NOTES' TEXT NOT NULL ," + // 7: notes
                 "'ORDER_TYPE' INTEGER NOT NULL ," + // 8: order_type
-                "'ESTIMATED_TIME' INTEGER NOT NULL );"); // 9: estimated_time
+                "'ESTIMATED_TIME' INTEGER NOT NULL ," + // 9: estimated_time
+                "'HAS_MODIFIERS' INTEGER);"); // 10: hasModifiers
     }
 
     /** Drops the underlying database table. */
@@ -87,6 +89,11 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         stmt.bindString(8, entity.getNotes());
         stmt.bindLong(9, entity.getOrder_type());
         stmt.bindLong(10, entity.getEstimated_time());
+ 
+        Integer hasModifiers = entity.getHasModifiers();
+        if (hasModifiers != null) {
+            stmt.bindLong(11, hasModifiers);
+        }
     }
 
     @Override
@@ -114,7 +121,8 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
             cursor.getInt(offset + 6), // item_id
             cursor.getString(offset + 7), // notes
             cursor.getInt(offset + 8), // order_type
-            cursor.getLong(offset + 9) // estimated_time
+            cursor.getLong(offset + 9), // estimated_time
+            cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10) // hasModifiers
         );
         return entity;
     }
@@ -132,6 +140,7 @@ public class AddItemDao extends AbstractDao<AddItem, Long> {
         entity.setNotes(cursor.getString(offset + 7));
         entity.setOrder_type(cursor.getInt(offset + 8));
         entity.setEstimated_time(cursor.getLong(offset + 9));
+        entity.setHasModifiers(cursor.isNull(offset + 10) ? null : cursor.getInt(offset + 10));
      }
     
     /** @inheritdoc */
