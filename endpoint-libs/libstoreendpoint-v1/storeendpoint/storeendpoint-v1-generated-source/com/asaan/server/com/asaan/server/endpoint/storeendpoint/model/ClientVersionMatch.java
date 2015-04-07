@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for ChatUser.
+ * Model definition for ClientVersionMatch.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,121 +29,100 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ChatUser extends com.google.api.client.json.GenericJson {
+public final class ClientVersionMatch extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String name;
+  private java.lang.String approvedAndroidClientVersion;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String objectId;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String phone;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String profilePhotoUrl;
+  private java.lang.String approvedIOSClientVersion;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long userId;
+  private java.lang.Long id;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String serverVersion;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getName() {
-    return name;
+  public java.lang.String getApprovedAndroidClientVersion() {
+    return approvedAndroidClientVersion;
   }
 
   /**
-   * @param name name or {@code null} for none
+   * @param approvedAndroidClientVersion approvedAndroidClientVersion or {@code null} for none
    */
-  public ChatUser setName(java.lang.String name) {
-    this.name = name;
+  public ClientVersionMatch setApprovedAndroidClientVersion(java.lang.String approvedAndroidClientVersion) {
+    this.approvedAndroidClientVersion = approvedAndroidClientVersion;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getObjectId() {
-    return objectId;
+  public java.lang.String getApprovedIOSClientVersion() {
+    return approvedIOSClientVersion;
   }
 
   /**
-   * @param objectId objectId or {@code null} for none
+   * @param approvedIOSClientVersion approvedIOSClientVersion or {@code null} for none
    */
-  public ChatUser setObjectId(java.lang.String objectId) {
-    this.objectId = objectId;
+  public ClientVersionMatch setApprovedIOSClientVersion(java.lang.String approvedIOSClientVersion) {
+    this.approvedIOSClientVersion = approvedIOSClientVersion;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getPhone() {
-    return phone;
+  public java.lang.Long getId() {
+    return id;
   }
 
   /**
-   * @param phone phone or {@code null} for none
+   * @param id id or {@code null} for none
    */
-  public ChatUser setPhone(java.lang.String phone) {
-    this.phone = phone;
+  public ClientVersionMatch setId(java.lang.Long id) {
+    this.id = id;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getProfilePhotoUrl() {
-    return profilePhotoUrl;
+  public java.lang.String getServerVersion() {
+    return serverVersion;
   }
 
   /**
-   * @param profilePhotoUrl profilePhotoUrl or {@code null} for none
+   * @param serverVersion serverVersion or {@code null} for none
    */
-  public ChatUser setProfilePhotoUrl(java.lang.String profilePhotoUrl) {
-    this.profilePhotoUrl = profilePhotoUrl;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getUserId() {
-    return userId;
-  }
-
-  /**
-   * @param userId userId or {@code null} for none
-   */
-  public ChatUser setUserId(java.lang.Long userId) {
-    this.userId = userId;
+  public ClientVersionMatch setServerVersion(java.lang.String serverVersion) {
+    this.serverVersion = serverVersion;
     return this;
   }
 
   @Override
-  public ChatUser set(String fieldName, Object value) {
-    return (ChatUser) super.set(fieldName, value);
+  public ClientVersionMatch set(String fieldName, Object value) {
+    return (ClientVersionMatch) super.set(fieldName, value);
   }
 
   @Override
-  public ChatUser clone() {
-    return (ChatUser) super.clone();
+  public ClientVersionMatch clone() {
+    return (ClientVersionMatch) super.clone();
   }
 
 }

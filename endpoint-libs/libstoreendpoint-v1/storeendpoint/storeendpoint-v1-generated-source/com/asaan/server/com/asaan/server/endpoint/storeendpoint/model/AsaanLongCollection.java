@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for OrderReviewListAndCount.
+ * Model definition for AsaanLongCollection.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class OrderReviewListAndCount extends com.google.api.client.json.GenericJson {
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long count;
+public final class AsaanLongCollection extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<OrderReview> reviews;
+  private java.util.List<AsaanLong> items;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Long getCount() {
-    return count;
+  public java.util.List<AsaanLong> getItems() {
+    return items;
   }
 
   /**
-   * @param count count or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public OrderReviewListAndCount setCount(java.lang.Long count) {
-    this.count = count;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.util.List<OrderReview> getReviews() {
-    return reviews;
-  }
-
-  /**
-   * @param reviews reviews or {@code null} for none
-   */
-  public OrderReviewListAndCount setReviews(java.util.List<OrderReview> reviews) {
-    this.reviews = reviews;
+  public AsaanLongCollection setItems(java.util.List<AsaanLong> items) {
+    this.items = items;
     return this;
   }
 
   @Override
-  public OrderReviewListAndCount set(String fieldName, Object value) {
-    return (OrderReviewListAndCount) super.set(fieldName, value);
+  public AsaanLongCollection set(String fieldName, Object value) {
+    return (AsaanLongCollection) super.set(fieldName, value);
   }
 
   @Override
-  public OrderReviewListAndCount clone() {
-    return (OrderReviewListAndCount) super.clone();
+  public AsaanLongCollection clone() {
+    return (AsaanLongCollection) super.clone();
   }
 
 }
