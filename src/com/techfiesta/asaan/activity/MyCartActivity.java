@@ -180,8 +180,9 @@ public class MyCartActivity extends Activity {
 		super.onResume();
 		initDatabase();
 		orderList = addItemDao.queryBuilder().list();
-		closeDatabase();
 		Log.e(">>>", "List count" + addItemDao.count());
+		closeDatabase();
+		
 		if(orderList.size()==0)
 		{
 		       finish();

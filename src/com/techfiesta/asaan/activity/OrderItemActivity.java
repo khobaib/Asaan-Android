@@ -467,8 +467,7 @@ private void updateItem()
 			try {
 
 				Log.e(">>>>>>>", "store id = " + SplashActivity.STORE_ID + " menuItemPOSId = " + menuItemPOSId);
-				menuItemModifiersAndGroups = SplashActivity.mStoreendpoint.getStoreMenuItemModifiers(
-						SplashActivity.STORE_ID, menuItemPOSId).execute();
+				menuItemModifiersAndGroups = SplashActivity.mStoreendpoint.getStoreMenuItemModifiers(menuItemPOSId, AsaanUtility.selectedStore.getId()).execute();
 				logger.log(Level.INFO, "execute elapsed Time = " + (new Date().getTime() - startTime));
 //				Log.e("size", "" + menuItemModifiersAndGroups.getModifiers().size());
 

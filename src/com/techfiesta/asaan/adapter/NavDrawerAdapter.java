@@ -57,7 +57,7 @@ public class NavDrawerAdapter extends ArrayAdapter<NavMenuItem>{
     		}
     	holder.tvName.setText(getItem(position).getName());
     	holder.ivIcon.setImageResource(getItem(position).getId());
-    	if(!checkPendingOrders())
+    	if(!checkPendingOrders() && position==4)
     		holder.tvName.setTextColor(mContext.getResources().getColor(R.color.ash));
             		
 		

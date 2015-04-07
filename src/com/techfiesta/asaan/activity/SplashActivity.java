@@ -27,7 +27,6 @@ import com.techfiesta.asaan.utility.CloudEndpointUtils;
 
 public class SplashActivity extends Activity {
 
-	public static final long STORE_ID = 1L;
 	public static Storeendpoint mStoreendpoint;
 	public static Userendpoint mUserendpoint;
 	Context mContext;

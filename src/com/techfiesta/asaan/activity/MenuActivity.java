@@ -35,8 +35,8 @@ public class MenuActivity extends Activity {
 	public static StoreMenuItem selectedMenuItem = null;
 
 	private long INITIAL_POSITION = 0;
-	private int MAX_RESULT = 20;
-	private long storeId = -1;
+	private long MAX_RESULT = 20;
+	private int storeId = -1;
 	private Bundle bundle=new Bundle();
 
 	ActionBar actionBar = null;
@@ -57,7 +57,7 @@ public class MenuActivity extends Activity {
 
 		setContentView(R.layout.activity_menu);
 		initDatabase();
-		storeId = AsaanUtility.selectedStore.getId();
+		storeId = AsaanUtility.selectedStore.getId().intValue();
 		new GetMenu().execute();
 	}
 

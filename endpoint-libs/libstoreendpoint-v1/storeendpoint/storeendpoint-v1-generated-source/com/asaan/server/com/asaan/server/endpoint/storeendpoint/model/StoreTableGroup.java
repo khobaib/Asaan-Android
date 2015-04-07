@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for StoreMenuItemModifier.
+ * Model definition for StoreTableGroup.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,13 +29,19 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class StoreMenuItemModifier extends com.google.api.client.json.GenericJson {
+public final class StoreTableGroup extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key @com.google.api.client.json.JsonString
   private java.lang.Long createdDate;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String firstName;
 
   /**
    * The value may be {@code null}.
@@ -47,7 +53,7 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String longDescription;
+  private java.lang.String lastName;
 
   /**
    * The value may be {@code null}.
@@ -58,26 +64,20 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private java.lang.Integer modifierGroupPOSId;
+  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
+  private java.lang.Long orderId;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.Integer modifierPOSId;
+  private java.lang.String profilePhotoUrl;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.Integer price;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String shortDescription;
+  private java.lang.Integer status;
 
   /**
    * The value may be {@code null}.
@@ -88,8 +88,8 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private java.lang.Integer weighting;
+  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
+  private java.lang.Long userId;
 
   /**
    * @return value or {@code null} for none
@@ -101,8 +101,23 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @param createdDate createdDate or {@code null} for none
    */
-  public StoreMenuItemModifier setCreatedDate(java.lang.Long createdDate) {
+  public StoreTableGroup setCreatedDate(java.lang.Long createdDate) {
     this.createdDate = createdDate;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.String getFirstName() {
+    return firstName;
+  }
+
+  /**
+   * @param firstName firstName or {@code null} for none
+   */
+  public StoreTableGroup setFirstName(java.lang.String firstName) {
+    this.firstName = firstName;
     return this;
   }
 
@@ -116,7 +131,7 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @param id id or {@code null} for none
    */
-  public StoreMenuItemModifier setId(java.lang.Long id) {
+  public StoreTableGroup setId(java.lang.Long id) {
     this.id = id;
     return this;
   }
@@ -124,15 +139,15 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getLongDescription() {
-    return longDescription;
+  public java.lang.String getLastName() {
+    return lastName;
   }
 
   /**
-   * @param longDescription longDescription or {@code null} for none
+   * @param lastName lastName or {@code null} for none
    */
-  public StoreMenuItemModifier setLongDescription(java.lang.String longDescription) {
-    this.longDescription = longDescription;
+  public StoreTableGroup setLastName(java.lang.String lastName) {
+    this.lastName = lastName;
     return this;
   }
 
@@ -146,7 +161,7 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @param modifiedDate modifiedDate or {@code null} for none
    */
-  public StoreMenuItemModifier setModifiedDate(java.lang.Long modifiedDate) {
+  public StoreTableGroup setModifiedDate(java.lang.Long modifiedDate) {
     this.modifiedDate = modifiedDate;
     return this;
   }
@@ -154,60 +169,45 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Integer getModifierGroupPOSId() {
-    return modifierGroupPOSId;
+  public java.lang.Long getOrderId() {
+    return orderId;
   }
 
   /**
-   * @param modifierGroupPOSId modifierGroupPOSId or {@code null} for none
+   * @param orderId orderId or {@code null} for none
    */
-  public StoreMenuItemModifier setModifierGroupPOSId(java.lang.Integer modifierGroupPOSId) {
-    this.modifierGroupPOSId = modifierGroupPOSId;
+  public StoreTableGroup setOrderId(java.lang.Long orderId) {
+    this.orderId = orderId;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Integer getModifierPOSId() {
-    return modifierPOSId;
+  public java.lang.String getProfilePhotoUrl() {
+    return profilePhotoUrl;
   }
 
   /**
-   * @param modifierPOSId modifierPOSId or {@code null} for none
+   * @param profilePhotoUrl profilePhotoUrl or {@code null} for none
    */
-  public StoreMenuItemModifier setModifierPOSId(java.lang.Integer modifierPOSId) {
-    this.modifierPOSId = modifierPOSId;
+  public StoreTableGroup setProfilePhotoUrl(java.lang.String profilePhotoUrl) {
+    this.profilePhotoUrl = profilePhotoUrl;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Integer getPrice() {
-    return price;
+  public java.lang.Integer getStatus() {
+    return status;
   }
 
   /**
-   * @param price price or {@code null} for none
+   * @param status status or {@code null} for none
    */
-  public StoreMenuItemModifier setPrice(java.lang.Integer price) {
-    this.price = price;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getShortDescription() {
-    return shortDescription;
-  }
-
-  /**
-   * @param shortDescription shortDescription or {@code null} for none
-   */
-  public StoreMenuItemModifier setShortDescription(java.lang.String shortDescription) {
-    this.shortDescription = shortDescription;
+  public StoreTableGroup setStatus(java.lang.Integer status) {
+    this.status = status;
     return this;
   }
 
@@ -221,7 +221,7 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @param storeId storeId or {@code null} for none
    */
-  public StoreMenuItemModifier setStoreId(java.lang.Long storeId) {
+  public StoreTableGroup setStoreId(java.lang.Long storeId) {
     this.storeId = storeId;
     return this;
   }
@@ -229,26 +229,26 @@ public final class StoreMenuItemModifier extends com.google.api.client.json.Gene
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Integer getWeighting() {
-    return weighting;
+  public java.lang.Long getUserId() {
+    return userId;
   }
 
   /**
-   * @param weighting weighting or {@code null} for none
+   * @param userId userId or {@code null} for none
    */
-  public StoreMenuItemModifier setWeighting(java.lang.Integer weighting) {
-    this.weighting = weighting;
+  public StoreTableGroup setUserId(java.lang.Long userId) {
+    this.userId = userId;
     return this;
   }
 
   @Override
-  public StoreMenuItemModifier set(String fieldName, Object value) {
-    return (StoreMenuItemModifier) super.set(fieldName, value);
+  public StoreTableGroup set(String fieldName, Object value) {
+    return (StoreTableGroup) super.set(fieldName, value);
   }
 
   @Override
-  public StoreMenuItemModifier clone() {
-    return (StoreMenuItemModifier) super.clone();
+  public StoreTableGroup clone() {
+    return (StoreTableGroup) super.clone();
   }
 
 }

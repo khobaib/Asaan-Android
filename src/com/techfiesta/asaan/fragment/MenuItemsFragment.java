@@ -152,7 +152,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		protected Void doInBackground(Void... params) {
 			 try { 
 				 Log.e("params", ""+AsaanUtility.selectedStore.getId()+" "+menuPOSId);
-			menuItemAndStatsCollection=SplashActivity.mStoreendpoint.getMenuItemAndStatsForMenu(AsaanUtility.selectedStore.getId(), menuPOSId,0,MAX_RESULT).execute();
+			menuItemAndStatsCollection=SplashActivity.mStoreendpoint.getMenuItemAndStatsForMenu(0,MAX_RESULT, menuPOSId,AsaanUtility.selectedStore.getId()).execute();
 			Log.e("SIZE", "jjj"+menuItemAndStatsCollection.getItems().size());
 			
 			} catch (IOException e) {

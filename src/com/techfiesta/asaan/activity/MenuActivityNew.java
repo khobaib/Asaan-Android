@@ -39,7 +39,7 @@ import asaan.dao.DaoMaster.OpenHelper;
 public class MenuActivityNew  extends Activity{
 	
 	private int MAX_RESULT=50;
-	private long  storeId=11;
+	private long  storeId=-1;
 	public static MenusAndMenuItems menusAndMenuItems;
 	private ActionBar actionBar;
 	private ProgressDialog pdDialog;
@@ -121,10 +121,10 @@ public class MenuActivityNew  extends Activity{
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				storeId=AsaanUtility.selectedStore.getId();
-				menusAndMenuItems = SplashActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(storeId,
-						Constants.MENU_TYPE_DINE_IN, MAX_RESULT).execute();
-				Log.e("menu_size", "" + menusAndMenuItems.size());
+				storeId=AsaanUtility.selectedStore.getId().intValue();
+				menusAndMenuItems = SplashActivity.mStoreendpoint.getStoreMenuHierarchyAndItems(MAX_RESULT,
+						Constants.MENU_TYPE_DINE_IN, storeId).execute();
+				Log.e("menu_size", "" + menusAndMenuItems.size()+menusAndMenuItems.toPrettyString());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,7 +134,12 @@ public class MenuActivityNew  extends Activity{
 
 		@Override
 		protected void onPostExecute(Void result) {
-			for (StoreMenuHierarchy smh : menusAndMenuItems.getMenusAndSubmenus()) {
+			if(menusAndMenuItems.getMenusAndSubmenus()==null)
+			{
+				Log.e("MSG","menu and submenu null");
+			}
+			for (int i=0;i<menusAndMenuItems.getMenusAndSubmenus().size();i++) {
+				StoreMenuHierarchy smh=menusAndMenuItems.getMenusAndSubmenus().get(i);
 				if (smh.getLevel() == 0) // Menu Level
 				{
 					Bundle bundle = new Bundle();

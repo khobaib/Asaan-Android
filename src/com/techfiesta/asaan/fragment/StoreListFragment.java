@@ -220,7 +220,11 @@ public class StoreListFragment extends Fragment {
 		protected void onPostExecute(Void result) {
 			// setting list
 			if(error)
+			{
 				AsaanUtility.simpleAlert(getActivity(),"An error occured.");
+				Log.e("POST","load info from server");
+				//new GetStoreStatsFromServer().execute();
+			}
 			else
 			{
 			storeList = storeCollection.getItems();
