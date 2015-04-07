@@ -76,6 +76,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 	}
 	private class GetWaitListQueueFromSever extends AsyncTask<Void,Void,Void>
 	{
+		private boolean error=false;
 		@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -92,7 +93,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 				storeWaitListQueueCollection=getStoreWaitListQueue.execute();
 				Log.e("response",storeWaitListQueueCollection.toPrettyString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				error=true;
 				e.printStackTrace();
 			}
 			return null;
@@ -102,12 +103,19 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 			super.onPostExecute(result);
 			if(pDialog!=null)
 				pDialog.dismiss();
+			if(error)
+				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,"An error occured.");
+			else
+			{
+				//update ui
+			}
 		}
 		
 	}
     private class SaveWaitListQueueInServer extends AsyncTask<Void,Void,Void>
     {
     	StoreWaitListQueue storeWaitListQueue=new StoreWaitListQueue();
+    	private boolean error=false;
     	@Override
     	protected void onPreExecute() {
     		super.onPreExecute();
@@ -127,7 +135,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 				storeWaitListQueue=saveStoreWaitlistQueueEntry.execute();
 				Log.e("MSG",storeWaitListQueue.toPrettyString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				error=true;
 				e.printStackTrace();
 			}
 			return null;
@@ -136,6 +144,8 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			pDialog.dismiss();
+			if(error)
+				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,"An error occured.");
 		}
     	
     }

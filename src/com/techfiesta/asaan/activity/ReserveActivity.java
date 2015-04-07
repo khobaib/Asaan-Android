@@ -36,16 +36,22 @@ public class ReserveActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				if(AsaanUtility.selectedStore.getProvidesReservation())
+				{
 				Intent intent=new Intent(ReserveActivity.this,ReserveConfirmActivity.class);
 				startActivity(intent);
+				}
 			}
 		});
 		rlWaitList.setOnClickListener(new OnClickListener() {
 					
 					@Override
 					public void onClick(View v) {
+						if(AsaanUtility.selectedStore.getProvidesWaitlist())
+						{
 						Intent intent=new Intent(ReserveActivity.this,WaitListConfirmActivity.class);
 						startActivity(intent);
+						}
 					}
 				});
 						

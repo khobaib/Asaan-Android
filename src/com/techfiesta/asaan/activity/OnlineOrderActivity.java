@@ -113,37 +113,40 @@ public class OnlineOrderActivity extends Activity {
 			}
 		});
 
-		carryoutNext.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				appInstance.setPARENT_PAGE(Constants.FROM_ONLINE_ORDER);
-				Intent in = new Intent(OnlineOrderActivity.this, MenuActivity.class);
-				startActivity(in);
-
-			}
-		});
-
-		deliverNext.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				appInstance.setPARENT_PAGE(Constants.FROM_ONLINE_ORDER);
-				Intent in = new Intent(OnlineOrderActivity.this, MenuActivity.class);
-				startActivity(in);
-
-			}
-		});
+//		carryoutNext.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				appInstance.setPARENT_PAGE(Constants.FROM_ONLINE_ORDER);
+//				Intent in = new Intent(OnlineOrderActivity.this, MenuActivity.class);
+//				startActivity(in);
+//
+//			}
+//		});
+//
+//		deliverNext.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				appInstance.setPARENT_PAGE(Constants.FROM_ONLINE_ORDER);
+//				Intent in = new Intent(OnlineOrderActivity.this, MenuActivity.class);
+//				startActivity(in);
+//
+//			}
+//		});
 		
 		rl_carryout.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				if(AsaanUtility.selectedStore.getProvidesCarryout())
+				{
 				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
 				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_CARRYOUT);
 				AsaanUtility.setPartySize(OnlineOrderActivity.this,Integer.valueOf(People.getText().toString()));
 				intent.putExtra(Constants.ESTIMATED_TIME,deliverTime);
 				startActivity(intent);
+				}
 				
 			}
 		});
@@ -151,12 +154,14 @@ public class OnlineOrderActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
+				if(AsaanUtility.selectedStore.getProvidesDelivery())
+				{
 				Intent intent=new Intent(OnlineOrderActivity.this,MenuActivityNew.class);
 				intent.putExtra(Constants.ORDER_TYPE,Constants.ORDER_TYPE_DELIVERY);
 				AsaanUtility.setPartySize(OnlineOrderActivity.this,Integer.valueOf(People.getText().toString()));
 				intent.putExtra(Constants.ESTIMATED_TIME,deliverTime);
 				startActivity(intent);
+				}
 			}
 		});
 		
