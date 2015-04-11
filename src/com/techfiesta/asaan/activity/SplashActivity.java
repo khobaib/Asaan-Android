@@ -115,10 +115,12 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 			if(userCardCollection!=null)
 			{
 				Log.e("Response",userCardCollection.toPrettyString());
-				if(userCardCollection.getItems().size()>=0)
+				if(userCardCollection.getItems()!= null && userCardCollection.getItems().size()>=0)
 				{
 					AsaanUtility.defCard=userCardCollection.getItems().get(0);
 				}
+				else
+					AsaanUtility.defCard=null;
 			}
 			else
 				AsaanUtility.defCard=null;
