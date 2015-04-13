@@ -2,21 +2,9 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
-import com.google.android.gms.internal.it;
-import com.google.android.gms.maps.model.Tile;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.fragment.MenuItemsFragment;
-import com.techfiesta.asaan.utility.AsaanUtility;
-import com.techfiesta.asaan.utility.Constants;
-import com.techfiesta.asaan.utility.MyTabListener;
-
 import android.app.ActionBar;
-import android.app.ActionBar.TabListener;
-import android.app.Activity;
 import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,14 +15,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
-import asaan.dao.DaoSession;
 import asaan.dao.DaoMaster.OpenHelper;
+import asaan.dao.DaoSession;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenusAndMenuItems;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.fragment.MenuItemsFragment;
+import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
+import com.techfiesta.asaan.utility.MyTabListener;
 
 public class MenuActivityNew  extends Activity{
 	

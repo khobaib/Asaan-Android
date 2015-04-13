@@ -1,7 +1,5 @@
 package com.techfiesta.asaan.activity;
 
-import com.techfiesta.asaan.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.techfiesta.asaan.R;
 
 public class SearchEmployeeActivity  extends Activity{
 	private TextView tvAddEmployee,tvSearch;

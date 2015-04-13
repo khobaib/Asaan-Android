@@ -3,16 +3,6 @@ package com.techfiesta.asaan.fragment;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetCurrentUser;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.ChatActivity;
-import com.techfiesta.asaan.activity.PaymentInfoActivity;
-import com.techfiesta.asaan.adapter.SimpleListAdapter;
-import com.techfiesta.asaan.model.UserPicture;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -22,19 +12,26 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.PaymentInfoActivity;
+import com.techfiesta.asaan.adapter.SimpleListAdapter;
+import com.techfiesta.asaan.model.UserPicture;
 
 public class ProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;

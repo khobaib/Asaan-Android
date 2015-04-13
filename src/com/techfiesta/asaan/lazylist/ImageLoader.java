@@ -15,8 +15,6 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.techfiesta.asaan.R;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +26,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import com.techfiesta.asaan.R;
 
 public class ImageLoader {
 

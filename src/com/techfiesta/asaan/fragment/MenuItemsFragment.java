@@ -7,14 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -22,34 +16,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStatsCollection;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
-import com.google.android.gms.internal.ml;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
-import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
-import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.MenuItemsAdapter;
 import com.techfiesta.asaan.interfaces.ScrollToIndexListener;
-import com.techfiesta.asaan.lazylist.ImageLoader;
-import com.techfiesta.asaan.utility.AmountConversionUtils;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
-import com.techfiesta.asaan.utility.MenuHierarchy.MenuItem;
 
 @SuppressLint("NewApi")
 public class MenuItemsFragment extends Fragment implements ScrollToIndexListener{
