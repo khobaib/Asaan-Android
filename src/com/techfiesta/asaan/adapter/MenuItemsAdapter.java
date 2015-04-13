@@ -157,6 +157,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 			if( viewHolder.txtPrice!=null)
 				viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
 			imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), viewHolder.imgFood);
+			//imageLoader.getRoundedPicFromURL(storeMenuItem.getThumbnailUrl(),viewHolder.imgFood)
 			if(storeItemStats!=null)
 			{
 				viewHolder.rl_stats.setVisibility(View.VISIBLE);

@@ -170,14 +170,13 @@ public class MyCartActivity extends Activity {
 		initDatabase();
 		orderList = addItemDao.queryBuilder().list();
 		Log.e(">>>", "List count" + addItemDao.count());
-		closeDatabase();
 		
 		if(orderList.size()==0)
 		{
 		       finish();
 		       return;
 		}
-		
+		setSelectedStore(orderList.get(0));
         setStorName();
 		subtotalAmount = 0;
 		for (AddItem item : orderList) {
@@ -219,7 +218,7 @@ public class MyCartActivity extends Activity {
 				intent.putExtra(Constants.KEY_FROM_ACTIVITY,1);
 				intent.putExtra(Constants.KEY_QUANTITY,addItem.getQuantity());
 				
-				setSelectedStore(addItem);
+				
 				
 				startActivity(intent);
 			}
@@ -317,6 +316,7 @@ public class MyCartActivity extends Activity {
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
 		private boolean error=false;
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -330,11 +330,7 @@ public class MyCartActivity extends Activity {
 			
 			StoreOrder storeOrder=new StoreOrder();
 			long id=getOrderedStoreId();
-			
-			initDatabase();
 			DStore dStore=getOrderedStoreFromDatabase(id);
-			closeDatabase();
-			
 			
 			int guestSize=AsaanUtility.getCurrentPartySize(getApplicationContext());
 			storeOrder.setGuestCount(guestSize);
@@ -394,6 +390,11 @@ public class MyCartActivity extends Activity {
 				showDialogOrderPosted();
 			}
 		}
+	}
+	@Override
+	protected void onDestroy() {
+		closeDatabase();
+		super.onDestroy();
 	}
 	private DStore getOrderedStoreFromDatabase(Long id)
 	{

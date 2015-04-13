@@ -12,6 +12,7 @@ import android.view.Window;
 
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.FragmentMenu;
+import com.techfiesta.asaan.fragment.HistoryFragment;
 import com.techfiesta.asaan.fragment.InfoFragment;
 import com.techfiesta.asaan.fragment.ReviewFragment;
 
@@ -21,6 +22,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	InfoFragment infoFragment;
 	ReviewFragment reviewFragment;
 	FragmentMenu fragmentMenu;
+	HistoryFragment historyFragment;
 	public static boolean isBackButtonPressed = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		infoFragment = new InfoFragment();
 		reviewFragment = new ReviewFragment();
-
+		historyFragment=new HistoryFragment();
 		isBackButtonPressed = false;
 
 		setTabs();
@@ -65,7 +67,7 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		int position = tab.getPosition();
 		if (position == 0) {
-			//ft.replace(R.id.content_frame, );
+			ft.replace(R.id.content_frame,historyFragment);
 			// ft.commit();
 		} else if (position == 1) {
 			ft.replace(R.id.content_frame, infoFragment);

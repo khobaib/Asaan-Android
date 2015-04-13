@@ -4,9 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
 
 public class AsaanApplication extends Application {
@@ -30,6 +34,17 @@ public class AsaanApplication extends Application {
 		Parse.initialize(this, ASAAN_APPLICATION_ID, ASAAN_CLIENT_KEY);
 
 		ParseFacebookUtils.initialize(getResources().getString(R.string.fb_asaan_app_id));
+		
+		ParsePush.subscribeInBackground("", new SaveCallback() {
+			  @Override
+			  public void done(ParseException e) {
+			    if (e == null) {
+			      Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
+			    } else {
+			      Log.e("com.parse.push", "failed to subscribe for push", e);
+			    }
+			  }
+			});
 
 		context = getApplicationContext();
 		initializeSharedPreference();

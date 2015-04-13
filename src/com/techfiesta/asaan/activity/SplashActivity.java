@@ -20,7 +20,10 @@ import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.CloudEndpointUtils;
@@ -37,9 +40,7 @@ public class SplashActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		// getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		// getActionBar().hide();
-
+		
 		setContentView(R.layout.splash);
 		mContext = SplashActivity.this;
 		buildStoreEndpoint();

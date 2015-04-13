@@ -7,7 +7,7 @@ import asaan.dao.AddItem;
 public class XMLPosOrder {
 	
 	private String begingString="<POSRESPONSE> <GETCHECKDETAILS> <CHECK GUESTCOUNT=\"%s\" TABLENUMBER=\"0\" SUBTOTAL=\"%s\" TAX=\"%s\" SERVICECHARGES=\"%s\" COMPLETETOTAL=\"%s\" DELIVERY=\"%s\"> <ENTRIES>";
-	private String tableRowXml="<ENTRY ID=\"%d\" QUANTITY=\"%s\" PRICE=\"%s\" DISP_NAME=\"%s\" ITEMID=\"%ld\" OPTION=\"%s\" />";
+	private String tableRowXml="<ENTRY ID=\"%d\" QUANTITY=\"%d\" PRICE=\"%d\" DISP_NAME=\"%s\" ITEMID=\"%d\" OPTION=\"%s\" />";
 	private String disCount="<DISCOUNTS DESC=\"%s\" AMOUNT=\"%s\"/>";
 	private String payment="<PAYMENTS BRAND=\"--CARDTYPE--\" LASTFOUR=\"--CARDLASTFOUR--\" />";
 	private String end="</CHECK></GETCHECKDETAILS></POSRESPONSE>";
