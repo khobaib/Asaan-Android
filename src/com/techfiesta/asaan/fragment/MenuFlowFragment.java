@@ -1,6 +1,20 @@
 package com.techfiesta.asaan.fragment;
 
+import java.net.InterfaceAddress;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.MenuFlowActivity;
+import com.techfiesta.asaan.activity.OrderItemActivity;
+import com.techfiesta.asaan.interfaces.ForwardBackWardClickListner;
+import com.techfiesta.asaan.lazylist.ImageLoader;
+import com.techfiesta.asaan.utility.AmountConversionUtils;
+import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
+
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +25,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.MenuFlowActivity;
-import com.techfiesta.asaan.activity.OrderItemActivity;
-import com.techfiesta.asaan.interfaces.ForwardBackWardClickListner;
-import com.techfiesta.asaan.lazylist.ImageLoader;
-import com.techfiesta.asaan.utility.AmountConversionUtils;
-import com.techfiesta.asaan.utility.Constants;
 
 public class MenuFlowFragment extends Fragment{
 	private ImageView ivIteImage;

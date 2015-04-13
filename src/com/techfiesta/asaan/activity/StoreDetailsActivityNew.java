@@ -1,19 +1,23 @@
 package com.techfiesta.asaan.activity;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar.TabListener;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
+import lombok.core.Main;
 
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.fragment.FragmentMenu;
 import com.techfiesta.asaan.fragment.InfoFragment;
 import com.techfiesta.asaan.fragment.ReviewFragment;
+
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.Window;
 
 public class StoreDetailsActivityNew extends FragmentActivity implements TabListener {
 

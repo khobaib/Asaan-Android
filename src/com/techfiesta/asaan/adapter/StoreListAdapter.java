@@ -30,6 +30,7 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStats
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.ChatActivity;
 import com.techfiesta.asaan.activity.ClaimStoreActivity;
+import com.techfiesta.asaan.activity.MenuActivity;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
 import com.techfiesta.asaan.activity.ReserveActivity;

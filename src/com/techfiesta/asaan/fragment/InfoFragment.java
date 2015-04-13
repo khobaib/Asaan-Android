@@ -13,8 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.google.android.gms.maps.MapFragment;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.LocationActivity;
+import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class InfoFragment extends Fragment {

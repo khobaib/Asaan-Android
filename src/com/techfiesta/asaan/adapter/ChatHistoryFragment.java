@@ -1,7 +1,15 @@
-package com.techfiesta.asaan.fragment;
+package com.techfiesta.asaan.adapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.SplashActivity;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -12,15 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
-import com.google.api.client.http.HttpHeaders;
-import com.parse.ParseUser;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.SplashActivity;
-import com.techfiesta.asaan.adapter.SimpleListAdapter;
-import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ChatHistoryFragment  extends Fragment{
 	

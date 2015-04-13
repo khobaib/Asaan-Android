@@ -1,5 +1,6 @@
 package com.techfiesta.asaan.activity;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -11,10 +12,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,7 +28,11 @@ import asaan.dao.DaoSession;
 import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;

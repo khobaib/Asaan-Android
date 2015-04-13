@@ -1,14 +1,14 @@
 package com.techfiesta.asaan.fragment;
 
 
+import com.techfiesta.asaan.R;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.techfiesta.asaan.R;
 
 public class WaitListStatusFragment extends Fragment{
 	private TextView tvStatus,tvPartyAhead,tvEstTime,tvLeaveLine;

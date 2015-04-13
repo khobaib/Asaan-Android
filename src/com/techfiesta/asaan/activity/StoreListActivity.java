@@ -1,42 +1,69 @@
 package com.techfiesta.asaan.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
+import asaan.dao.DStore;
+import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
+import asaan.dao.Trophies;
+import asaan.dao.TrophiesDao;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeamCollection;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.internal.it;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.GoogleMap;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.ChatHistoryFragment;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
-import com.techfiesta.asaan.fragment.ChatHistoryFragment;
+import com.techfiesta.asaan.adapter.StoreListAdapter;
 import com.techfiesta.asaan.fragment.PendingOrderFragment;
 import com.techfiesta.asaan.fragment.ProfileFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.fragment.WaitListStatusFragment;
 import com.techfiesta.asaan.model.NavMenuItem;
 import com.techfiesta.asaan.utility.AsaanApplication;
+import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
 public class StoreListActivity extends FragmentActivity {
 	

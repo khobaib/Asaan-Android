@@ -3,6 +3,17 @@ package com.techfiesta.asaan.fragment;
 import java.io.IOException;
 import java.util.List;
 
+import com.google.android.gms.internal.om;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.EditCartActivity;
+import com.techfiesta.asaan.activity.MyCartActivity;
+import com.techfiesta.asaan.activity.SplashActivity;
+import com.techfiesta.asaan.activity.StoreListActivity;
+import com.techfiesta.asaan.adapter.MyCartListAdapter;
+import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
+import com.techfiesta.asaan.utility.NestedListView;
+
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -14,26 +25,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
-import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
-
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.EditCartActivity;
-import com.techfiesta.asaan.activity.SplashActivity;
-import com.techfiesta.asaan.activity.StoreListActivity;
-import com.techfiesta.asaan.adapter.MyCartListAdapter;
-import com.techfiesta.asaan.utility.AsaanUtility;
-import com.techfiesta.asaan.utility.Constants;
-import com.techfiesta.asaan.utility.NestedListView;
+import asaan.dao.DaoMaster.OpenHelper;
 
 public class PendingOrderFragment extends Fragment{
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;

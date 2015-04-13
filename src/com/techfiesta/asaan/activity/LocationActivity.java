@@ -1,10 +1,6 @@
 package com.techfiesta.asaan.activity;
 
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.os.Bundle;
-
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,6 +10,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.os.Bundle;
 
 public class LocationActivity extends Activity {
 	private GoogleMap map;

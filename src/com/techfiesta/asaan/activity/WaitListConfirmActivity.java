@@ -2,6 +2,17 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetStoreWaitListQueue;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveStoreWaitlistQueueEntry;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreWaitListQueue;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreWaitListQueueCollection;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.utility.AsaanUtility;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,16 +24,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetStoreWaitListQueue;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveStoreWaitlistQueueEntry;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreWaitListQueue;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreWaitListQueueCollection;
-import com.google.api.client.http.HttpHeaders;
-import com.parse.ParseUser;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class WaitListConfirmActivity extends Activity implements OnClickListener{
 	private TextView tvPeople;

@@ -3,6 +3,9 @@ package com.techfiesta.asaan.activity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.utility.AsaanUtility;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -12,9 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ReserveConfirmActivity extends Activity implements OnClickListener{
 	private TextView tvName,tvPeople,tvDay,tvDate,tvTime;

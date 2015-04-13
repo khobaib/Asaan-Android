@@ -3,6 +3,10 @@ package com.techfiesta.asaan.utility;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
+import com.techfiesta.asaan.R;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,10 +17,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.view.WindowManager.BadTokenException;
-
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
-import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
-import com.techfiesta.asaan.R;
 
 public class AsaanUtility {
 	private static final NumberFormat FORMAT_CURRENCY = NumberFormat.getCurrencyInstance();

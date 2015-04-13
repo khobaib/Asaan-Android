@@ -2,7 +2,18 @@ package com.techfiesta.asaan.fragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.SplashActivity;
+import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
+import com.techfiesta.asaan.adapter.StoreListAdapter;
+import com.techfiesta.asaan.utility.AsaanApplication;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -22,20 +33,10 @@ import android.widget.ListView;
 import asaan.dao.DStore;
 import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
-import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 import asaan.dao.Trophies;
 import asaan.dao.TrophiesDao;
-
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreCollection;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreStatsCollection;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.SplashActivity;
-import com.techfiesta.asaan.activity.StoreDetailsActivityNew;
-import com.techfiesta.asaan.adapter.StoreListAdapter;
-import com.techfiesta.asaan.utility.AsaanApplication;
-import com.techfiesta.asaan.utility.AsaanUtility;
+import asaan.dao.DaoMaster.OpenHelper;
 
 public class StoreListFragment extends Fragment {
 	private ListView storeListView;

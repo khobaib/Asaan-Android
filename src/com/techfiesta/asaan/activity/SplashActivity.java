@@ -27,7 +27,6 @@ import com.techfiesta.asaan.utility.CloudEndpointUtils;
 
 public class SplashActivity extends Activity {
 
-	public static final long STORE_ID = 1;
 	public static Storeendpoint mStoreendpoint;
 	public static Userendpoint mUserendpoint;
 	Context mContext;
@@ -44,6 +43,7 @@ public class SplashActivity extends Activity {
 		mContext = SplashActivity.this;
 		buildStoreEndpoint();
 		buildUserEndpoint();
+		// deleteCurrentUser();
 		trytoLoadMainScreen(mContext);
 
 	}
@@ -166,6 +166,29 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 				});
 		userEndpointBuilder.setApplicationName("Asaan");
 		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
+	}
+
+	private void deleteCurrentUser() {
+		// for sign up flow deleting user
+		ParseUser user = ParseUser.getCurrentUser();
+		/*
+		 * if(user!=null) { user.deleteInBackground(new DeleteCallback() {
+		 * 
+		 * @Override public void done(ParseException e) { Intent i= new
+		 * Intent(AsaanSplashActivity.this, AsaanMainActivity.class);
+		 * startActivity(i); // close this activity finish();
+		 * overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		 * 
+		 * } }); } else
+		 */
+		{
+			Intent i = new Intent(SplashActivity.this, LoginChooserActivity.class);
+			startActivity(i);
+			// close this activity
+			finish();
+			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		}
+
 	}
 
 	private void internetAvailabilityAlert(Context context, String message) {

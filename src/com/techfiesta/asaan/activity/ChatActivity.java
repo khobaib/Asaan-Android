@@ -2,7 +2,24 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import lombok.core.Main;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatMessagesForStoreOrRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeamCollection;
+import com.google.android.gms.internal.ms;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.SimpleListAdapter;
+import com.techfiesta.asaan.utility.AsaanUtility;
+
+import android.R.bool;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.AsyncTask;
@@ -15,20 +32,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
-import com.google.api.client.http.HttpHeaders;
-import com.parse.ParseUser;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.adapter.SimpleListAdapter;
-import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ChatActivity extends Activity{
 	private ImageView ivAttach;
