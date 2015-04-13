@@ -3,8 +3,14 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +34,8 @@ import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
+import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
+import com.techfiesta.asaan.interfaces.NotificationListner;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ChatActivity extends Activity{
@@ -38,6 +46,17 @@ public class ChatActivity extends Activity{
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	ArrayList<String> chatList=new ArrayList<String>();
 	SimpleListAdapter adapter;
+	PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
+		public void onReceive(android.content.Context context, android.content.Intent intent) {
+
+			Log.e("msg", "On receive");
+			String msg = intent.getStringExtra("msg");
+			if(msg!=null)
+                 addMessageToList(msg);			
+			
+
+		};
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,9 +85,17 @@ public class ChatActivity extends Activity{
 		lvChat.setAdapter(adapter);
 		new GetStoreChatRoomsAndMemberships().execute();
 	}
+	@Override
+	protected void onResume() {
+		registerReceiver(pushNotificationReceiver,new IntentFilter("com.asaan"));
+		super.onResume();
+	}
+
 	private class GetStoreChatRoomsAndMemberships extends AsyncTask<Void,Void,Void>
 	{
-     private ChatRoomsAndStoreChatMemberships chMemberships;
+   
+     private boolean error=false;
+     ChatRoomsAndStoreChatMemberships chatRoomsAndStoreChatMemberships;
      @Override
     	protected void onPreExecute() {
     		super.onPreExecute();
@@ -81,23 +108,28 @@ public class ChatActivity extends Activity{
 				 getChatRoomsAndMembershipsForUser=SplashActivity.mStoreendpoint.getChatRoomsAndMembershipsForUser();
 				 HttpHeaders httpHeaders=getChatRoomsAndMembershipsForUser.getRequestHeaders();
 				 httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
-				ChatRoomsAndStoreChatMemberships chatRoomsAndStoreChatMemberships= getChatRoomsAndMembershipsForUser.execute();
-				Log.e("chat","executing doInBackGround....");
+				chatRoomsAndStoreChatMemberships= getChatRoomsAndMembershipsForUser.execute();
+				if(chatRoomsAndStoreChatMemberships!=null)
+				 Log.e("chat",chatRoomsAndStoreChatMemberships.toPrettyString());
 				
 			} catch (IOException e) {
 				e.printStackTrace();
+				error=true;
 			}
 			return null;
 		}
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			Log.e("chat","executing onpostExecute");
-			if(chMemberships!=null)
-			{  boolean matchFound=false;
-				for(int i=0;i<chMemberships.getStoreChatMemberships().size();i++)
+			if(error)
+				AsaanUtility.simpleAlert(ChatActivity.this,"An error occured.");
+			if(chatRoomsAndStoreChatMemberships.getChatRooms()!=null && chatRoomsAndStoreChatMemberships.getChatRooms().size()>0)
+			{  
+				int size=chatRoomsAndStoreChatMemberships.getChatRooms().size();
+				boolean matchFound=false;
+				for(int i=0;i<size;i++)
 				{
-					if(chMemberships.getStoreChatMemberships().get(i).getStoreId()==AsaanUtility.selectedStore.getId())
+					if(chatRoomsAndStoreChatMemberships.getChatRooms().get(i).getStoreId()==AsaanUtility.selectedStore.getId())
 					{
 						matchFound=true;
 						break;
@@ -192,6 +224,17 @@ public class ChatActivity extends Activity{
 			lvChat.smoothScrollByOffset(chatList.size()-1);
 		}
 			
+	}
+	public void addMessageToList(String message) {
+		chatList.add(message);
+		adapter.notifyDataSetChanged();
+		Log.e("STATUS",message.toString());
+		
+	}
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(pushNotificationReceiver);
+		super.onDestroy();
 	}
 
 }
