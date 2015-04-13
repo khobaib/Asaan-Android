@@ -1,16 +1,14 @@
 package com.techfiesta.asaan.activity;
 
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.utility.AsaanUtility;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ClaimStoreActivity extends Activity{
 	private TextView tvName,tvSaveEmployee,tvAddEmployee,tvEdit;
