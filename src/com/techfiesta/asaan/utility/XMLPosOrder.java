@@ -25,12 +25,18 @@ public class XMLPosOrder {
 		for(int i=0;i<size;i++)
 		{
 			String modItem="";
+			try{
 			if(orderlist.get(i).getMod_items()!=null && orderlist.get(i).getMod_items().size()>0)
 			{
 				modItem=orderlist.get(i).getMod_items().get(0).getName();
-			}
+			}}
+			catch(Exception e){}
 			
-			String tempStr=String.format(tableRowXml,i+1,orderlist.get(i).getQuantity(),orderlist.get(i).getPrice(),orderlist.get(i).getItem_name(),orderlist.get(i).getItem_id(),modItem );
+			String tempStr="";
+			try{
+			tempStr=String.format(tableRowXml,i+1,orderlist.get(i).getQuantity(),orderlist.get(i).getPrice(),orderlist.get(i).getItem_name(),orderlist.get(i).getItem_id(),modItem );
+			}
+			catch(Exception e){};
 			tableRows+=tempStr;
 		}
 		return tableRows;

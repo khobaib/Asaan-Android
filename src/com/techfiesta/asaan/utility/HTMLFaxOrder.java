@@ -74,10 +74,16 @@ public class HTMLFaxOrder {
 		for(i=0;i<size;i++)
 		{
 			String options="";
+			try{
 		   if(orderList.get(i).getMod_items()!=null && orderList.get(i).getMod_items().size()>0)
 			   options=orderList.get(i).getMod_items().get(0).getName();
-		   
-			String row=String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+			}
+			catch(Exception e){}
+			String row ="";
+			try{
+			row =String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+			}
+			catch(Exception e){}
 			beginingString+=row;
 		}
 		
