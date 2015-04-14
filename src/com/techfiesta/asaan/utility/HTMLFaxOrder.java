@@ -49,7 +49,9 @@ public class HTMLFaxOrder {
 	private void setUpBeginingString()
 	{
 		String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
-		String to=AsaanUtility.selectedStore.getName();
+		String to= "";
+		if(AsaanUtility.selectedStore!=null)
+			to =AsaanUtility.selectedStore.getName();
 		String phone="phone";
 		if(ParseUser.getCurrentUser().get("phone")!=null)
 		   phone=ParseUser.getCurrentUser().get("phone").toString();
