@@ -444,8 +444,13 @@ public class MyCartActivity extends Activity {
 	}
 	
 	private void deleteFromDatabase() {
+		try {
 		addItemDao.deleteAll();
 		modItemDao.deleteAll();
+		}
+		catch(Exception e)
+		{}
+		
 		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
 		adapter.notifyDataSetChanged();
 	}
