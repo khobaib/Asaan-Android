@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -356,7 +357,16 @@ public class MyCartActivity extends Activity {
 			long tax=0;
 			storeOrder.setTax(tax);
 			double gratuity =  (subtotalAmount * 0.15) / 100;
-			storeOrder.setDeliveryFee((long)dStore.getDeliveryFee());
+			long lDeliveryFee =0;
+			try{
+				lDeliveryFee = (long)dStore.getDeliveryFee();
+				storeOrder.setDeliveryFee(lDeliveryFee);
+			}
+			catch(Exception e)
+			{	
+				Log.e("order info failed","dStore.getDeliveryFee() failed.");
+			}
+			
 			storeOrder.setServiceCharge((long)gratuity);
 			long total=subtotalAmount+(long)gratuity+tax;
 			storeOrder.setFinalTotal(total);
@@ -374,7 +384,7 @@ public class MyCartActivity extends Activity {
 			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
 			try {

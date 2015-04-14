@@ -106,7 +106,7 @@ public class PaymentInfoActivity extends Activity {
 				} else {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
 				}
-
+				pDialog.hide();
 			}
 		});
 		btnSkip.setOnClickListener(new OnClickListener() {
