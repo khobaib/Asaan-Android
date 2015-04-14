@@ -97,8 +97,10 @@ public class PaymentInfoActivity extends Activity {
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
 					zip = Zip.getText().toString();
-					expMonth = Integer.parseInt(etMonth.getText().toString());
-					expYear = Integer.parseInt(etYear.getText().toString());
+					if(etMonth.getText().toString().length()>0)
+						expMonth = Integer.parseInt(etMonth.getText().toString());
+					if(etYear.getText().toString().length()>0)
+						expYear = Integer.parseInt(etYear.getText().toString());
 					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
 					saveCreditCard();
 				} else {
