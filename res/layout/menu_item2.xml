@@ -9,10 +9,10 @@
     android:layout_margin="10dp"
     android:background="@color/app_bg_color" 
     android:id="@+id/rl_1" >
-    <ImageView
+    <com.techfiesta.asaan.utility.RoundedImageView
         android:id="@+id/image_food_item"
         android:layout_width="80dp"
-        android:layout_height="65dp"
+        android:layout_height="80dp"
         android:padding="1dp"
         android:contentDescription="@string/menu_category_title"
         android:layout_marginLeft="10dp"

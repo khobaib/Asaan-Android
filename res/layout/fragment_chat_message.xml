@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/linlaybottom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/app_bg"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/iv_attatch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/attatchmentx"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/et_chatbox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:text="send"
+            android:padding="5dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_chats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:background="@color/app_bg"
+        android:layout_above="@+id/linlaybottom" >
+    </ListView>
+
+</RelativeLayout>

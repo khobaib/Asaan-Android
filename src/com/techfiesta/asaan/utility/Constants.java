@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class Constants {
 
-	public static Map<Long, MenuHierarchy.SubMenu> subMenuMap = new HashMap<Long, MenuHierarchy.SubMenu>();
+	/*public static Map<Long, MenuHierarchy.SubMenu> subMenuMap = new HashMap<Long, MenuHierarchy.SubMenu>();
 	public static Map<Long, MenuHierarchy.MenuItem> menuItemMap = new HashMap<Long, MenuHierarchy.MenuItem>();
 	public static Map<Long, MenuHierarchy.ModifierGroup> modGrpMap = new HashMap<Long, MenuHierarchy.ModifierGroup>();
 	public static Map<Long, MenuHierarchy.MenuTax> menuTaxMap = new HashMap<Long, MenuHierarchy.MenuTax>();
-
+*/
 	public static final int ROW_TYPE_MENU = 0;
 	public static final int ROW_TYPE_SUBMENU = 1;
 	public static final int ROW_TYPE_MENUITEM = 2;
@@ -22,7 +22,7 @@ public class Constants {
 												// = carry-out
 
 	public static final long STORE_ID = 1L;
-
+	
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	public static final String ORDER_TYPE = "order_type";
 	public static final String ESTIMATED_TIME = "estimated_time";

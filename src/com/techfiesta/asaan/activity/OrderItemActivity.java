@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import lombok.Getter;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -319,7 +318,8 @@ private void updateItem()
 		List<ModifierGroup> modifierGroups = new ArrayList<ModifierGroup>();
 
 		int listItemClickPosition = 0;
-
+       long finalPrice = 0;
+       String finalDesc="";
 		static class ViewHolder {
 			public TextView txtName;
 			public TextView txtDescription;
@@ -411,11 +411,15 @@ private void updateItem()
 			return weakActivity.get();
 		}
 
-		@Getter
-		long finalPrice;
+		private long getFinalPrice()
+		{
+		 return finalPrice;
 
-		@Getter
-		String finalDesc;
+		}
+		private String getFinalDescription()
+		{
+		return finalDesc;
+		}
 
 		@Override
 		public int getCount() {

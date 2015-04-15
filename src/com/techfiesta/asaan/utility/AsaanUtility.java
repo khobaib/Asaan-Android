@@ -14,6 +14,7 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.view.WindowManager.BadTokenException;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
 import com.techfiesta.asaan.R;
@@ -27,6 +28,8 @@ public class AsaanUtility {
 	private static GPSTracker mGps = null;
 	public static Store selectedStore = null;
 	public static UserCard defCard=null;
+	public static  long USER_ID = 0;
+	public static ChatMessage selectedChatMessage=null;
 
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

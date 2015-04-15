@@ -2,15 +2,18 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.MatrixCursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,15 +31,22 @@ import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeam;
+import com.google.android.gms.internal.er;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
+import com.techfiesta.asaan.fragment.ChatListFragment;
+import com.techfiesta.asaan.fragment.ChatMessageFragment;
+import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.interfaces.NotificationListner;
 import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
 public class ChatActivity extends Activity{
 	private ImageView ivAttach;
@@ -46,7 +56,7 @@ public class ChatActivity extends Activity{
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	ArrayList<String> chatList=new ArrayList<String>();
 	SimpleListAdapter adapter;
-	PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
+	/*PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
 		public void onReceive(android.content.Context context, android.content.Intent intent) {
 
 			Log.e("msg", "On receive");
@@ -56,38 +66,17 @@ public class ChatActivity extends Activity{
 			
 
 		};
-	};
+	};*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
-		lvChat=(ListView)findViewById(R.id.lv_chats);
-		ivAttach=(ImageView)findViewById(R.id.iv_attatch);
-		edtChatBox=(EditText)findViewById(R.id.et_chatbox);
-		tvSend=(TextView)findViewById(R.id.tv_send);
-		ivAttach.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				showAttachmentDialog();
-				
-			}
-		});
-		tvSend.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				sendMessage(edtChatBox.getText().toString());
-				
-			}
-		});
-		adapter=new SimpleListAdapter(getApplicationContext(),R.layout.row_simple_list,chatList);
-		lvChat.setAdapter(adapter);
+		
 		new GetStoreChatRoomsAndMemberships().execute();
 	}
 	@Override
 	protected void onResume() {
-		registerReceiver(pushNotificationReceiver,new IntentFilter("com.asaan"));
+		/*registerReceiver(pushNotificationReceiver,new IntentFilter("com.asaan"));*/
 		super.onResume();
 	}
 
@@ -123,32 +112,83 @@ public class ChatActivity extends Activity{
 			super.onPostExecute(result);
 			if(error)
 				AsaanUtility.simpleAlert(ChatActivity.this,"An error occured.");
-			if(chatRoomsAndStoreChatMemberships.getChatRooms()!=null && chatRoomsAndStoreChatMemberships.getChatRooms().size()>0)
-			{  
-				int size=chatRoomsAndStoreChatMemberships.getChatRooms().size();
-				boolean matchFound=false;
-				for(int i=0;i<size;i++)
-				{
-					if(chatRoomsAndStoreChatMemberships.getChatRooms().get(i).getStoreId()==AsaanUtility.selectedStore.getId())
-					{
-						matchFound=true;
-						break;
+			if (chatRoomsAndStoreChatMemberships != null) {
+				ChatRoom chatRoom=isMemberOfChatroom(chatRoomsAndStoreChatMemberships.getChatRooms());
+				if (chatRoom!=null) {
+					ChatMessage chatMessage=new ChatMessage();
+					chatMessage.setRoomId(chatRoom.getId());
+					AsaanUtility.USER_ID = chatRoom.getUserId();
+					AsaanUtility.selectedChatMessage=chatMessage;
+					loadChatMessageFragment();
+
+				} else {
+					StoreChatTeam storeChatTeam = checkForMemberShips(chatRoomsAndStoreChatMemberships
+							.getStoreChatMemberships());
+					if (storeChatTeam != null) {
+						
+						AsaanUtility.USER_ID = storeChatTeam.getUserId();
+						loadChatListFragment();
+						
+					} else {
+						new SaveChatRoomInServer().execute();
 					}
-				}
-				if(!matchFound)
-				{
-					new SaveChatRoomInServer().execute();
+
 				}
 			}
-			else
-				new SaveChatRoomInServer().execute();
 					
 		}
+	
+	}
+	public void loadChatMessageFragment()
+	{
+		ChatMessageFragment chatMessageFragment=new ChatMessageFragment();
+		FragmentTransaction  ft=getFragmentManager().beginTransaction();
+		ft.replace(R.id.frame_container,chatMessageFragment);
+		ft.commit();
+	}
+	private void loadChatListFragment()
+	{
+		ChatListFragment chatListFragment=new ChatListFragment();
+		FragmentTransaction  ft=getFragmentManager().beginTransaction();
+		ft.replace(R.id.frame_container,chatListFragment);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+	private ChatRoom isMemberOfChatroom(List<ChatRoom> rooms)
+	{  ChatRoom chatRoom=null;
+		if(rooms==null)
+			return chatRoom;
+		int size=rooms.size();
+		for(int i=0;i<size;i++)
+		{
+			if(rooms.get(i).getStoreId()==AsaanUtility.selectedStore.getId())
+			{
+				return rooms.get(i);
+			}
+		}
+		return chatRoom;
 		
+	}
+	private StoreChatTeam checkForMemberShips(List<StoreChatTeam> chatTeams)
+	{
+		StoreChatTeam storeChatTeam=null;
+		if(chatTeams==null)
+		   return storeChatTeam;
+		int size=chatTeams.size();
+		for(int i=0;i<size;i++)
+		{
+			if(chatTeams.get(i).getStoreId()==AsaanUtility.selectedStore.getId())
+			{
+				storeChatTeam=chatTeams.get(i);
+				
+			}
+		}
+		return storeChatTeam;
 	}
 	private class SaveChatRoomInServer extends AsyncTask<Void,Void,Void>
 	{
 		private ChatRoom chatRoom;
+		private boolean error=false;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -169,72 +209,24 @@ public class ChatActivity extends Activity{
 				chatRoom=saveChatRoom.execute();
 				Log.e("response",chatRoom.toPrettyString()+"date"+chatRoom.getModifiedDate()+"id"+chatRoom.getId());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				error=true;
 				e.printStackTrace();
 			}
 			return null;
 		}
-		
-	}
-	private void  showAttachmentDialog()
-	{
-		final Dialog dialog=new Dialog(ChatActivity.this);
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.dialog_attatchment);
-		ArrayList<String> list=new ArrayList<>();
-		list.add("Take Photo");
-		list.add("Choose from existing photos.");
-		list.add("Cancel");
-		
-		ListView lv=(ListView)dialog.findViewById(R.id.lv_attatch);
-		SimpleListAdapter adapter=new SimpleListAdapter(ChatActivity.this,R.layout.row_simple_list,list);
-		
-		lv.setAdapter(adapter);
-		Window window = dialog.getWindow();
-		WindowManager.LayoutParams wlp = window.getAttributes();
-
-		wlp.gravity = Gravity.BOTTOM;
-		//wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-		window.setAttributes(wlp);
-		dialog.show();
-		
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Log.e("HLW",""+position);
-				if (position == 0) {
-
-				} else if (position == 1) {
-
-				} else if (position == 2)
-					dialog.dismiss();
-
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if(error)
+				AsaanUtility.simpleAlert(ChatActivity.this,"An error has occured!.");
+			else
+			{
+				ChatMessage chatMessage=new ChatMessage();
+				chatMessage.setRoomId(chatRoom.getId());
+				AsaanUtility.selectedChatMessage=chatMessage;
+				loadChatMessageFragment();
 			}
-		});
-		
-	}
-	private void sendMessage(String msg)
-	{
-		if(!msg.equals(""))
-		{
-			chatList.add(msg);
-			adapter.notifyDataSetChanged();
-			edtChatBox.setText("");
-			lvChat.smoothScrollByOffset(chatList.size()-1);
 		}
-			
 	}
-	public void addMessageToList(String message) {
-		chatList.add(message);
-		adapter.notifyDataSetChanged();
-		Log.e("STATUS",message.toString());
-		
-	}
-	@Override
-	protected void onDestroy() {
-		unregisterReceiver(pushNotificationReceiver);
-		super.onDestroy();
-	}
-
+	
 }
