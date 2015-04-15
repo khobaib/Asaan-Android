@@ -19,7 +19,7 @@
         android:layout_below="@+id/iv_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="Asaan"
+        android:text="Savoir"
         android:textColor="@color/text_golden_color"
         android:textSize="45dp" />
 

@@ -150,7 +150,7 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 					}
 				});
-		storeEndpointBuilder.setApplicationName("Asaan");
+		storeEndpointBuilder.setApplicationName("Savoir");
 		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build();
 	}
 
@@ -164,7 +164,7 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 					}
 				});
-		userEndpointBuilder.setApplicationName("Asaan");
+		userEndpointBuilder.setApplicationName("Savoir");
 		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
 	}
 

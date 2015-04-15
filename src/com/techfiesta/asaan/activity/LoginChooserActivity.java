@@ -80,7 +80,7 @@ public class LoginChooserActivity extends Activity {
 	 * @Override public void initialize(HttpRequest arg0) throws IOException {
 	 * // TODO Auto-generated method stub
 	 * 
-	 * } }); storeEndpointBuilder.setApplicationName("Asaan"); mStoreendpoint =
+	 * } }); storeEndpointBuilder.setApplicationName("Savoir"); mStoreendpoint =
 	 * CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build(); }
 	 * 
 	 * private void buildUserEndpoint() { Userendpoint.Builder
@@ -91,7 +91,7 @@ public class LoginChooserActivity extends Activity {
 	 * @Override public void initialize(HttpRequest arg0) throws IOException {
 	 * // TODO Auto-generated method stub
 	 * 
-	 * } }); userEndpointBuilder.setApplicationName("Asaan"); mUserendpoint =
+	 * } }); userEndpointBuilder.setApplicationName("Savoir"); mUserendpoint =
 	 * CloudEndpointUtils.updateBuilder(userEndpointBuilder).build(); }
 	 */
 	private void launchActivity(Class<?> launchingClass) {
