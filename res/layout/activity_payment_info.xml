@@ -44,7 +44,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Use Asaan to easily pay the check inside resturants or for "
+            android:text="Use Savoir to easily pay the check inside resturants or for "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/text_golden_color" />
 

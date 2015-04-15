@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Asaan</string>
+    <string name="app_name">Savoir</string>
     <string name="fb_asaan_app_id">718517514848212</string>
     <string name="map_key_dev">AIzaSyCpNVfgYL-xlar9t3KJ70UIkVHaZ2MrLU0</string>
     <string name="map_key_dev_khobaib">AIzaSyCIe2Q41ucXLA8HDKyLihSomaIKXcnJ-LM</string>
@@ -14,7 +14,7 @@
     <string name="validationErrors">Validation Errors</string>
     
     <string name="frontpage_tagline">Discover and share great places with friends.</string>
-    <string name="signup_title">Welcome to Asaan! Let\'s start by setting up your account.</string>  
+    <string name="signup_title">Welcome to Savoir! Let\'s start by setting up your account.</string>  
     <string name="profile_page_title">Your name and photo will help the.</string> 
     <string name="phone_number_warning">Your number to call or text you regarding your account information.</string> 
     
