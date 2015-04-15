@@ -1,5 +1,6 @@
 package com.techfiesta.asaan.fragment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +48,7 @@ public class ProfileFragment extends Fragment{
 	Bitmap picture;
 
 	private String selectedImagePath;
+	  Uri outputFileUri;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.frag_profile4,null,false);
@@ -98,14 +102,12 @@ public class ProfileFragment extends Fragment{
 			
 			@Override
 			public void onClick(View v) {
-				//showOptionsDialog();
-				Intent intent = new Intent();
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 				
+				showOptionsDialog();
+				   
+				   
+				}
 				
-			}
 		});
 		tvPayment.setOnClickListener(new OnClickListener() {
 			
@@ -117,6 +119,24 @@ public class ProfileFragment extends Fragment{
 			}
 		});
 		setUpUI();
+	}
+	void prepareCamera()
+	{
+		final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/"; 
+        File newdir = new File(dir); 
+        newdir.mkdirs();
+        String file = dir+System.currentTimeMillis()+".jpg";
+        File newfile = new File(file);
+        try {
+            newfile.createNewFile();
+        } catch (IOException e) {}       
+
+        outputFileUri = Uri.fromFile(newfile);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+        startActivityForResult(cameraIntent,CAMERA_REQUEST);
 	}
 	 private void setUpUI()
 	  {
@@ -147,8 +167,19 @@ public class ProfileFragment extends Fragment{
 				}
 			}
 		 if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {  
-	            Bitmap photo = (Bitmap) data.getExtras().get("data"); 
-	            ivProfilePic.setImageBitmap(photo);
+	            Log.e("msg","picture saved");
+	           
+				userPic = new UserPicture(outputFileUri, getActivity().getContentResolver());
+				try {
+					picture = userPic.getBitmap();
+					if (picture != null)
+						selectedImagePath = userPic.getPath();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				ivProfilePic.setImageBitmap(picture);
 	        }  
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -177,11 +208,9 @@ public class ProfileFragment extends Fragment{
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					if (position == 2) {
-						dialog.dismiss();
-					} else if (position == 0) {
-						Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
-		                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+					
+					 if (position == 0) {
+						prepareCamera();
 					} else if (position == 1)
 					{
 						Intent intent = new Intent();
@@ -189,6 +218,7 @@ public class ProfileFragment extends Fragment{
 						intent.setAction(Intent.ACTION_GET_CONTENT);
 						startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 					}
+					dialog.dismiss();
 
 				}
 			});

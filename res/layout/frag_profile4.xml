@@ -10,10 +10,10 @@
         android:layout_margin="10dp"
         >
 
-        <ImageView
+        <com.techfiesta.asaan.utility.RoundedImageView
             android:id="@+id/imgViewProfPic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
