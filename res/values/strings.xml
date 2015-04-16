@@ -107,5 +107,6 @@
     <string name="gallery_right_arrow">Move to next menu item image</string>
     <string name="gallery_selected_menu_item">Selected menu item image</string>
     <string name="menu_modifier_title">Happy Hour </string>
+     <string name="default_pic_message">[Picture message]</string>
 
 </resources>

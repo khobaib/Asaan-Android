@@ -1,5 +1,10 @@
 package com.techfiesta.asaan.fragment;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,10 +22,12 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUserAr
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeam;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SendCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.ChatActivity;
@@ -28,13 +35,20 @@ import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.ChatMessageAdapter;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
+import com.techfiesta.asaan.model.UserPicture;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -61,6 +75,15 @@ public class ChatMessageFragment extends Fragment {
 	long one_day_in_mili=1000*60*60*24;
 	private HashMap<Long,ChatUser> userHashMap=new HashMap<Long,ChatUser>();
 	private List<ChatUser> userList;
+	
+	private static final int SELECT_PICTURE = 1;
+	private static final int CAMERA_REQUEST=2;
+
+    private int TEXT_MESSAGE=0;
+    private int PIC_MESSAGE=1;
+	private Uri outputFileUri;
+	UserPicture userPic;
+	Bitmap picture;
 	PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
 		public void onReceive(android.content.Context context, android.content.Intent intent) {
 
@@ -87,7 +110,8 @@ public class ChatMessageFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				sendMessage(edtChatBox.getText().toString());
+			if(!edtChatBox.getText().toString().equals(""))
+				sendMessage(edtChatBox.getText().toString(),TEXT_MESSAGE);
 				
 			}
 		});
@@ -129,28 +153,53 @@ public class ChatMessageFragment extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Log.e("HLW",""+position);
+				
 				if (position == 0) {
-
+					prepareCamera();
+					
 				} else if (position == 1) {
-
-				} else if (position == 2)
-					dialog.dismiss();
-
+					Intent intent = new Intent();
+					intent.setType("image/*");
+					intent.setAction(Intent.ACTION_GET_CONTENT);
+					startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+				}
+				dialog.dismiss();
 			}
 		});
 		
 	}
-	private void sendMessage(String msg)
+	void prepareCamera()
 	{
-		if(!msg.equals(""))
-		{
-			ChatMessage chatMessage=new ChatMessage();
-			chatMessage.setTxtMessage(msg);
-			chatMessage.setRoomId(AsaanUtility.selectedChatMessage.getRoomId());
-			
-			new SaveChatMessageInServer(chatMessage).execute();
+		final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/"; 
+        File newdir = new File(dir); 
+        newdir.mkdirs();
+        String file = dir+System.currentTimeMillis()+".jpg";
+        File newfile = new File(file);
+        try {
+            newfile.createNewFile();
+        } catch (IOException e) {}       
+
+        outputFileUri = Uri.fromFile(newfile);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+        startActivityForResult(cameraIntent,CAMERA_REQUEST);
+	}
+	private void sendMessage(String msg,int type)
+	{
+		ChatMessage chatMessage=new ChatMessage();
+		chatMessage.setRoomId(AsaanUtility.selectedChatMessage.getRoomId());
+		if(type==TEXT_MESSAGE)
+		    chatMessage.setTxtMessage(msg);
+		else
+			if (type == PIC_MESSAGE) {
+			chatMessage.setFileMessage(msg);
+			String defMessage = getActivity().getResources().getString(R.string.default_pic_message);
+			chatMessage.setTxtMessage(defMessage);
 		}
+
+		new SaveChatMessageInServer(chatMessage).execute();
 			
 	}
 	
@@ -208,8 +257,8 @@ public class ChatMessageFragment extends Fragment {
 				}
 				else
 				   adapter.notifyDataSetChanged();
-			lvChat.smoothScrollToPosition(chatList.size()-1);
 			
+				lvChat.smoothScrollToPosition(chatList.size()-1);
 		}
 		private void addMessagesToChatist()
 		{
@@ -317,6 +366,76 @@ public class ChatMessageFragment extends Fragment {
 	public void onStop() {
 		getActivity().unregisterReceiver(pushNotificationReceiver);
 		super.onStop();
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == SELECT_PICTURE) {
+				Uri selectedImageUri = data.getData();
+				userPic = new UserPicture(selectedImageUri, getActivity().getContentResolver());
+				try {
+					picture = userPic.getBitmap();
+					if (picture != null)
+					{
+						ByteArrayOutputStream stream = new ByteArrayOutputStream();
+						picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+						saveImageInParse(stream.toByteArray());
+						
+					}
+					else
+						Log.e("Bitmap","bitmap null");
+						
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}
+		if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+			Log.e("msg", "picture taken");
+			userPic = new UserPicture(outputFileUri, getActivity().getContentResolver());
+			try {
+				picture = userPic.getBitmap();
+				if (picture != null)
+				{
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+					saveImageInParse(stream.toByteArray());
+					
+				}
+				else
+					Log.e("Bitmap","bitmap null");
+					
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	private void saveImageInParse(byte[] bytes)
+	{
+		
+		String filename=AsaanUtility.USER_ID+System.currentTimeMillis()+"-picture.jpg";
+		final ParseFile parseFile=new ParseFile(filename,bytes);
+		parseFile.saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e==null)
+				{
+					Log.e("PIC URL",parseFile.getUrl());
+					sendMessage(parseFile.getUrl(),PIC_MESSAGE);
+				}
+				else
+				{
+					Log.e("PIC URL Error","error");
+				}
+				
+			}
+		});
 	}
 
 }
