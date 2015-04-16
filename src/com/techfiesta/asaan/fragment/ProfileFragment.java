@@ -1,5 +1,6 @@
 package com.techfiesta.asaan.fragment;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,26 +27,37 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.google.android.gms.internal.eb;
+import com.google.android.gms.internal.fa;
+import com.google.android.gms.internal.ph;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.PaymentInfoActivity;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
+import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.model.UserPicture;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;
 	private static final int CAMERA_REQUEST=2;
-	private TextView tvSave,tvPayment;
-	private EditText etFirstName,etLastName,etEmail,etTip,etPhone,etPaymentInfo,etFacebookProfile;
+	private TextView tvSave,tvPayment,tvTips;
+	private EditText etFirstName,etLastName,etEmail,etPhone,etPaymentInfo,etFacebookProfile;
+	private SeekBar sbTips;
 	private ProgressDialog pdDialog;
 	private ImageView ivProfilePic;
+	private ImageLoader imageLoader;
+	private boolean isNewprofilePicAdded=false;
 	
-	UserPicture userPic;
-	Bitmap picture;
+	private UserPicture userPic;
+	private Bitmap picture;
 
 	private String selectedImagePath;
 	  Uri outputFileUri;
@@ -58,7 +70,8 @@ public class ProfileFragment extends Fragment{
 		etLastName=(EditText)v.findViewById(R.id.etViewLastName);
 		etEmail=(EditText)v.findViewById(R.id.etViewEmail);
 		etPhone=(EditText)v.findViewById(R.id.etViewPhone);
-		etTip=(EditText)v.findViewById(R.id.etViewTip);
+		tvTips=(TextView)v.findViewById(R.id.txtViewLblTip);
+		sbTips=(SeekBar)v.findViewById(R.id.seekBarTips);
 		etFacebookProfile=(EditText)v.findViewById(R.id.etViewFbProf);
 		ivProfilePic=(ImageView)v.findViewById(R.id.imgViewProfPic);
 		tvPayment=(TextView)v.findViewById(R.id.txtViewPayInfo);
@@ -70,32 +83,23 @@ public class ProfileFragment extends Fragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		imageLoader=new ImageLoader(getActivity());
 		tvSave.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
+				pdDialog.setMessage("Please wait....");
 				pdDialog.show();
-				ParseUser user=ParseUser.getCurrentUser();
-				String firstName=etFirstName.getText().toString();
-				user.put("firstName",firstName);
-				String lastName=etLastName.getText().toString();
-				user.put("lastName",lastName);
-				
-				user.saveInBackground(new SaveCallback() {
-					
-					@Override
-					public void done(ParseException e) {
-						if(e==null)
-						{
-							Log.e("response","user updated");
-						}
-						else
-							Log.e("response",e.toString());
-						
-						pdDialog.dismiss();
+
+				if (isNewprofilePicAdded) {
+					if (picture != null) {
+						ByteArrayOutputStream stream = new ByteArrayOutputStream();
+						picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+						saveImageInParse(stream.toByteArray());
 					}
-				});
-				
+				} else
+					saveUserInParse("");
+
 			}
 		});
 		ivProfilePic.setOnClickListener(new OnClickListener() {
@@ -118,7 +122,86 @@ public class ProfileFragment extends Fragment{
 				
 			}
 		});
+		sbTips.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if(progress<15)
+				{
+					sbTips.setProgress(15);
+					tvTips.setText("Tips(15%)");
+				}
+				else
+				 tvTips.setText("Tips("+progress+")");
+			}
+		});
 		setUpUI();
+	}
+	private void saveImageInParse(byte[] bytes)
+	{
+		
+		String filename=ParseUser.getCurrentUser().getObjectId()+System.currentTimeMillis()+"-picture.jpg";
+		final ParseFile parseFile=new ParseFile(filename,bytes);
+		parseFile.saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e==null)
+				{
+					Log.e("PIC URL",parseFile.getUrl());
+					saveUserInParse(parseFile.getUrl());
+					
+				}
+				else
+				{
+					Log.e("PIC URL Error","error");
+				}
+				
+			}
+		});
+	}
+	private void saveUserInParse(String url)
+	{
+		ParseUser user=ParseUser.getCurrentUser();
+		String firstName=etFirstName.getText().toString();
+		user.put("firstName",firstName);
+		String lastName=etLastName.getText().toString();
+		user.put("lastName",lastName);
+		String phone=etPhone.getText().toString();
+		user.put("phone",phone);
+		int tips=sbTips.getProgress();
+		user.put("tip",""+tips);
+		if(!url.equals(""))
+			user.put("profilePhotoUrl",url);
+		
+		user.saveInBackground(new SaveCallback() {
+			
+			@Override
+			public void done(ParseException e) {
+				if(e==null)
+				{
+					Log.e("response","user updated");
+					AsaanUtility.simpleAlert(getActivity(),"Your profile is updated.");
+				}
+				else
+					Log.e("response",e.toString());
+				if(pdDialog.isShowing())
+					pdDialog.dismiss();
+			}
+		});
+		
 	}
 	void prepareCamera()
 	{
@@ -143,6 +226,21 @@ public class ProfileFragment extends Fragment{
 		  ParseUser user=ParseUser.getCurrentUser();
 		  etFirstName.setText(user.getString("firstName"));
 		  etLastName.setText(user.getString("lastName"));
+		  etEmail.setText(user.getEmail());
+		  etPhone.setText(user.getString("phone"));
+		  int tips=Integer.valueOf(user.getString("tip"));
+		  if(tips>15)
+		  {
+		     sbTips.setProgress(tips);
+		     tvTips.setText("Tips("+tips+")");
+		  }
+		  else
+		  {
+			  tvTips.setText("Tips(15%)");
+			  sbTips.setProgress(15);
+		  }
+		  Log.e("MSG",user.getString("tip")+"");
+		  imageLoader.DisplayImage(user.getString("profilePhotoUrl"), ivProfilePic);
 		  
 	  }
 	 @Override
@@ -156,10 +254,11 @@ public class ProfileFragment extends Fragment{
 						if (picture != null)
 							selectedImagePath = userPic.getPath();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
-
+                    
+					isNewprofilePicAdded=true;
 					ivProfilePic.setImageBitmap(picture);
 					System.out.println(selectedImagePath);
 					// profilePhotoUrl = selectedImagePath;
@@ -178,7 +277,7 @@ public class ProfileFragment extends Fragment{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				isNewprofilePicAdded=true;
 				ivProfilePic.setImageBitmap(picture);
 	        }  
 		super.onActivityResult(requestCode, resultCode, data);
