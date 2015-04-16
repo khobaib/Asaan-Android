@@ -254,11 +254,12 @@ public class ChatMessageFragment extends Fragment {
 				{
 				adapter=new ChatMessageAdapter(getActivity(),chatList,userHashMap);
 				lvChat.setAdapter(adapter);
+				adapter.notifyDataSetChanged();
 				}
 				else
 				   adapter.notifyDataSetChanged();
 			
-				lvChat.smoothScrollToPosition(chatList.size()-1);
+				new SmoothScrollingAsynkTask().execute();
 		}
 		private void addMessagesToChatist()
 		{
@@ -414,6 +415,26 @@ public class ChatMessageFragment extends Fragment {
 
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	private class SmoothScrollingAsynkTask extends AsyncTask<Void,Void, Void>
+	{
+
+		@Override
+		protected void onPreExecute() {
+			Log.e("scroll","started");
+			super.onPreExecute();
+		}
+		@Override
+		protected Void doInBackground(Void... params) {
+			lvChat.setSelection(chatList.size()-1);
+			lvChat.smoothScrollToPosition(chatList.size()-1);
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			Log.e("scroll","finished");
+			super.onPostExecute(result);
+		}
 	}
 	private void saveImageInParse(byte[] bytes)
 	{
