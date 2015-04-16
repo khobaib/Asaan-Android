@@ -173,8 +173,7 @@ public class PaymentInfoActivity extends Activity {
 					handleError(error.getLocalizedMessage());
 					// finishProgress();
 				}
-				
-			});
+			});		
 		} else if (!card.validateNumber()) {
 			handleError("The card number that you entered is invalid");
 		} else if (!card.validateExpiryDate()) {
@@ -224,6 +223,7 @@ public class PaymentInfoActivity extends Activity {
 		userCard.setName(card.getName());
 		userCard.setState(card.getAddressState());
 		userCard.setZip(card.getAddressZip());
+		userCard.setCardId(card.getId());
 
 		new PostCardInfo().execute();
 
