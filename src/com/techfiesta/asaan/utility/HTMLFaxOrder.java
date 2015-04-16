@@ -49,7 +49,7 @@ public class HTMLFaxOrder {
 	private void setUpBeginingString()
 	{
 		String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
-		String to= "";
+		String to= "none";
 		if(AsaanUtility.selectedStore!=null)
 			to =AsaanUtility.selectedStore.getName();
 		String phone="phone";
@@ -58,7 +58,7 @@ public class HTMLFaxOrder {
 		String order="ORDER ID";
 		String email=ParseUser.getCurrentUser().getEmail();
 		String orderType="TEMP";
-		String address="";
+		String address="none";
 		if(ParseUser.getCurrentUser().get("address")!=null)
 			address=ParseUser.getCurrentUser().get("address").toString();
 		long mili=System.currentTimeMillis();
