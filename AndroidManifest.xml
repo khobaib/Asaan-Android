@@ -43,6 +43,7 @@
 	<permission android:protectionLevel="signature"
 	    android:name="com.techfiesta.asaan.permission.C2D_MESSAGE" />
 	<uses-permission android:name="com.techfiesta.asaan.permission.C2D_MESSAGE" />
+	<uses-permission android:name="android.permission.CALL_PHONE"/>
 	    
 
     <application

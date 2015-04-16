@@ -30,7 +30,6 @@
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/tv_discount"
         android:textColor="@color/black"
-        android:inputType="number"
         android:background="@color/white"/>
     
 
