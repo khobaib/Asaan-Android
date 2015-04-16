@@ -101,7 +101,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 			if(pDialog!=null)
 				pDialog.dismiss();
 			if(error)
-				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,"An error occured.");
+				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,getResources().getString(R.string.error_alert));
 			else
 			{
 				//update ui
@@ -142,9 +142,19 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 			super.onPostExecute(result);
 			pDialog.dismiss();
 			if(error)
-				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,"An error occured.");
+				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,createWaitListErrorString());
+			else
+				AsaanUtility.simpleAlert(WaitListConfirmActivity.this,createWaitListConfrimString());
 		}
     	
+    }
+    private String createWaitListConfrimString()
+    {
+    	return "Thank you- Your reservation request has been sent.If you need to make changes please call "+ AsaanUtility.selectedStore.getPhone()+".";
+    }
+    private String createWaitListErrorString()
+    {
+    	return "We were unable to reach "+AsaanUtility.selectedStore.getName()+" and place you on their wait list. We're really sorry. Please call "+AsaanUtility.selectedStore.getName()+" directly at "+AsaanUtility.selectedStore.getPhone()+".";
     }
 	private void internetAvailabilityAlert(Context context, String message,final int flag) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
@@ -181,7 +191,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 		if(AsaanUtility.hasInternet(WaitListConfirmActivity.this))
 	        new GetWaitListQueueFromSever().execute();
 		else
-			internetAvailabilityAlert(WaitListConfirmActivity.this, "Please Check your internet connection",FLAG_GET_WAIT_LIST_QUEUE);
+			internetAvailabilityAlert(WaitListConfirmActivity.this,getResources().getString(R.string.internet_alert),FLAG_GET_WAIT_LIST_QUEUE);
 
 		
 	}
@@ -190,7 +200,7 @@ public class WaitListConfirmActivity extends Activity implements OnClickListener
 		if(AsaanUtility.hasInternet(WaitListConfirmActivity.this))
 	        new SaveWaitListQueueInServer().execute();
 		else
-			internetAvailabilityAlert(WaitListConfirmActivity.this, "Please Check your internet connection",FLAG_SAVE_QUEUE_IN_SERVER);
+			internetAvailabilityAlert(WaitListConfirmActivity.this, getResources().getString(R.string.internet_alert),FLAG_SAVE_QUEUE_IN_SERVER);
 
 	}
 	
