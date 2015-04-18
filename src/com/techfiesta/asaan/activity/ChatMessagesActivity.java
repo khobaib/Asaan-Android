@@ -1,10 +1,9 @@
-package com.techfiesta.asaan.fragment;
+package com.techfiesta.asaan.activity;
 
-import java.io.BufferedInputStream;
+
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,14 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatMessagesForStoreOrRoom;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatMessage;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessagesAndUsers;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUser;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUserArray;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeam;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -30,17 +25,15 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SendCallback;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.ChatActivity;
-import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.ChatMessageAdapter;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
 import com.techfiesta.asaan.model.UserPicture;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -51,9 +44,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -64,7 +57,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ChatMessageFragment extends Fragment {
+public class ChatMessagesActivity extends Activity {
 	private ImageView ivAttach;
 	private EditText edtChatBox;
 	private TextView tvSend;
@@ -91,13 +84,18 @@ public class ChatMessageFragment extends Fragment {
 			new GetChatMessagesForRoomFromServer().execute();
 		};
 	};
+	private ActionBar actionBar;
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v=inflater.inflate(R.layout.fragment_chat_message,null,false);
-		lvChat=(ListView)v.findViewById(R.id.lv_chats);
-		ivAttach=(ImageView)v.findViewById(R.id.iv_attatch);
-		edtChatBox=(EditText)v.findViewById(R.id.et_chatbox);
-		tvSend=(TextView)v.findViewById(R.id.tv_send);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.fragment_chat_message);
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		lvChat=(ListView)findViewById(R.id.lv_chats);
+		ivAttach=(ImageView)findViewById(R.id.iv_attatch);
+		edtChatBox=(EditText)findViewById(R.id.et_chatbox);
+		tvSend=(TextView)findViewById(R.id.tv_send);
 		ivAttach.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -115,21 +113,16 @@ public class ChatMessageFragment extends Fragment {
 				
 			}
 		});
-		return v;
-	}
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 		new GetChatMessagesForRoomFromServer().execute();
 	}
 	@Override
-	public void onResume() {
+	protected void onResume() {
+		registerReceiver(pushNotificationReceiver,new IntentFilter(getResources().getString(R.string.intent_filter_push)));
 		super.onResume();
-		getActivity().registerReceiver(pushNotificationReceiver,new IntentFilter(getActivity().getResources().getString(R.string.intent_filter_push)));
 	}
 	private void  showAttachmentDialog()
 	{
-		final Dialog dialog=new Dialog(getActivity());
+		final Dialog dialog=new Dialog(ChatMessagesActivity.this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_attatchment);
 		ArrayList<String> list=new ArrayList<>();
@@ -138,7 +131,7 @@ public class ChatMessageFragment extends Fragment {
 		list.add("Cancel");
 		
 		ListView lv=(ListView)dialog.findViewById(R.id.lv_attatch);
-		SimpleListAdapter adapter=new SimpleListAdapter(getActivity(),R.layout.row_simple_list,list);
+		SimpleListAdapter adapter=new SimpleListAdapter(ChatMessagesActivity.this,R.layout.row_simple_list,list);
 		
 		lv.setAdapter(adapter);
 		Window window = dialog.getWindow();
@@ -195,7 +188,7 @@ public class ChatMessageFragment extends Fragment {
 		else
 			if (type == PIC_MESSAGE) {
 			chatMessage.setFileMessage(msg);
-			String defMessage = getActivity().getResources().getString(R.string.default_pic_message);
+			String defMessage = getResources().getString(R.string.default_pic_message);
 			chatMessage.setTxtMessage(defMessage);
 		}
 
@@ -227,7 +220,7 @@ public class ChatMessageFragment extends Fragment {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(error)
-				AsaanUtility.simpleAlert(getActivity(),"An error has occured!.");
+				AsaanUtility.simpleAlert(ChatMessagesActivity.this,"An error has occured!.");
 			else
 			{
 				if(chatMessagesAndUsers.getChatMessages()!=null)
@@ -252,7 +245,7 @@ public class ChatMessageFragment extends Fragment {
 			Log.e("SIZE",""+chatList.size());
 				if(adapter==null)
 				{
-				adapter=new ChatMessageAdapter(getActivity(),chatList,userHashMap);
+				adapter=new ChatMessageAdapter(ChatMessagesActivity.this,chatList,userHashMap);
 				lvChat.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
 				}
@@ -311,7 +304,7 @@ public class ChatMessageFragment extends Fragment {
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
 			if(error)
-				AsaanUtility.simpleAlert(getActivity(),"An error has occured!.");
+				AsaanUtility.simpleAlert(ChatMessagesActivity.this,"An error has occured!.");
 			else
 			{
 				addMessageToList(chatMessage);
@@ -365,7 +358,7 @@ public class ChatMessageFragment extends Fragment {
 	}
 	@Override
 	public void onStop() {
-		getActivity().unregisterReceiver(pushNotificationReceiver);
+		unregisterReceiver(pushNotificationReceiver);
 		super.onStop();
 	}
 
@@ -374,7 +367,7 @@ public class ChatMessageFragment extends Fragment {
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == SELECT_PICTURE) {
 				Uri selectedImageUri = data.getData();
-				userPic = new UserPicture(selectedImageUri, getActivity().getContentResolver());
+				userPic = new UserPicture(selectedImageUri,getContentResolver());
 				try {
 					picture = userPic.getBitmap();
 					if (picture != null)
@@ -395,7 +388,7 @@ public class ChatMessageFragment extends Fragment {
 		}
 		if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
 			Log.e("msg", "picture taken");
-			userPic = new UserPicture(outputFileUri, getActivity().getContentResolver());
+			userPic = new UserPicture(outputFileUri,getContentResolver());
 			try {
 				picture = userPic.getBitmap();
 				if (picture != null)
@@ -458,5 +451,19 @@ public class ChatMessageFragment extends Fragment {
 			}
 		});
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return super.onCreateOptionsMenu(menu);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+       if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
+	}
+
 
 }

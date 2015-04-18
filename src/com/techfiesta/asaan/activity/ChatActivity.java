@@ -2,11 +2,14 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
@@ -18,6 +21,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -29,37 +34,50 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatMessagesForStoreOrRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetChatRoomsAndMembershipsForUser;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveChatRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessagesAndUsers;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoom;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatRoomsAndStoreChatMemberships;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUser;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatTeam;
 import com.google.android.gms.internal.er;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.ChatMessageAdapter;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
-import com.techfiesta.asaan.fragment.ChatListFragment;
-import com.techfiesta.asaan.fragment.ChatMessageFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
 public class ChatActivity extends Activity{
-	private ImageView ivAttach;
-	private EditText edtChatBox;
-	private TextView tvSend;
-	private ListView lvChat;
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
-	ArrayList<String> chatList=new ArrayList<String>();
-	SimpleListAdapter adapter;
+	private ListView lvChat;
+	List<ChatMessage> chatList;
+	ChatMessageAdapter adapter;
+	long one_day_in_mili = 1000 * 60 * 60 * 24;
+	private HashMap<Long, ChatUser> userHashMap = new HashMap<Long, ChatUser>();
+	private ActionBar actionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_chat);
-		
+		setContentView(R.layout.fragment_chat_list);
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		lvChat = (ListView) findViewById(R.id.lv_chats);
+		lvChat.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				AsaanUtility.selectedChatMessage = chatList.get(position);
+				loadChatMessagesActivity();
+			}
+		});
 		new GetStoreChatRoomsAndMemberships().execute();
 	}
 	@Override
@@ -107,7 +125,7 @@ public class ChatActivity extends Activity{
 					chatMessage.setRoomId(chatRoom.getId());
 					AsaanUtility.USER_ID = chatRoom.getUserId();
 					AsaanUtility.selectedChatMessage=chatMessage;
-					loadChatMessageFragment();
+					loadChatMessagesActivity();
 
 				} else {
 					StoreChatTeam storeChatTeam = checkForMemberShips(chatRoomsAndStoreChatMemberships
@@ -115,7 +133,7 @@ public class ChatActivity extends Activity{
 					if (storeChatTeam != null) {
 						
 						AsaanUtility.USER_ID = storeChatTeam.getUserId();
-						loadChatListFragment();
+						loadChats();
 						
 					} else {
 						new SaveChatRoomInServer().execute();
@@ -127,21 +145,18 @@ public class ChatActivity extends Activity{
 		}
 	
 	}
-	public void loadChatMessageFragment()
+	private void loadChatMessagesActivity()
 	{
-		ChatMessageFragment chatMessageFragment=new ChatMessageFragment();
-		FragmentTransaction  ft=getFragmentManager().beginTransaction();
-		ft.replace(R.id.frame_container,chatMessageFragment);
-		ft.commit();
+		Intent intent=new Intent(ChatActivity.this,ChatMessagesActivity.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	}
-	private void loadChatListFragment()
+	private void loadChats()
 	{
-		ChatListFragment chatListFragment=new ChatListFragment();
-		FragmentTransaction  ft=getFragmentManager().beginTransaction();
-		ft.replace(R.id.frame_container,chatListFragment);
-		ft.addToBackStack(null);
-		ft.commit();
+		new GetChatMessagesForRoomFromServer().execute();
+		
 	}
+	
 	private ChatRoom isMemberOfChatroom(List<ChatRoom> rooms)
 	{  ChatRoom chatRoom=null;
 		if(rooms==null)
@@ -212,9 +227,78 @@ public class ChatActivity extends Activity{
 				ChatMessage chatMessage=new ChatMessage();
 				chatMessage.setRoomId(chatRoom.getId());
 				AsaanUtility.selectedChatMessage=chatMessage;
-				loadChatMessageFragment();
+				loadChatMessagesActivity();
 			}
 		}
 	}
+	private class GetChatMessagesForRoomFromServer extends AsyncTask<Void, Void, Void> {
+		private boolean error = false;
+		ChatMessagesAndUsers chatMessagesAndUsers;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				GetChatMessagesForStoreOrRoom getChatUsersForRoom = SplashActivity.mStoreendpoint
+						.getChatMessagesForStoreOrRoom(0, true, 50, System.currentTimeMillis() - 7 * one_day_in_mili,
+								AsaanUtility.selectedStore.getId());
+				HttpHeaders httpHeaders = getChatUsersForRoom.getRequestHeaders();
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				chatMessagesAndUsers = getChatUsersForRoom.execute();
+				if (chatMessagesAndUsers != null)
+					Log.e("msg", chatMessagesAndUsers.toPrettyString());
+			} catch (IOException e) {
+				error = true;
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if (error)
+				AsaanUtility.simpleAlert(ChatActivity.this, "An error has occured!.");
+			else {
+				if (chatMessagesAndUsers.getChatUsers() != null)
+					createUserHashMap();
+				if (chatMessagesAndUsers.getChatMessages() != null)
+					setAdapter();
+			}
+		}
+
+		private void setAdapter() {
+			chatList = chatMessagesAndUsers.getChatMessages();
+			Collections.reverse(chatList);
+			adapter = new ChatMessageAdapter(ChatActivity.this, chatList, userHashMap);
+			lvChat.setAdapter(adapter);
+			lvChat.smoothScrollToPosition(chatList.size() - 1);
+
+		}
+
+		private void createUserHashMap() {
+			if (chatMessagesAndUsers.getChatUsers() != null) {
+				int size = chatMessagesAndUsers.getChatUsers().size();
+				for (int i = 0; i < size; i++) {
+					if (!userHashMap.containsKey(chatMessagesAndUsers.getChatUsers().get(i).getUserId()))
+						userHashMap.put(chatMessagesAndUsers.getChatUsers().get(i).getUserId(), chatMessagesAndUsers
+								.getChatUsers().get(i));
+				}
+			}
+		}
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return super.onCreateOptionsMenu(menu);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+       if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
+	}
+
 	
 }

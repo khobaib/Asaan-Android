@@ -7,6 +7,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,8 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreChatT
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.ChatActivity;
+import com.techfiesta.asaan.activity.ChatMessagesActivity;
 import com.techfiesta.asaan.activity.ReserveConfirmActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.ChatHistoryAdapter;
@@ -39,6 +42,7 @@ public class ChatHistoryFragment  extends Fragment{
 	private List<ChatRoom> chatRoomList;
 	private List<StoreChatTeam> storeChatTeams=null;
 	private ProgressDialog pdDialog;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.fragment_chat_history,null,false);
@@ -64,7 +68,7 @@ public class ChatHistoryFragment  extends Fragment{
 				if(storeChatTeam!=null)
 				{
 					AsaanUtility.USER_ID = storeChatTeam.getUserId();
-					loadChatListFragment();
+					loadChatActivity();
 					
 					
 				}
@@ -74,7 +78,7 @@ public class ChatHistoryFragment  extends Fragment{
 				chatMessage.setRoomId(chatRoom.getId());
 				AsaanUtility.USER_ID = chatRoom.getUserId();
 				AsaanUtility.selectedChatMessage=chatMessage;
-				loadChatMessageFragment();
+				loadChatMessagesActivity();
 				}
 			
 				
@@ -114,20 +118,18 @@ public class ChatHistoryFragment  extends Fragment{
 		}
 		return storeChatTeam;
 	}
-	private void loadChatListFragment()
+	private void loadChatMessagesActivity()
 	{
-		ChatListFragment chatListFragment=new ChatListFragment();
-		FragmentTransaction  ft=getFragmentManager().beginTransaction();
-		ft.replace(R.id.frame_container,chatListFragment);
-		ft.addToBackStack(null);
-		ft.commit();
+		Intent intent=new Intent(getActivity(),ChatMessagesActivity.class);
+		startActivity(intent);
+		getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 	}
-	public void loadChatMessageFragment()
+	private void loadChatActivity()
 	{
-		ChatMessageFragment chatMessageFragment=new ChatMessageFragment();
-		FragmentTransaction  ft=getFragmentManager().beginTransaction();
-		ft.replace(R.id.frame_container,chatMessageFragment);
-		ft.commit();
+		Intent intent=new Intent(getActivity(),ChatActivity.class);
+		startActivity(intent);
+		getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		
 	}
 	private void setSelecteStore(ChatRoom chatRoom)
 	{
@@ -191,5 +193,6 @@ public class ChatHistoryFragment  extends Fragment{
 		ChatHistoryAdapter chatHistoryAdapter=new ChatHistoryAdapter(getActivity(),chatRoomList);
 		lvChats.setAdapter(chatHistoryAdapter);
 	}
+	
 
 }

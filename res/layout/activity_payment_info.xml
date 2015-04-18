@@ -15,17 +15,6 @@
         android:textColor="@color/text_golden_color"
         android:textStyle="bold" />
     
-    <Button
-        android:id="@+id/b_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@android:color/transparent"
-        android:text="Skip"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/text_golden_color"
-        android:textStyle="bold" />
-
 
     <RelativeLayout
         android:id="@+id/rl_card_info"
@@ -44,7 +33,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Use Asaan to easily pay the check inside resturants or for "
+            android:text="Use Savoir to easily pay the check inside resturants or for "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/text_golden_color" />
 
