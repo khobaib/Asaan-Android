@@ -50,7 +50,7 @@ import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class OrderItemActivity extends Activity {
+public class OrderItemActivity extends BaseActivity {
 	ListView mListView = null;
 	int menuItemPOSId = 0;
 	int menuItemPrice = 0;
@@ -241,6 +241,7 @@ public class OrderItemActivity extends Activity {
 					//addItem = new AddItem(count + 1, AsaanUtility.selectedStore.getId().intValue(), total_cost,
 						//	menuItemShortDesc, quantity, menuItemPOSId, txtSpecialInstructions.getText().toString());
 					addItemDao.insert(addItem);
+					
 					
 					// to do
 					if (menuItemHasModifiers) {

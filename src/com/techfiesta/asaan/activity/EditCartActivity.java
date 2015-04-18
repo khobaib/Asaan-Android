@@ -33,7 +33,7 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.NestedListView;
 
-public class EditCartActivity extends Activity {
+public class EditCartActivity extends BaseActivity {
 
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;
 	private static final int ALERT_TYPE_CANCEL_ORDER = 2;

@@ -33,7 +33,7 @@ import com.techfiesta.asaan.fragment.ErrorDialogFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class PaymentInfoActivity extends Activity {
+public class PaymentInfoActivity extends BaseActivity {
 
 	UserCard userCard;
 	//public static final String PUBLISHABLE_KEY = "pk_test_hlpADPUOWaxn6uN0aATgLivW";

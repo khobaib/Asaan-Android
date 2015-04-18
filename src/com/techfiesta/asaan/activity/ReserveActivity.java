@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ReserveActivity extends Activity {
+public class ReserveActivity extends BaseActivity {
 	
 	private TextView tvName;
 	private RelativeLayout rlReserve,rlWaitList;

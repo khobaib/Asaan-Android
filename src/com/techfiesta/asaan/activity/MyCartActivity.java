@@ -50,7 +50,7 @@ import com.techfiesta.asaan.utility.NestedListView;
 import com.techfiesta.asaan.utility.XMLPosOrder;
 
 
-public class MyCartActivity extends Activity {
+public class MyCartActivity extends BaseActivity {
 
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;
 	private static final int ALERT_TYPE_CANCEL_ORDER = 2;
@@ -350,7 +350,7 @@ public class MyCartActivity extends Activity {
 			if(AsaanUtility.defCard!=null)
 			{
 				orderArguments.setUserId(AsaanUtility.defCard.getUserId());
-				orderArguments.setCardid(AsaanUtility.defCard.getCardId());
+				orderArguments.setCardid(""+AsaanUtility.defCard.getId());
 				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
 			}
 			//may need to change

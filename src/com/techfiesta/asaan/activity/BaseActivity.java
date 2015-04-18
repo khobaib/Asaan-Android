@@ -27,6 +27,11 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		unregisterReceiver(broadcastReceiver);
 		super.onDestroy();
 	}
-
+@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		//super.onBackPressed();
+	}
 
 }

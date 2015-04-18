@@ -31,7 +31,7 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 import com.techfiesta.asaan.utility.MyTabListener;
 
-public class MenuActivityNew  extends Activity{
+public class MenuActivityNew  extends BaseActivity{
 	
 	private int MAX_RESULT=50;
 	private long  storeId=-1;

@@ -24,7 +24,7 @@ import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class WaitListConfirmActivity extends Activity implements OnClickListener{
+public class WaitListConfirmActivity extends BaseActivity implements OnClickListener{
 	private TextView tvPeople;
 	private Button btnPeoplePlus,btnPeopleMinus,btnGetInLine;
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";

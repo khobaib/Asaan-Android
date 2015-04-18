@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ClaimStoreActivity extends Activity{
+public class ClaimStoreActivity extends BaseActivity{
 	private TextView tvName,tvSaveEmployee,tvAddEmployee,tvEdit;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

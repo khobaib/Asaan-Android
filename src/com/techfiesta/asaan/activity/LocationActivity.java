@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class LocationActivity extends Activity {
+public class LocationActivity extends BaseActivity {
 	private GoogleMap map;
 	private ActionBar actionBar;
 	@Override

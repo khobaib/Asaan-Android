@@ -20,7 +20,7 @@ import com.techfiesta.asaan.fragment.MenuFlowFragment;
 import com.techfiesta.asaan.interfaces.ForwardBackWardClickListner;
 import com.techfiesta.asaan.utility.Constants;
 
-public class MenuFlowActivity extends Activity implements ForwardBackWardClickListner{
+public class MenuFlowActivity extends BaseActivity implements ForwardBackWardClickListner{
 	public List<MenuItemAndStats> allItems ;
 	private ActionBar actionBar;
 	@Override

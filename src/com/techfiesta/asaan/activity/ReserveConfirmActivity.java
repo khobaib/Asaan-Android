@@ -29,7 +29,7 @@ import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ReserveConfirmActivity extends Activity implements OnClickListener{
+public class ReserveConfirmActivity extends BaseActivity implements OnClickListener{
 	private TextView tvName,tvPeople,tvDay,tvDate,tvTime;
 	private Button btnPeoplePlus,btnPeopleMinus,btnDayPlus,btnDayMinus,btnTimePlus,btnTimeMinus,btnReserve;
 	private long one_day=1000*60*60*24;

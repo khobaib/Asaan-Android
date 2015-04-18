@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TextView 
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Mar 25,2015"/>
+    
+     <TextView 
+        android:id="@+id/tv_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:text="Food"/>
+     <ImageView 
+         android:id="@+id/iv_food_like"
+         android:layout_height="40dp"
+         android:layout_width="40dp"
+         android:layout_toRightOf="@+id/tv_food"
+         android:layout_margin="10dp"
+          android:layout_below="@+id/tv_date"
+         android:src="@drawable/like_1"/>
+     <TextView 
+        android:id="@+id/tv_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_food_like"
+         android:layout_below="@+id/tv_date"
+       android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:text="Service"/>
+     <ImageView 
+         android:id="@+id/iv_service_like"
+         android:layout_height="40dp"
+         android:layout_width="40dp"
+         android:layout_toRightOf="@+id/tv_service"
+          android:layout_below="@+id/tv_date"
+         android:layout_margin="10dp"
+          android:src="@drawable/like_1"/>
+    
+
+</RelativeLayout>

@@ -26,7 +26,7 @@ import com.techfiesta.asaan.utility.AsaanApplication;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class OnlineOrderActivity extends Activity {
+public class OnlineOrderActivity extends BaseActivity {
 
 	Button carryoutNext;
 	Button deliverNext;

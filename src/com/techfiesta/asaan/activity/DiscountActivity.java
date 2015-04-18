@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.techfiesta.asaan.R;
 
-public class DiscountActivity extends Activity{
+public class DiscountActivity extends BaseActivity{
 
 	private ActionBar actionBar;
 	@Override

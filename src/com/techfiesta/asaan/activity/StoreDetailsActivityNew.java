@@ -4,6 +4,10 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -23,18 +27,28 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	ReviewFragment reviewFragment;
 	FragmentMenu fragmentMenu;
 	HistoryFragment historyFragment;
-	public static boolean isBackButtonPressed = false;
+	//public static boolean isBackButtonPressed = false;
+BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			finish();
+			
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_store_details);
 		actionBar = getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		infoFragment = new InfoFragment();
 		reviewFragment = new ReviewFragment();
 		historyFragment=new HistoryFragment();
-		isBackButtonPressed = false;
+		
 
 		setTabs();
 		
@@ -87,11 +101,21 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 		// TODO Auto-generated method stub
 
 	}
-
+	@Override
+	protected void onResume() {
+		registerReceiver(broadcastReceiver,new IntentFilter(getResources().getString(R.string.intent_filter_finish)));
+		super.onResume();
+	}
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(broadcastReceiver);
+		super.onDestroy();
+	}
 	@Override
 	public void onBackPressed() {
-		isBackButtonPressed = true;
-		super.onBackPressed();
+		finish();
+		overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		//super.onBackPressed();
 	}
 
 	@Override
@@ -102,14 +126,16 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+       if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
 		return true;
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		return super.onOptionsItemSelected(item);
-	}
-
+	
 }

@@ -1,8 +1,11 @@
 package com.techfiesta.asaan.fragment;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -16,24 +19,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
+import asaan.dao.DStore;
+import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.PlaceOrderArguments;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.DiscountActivity;
 import com.techfiesta.asaan.activity.EditCartActivity;
+import com.techfiesta.asaan.activity.MenuActivityNew;
+import com.techfiesta.asaan.activity.MyCartActivity;
+import com.techfiesta.asaan.activity.OrderItemActivity;
+import com.techfiesta.asaan.activity.PaymentInfoActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.activity.StoreListActivity;
 import com.techfiesta.asaan.adapter.MyCartListAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
+import com.techfiesta.asaan.utility.HTMLFaxOrder;
 import com.techfiesta.asaan.utility.NestedListView;
+import com.techfiesta.asaan.utility.XMLPosOrder;
 
 public class PendingOrderFragment extends Fragment{
 	private static final int ALERT_TYPE_PLACE_ORDER = 1;
@@ -46,15 +67,24 @@ public class PendingOrderFragment extends Fragment{
 	private AddItemDao addItemDao;
 	private AddItem addItem;
 	private ModItem modItem;
-	 private ModItemDao modItemDao;
+	private ModItemDao modItemDao;
+	private DStoreDao dStoreDao;
+	 
+	 private ActionBar actionBar;
 
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
 	List<AddItem> orderList;
 
 	private ProgressDialog pDialog;
-	private Button bEdit,btnCancelOrder,btnPostOrder;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue;
+	private Button bEdit,btnPlaceOrder,btnCancelOrder,btnPlus;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
+	private int subtotalAmount;
+	private RelativeLayout rlDiscount;
+	private int MYCART_ACTIVITY_INDENTIFIER=100;
+	private int REQUEST_CODE=1;
+	private int RESULT_CODE=2;
+	private long one_hour_in_mili=1000*60*60;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,12 +97,70 @@ public class PendingOrderFragment extends Fragment{
 		tvTax = (TextView) v.findViewById(R.id.tv_tax_amount);
 		tvTotal = (TextView) v.findViewById(R.id.tv_total_amount);
 		tvAmountDue = (TextView) v.findViewById(R.id.tv_due_amount);
+		tvDeliveryTime=(TextView)v.findViewById(R.id.tv_delivery_time);
 		btnCancelOrder=(Button)v.findViewById(R.id.b_calcel_order);
-		btnPostOrder=(Button)v.findViewById(R.id.b_place_order);
-		
+		btnPlaceOrder=(Button)v.findViewById(R.id.b_place_order);
+		pDialog = new ProgressDialog(getActivity());
 		
 
 		bEdit = (Button) v.findViewById(R.id.b_edit);
+		bEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(getActivity(), EditCartActivity.class));
+				getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+			}
+		});
+		btnPlus=(Button)v.findViewById(R.id.b_add);
+		btnPlus.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(),MenuActivityNew.class);
+				long id=AsaanUtility.getCurrentOrderedStoredId(getActivity());
+				Store store=new Store();
+				store.setId(id);
+				
+				int order_type=getOrderType();
+				intent.putExtra(Constants.ORDER_TYPE,order_type);
+				
+				AsaanUtility.selectedStore=store;
+				startActivity(intent);
+				
+			}
+		});
+		btnPlaceOrder.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onClickPlaceOrder(v);
+				
+			}
+		});
+		btnCancelOrder.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onClickCancelOrder(v);
+				
+			}
+		});
+		rlDiscount=(RelativeLayout)v.findViewById(R.id.rl_discount);
+		rlDiscount.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(),DiscountActivity.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				
+			}
+		});
+    
+
+
 		
 		return v;
 	}
@@ -98,7 +186,7 @@ public class PendingOrderFragment extends Fragment{
 				
 			}
 		});
-		btnPostOrder.setOnClickListener(new OnClickListener() {
+		btnPlaceOrder.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -106,18 +194,25 @@ public class PendingOrderFragment extends Fragment{
 				
 			}
 		});
-	       new GetStoreDetails(id).execute();
-		   initDatabaseAndPopuateList();
 		  
 	}
-	@Override
-	public void onResume(){
+@Override
+public void onResume() {
+	
+	super.onResume();
 		super.onResume();
-
+		initDatabase();
 		orderList = addItemDao.queryBuilder().list();
 		Log.e(">>>", "List count" + addItemDao.count());
-
-		int subtotalAmount = 0;
+		
+		if(orderList.size()==0)
+		{
+		       //finish();
+		       return;
+		}
+		setSelectedStore(orderList.get(0));
+        setStorName();
+		subtotalAmount = 0;
 		for (AddItem item : orderList) {
 			subtotalAmount += item.getPrice();
 		}
@@ -134,22 +229,69 @@ public class PendingOrderFragment extends Fragment{
 		tvTotal.setText("$" + String.format("%.2f", total));
 
 		tvAmountDue.setText("$" + String.format("%.2f", total));
+		long estimatedtime=getEstimatedTime();
+		tvDeliveryTime.setText(getFormattedTime(estimatedtime));
 
 		adapter = new MyCartListAdapter(getActivity(), orderList, Constants.MY_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
+		lvOrder.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				AddItem addItem=orderList.get(position);
+				long estimatedtime=getEstimatedTime();
+				Intent intent=new Intent(getActivity(),OrderItemActivity.class);
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_POS_ID,addItem.getItem_id());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_PRICE,addItem.getPrice());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, convertHasModifiers(addItem.getHasModifiers()));
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,addItem.getItem_name());
+				intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,"");
+				intent.putExtra(Constants.ORDER_TYPE,getOrderType());
+				intent.putExtra(Constants.ESTIMATED_TIME,estimatedtime);
+				intent.putExtra(Constants.KEY_FROM_ACTIVITY,1);
+				intent.putExtra(Constants.KEY_QUANTITY,addItem.getQuantity());
+				
+				
+				
+				startActivity(intent);
+			}
+		});
+	}
+	private int getOrderType()
+	{
+		if(orderList.size()!=0)
+		   return orderList.get(0).getOrder_type();
+		return 1;
+	}
+	private boolean convertHasModifiers(int x)
+	{
+		return x==1?true:false;
 	}
 
-	
+	private void setSelectedStore(AddItem addItem)
+	{
+		Store store=new Store();
+		store.setId((long)addItem.getStore_id());
+		store.setName(addItem.getStore_name());
+		AsaanUtility.selectedStore=store;
+	}
 
 
-	private void initDatabaseAndPopuateList() {
+	private void initDatabase() {
 		OpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(), "asaan-db", null);
 		db = helper.getWritableDatabase();
 		daoMaster = new DaoMaster(db);
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
 		modItemDao = daoSession.getModItemDao();
-		orderList = addItemDao.queryBuilder().list();
+		dStoreDao=daoSession.getDStoreDao();
+		
+		
+	}
+	private void closeDatabase()
+	{
+		daoSession.getDatabase().close();
 	}
 
 	public void onClickPlaceOrder(View v){
@@ -168,14 +310,21 @@ public class PendingOrderFragment extends Fragment{
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
 				if (alertType == ALERT_TYPE_CANCEL_ORDER) {
-					deletefromDatabase();
+					deleteFromDatabase();
 					Intent i = new Intent(getActivity(), StoreListActivity.class);
 					startActivity(i);
 					getActivity().overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
-					getActivity().finish();
+					//finish();
 
 				} else {
-					new RemotePlaceOrderTask().execute();
+					if(AsaanUtility.defCard==null)
+					{
+						Intent intent=new Intent(getActivity(),PaymentInfoActivity.class);
+						intent.putExtra(Constants.KEY_FROM_ACTIVITY,MYCART_ACTIVITY_INDENTIFIER);
+						startActivityForResult(intent,REQUEST_CODE);
+					}
+					else
+					   new RemotePlaceOrderTask().execute();
 				}
 			}
 		});
@@ -195,41 +344,74 @@ public class PendingOrderFragment extends Fragment{
 		Alert.show();
 	}
 
+	private long getOrderedStoreId() {
+		return AsaanUtility.getCurrentOrderedStoredId(getActivity());
+	}
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
+		private boolean error=false;
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog.setMessage("Please wait we are taking your order...");
 			pDialog.show();
+			
 		}
 
 		@Override
 		protected Void doInBackground(String... params) {
-			/*String strOrderFor = "Khobaib";
-			String strOrderReadyTime = "4:45PM";
-			String strNote = "Please make it spicy - no Peanuts Please";
-			String strOrder = "" + "<CHECKREQUESTS>" + "<ADDCHECK EXTCHECKID=\"" + strOrderFor + "\" READYTIME=\""
-					+ strOrderReadyTime + "\" NOTE=\"" + strNote + "\" ORDERMODE=\"@ORDER_MODE\" >" + "<ITEMREQUESTS>"
-					+ getOrderString()+ "</ITEMREQUESTS>" + "</ADDCHECK>" + "</CHECKREQUESTS>";
 			
-			Log.e("Order String", strOrder);
-
-			PlaceOrder PlaceOrderReq;
-			try {
-				String token = ParseUser.getCurrentUser().getString("authToken");
-
-				PlaceOrderReq = SplashActivity.mStoreendpoint.placeOrder((long) 1, 1, strOrder);
-				HttpHeaders headers = PlaceOrderReq.getRequestHeaders();
-				headers.put(USER_AUTH_TOKEN_HEADER_NAME, token);
-				StoreOrder order = PlaceOrderReq.execute();
+			StoreOrder storeOrder=new StoreOrder();
+			long id=getOrderedStoreId();
+			DStore dStore=getOrderedStoreFromDatabase(id);
+			
+			int guestSize=AsaanUtility.getCurrentPartySize(getActivity());
+			storeOrder.setGuestCount(guestSize);
+			storeOrder.setOrderMode(getOrderType());
+			storeOrder.setStoreId(id);
+			storeOrder.setStoreName(orderList.get(0).getStore_name());
+			storeOrder.setSubTotal((long)subtotalAmount);
+			long tax=0;
+			storeOrder.setTax(tax);
+			double gratuity =  (subtotalAmount * 0.15) / 100;
+			storeOrder.setDeliveryFee((long)dStore.getDeliveryFee());
+			storeOrder.setServiceCharge((long)gratuity);
+			long total=subtotalAmount+(long)gratuity+tax;
+			storeOrder.setFinalTotal(total);
+			
+			PlaceOrderArguments orderArguments=new PlaceOrderArguments();
+			if(AsaanUtility.defCard!=null)
+			{
+				orderArguments.setUserId(AsaanUtility.defCard.getUserId());
+				orderArguments.setCardid(""+AsaanUtility.defCard.getId());
 				
-
-
+				Log.e("cardID",AsaanUtility.defCard.getId()+"  "+AsaanUtility.defCard.getCardId());
+				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
+			}
+			//may need to change
+			
+			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
+			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
+			
+			XMLPosOrder xmlPosOrder=new XMLPosOrder();
+			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			
+			orderArguments.setOrder(storeOrder);
+			try {
+				
+				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
+				Log.e("order",placeOrder.toString()+orderArguments.toPrettyString());
+				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				StoreOrder order=placeOrder.execute();
+				if(order!=null)
+				   Log.e("order Rresponse",order.toPrettyString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
-			}*/
+				error=true;
+			}
 
 			return null;
 		}
@@ -237,31 +419,63 @@ public class PendingOrderFragment extends Fragment{
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			deleteAllPostedOrders();
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-			showDialogOrderPosted();
+			if (error)
+				AsaanUtility.simpleAlert(getActivity(), "An error occured");
+			else {
+				deleteFromDatabase();
+				showDialogOrderPosted();
+			}
 		}
-
 	}
-
-	private void deletefromDatabase() {
-		addItemDao.deleteAll();
-		AsaanUtility.setCurrentOrderdStoreId(getActivity(), -1);
-		adapter.notifyDataSetChanged();
+	@Override
+	public void onStop() {
+		closeDatabase();
+		super.onStop();
 	}
-	private void deleteAllPostedOrders()
+	private DStore getOrderedStoreFromDatabase(Long id)
 	{
-		// deleting all orders
-		OpenHelper helper = new DaoMaster.DevOpenHelper(getActivity(), "asaan-db", null);
-		SQLiteDatabase db = helper.getWritableDatabase();
-		DaoMaster daoMaster = new DaoMaster(db);
-		DaoSession daoSession = daoMaster.newSession();
-		AddItemDao addItemDao = daoSession.getAddItemDao();
-		ModItemDao modItemDao = daoSession.getModItemDao();
+		List<DStore> list=dStoreDao.queryBuilder().list();
+		int size=list.size();
+		for(int i=0;i<size;i++)
+		{
+			if(list.get(i).getId()==id)
+			 return list.get(i);
+		}
+		
+	 return null;
+	}
+	public long getEstimatedTime()
+	{
+		int size=orderList.size();
+		long max=0;
+		for(int i=0;i<size;i++)
+		{
+			if(orderList.get(i).getEstimated_time()>max)
+				max=orderList.get(i).getEstimated_time();
+		}
+		long curTime=System.currentTimeMillis();
+		if(curTime+one_hour_in_mili>max)
+			max=curTime+one_hour_in_mili;
+	  return max;
+	}
+	private String getFormattedTime(Long rawTime) {
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+		String sTime = sdf.format(new Date(rawTime));
+		return sTime;
+	}
+	private String getFormattedDate(Long rawTime) {
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM d,yyyy");
+		String sDate = sdf.format(new Date(rawTime));
+		return sDate;
+	}
+	
+	private void deleteFromDatabase() {
 		addItemDao.deleteAll();
 		modItemDao.deleteAll();
 		AsaanUtility.setCurrentOrderdStoreId(getActivity(), -1);
+		adapter.notifyDataSetChanged();
 	}
 	private void showDialogOrderPosted() {
 		AlertDialog.Builder bld = new AlertDialog.Builder(getActivity());
@@ -276,44 +490,26 @@ public class PendingOrderFragment extends Fragment{
 				
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
-				getActivity().finish();
+				//finish();
 				getActivity().overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 			}
 		});
 		bld.create().show();
 	}
-	private class GetStoreDetails extends AsyncTask<Void,Void,Void>
+	private void setStorName()
 	{
-		long storeId;
-		public GetStoreDetails(long id)
-		{
-			this.storeId=id;
-		}
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			pDialog.setMessage("please wait....");
-			pDialog.show();
-		}
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				AsaanUtility.selectedStore= SplashActivity.mStoreendpoint.getStore(storeId).execute();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			tvStoreName.setText(AsaanUtility.selectedStore.getName());
-			if(pDialog.isShowing())
-				pDialog.dismiss();
-		}
+		String shopName=orderList.get(0).getStore_name();
+		tvStoreName.setText(shopName);
 		
 	}
-
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==REQUEST_CODE && resultCode==RESULT_CODE)
+		{
+			new RemotePlaceOrderTask().execute();
+		}
+	}
+	
 
 }

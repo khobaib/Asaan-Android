@@ -137,6 +137,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 			
 		} else if (position == 0) {
 			ChatUser temp = hashMap.get(chatMessage.getUserId());
+			holder.tvName.setVisibility(View.VISIBLE);
 			holder.tvName.setText(temp.getName());
 		}
 		if(chatUser.getProfilePhotoUrl()!=null && !chatUser.getProfilePhotoUrl().equals("undefined") && !chatUser.getProfilePhotoUrl().equals("") )

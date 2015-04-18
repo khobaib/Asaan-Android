@@ -65,7 +65,7 @@ public class HTMLFaxOrder {
 		//Log.e("STRING",userName+to+phone+order+email+orderType+address+placed+expctedTime);
 		
 		beginingString=String.format(beginingString,userName,to,phone,order,email,orderType,address,placed,prepaid,expctedTime);
-		Log.e("STRING",beginingString);
+		//Log.e("STRING",beginingString);
 	}
 	private void createRowsStrings(List<AddItem> orderList)
 	{

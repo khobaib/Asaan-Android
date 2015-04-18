@@ -120,8 +120,8 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 				} else if (position == 6) {
 
 					ParseUser.logOut();
-					Intent intent = new Intent(StoreListActivity.this, LoginActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					Intent intent = new Intent(StoreListActivity.this, LoginChooserActivity.class);
+					
 					startActivity(intent);
 					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
 					sendBroadcast(intent);
@@ -171,6 +171,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initDatabase();
 		registerReceiver(broadcastReceiver,new IntentFilter(getResources().getString(R.string.intent_filter_finish)));
 		Log.e("MSG", "on resume");
 		invalidateOptionsMenu();
@@ -197,11 +198,14 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		addItemDao = daoSession.getAddItemDao();
 		
 	}
-	
+	private void closeDatabase()
+	{
+		daoMaster.getDatabase().close();
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		initDatabase();
+		
 		if(addItemDao.count()>0)
 			getMenuInflater().inflate(R.menu.activity_menu, menu);
 		else
@@ -241,6 +245,11 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 			
 		}
 		return true;
+	}
+	@Override
+	protected void onStop() {
+		closeDatabase();
+		super.onStop();
 	}
 	@Override
 	protected void onDestroy() {

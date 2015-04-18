@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.techfiesta.asaan.R;
 
-public class SearchEmployeeActivity  extends Activity{
+public class SearchEmployeeActivity  extends BaseActivity{
 	private TextView tvAddEmployee,tvSearch;
 	private EditText etPhone;
 	@Override

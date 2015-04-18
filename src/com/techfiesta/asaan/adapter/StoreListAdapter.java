@@ -139,6 +139,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 						AsaanUtility.selectedStore = selectedStore;
 						Intent intent = new Intent(mContext, MenuActivityNew.class);
 						mContext.startActivity(intent);
+						((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 					} else {
 						alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
 					}
@@ -156,6 +157,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 						AsaanUtility.selectedStore = selectedStore;
 						Intent intent = new Intent(mContext, OnlineOrderActivity.class);
 						mContext.startActivity(intent);
+						((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 					} else {
 						alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
 					}
@@ -187,6 +189,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 						Intent intent=new Intent(mContext,ReserveActivity.class);
 						AsaanUtility.selectedStore=store;
 						mContext.startActivity(intent);
+						((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 						
 					}
 						
@@ -200,6 +203,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 					Intent intent=new Intent(mContext,ChatActivity.class);
 					AsaanUtility.selectedStore=store;
 					mContext.startActivity(intent);
+					((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 					
 				}
 			});

@@ -25,7 +25,7 @@ import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.model.UserPicture;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends BaseActivity {
 	private ImageView ProfilePicture;
 	private EditText FirstName;
 	private EditText LastName;
