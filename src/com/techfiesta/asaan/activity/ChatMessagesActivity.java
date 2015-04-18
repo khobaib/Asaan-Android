@@ -57,7 +57,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ChatMessagesActivity extends Activity {
+public class ChatMessagesActivity extends BaseActivity {
 	private ImageView ivAttach;
 	private EditText edtChatBox;
 	private TextView tvSend;
@@ -307,8 +307,10 @@ public class ChatMessagesActivity extends Activity {
 				AsaanUtility.simpleAlert(ChatMessagesActivity.this,"An error has occured!.");
 			else
 			{
-				addMessageToList(chatMessage);
-				sendPush(chatMessage);
+				edtChatBox.setText("");
+				new GetChatMessagesForRoomFromServer().execute();
+				if(userList!=null && userList.size()>0)
+					sendPush(chatMessage);
 				
 			}
 			
@@ -348,13 +350,6 @@ public class ChatMessagesActivity extends Activity {
 			}
 		});
 		
-	}
-	public void addMessageToList(ChatMessage message) {
-		
-		chatList.add(message);
-		adapter.notifyDataSetChanged();
-		edtChatBox.setText("");
-		lvChat.smoothScrollByOffset(chatList.size()-1);
 	}
 	@Override
 	public void onStop() {
@@ -419,8 +414,11 @@ public class ChatMessagesActivity extends Activity {
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
+			if(chatList.size()>1)
+			{
 			lvChat.setSelection(chatList.size()-1);
 			lvChat.smoothScrollToPosition(chatList.size()-1);
+			}
 			return null;
 		}
 		@Override

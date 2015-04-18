@@ -54,7 +54,7 @@ import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
-public class ChatActivity extends Activity{
+public class ChatActivity extends BaseActivity{
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	private ListView lvChat;
 	List<ChatMessage> chatList;
@@ -75,7 +75,7 @@ public class ChatActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				AsaanUtility.selectedChatMessage = chatList.get(position);
-				loadChatMessagesActivity();
+				loadChatMessagesActivity(true);
 			}
 		});
 		new GetStoreChatRoomsAndMemberships().execute();
@@ -125,7 +125,7 @@ public class ChatActivity extends Activity{
 					chatMessage.setRoomId(chatRoom.getId());
 					AsaanUtility.USER_ID = chatRoom.getUserId();
 					AsaanUtility.selectedChatMessage=chatMessage;
-					loadChatMessagesActivity();
+					loadChatMessagesActivity(false);
 
 				} else {
 					StoreChatTeam storeChatTeam = checkForMemberShips(chatRoomsAndStoreChatMemberships
@@ -145,11 +145,13 @@ public class ChatActivity extends Activity{
 		}
 	
 	}
-	private void loadChatMessagesActivity()
+	private void loadChatMessagesActivity(boolean keepHistory)
 	{
 		Intent intent=new Intent(ChatActivity.this,ChatMessagesActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		if(!keepHistory)
+			finish();
 	}
 	private void loadChats()
 	{
@@ -227,7 +229,8 @@ public class ChatActivity extends Activity{
 				ChatMessage chatMessage=new ChatMessage();
 				chatMessage.setRoomId(chatRoom.getId());
 				AsaanUtility.selectedChatMessage=chatMessage;
-				loadChatMessagesActivity();
+				AsaanUtility.USER_ID = chatRoom.getUserId();
+				loadChatMessagesActivity(false);
 			}
 		}
 	}

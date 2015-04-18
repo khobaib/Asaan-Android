@@ -31,7 +31,8 @@
     android:layout_toRightOf="@+id/iv_profile"
     android:layout_margin="20dp"
     android:layout_alignBaseline="@+id/iv_profile"
-    android:textColor="@color/white"
+    android:textColor="@color/black"
+    android:background="@drawable/grey_bubble"
     android:text="Message"/> 
     <ImageView
       android:id="@+id/iv_image"
@@ -42,6 +43,7 @@
       android:layout_margin="20dp"
       android:layout_toRightOf="@+id/iv_profile"
       android:visibility="invisible"
+      android:background="@drawable/grey_bubble"
       android:src="@drawable/ic_launcher" />
 
 
