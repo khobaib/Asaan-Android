@@ -8,7 +8,7 @@
         android:id="@+id/linlaybottom"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/app_bg"
+        android:background="@color/actionbar_bg"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
@@ -16,7 +16,7 @@
             android:id="@+id/iv_attatch"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/attatchmentx"
+            android:src="@drawable/attatchment"
             android:layout_weight="1" />
 
         <EditText
