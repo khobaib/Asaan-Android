@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,13 +24,13 @@ import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 
-public class LoginChooserActivity extends Activity {
+public class LoginChooserActivity extends BaseActivity {
 
 	private static final String TAG = LoginChooserActivity.class.getSimpleName();
 
 	Context mContext;
 	ParseUser currentUser;
-
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -104,6 +106,7 @@ public class LoginChooserActivity extends Activity {
 		});
 
 	}
+	
 
 	private void setUserDataforFB() {
 		Session session = ParseFacebookUtils.getSession();
@@ -171,6 +174,6 @@ public class LoginChooserActivity extends Activity {
 		request.executeAsync();
 
 	}
-
+	
 	
 }

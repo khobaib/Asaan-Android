@@ -319,14 +319,19 @@ public class StoreListFragment extends Fragment {
 			super.onPostExecute(result);
 			if(error)
 				AsaanUtility.simpleAlert(getActivity(),"An error occured.");
-			else
+			else if(getActivity()!=null)
 			{
 			storeListAdapter = new StoreListAdapter(getActivity(), storeList,storeStatsCollection.getItems());
 			storeListView.setAdapter(storeListAdapter);
-			closeDatabase();
+			
 			}
 		}
 		
+	}
+	@Override
+	public void onDestroy() {
+		closeDatabase();
+		super.onDestroy();
 	}
 	private void internetAvailabilityAlert(Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);

@@ -125,7 +125,7 @@ public class ChatMessageFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		getActivity().registerReceiver(pushNotificationReceiver,new IntentFilter("com.asaan"));
+		getActivity().registerReceiver(pushNotificationReceiver,new IntentFilter(getActivity().getResources().getString(R.string.intent_filter_push)));
 	}
 	private void  showAttachmentDialog()
 	{

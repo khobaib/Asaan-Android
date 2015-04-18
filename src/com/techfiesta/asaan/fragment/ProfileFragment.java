@@ -228,7 +228,11 @@ public class ProfileFragment extends Fragment{
 		  etLastName.setText(user.getString("lastName"));
 		  etEmail.setText(user.getEmail());
 		  etPhone.setText(user.getString("phone"));
-		  int tips=Integer.valueOf(user.getString("tip"));
+		  int tips;
+		  if(user.getString("tip")==null)
+			  tips=15;
+		  else	  
+		    tips=Integer.valueOf(user.getString("tip"));
 		  if(tips>15)
 		  {
 		     sbTips.setProgress(tips);

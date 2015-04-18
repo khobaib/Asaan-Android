@@ -110,4 +110,6 @@
      <string name="default_pic_message">[Picture message]</string>
      <string name="internet_alert">Please check you internet connection.</string>
      <string name="error_alert">An error occured.</string>
+     <string name="intent_filter_push">com.asaan.push</string>
+     <string name="intent_filter_finish">com.asaan.finish</string>
 </resources>

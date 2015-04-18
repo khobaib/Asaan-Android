@@ -3,7 +3,10 @@ package com.techfiesta.asaan.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,12 +20,11 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.techfiesta.asaan.R;
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends BaseActivity {
 	private EditText edtEmail;
 	private EditText edtPass;
 	private Button btnSave;
 	private ProgressDialog pdialog;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,8 +74,11 @@ public class SignUpActivity extends Activity {
 
 				if (e == null) {
 					// go to profile activity
-					Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
+					Intent intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+					sendBroadcast(intent);
+					intent = new Intent(SignUpActivity.this, ProfileActivity.class);
 					startActivity(intent);
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				} else {
 					alert("Error in sign up!");
 					// for testing
@@ -88,7 +93,14 @@ public class SignUpActivity extends Activity {
 		});
 
 	}
-
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+ @Override
+protected void onDestroy() {
+	super.onDestroy();
+}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) { // Back key pressed

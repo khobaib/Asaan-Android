@@ -44,7 +44,6 @@ import com.techfiesta.asaan.broadcastreceiver.PushNotificationReceiver;
 import com.techfiesta.asaan.fragment.ChatListFragment;
 import com.techfiesta.asaan.fragment.ChatMessageFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
-import com.techfiesta.asaan.interfaces.NotificationListner;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
@@ -56,17 +55,6 @@ public class ChatActivity extends Activity{
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	ArrayList<String> chatList=new ArrayList<String>();
 	SimpleListAdapter adapter;
-	/*PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
-		public void onReceive(android.content.Context context, android.content.Intent intent) {
-
-			Log.e("msg", "On receive");
-			String msg = intent.getStringExtra("msg");
-			if(msg!=null)
-                 addMessageToList(msg);			
-			
-
-		};
-	};*/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

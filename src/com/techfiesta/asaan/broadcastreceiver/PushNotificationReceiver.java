@@ -10,8 +10,8 @@ import android.util.Log;
 import com.google.api.client.json.Json;
 import com.parse.Parse;
 import com.parse.ParsePushBroadcastReceiver;
+import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.ChatActivity;
-import com.techfiesta.asaan.interfaces.NotificationListner;
 import com.techfiesta.asaan.utility.AsaanApplication;
 
 public class PushNotificationReceiver extends ParsePushBroadcastReceiver{
@@ -29,7 +29,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver{
 			}
 			
 		}
-		Intent i=new Intent("com.asaan");
+		Intent i=new Intent(context.getResources().getString(R.string.intent_filter_push));
 		i.putExtra("msg",pushData.toString());
 		
 		Log.e("MSG","here");

@@ -173,6 +173,8 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 			}
 			
 		}
+		if(getActivity()!=null)
+		{
 		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type,this);
 		adapter.notifyDataSetChanged();
 		mListView.setAdapter(adapter);
@@ -202,6 +204,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 				}
 			}
 		});
+		}
 		
 	}
 

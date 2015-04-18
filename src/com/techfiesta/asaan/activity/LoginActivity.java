@@ -2,7 +2,10 @@ package com.techfiesta.asaan.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,14 +18,13 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
 	EditText userEmail;
 	EditText passWord;
 	Button Login;
 	ParseUser currentUser;
 	private ProgressDialog pDialog;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -52,7 +54,9 @@ public class LoginActivity extends Activity {
 		Intent intent = new Intent(this, launchingClass);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
-		finish();
+		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+		sendBroadcast(intent);
 	}
 
 	private void LoginUser() {
@@ -76,6 +80,14 @@ public class LoginActivity extends Activity {
 
 			}
 		});
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 }

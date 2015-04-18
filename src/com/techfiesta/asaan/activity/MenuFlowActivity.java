@@ -9,6 +9,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreItemStats;
@@ -139,7 +141,21 @@ public class MenuFlowActivity extends Activity implements ForwardBackWardClickLi
 	private void setActionBarHeader(int counter)
 	{
 		Log.e("MSG", "aBarcounter"+counter);
-		actionBar.setTitle((counter+1)+" of "+ (allItems.size()+1));
+		actionBar.setTitle((counter+1)+" of "+ (allItems.size()));
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 
 }

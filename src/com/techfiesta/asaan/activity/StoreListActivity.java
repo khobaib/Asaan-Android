@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -56,6 +58,14 @@ public class StoreListActivity extends FragmentActivity {
 	private AddItem addItem;
 	
 	AsaanApplication appInstance;
+BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			finish();
+			
+		}
+	};
 
 	@SuppressLint("NewApi") @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +123,8 @@ public class StoreListActivity extends FragmentActivity {
 					Intent intent = new Intent(StoreListActivity.this, LoginActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
+					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+					sendBroadcast(intent);
 				}
 				ft.addToBackStack(null);
 				ft.commit();
@@ -159,6 +171,7 @@ public class StoreListActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		registerReceiver(broadcastReceiver,new IntentFilter(getResources().getString(R.string.intent_filter_finish)));
 		Log.e("MSG", "on resume");
 		invalidateOptionsMenu();
 		// setupMap();
@@ -228,5 +241,10 @@ public class StoreListActivity extends FragmentActivity {
 			
 		}
 		return true;
+	}
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(broadcastReceiver);
+		super.onDestroy();
 	}
 }
