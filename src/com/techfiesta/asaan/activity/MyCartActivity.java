@@ -2,27 +2,15 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import android.R.bool;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,7 +32,6 @@ import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
-import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
@@ -72,8 +59,6 @@ public class MyCartActivity extends Activity {
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
-	private AddItem addItem;
-	private ModItem modItem;
 	private ModItemDao modItemDao;
 	private DStoreDao dStoreDao;
 	 
@@ -454,12 +439,16 @@ public class MyCartActivity extends Activity {
 	}
 	
 	private void deleteFromDatabase() {
-		try {
-		addItemDao.deleteAll();
-		modItemDao.deleteAll();
+		try {			
+			initDatabase();
+			addItemDao.deleteAll();
+			modItemDao.deleteAll();
+			closeDatabase();		
 		}
 		catch(Exception e)
-		{}
+		{
+			 Log.e("Database Error","Failed to delete old orders");
+		}
 		
 		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
 		adapter.notifyDataSetChanged();
