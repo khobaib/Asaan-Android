@@ -69,6 +69,8 @@ public class LoginActivity extends Activity {
 
 					currentUser = ParseUser.getCurrentUser();
 					Log.d(">>", "login success" + currentUser.getEmail());
+					
+					new SplashActivity().GetNewUserCardsFromServer();
 					launchActivity(StoreListActivity.class);
 				} else {
 					Log.d(">>", "login failed");
@@ -77,5 +79,4 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
-
 }

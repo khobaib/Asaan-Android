@@ -95,7 +95,7 @@ public class SplashActivity extends Activity {
 
 		}
 	}
-private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
+public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 {
 	
 	@Override
@@ -216,4 +216,10 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 		bld.create().show();
 	}
+	
+	public void GetNewUserCardsFromServer()
+	{
+		new GetUserCardsFromServer().execute();
+	}
+	
 }
