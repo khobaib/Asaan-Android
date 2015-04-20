@@ -21,7 +21,7 @@
     android:layout_height="30dp"
     android:layout_below="@+id/tv_name"
     android:layout_alignParentRight="true"
-    android:src="@drawable/asaan_icon"
+    android:background="@drawable/ic_launcher"
     android:layout_margin="10dp"/>
 <TextView 
     android:id="@+id/tv_message"
@@ -45,6 +45,6 @@
       android:layout_toLeftOf="@+id/iv_profile"
       android:visibility="invisible"
       android:background="@drawable/purple_bubble"
-      android:src="@drawable/ic_launcher" />
+      android:src="@drawable/savoir" />
 
 </RelativeLayout>

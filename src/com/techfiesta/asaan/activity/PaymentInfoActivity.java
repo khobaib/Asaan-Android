@@ -75,7 +75,6 @@ public class PaymentInfoActivity extends BaseActivity {
 		etYear = (EditText) findViewById(R.id.et_year);
 
 		btnSave = (Button) findViewById(R.id.b_save);
-		btnSkip=(Button)findViewById(R.id.b_skip);
 		
 		pDialog = new ProgressDialog(PaymentInfoActivity.this);
 		pDialog.setMessage("Please Wait...");
@@ -100,6 +99,7 @@ public class PaymentInfoActivity extends BaseActivity {
 					expMonth = Integer.parseInt(etMonth.getText().toString());
 					expYear = Integer.parseInt(etYear.getText().toString());
 					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
+					saveDefaultTips();
 					saveCreditCard();
 				} else {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
@@ -107,21 +107,12 @@ public class PaymentInfoActivity extends BaseActivity {
 
 			}
 		});
-		btnSkip.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
-				startActivity(intent);
-				
-			}
-		});
 
 	}
 
 	private void saveDefaultTips() {
 		ParseUser user = ParseUser.getCurrentUser();
-		user.put("defaultTips", tips);
+		user.put("tip",""+ tips);
 		user.saveInBackground(new SaveCallback() {
 
 			@Override
@@ -136,13 +127,15 @@ public class PaymentInfoActivity extends BaseActivity {
 
 	private void createDefaultTipSpinner() {
 		ArrayList<Integer> list = new ArrayList<>();
-		for (int i = 1; i < 21; i++) {
+		for (int i = 3; i < 21; i++) {
 			list.add(i * 5);
 		}
 		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
 			//	android.R.layout.simple_spinner_dropdown_item, list);
 		DefaultTipsSpinnerAdapter adapter=new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item, list);
 		defaultTipSpinner.setAdapter(adapter);
+		
+		
 	}
 
 	public void saveCreditCard() {
@@ -188,27 +181,6 @@ public class PaymentInfoActivity extends BaseActivity {
 		Log.e("state", "inside GAE");
 		
 		Card card = token.getCard();
-		/*
-		 * JsonObject cardObj=new JsonObject();
-		 * cardObj.addProperty("accessToken", "FROM PARSE USER");
-		 * cardObj.addProperty("address",card.getAddressLine1());
-		 * cardObj.addProperty("brand",card.getType());
-		 * cardObj.addProperty("city", card.getAddressCity());
-		 * cardObj.addProperty("country", card.getCountry()); //
-		 * cardObj.addProperty("createdDate", ); //
-		 * cardObj.addProperty("currency", card.get);
-		 * //cardObj.addProperty("default",); cardObj.addProperty("exp_month",
-		 * card.getExpMonth()); cardObj.addProperty("exp_year",
-		 * card.getExpYear()); //cardObj.addProperty("fundingType", );
-		 * cardObj.addProperty("id", card.getFingerprint());
-		 * cardObj.addProperty("last4", card.getLast4());
-		 * //cardObj.addProperty("modifiedDate",); cardObj.addProperty("name",
-		 * card.getName()); //cardObj.addProperty("provider",); //
-		 * cardObj.addProperty("providerCustomerId",); //
-		 * cardObj.addProperty("refreshToken",); cardObj.addProperty("state",
-		 * card.getAddressState()); // cardObj.addProperty("userId",);
-		 * cardObj.addProperty("zip", card.getAddressZip());
-		 */
 		userCard = new UserCard();
 		userCard.setAccessToken(token.getId());
 		userCard.setAddress(card.getAddressLine1());
@@ -271,17 +243,17 @@ public class PaymentInfoActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			if(pDialog!=null && pDialog.isShowing())
+				pDialog.dismiss();
 			if(exceptionStatus)
 			{
-				if(pDialog!=null && pDialog.isShowing())
-					pDialog.dismiss();
 				AsaanUtility.simpleAlert(PaymentInfoActivity.this, "An error occured.");
 			}
 			else{
 				Intent i=getIntent();
 				
 				int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
-				if(code==-1)
+				if(code!=-1)
 				{
 					setResult(RESPONSE_CODE);
 					finish();

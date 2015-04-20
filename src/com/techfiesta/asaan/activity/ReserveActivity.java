@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
@@ -57,5 +58,14 @@ public class ReserveActivity extends BaseActivity {
 						
 				
 			}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
+	}
 
 }
