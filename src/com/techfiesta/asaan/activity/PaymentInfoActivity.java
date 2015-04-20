@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.SaveUserCard;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -251,10 +252,7 @@ public class PaymentInfoActivity extends Activity {
 				//pDialog.dismiss();
 				if(responseUserCard.getId() != null)
 				{
-					/*Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
-					finish();*/
+					AsaanUtility.defCard=userCard;
 				}
 				else
 				{
