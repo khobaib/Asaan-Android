@@ -3,34 +3,44 @@ package com.techfiesta.asaan.activity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.model.UserPicture;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ProfileActivity extends BaseActivity {
-	private ImageView ProfilePicture;
+	private ImageView ivProfilePic;
 	private EditText FirstName;
 	private EditText LastName;
 	private EditText Phone;
-	private Button btnSave,btnSkip;
+	private Button btnSave;
 
 	String profilePhotoUrl;
 	String firstName;
@@ -40,11 +50,15 @@ public class ProfileActivity extends BaseActivity {
 	Bitmap picture;
 
 	UserPicture userPic;
-
+	
 	private static final int SELECT_PICTURE = 1;
+	private static final int CAMERA_REQUEST=2;
+
 
 	private String selectedImagePath;
 	private ProgressDialog pdialog;
+	 Uri outputFileUri;
+	 private boolean isNewprofilePicAdded=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +70,9 @@ public class ProfileActivity extends BaseActivity {
 		FirstName = (EditText) findViewById(R.id.et_first_name);
 		LastName = (EditText) findViewById(R.id.et_last_name);
 		Phone = (EditText) findViewById(R.id.et_phone);
-		ProfilePicture = (ImageView) findViewById(R.id.iv_propic_add);
+		ivProfilePic = (ImageView) findViewById(R.id.iv_propic_add);
 		btnSave = (Button) findViewById(R.id.b_save);
-		btnSkip = (Button) findViewById(R.id.b_skip);
+		//btnSkip = (Button) findViewById(R.id.b_skip);
 		
 		pdialog = new ProgressDialog(ProfileActivity.this);
 		pdialog.setMessage("Loading...");
@@ -87,7 +101,7 @@ public class ProfileActivity extends BaseActivity {
 
 			}
 		});
-		btnSkip.setOnClickListener(new OnClickListener() {
+		/*btnSkip.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -95,15 +109,12 @@ public class ProfileActivity extends BaseActivity {
 				startActivity(intent);
 				
 			}
-		});
-		ProfilePicture.setOnClickListener(new OnClickListener() {
+		});*/
+		ivProfilePic.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+				showOptionsDialog();
 
 			}
 		});
@@ -146,8 +157,10 @@ public class ProfileActivity extends BaseActivity {
 				pdialog.dismiss();
 				if (e == null) {
 //					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
-					Intent intent = new Intent(ProfileActivity.this, PaymentInfoActivity.class);
+					Intent intent = new Intent(ProfileActivity.this, StoreListActivity.class);
 					startActivity(intent);
+					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+					sendBroadcast(intent);
 				} else {
 					Log.e("error", "updating user failed" + e.toString());
 					AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
@@ -157,31 +170,63 @@ public class ProfileActivity extends BaseActivity {
 		});
 
 	}
+	void prepareCamera()
+	{
+		final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/"; 
+        File newdir = new File(dir); 
+        newdir.mkdirs();
+        String file = dir+System.currentTimeMillis()+".jpg";
+        File newfile = new File(file);
+        try {
+            newfile.createNewFile();
+        } catch (IOException e) {}       
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == Activity.RESULT_OK) {
-			if (requestCode == SELECT_PICTURE) {
-				Uri selectedImageUri = data.getData();
-				userPic = new UserPicture(selectedImageUri, getContentResolver());
-				try {
-					picture = userPic.getBitmap();
-					if (picture != null)
-						selectedImagePath = userPic.getPath();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+        outputFileUri = Uri.fromFile(newfile);
 
-				ProfilePicture.setImageBitmap(picture);
-				System.out.println(selectedImagePath);
-				// profilePhotoUrl = selectedImagePath;
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
+        startActivityForResult(cameraIntent,CAMERA_REQUEST);
 	}
+	 @Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			 if (resultCode == Activity.RESULT_OK) {
+					if (requestCode == SELECT_PICTURE) {
+						Uri selectedImageUri = data.getData();
+						userPic = new UserPicture(selectedImageUri, getContentResolver());
+						try {
+							picture = userPic.getBitmap();
+							if (picture != null)
+								selectedImagePath = userPic.getPath();
+						} catch (IOException e) {
+							
+							e.printStackTrace();
+						}
+	                    
+						isNewprofilePicAdded=true;
+						ivProfilePic.setImageBitmap(picture);
+						System.out.println(selectedImagePath);
+						// profilePhotoUrl = selectedImagePath;
 
+					}
+				}
+			 if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {  
+		            Log.e("msg","picture saved");
+		           
+					userPic = new UserPicture(outputFileUri,getContentResolver());
+					try {
+						picture = userPic.getBitmap();
+						if (picture != null)
+							selectedImagePath = userPic.getPath();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					isNewprofilePicAdded=true;
+					ivProfilePic.setImageBitmap(picture);
+		        }  
+			super.onActivityResult(requestCode, resultCode, data);
+		}
 	private static boolean validatePhoneNumber(String phoneNo) {
 
 		/*
@@ -209,5 +254,46 @@ public class ProfileActivity extends BaseActivity {
 			return false;
 
 	}
+	 private void  showOptionsDialog()
+		{
+			final Dialog dialog=new Dialog(ProfileActivity.this);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.dialog_attatchment);
+			ArrayList<String> list=new ArrayList<>();
+			list.add("Take Photo");
+			list.add("Choose from existing photos.");
+			list.add("Cancel");
+			
+			ListView lv=(ListView)dialog.findViewById(R.id.lv_attatch);
+			SimpleListAdapter adapter=new SimpleListAdapter(ProfileActivity.this,R.layout.row_simple_list,list);
+			
+			lv.setAdapter(adapter);
+			Window window = dialog.getWindow();
+			WindowManager.LayoutParams wlp = window.getAttributes();
+
+			//wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+			window.setAttributes(wlp);
+			dialog.show();
+			
+			lv.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					
+					 if (position == 0) {
+						prepareCamera();
+					} else if (position == 1)
+					{
+						Intent intent = new Intent();
+						intent.setType("image/*");
+						intent.setAction(Intent.ACTION_GET_CONTENT);
+						startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+					}
+					dialog.dismiss();
+
+				}
+			});
+			
+		}
 
 }

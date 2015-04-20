@@ -15,16 +15,6 @@
         android:textColor="@color/text_golden_color"
         android:textStyle="bold" />
  
-    <Button
-        android:id="@+id/b_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:background="@android:color/transparent"
-        android:text="Skip"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/text_golden_color"
-        android:textStyle="bold" />
     <RelativeLayout
         android:id="@+id/rl_profile_title"
         android:layout_width="match_parent"
@@ -44,30 +34,30 @@
             android:textColor="@color/text_golden_color" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_total_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_profile_title"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
+        android:layout_marginTop="20dp" >
 
         <ImageView
             android:id="@+id/iv_propic_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+           android:layout_alignParentLeft="true"
             android:padding="5dp"
             android:src="@drawable/profile_pic_add" />
 
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:layout_weight="2" >
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/iv_propic_add"
+            >
 
             <TextView
                 android:id="@+id/tv_first_name"
@@ -134,6 +124,6 @@
                 android:inputType="phone"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

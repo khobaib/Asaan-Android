@@ -75,9 +75,8 @@ public class SignUpActivity extends BaseActivity {
 
 				if (e == null) {
 					// go to profile activity
-					Intent intent=new Intent(getResources().getString(R.string.intent_filter_finish));
-					sendBroadcast(intent);
-					intent = new Intent(SignUpActivity.this, ProfileActivity.class);
+					
+					Intent intent = new Intent(SignUpActivity.this, ProfileActivity.class);
 					startActivity(intent);
 					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				} else {
