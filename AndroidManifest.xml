@@ -49,7 +49,7 @@
     <application
         android:name="com.techfiesta.asaan.utility.AsaanApplication"
         android:allowBackup="true"
-        android:icon="@drawable/asaan_icon"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <uses-library android:name="android.test.runner" />
