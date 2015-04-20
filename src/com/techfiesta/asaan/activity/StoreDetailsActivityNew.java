@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.fragment.FragmentMenu;
 import com.techfiesta.asaan.fragment.HistoryFragment;
 import com.techfiesta.asaan.fragment.InfoFragment;
 import com.techfiesta.asaan.fragment.ReviewFragment;
@@ -25,7 +24,6 @@ public class StoreDetailsActivityNew extends FragmentActivity implements TabList
 	ActionBar actionBar = null;
 	InfoFragment infoFragment;
 	ReviewFragment reviewFragment;
-	FragmentMenu fragmentMenu;
 	HistoryFragment historyFragment;
 	//public static boolean isBackButtonPressed = false;
 BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {

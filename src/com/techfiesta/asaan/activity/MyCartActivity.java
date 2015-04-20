@@ -279,8 +279,8 @@ public class MyCartActivity extends BaseActivity {
 					deleteFromDatabase();
 					Intent i = new Intent(MyCartActivity.this, StoreListActivity.class);
 					startActivity(i);
-					overridePendingTransition(R.anim.prev_slide_out, R.anim.prev_slide_in);
-					finish();
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					sendBroadcast(new Intent(getResources().getString(R.string.intent_filter_finish)));
 
 				} else {
 					if(AsaanUtility.defCard==null)

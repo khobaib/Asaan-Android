@@ -27,6 +27,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:padding="5dp"
+        android:background="@drawable/spinner_dropdown"
         android:focusable="false"
         android:spinnerMode="dropdown"/>
 

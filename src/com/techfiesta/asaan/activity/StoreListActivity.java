@@ -85,8 +85,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		}
 		
 		setDrawerListItems();
-		navDrawerAdapter=new NavDrawerAdapter(StoreListActivity.this,R.layout.nav_menu_row,drawerItemList);
-		mDrawerList.setAdapter(navDrawerAdapter);
+		
 		
 		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -174,6 +173,8 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		initDatabase();
 		registerReceiver(broadcastReceiver,new IntentFilter(getResources().getString(R.string.intent_filter_finish)));
 		Log.e("MSG", "on resume");
+		navDrawerAdapter=new NavDrawerAdapter(StoreListActivity.this,R.layout.nav_menu_row,drawerItemList);
+		mDrawerList.setAdapter(navDrawerAdapter);
 		invalidateOptionsMenu();
 		// setupMap();
 

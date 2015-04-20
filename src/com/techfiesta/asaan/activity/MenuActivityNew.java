@@ -111,6 +111,7 @@ public class MenuActivityNew  extends BaseActivity{
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pdDialog.setMessage("loading......");
+			pdDialog.setCancelable(false);
 			pdDialog.show();
 		}
 		@Override
