@@ -237,10 +237,22 @@ public class MyCartActivity extends BaseActivity {
 
 	private void setSelectedStore(AddItem addItem)
 	{
+		DStore dStore=getStoreFromDatabase(addItem.getStore_id());
 		Store store=new Store();
 		store.setId((long)addItem.getStore_id());
 		store.setName(addItem.getStore_name());
+		if(dStore!=null)
+			store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
 		AsaanUtility.selectedStore=store;
+	}
+	private DStore getStoreFromDatabase(long Id)
+	{
+		List<DStore> dstList = dStoreDao.queryBuilder().list();
+		for (int i = 0; i < dstList.size(); i++) {
+			if(dstList.get(i).getId()==Id)
+				return dstList.get(i);
+		}
+		return null;
 	}
 
 
@@ -354,13 +366,20 @@ public class MyCartActivity extends BaseActivity {
 				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
 			}
 			//may need to change
-			
+			String strOrder="";
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
 			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
-			String strOrder=storeOrder.getOrderHTML();
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+		    if(AsaanUtility.selectedStore.getProvidesPosIntegration()==false)
+		    {
+		    	strOrder=storeOrder.getOrderHTML();
+		    	storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+		    }
+		    else
+		    	strOrder=xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4());
 			
+			
+		
 			orderArguments.setStrOrder(strOrder);
 			orderArguments.setOrder(storeOrder);
 			try {
