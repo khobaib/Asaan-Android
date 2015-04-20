@@ -155,7 +155,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		StoreListFragment strFragment=new StoreListFragment();
 		FragmentTransaction  ft=getFragmentManager().beginTransaction();
 		ft.replace(R.id.frame_container,strFragment);
-		ft.addToBackStack(null);
+		//ft.addToBackStack(null);
 		ft.commit();
 		
 	}
