@@ -85,14 +85,7 @@ public class SplashActivity extends Activity {
 					//i = new Intent(SplashActivity.this,StoreListActivity.class);
 					new GetUserCardsFromServer().execute();
 				}
-
-				
-
-				// close this activity
-				
-
 			}
-
 		}
 	}
 public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
@@ -134,10 +127,13 @@ public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
-		startActivity(i);
-		finish();
-		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		if(ParseUser.getCurrentUser() != null)
+		{
+			Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
+			startActivity(i);
+			finish();
+			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		}
 	}
 }
 	private void buildStoreEndpoint() {
@@ -216,10 +212,4 @@ public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 		bld.create().show();
 	}
-	
-	public void GetNewUserCardsFromServer()
-	{
-		new GetUserCardsFromServer().execute();
-	}
-	
 }
