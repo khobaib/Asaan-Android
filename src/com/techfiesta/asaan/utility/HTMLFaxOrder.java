@@ -55,7 +55,7 @@ public class HTMLFaxOrder {
 		String phone="phone";
 		if(ParseUser.getCurrentUser().get("phone")!=null)
 		   phone=ParseUser.getCurrentUser().get("phone").toString();
-		String order="ORDER ID";
+		String order="ORDER_ID";
 		String email=ParseUser.getCurrentUser().getEmail();
 		String orderType="TEMP";
 		String address="none";

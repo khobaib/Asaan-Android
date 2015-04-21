@@ -341,7 +341,7 @@ public class MyCartActivity extends Activity {
 			storeOrder.setSubTotal((long)subtotalAmount);
 			long tax=0;
 			storeOrder.setTax(tax);
-			double gratuity =  (subtotalAmount * 0.15) / 100;
+			double gratuity =  subtotalAmount * 0.15;
 			long lDeliveryFee =0;
 			try{
 				lDeliveryFee = (long)dStore.getDeliveryFee();
