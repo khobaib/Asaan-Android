@@ -366,12 +366,15 @@ public class MyCartActivity extends Activity {
 			//may need to change
 			
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
-			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
+			String temStr = "";
+			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
 			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
+			orderArguments.setStrOrder(temStr);
 			try {
 				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
 				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();

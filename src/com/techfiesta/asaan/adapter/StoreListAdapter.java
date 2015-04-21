@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,6 +202,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 					AsaanUtility.selectedStore=store;
 					mContext.startActivity(intent);
 					
+				}
+			});
+			
+			holder.btnCall.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent callIntent = new Intent(Intent.ACTION_CALL);
+				    callIntent.setData(Uri.parse("tel:6309041550"));
+				    mContext.startActivity(callIntent);					
 				}
 			});
 		}
