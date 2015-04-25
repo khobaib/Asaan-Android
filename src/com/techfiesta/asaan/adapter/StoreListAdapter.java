@@ -45,6 +45,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 	private List<Store> storeList;
 	private List<StoreStats> storeStatsList;
 	private ImageLoader imageLoader;
+	private final int stub_id = R.drawable.storeblack; 
 
 	public StoreListAdapter(Context context, List<Store> stores,List<StoreStats> storeStats) {
 		super(context, R.layout.row_restaurant_list, stores);
@@ -107,7 +108,12 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		// + ((store.getBackgroundImageUrl() == null) ? "null" :
 		// store.getBackgroundImageUrl()));
 
-		imageLoader.DisplayImage(store.getBackgroundImageUrl(), holder.ivPhoto);
+		if(store.getBackgroundImageUrl()!=null)
+			imageLoader.DisplayImage(store.getBackgroundImageUrl(), holder.ivPhoto);
+		else
+		{
+			holder.ivPhoto.setImageResource(stub_id);
+		}
 		// downLoadBgImageFromPrase(holder.ivPhoto,store.getBackgroundImageUrl());
 
 		holder.tvName.setText(store.getName());
