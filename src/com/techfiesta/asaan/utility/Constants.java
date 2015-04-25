@@ -43,6 +43,7 @@ public class Constants {
 	public static final String BUNDLE_KEY_ITEM_POSITION = "BUNDLE_KEY_ITEM_POSITION";
 	public static final String BUNDLE_KEY_HAS_STATS = "BUNDLE_KEY_HAS_STATS";
 	public static final String BUNDLE_KEY_IMAGE_URL = "BUNDLE_KEY_IMAGE_URL";
+	public static final String BUNDLE_KEY_CURRENT_MENU_POSID = "BUNDLE_KEY_CURRENT_MENU_POSID";
 
 
 	public static final int MY_CART_ACTIVITY = 1;

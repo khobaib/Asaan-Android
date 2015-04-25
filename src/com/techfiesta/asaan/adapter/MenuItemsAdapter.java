@@ -67,6 +67,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	   
 	   sectionsList = menuHolder.subMenus;
 	   sectionIndexList=new ArrayList<Integer>();
+	   MenuActivityNew.currentSectionIndexList = sectionIndexList;
 	   int sumPosition =0;
 	   for( int i=0; i<sectionsList.size(); i++)
 	   {	
@@ -241,6 +242,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 				public void onClick(View v) {
 					Intent i = new Intent(mContext, MenuFlowActivity.class);
 					i.putExtra(Constants.BUNDLE_KEY_ITEM_POSITION,position);
+					i.putExtra(Constants.BUNDLE_KEY_CURRENT_MENU_POSID, menuPOSId);
 					i.putExtra(Constants.ORDER_TYPE,orderType);
 					mContext.startActivity(i);
 					

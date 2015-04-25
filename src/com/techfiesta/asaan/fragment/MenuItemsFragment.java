@@ -174,6 +174,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 	private void generateList()
 	{
 		AsaanMenuHolder menuHoder = MenuActivityNew.menuMap.get(menuPOSId);
+		MenuActivityNew.currentMenuItemAndStats = menuHoder.menuItemHolder.menuItemAndStats;
 		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(), menuPOSId, menuHoder.menuItemHolder.menuItemAndStats, order_type,this);
 		adapter.notifyDataSetChanged();
 		mListView.setAdapter(adapter);

@@ -1,6 +1,7 @@
 package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +43,8 @@ public class MenuActivityNew  extends Activity{
 	private long  storeId=-1;
 	public static MenusAndMenuItems menusAndMenuItems;
 	public static HashMap<Integer, AsaanMenuHolder> menuMap;
+	public static List<MenuItemAndStats> currentMenuItemAndStats;
+	public static List<Integer> currentSectionIndexList;
 	private ActionBar actionBar;
 	private ProgressDialog pdDialog;
 	private int order_type=-1;
