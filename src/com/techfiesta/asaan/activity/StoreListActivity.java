@@ -32,6 +32,7 @@ import asaan.dao.DaoSession;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
+import com.techfiesta.asaan.fragment.AllHistoryFragment;
 import com.techfiesta.asaan.fragment.ChatHistoryFragment;
 import com.techfiesta.asaan.fragment.PendingOrderFragment;
 import com.techfiesta.asaan.fragment.ProfileFragment;
@@ -115,6 +116,10 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 						PendingOrderFragment pFragment = new PendingOrderFragment();
 						ft.replace(R.id.frame_container, pFragment);
 					}
+
+				}else if (position == 5) {
+					AllHistoryFragment allHistoryFragment=new AllHistoryFragment();
+					ft.replace(R.id.frame_container, allHistoryFragment);
 
 				} else if (position == 6) {
 

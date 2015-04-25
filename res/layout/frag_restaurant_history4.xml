@@ -41,6 +41,8 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/viewBar1"
         android:layout_centerHorizontal="true"
+        android:dividerHeight="1dp"
+        android:divider="@color/white"
         android:layout_marginTop="10dp" >
     </ListView>
 

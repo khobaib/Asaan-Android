@@ -16,6 +16,7 @@ import android.view.WindowManager.BadTokenException;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreOrder;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
 import com.techfiesta.asaan.R;
 
@@ -30,6 +31,7 @@ public class AsaanUtility {
 	public static UserCard defCard=null;
 	public static  long USER_ID = 0;
 	public static ChatMessage selectedChatMessage=null;
+	public static StoreOrder selectedStoreOrder=null;
 
 	public static boolean hasInternet(Context context) {
 		ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

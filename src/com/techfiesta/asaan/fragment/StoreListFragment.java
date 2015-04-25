@@ -156,7 +156,7 @@ public class StoreListFragment extends Fragment {
 			store.setFbUrl(dStore.getFbUrl());
 			store.setGplusUrl(dStore.getGplusUrl());
 			store.setHours(dStore.getHours());
-			Log.e("address", dStore.getAddress());
+			//Log.e("address", dStore.getAddress());
 			store.setId(dStore.getId());
 			store.setIsActive(dStore.getIsActive());
 			store.setLat(dStore.getLat());
