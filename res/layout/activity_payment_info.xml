@@ -48,7 +48,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/text_golden_color" />
 
-        <EditText
+        <com.alihafizji.library.CreditCardEditText
             android:id="@+id/et_card_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,10 +57,11 @@
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Card Number"
+            android:inputType="textNoSuggestions" 
             android:textAppearance="?android:attr/textAppearanceSmall" >
-
-            <requestFocus />
-        </EditText>
+        <requestFocus />    
+        </com.alihafizji.library.CreditCardEditText>
+        
 
         <LinearLayout
             android:id="@+id/ll_card_details"
