@@ -19,14 +19,25 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetReviewForCurrentUserAndOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveStoreItemReviews;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ItemReview;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ItemReviewsArray;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderAndReviews;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderReview;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderReviewAndItemReviews;
 import com.google.android.gms.internal.lv;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.adapter.OrderHistoryItemAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.NestedListView;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,6 +51,10 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvAmountDue,tvSummary;
 	private ArrayList<AddItem> orderdItems=new ArrayList<AddItem>();
 	private NestedListView nestedListView;
+	private ProgressDialog pdDialog;
+	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
+	boolean shouldReviewActionShow=false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,10 +67,12 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 		tvSummary=(TextView)findViewById(R.id.tv_summary);
 		
 		nestedListView=(NestedListView)findViewById(R.id.lv_item_list);
-		
+		pdDialog=new ProgressDialog(OrderHistoryDetailsActivity.this);
+		pdDialog.setMessage("Please wait...");
 		tvStoreName.setText(AsaanUtility.selectedStoreOrder.getStoreName());
 		tvSummary.setText("Order Summary -"+getFormattedDate(AsaanUtility.selectedStoreOrder.getCreatedDate()));
 		ParseOrdersFromXml(AsaanUtility.selectedStoreOrder.getOrderDetails());
+		new GetOrderItemReviewFromServer().execute();
 	} 
 	private String getFormattedDate(Long rawTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d,yyyy");
@@ -119,10 +136,12 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		
-		
+		if(shouldReviewActionShow)
 			getMenuInflater().inflate(R.menu.activity_review, menu);
-		//else
-			//getMenuInflater().inflate(R.menu.main, menu);
+			
+		else
+			getMenuInflater().inflate(R.menu.main, menu);
+		
 		return true;
 	}
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,5 +155,54 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 			
 		}
 		return true;
+	}
+
+	private class GetOrderItemReviewFromServer extends AsyncTask<Void, Void, Void> {
+		private boolean error = false;
+		OrderReviewAndItemReviews orderReviewAndItemReviews;
+		@Override
+		protected void onPreExecute() {
+			pdDialog.show();
+			super.onPreExecute();
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			
+		GetReviewForCurrentUserAndOrder getReviewForCurrentUserAndOrder;
+		try {
+			getReviewForCurrentUserAndOrder = SplashActivity.mStoreendpoint
+				.getReviewForCurrentUserAndOrder(AsaanUtility.selectedStoreOrder.getId());
+			HttpHeaders httpHeaders = getReviewForCurrentUserAndOrder.getRequestHeaders();
+			httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+			orderReviewAndItemReviews = getReviewForCurrentUserAndOrder.execute();
+			if(orderReviewAndItemReviews!=null)
+				Log.e("reviews",orderReviewAndItemReviews.toPrettyString());
+		} catch (IOException e) {
+			error=true;
+			e.printStackTrace();
+		}
+	
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (pdDialog.isShowing())
+				pdDialog.dismiss();
+			if (error)
+				AsaanUtility.simpleAlert(OrderHistoryDetailsActivity.this,
+						getResources().getString(R.string.error_alert));
+			else {
+				OrderReview orderReview= orderReviewAndItemReviews.getOrderReview();
+				if(orderReview==null)
+				{
+				  shouldReviewActionShow=true;
+				  invalidateOptionsMenu();
+				}
+			}
+			super.onPostExecute(result);
+		}
+
 	}
 }
