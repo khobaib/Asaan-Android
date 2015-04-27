@@ -26,9 +26,11 @@ import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.NestedListView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import asaan.dao.AddItem;
 
@@ -121,6 +123,18 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 			getMenuInflater().inflate(R.menu.activity_review, menu);
 		//else
 			//getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// toggle nav drawer on selecting action bar app icon/title
+		
+		if(item.getItemId()==R.id.action_review)
+		{
+			Intent intent=new Intent(OrderHistoryDetailsActivity.this,MyCartActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+			
+		}
 		return true;
 	}
 }

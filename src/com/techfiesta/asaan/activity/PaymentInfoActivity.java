@@ -196,7 +196,7 @@ public class PaymentInfoActivity extends BaseActivity {
 		userCard.setName(card.getName());
 		userCard.setState(card.getAddressState());
 		userCard.setZip(card.getAddressZip());
-		userCard.setCardId(card.getId());
+		//userCard.setCardId(card.getId());
 
 		new PostCardInfo().execute();
 

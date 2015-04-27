@@ -7,8 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
@@ -33,7 +31,6 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuI
 //import com.google.android.gms.internal.ml;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
-import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
 import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.MenuItemsAdapter;
@@ -166,35 +163,10 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 	}
 	private void generateList()
 	{
-<<<<<<< HEAD
-		allItems = new ArrayList<MenuItemAndStats>();
-		List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
-		ArrayList<Integer> indexList=new ArrayList<Integer>();
-		for (int i=0;i<menuItemAndStatsCollection.getItems().size();i++) {
-			MenuItemAndStats item=menuItemAndStatsCollection.getItems().get(i);
-			if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==2)
-			{
-				allItems.add(item);
-				//Log.e("name",""+item.getMenuItem().getShortDescription());
-			}
-			if (item.getMenuItem().getMenuPOSId()== menuPOSId && item.getMenuItem().getLevel()==1)
-			{
-				indexList.add(i-allsections.size());
-				allsections.add(item);
-				String name=getName(item.getMenuItem().getSubMenuPOSId());
-				item.getMenuItem().setShortDescription(name);
-				//Log.e("POS",""+(i-allsections.size()));
-			}
-			
-		}
-		if(getActivity()!=null)
-		{
-		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type,this);
-=======
+
 		AsaanMenuHolder menuHoder = MenuActivityNew.menuMap.get(menuPOSId);
 		MenuActivityNew.currentMenuItemAndStats = menuHoder.menuItemHolder.menuItemAndStats;
 		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(), menuPOSId, menuHoder.menuItemHolder.menuItemAndStats, order_type,this);
->>>>>>> origin/savoir_vincent
 		adapter.notifyDataSetChanged();
 		mListView.setAdapter(adapter);
 		mListView.invalidate();
@@ -225,7 +197,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		});
 		}
 		
-	}
+	
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
