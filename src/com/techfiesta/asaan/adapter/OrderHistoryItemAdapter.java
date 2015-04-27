@@ -50,7 +50,7 @@ public class OrderHistoryItemAdapter extends ArrayAdapter<AddItem> {
 		AddItem addItem=getItem(position);
 		holder.tvName.setText(addItem.getItem_name());
 		holder.tvQuantity.setText(""+addItem.getQuantity());
-		holder.tvPrice.setText("$"+addItem.getPrice()+".00");
+		holder.tvPrice.setText("$"+((double)addItem.getPrice())/100);
 			
 		return convertView;
 	}

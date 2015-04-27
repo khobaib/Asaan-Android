@@ -123,7 +123,7 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 			int q=Integer.parseInt(line.getAttribute("QUANTITY"));
 			addItem.setQuantity(q);
 			
-			int price=Integer.parseInt(line.getAttribute("PRICE"));
+			int price= (int)(Double.parseDouble(line.getAttribute("PRICE"))*100);
 			addItem.setPrice(price);
 			
 			orderdItems.add(addItem);
