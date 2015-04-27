@@ -28,6 +28,7 @@ import com.techfiesta.asaan.utility.NestedListView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.TextView;
 import asaan.dao.AddItem;
 
@@ -112,13 +113,14 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 		OrderHistoryItemAdapter adapter=new OrderHistoryItemAdapter(OrderHistoryDetailsActivity.this,orderdItems);
 		nestedListView.setAdapter(adapter);
 	}
-	private String getCharacterDataFromElement(Element e) {
-	    Node child = e.getFirstChild();
-	    if (child instanceof CharacterData) {
-	      CharacterData cd = (CharacterData) child;
-	      return cd.getData();
-	    }
-	    return "";
-	  }
-
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		
+		
+			getMenuInflater().inflate(R.menu.activity_review, menu);
+		//else
+			//getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 }
