@@ -97,7 +97,7 @@ public class AsaanUtility {
 
 	public static void simpleAlert(Context context, String message) {
 		AlertDialog.Builder bld = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
-		bld.setTitle("Asaan");
+		bld.setTitle("Savoir");
 		bld.setMessage(message);
 		bld.setCancelable(false);
 		bld.setNeutralButton("Ok", new DialogInterface.OnClickListener() {

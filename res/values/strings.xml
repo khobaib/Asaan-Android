@@ -7,14 +7,15 @@
     <string name="map_key_dev_khobaib">AIzaSyCIe2Q41ucXLA8HDKyLihSomaIKXcnJ-LM</string>
     <string name="map_key_dev_rishta_home">AIzaSyBXY5mlywRlZ-V1SWrwrIIGUZAzg3iTySo</string>
     <string name="map_key_dev_tanzeer">AIzaSyAqfVbNI2saY9-t6OdGy1bczvJyiKP2h-8</string>
-     <string name="map_key_dev_tanzeer2"> AIzaSyBVQfr1A9wnwffLtN65tkRc6q_c_7YjdkQ</string>
+    <string name="map_key_dev_tanzeer2"> AIzaSyBVQfr1A9wnwffLtN65tkRc6q_c_7YjdkQ</string>
+    <string name="map_key_dev_vincent"> AIzaSyDsfsQ3IDbeDGtYe2kfhcOnO5ETtPomPCM</string>
                   
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="validationErrors">Validation Errors</string>
     
     <string name="frontpage_tagline">Discover and share great places with friends.</string>
-    <string name="signup_title">Welcome to Asaan! Let\'s start by setting up your account.</string>  
+    <string name="signup_title">Welcome to Savoir! Let\'s start by setting up your account.</string>  
     <string name="profile_page_title">Your name and photo will help the.</string> 
     <string name="phone_number_warning">Your number to call or text you regarding your account information.</string> 
     

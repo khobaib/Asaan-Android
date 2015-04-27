@@ -86,17 +86,10 @@ public class SplashActivity extends Activity {
 					//i = new Intent(SplashActivity.this,StoreListActivity.class);
 					new GetUserCardsFromServer().execute();
 				}
-
-				
-
-				// close this activity
-				
-
 			}
-
 		}
 	}
-private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
+public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 {
 	
 	@Override
@@ -135,10 +128,13 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
-		startActivity(i);
-		finish();
-		overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		if(ParseUser.getCurrentUser() != null)
+		{
+			Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
+			startActivity(i);
+			finish();
+			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+		}
 	}
 }
 	private void buildStoreEndpoint() {
@@ -151,7 +147,7 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 					}
 				});
-		storeEndpointBuilder.setApplicationName("Asaan");
+		storeEndpointBuilder.setApplicationName("Savoir");
 		mStoreendpoint = CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build();
 	}
 
@@ -165,7 +161,7 @@ private class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 
 					}
 				});
-		userEndpointBuilder.setApplicationName("Asaan");
+		userEndpointBuilder.setApplicationName("Savoir");
 		mUserendpoint = CloudEndpointUtils.updateBuilder(userEndpointBuilder).build();
 	}
 

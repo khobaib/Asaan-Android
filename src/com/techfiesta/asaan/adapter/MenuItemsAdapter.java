@@ -1,29 +1,32 @@
 package com.techfiesta.asaan.adapter;
 
-import java.nio.channels.NonReadableChannelException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStats;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStatsCollection;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreItemStats;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
-import com.google.android.gms.internal.ms;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.MenuFlowActivity;
+import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.fragment.MenuItemsFragment;
 import com.techfiesta.asaan.interfaces.ScrollToIndexListener;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AmountConversionUtils;
+import com.techfiesta.asaan.utility.AsaanMenuHolder;
+import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,66 +38,85 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements StickyListHeadersAdapter,SectionIndexer{
 
 	private Context mContext;
 	private List<MenuItemAndStats> menuItemAndStats;
-	List<MenuItemAndStats> sectionsList;
+	List<StoreMenuHierarchy> sectionsList;
 	ArrayList<Integer> sectionIndexList;
 	ImageLoader imageLoader;
 	private int orderType;
 	ScrollToIndexListener scrollToIndexListener=null;
-	public MenuItemsAdapter(Context context,List<MenuItemAndStats> objects,List<MenuItemAndStats> allsections,ArrayList<Integer> indexList,int order_type,MenuItemsFragment menuItemsFragment)
-	{		super(context,R.layout.menu_item2,objects);
+	AsaanMenuHolder menuHolder;
+	ArrayList<String> strHeadings;
+	int menuPOSId;
+	int firstRequestPos = 0;
+	private int MAX_RESULT = 50;
+	MenuItemAndStatsCollection menuItemAndStatsCollection=null;
+	boolean bLoading = false;
+	public MenuItemsAdapter(Context context,int menuPOSId, List<MenuItemAndStats> objects, int order_type,MenuItemsFragment menuItemsFragment)
+	{		
+	   super(context, R.layout.menu_item2, objects);
+	   menuHolder = MenuActivityNew.menuMap.get(menuPOSId);
+	   this.menuPOSId = menuPOSId;
+	   
 	   this.mContext=context;
 	   this.menuItemAndStats=objects;
-	   this.sectionsList=allsections;
-	   this.sectionIndexList=indexList;
+	   
+	   sectionsList = menuHolder.subMenus;
+	   sectionIndexList=new ArrayList<Integer>();
+	   MenuActivityNew.currentSectionIndexList = sectionIndexList;
+	   int sumPosition =0;
+	   for( int i=0; i<sectionsList.size(); i++)
+	   {	
+		   if(sectionsList.get(i).getMenuItemCount()>0)
+		   {
+			   sumPosition +=sectionsList.get(i).getMenuItemCount();		   
+			   Log.e("MenuItemsAdapter", "Submenu Name:" + sectionsList.get(i).getName() + " item counts: " + sectionsList.get(i).getMenuItemCount() );
+			   sectionIndexList.add(sumPosition);
+		   }
+	   }
 	   Log.e("indexlist",""+sectionIndexList.size());
 	   imageLoader=new ImageLoader((Activity)context);
 	   this.orderType=order_type;
 	   scrollToIndexListener=menuItemsFragment;
-		
+	   
+	   strHeadings = new ArrayList<String>();
+	   for(int i=0;i<sectionsList.size();i++)
+		{
+		   if(sectionsList.get(i).getMenuItemCount()>0)
+		   {
+			   strHeadings.add(sectionsList.get(i).getName());
+				Log.e("SECTION",sectionsList.get(i).getName());
+		   }
+		}
 	}
 
 	@Override
-	public Object[] getSections() {
-		ArrayList<String> list=new ArrayList<String>();
-		for(int i=0;i<sectionsList.size();i++)
-		{
-			list.add(sectionsList.get(i).getMenuItem().getShortDescription());
-			Log.e("SECTION",sectionsList.get(i).getMenuItem().getShortDescription());
-		}
-		return list.toArray();
+	public Object[] getSections() {		
+		return strHeadings.toArray();
 	}
 	public ArrayList<String> getSectionsHeaders() {
-		ArrayList<String> list=new ArrayList<String>();
-		for(int i=0;i<sectionsList.size();i++)
-		{
-			list.add(sectionsList.get(i).getMenuItem().getShortDescription());
-			Log.e("SECTION",sectionsList.get(i).getMenuItem().getShortDescription());
-		}
-		return list;
+		return strHeadings;
 	}
 	@Override
 	public int getPositionForSection(int sectionIndex) {
+		if(sectionIndex<=0)
+			return 0;
 		
 		if(sectionIndex >= sectionIndexList.size() )
 			return sectionIndexList.get(sectionIndexList.size()-1);
-		else if(sectionIndex<0)
-			return sectionIndexList.get(0);
-		else
-		  return sectionIndexList.get(sectionIndex);
+	
+		return sectionIndexList.get(sectionIndex-1);
 	}
 
 	@Override
 	public int getSectionForPosition(int position) {
 		for(int i=0;i<sectionIndexList.size();i++)
 			if(position<sectionIndexList.get(i))
-				return i-1;
+				return i;
 		return sectionIndexList.size()-1;
 	}
 	static class ViewHolder {
@@ -124,10 +146,26 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 		
 		View rowView = convertView;
 		MenuItemAndStats  menuItemAndStat = menuItemAndStats.get(position);
-		StoreMenuItem storeMenuItem=menuItemAndStat.getMenuItem();
-		StoreItemStats storeItemStats=menuItemAndStat.getStats();
+		StoreMenuItem storeMenuItem = null;
+		StoreItemStats storeItemStats = null;
+		if(menuItemAndStat!=null)
+		{			
+			storeMenuItem=menuItemAndStat.getMenuItem();
+			storeItemStats=menuItemAndStat.getStats();
+		}
+		else
+		{
+			if(bLoading==false)
+			{
+				bLoading = true;
+				firstRequestPos = position;
+				new GetMoreMenuItemAndStatsForMenu().execute();
+			}
+		}
+		
 		ViewHolder viewHolder = null;
-		Log.e("ItemName",""+ storeMenuItem.getShortDescription());
+		
+		Log.e("ItemName",""+ ((storeMenuItem!=null)? storeMenuItem.getShortDescription():"loading ...") + " position: " + position);
 		
 		if (rowView == null )
 		{
@@ -152,12 +190,14 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 			viewHolder = (ViewHolder) rowView.getTag();
 
 			
-			viewHolder.txtName.setText(storeMenuItem.getShortDescription());
-			viewHolder.txtDesc.setText(storeMenuItem.getLongDescription());
+			viewHolder.txtName.setText((storeMenuItem!=null) ? storeMenuItem.getShortDescription() : "loading ...");
+			viewHolder.txtDesc.setText((storeMenuItem!=null) ? storeMenuItem.getLongDescription() : "loading ...");
 			if( viewHolder.txtPrice!=null)
-				viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency(storeMenuItem.getPrice()));
-			imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), viewHolder.imgFood);
-			//imageLoader.getRoundedPicFromURL(storeMenuItem.getThumbnailUrl(),viewHolder.imgFood)
+
+				viewHolder.txtPrice.setText(AmountConversionUtils.formatCentsToCurrency((storeMenuItem!=null) ? storeMenuItem.getPrice() : 0));
+			if(storeMenuItem!=null)
+				imageLoader.DisplayImage(storeMenuItem.getThumbnailUrl(), viewHolder.imgFood);
+				
 			if(storeItemStats!=null)
 			{
 				viewHolder.rl_stats.setVisibility(View.VISIBLE);
@@ -204,6 +244,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 				public void onClick(View v) {
 					Intent i = new Intent(mContext, MenuFlowActivity.class);
 					i.putExtra(Constants.BUNDLE_KEY_ITEM_POSITION,position);
+					i.putExtra(Constants.BUNDLE_KEY_CURRENT_MENU_POSID, menuPOSId);
 					i.putExtra(Constants.ORDER_TYPE,orderType);
 					mContext.startActivity(i);
 					
@@ -219,8 +260,6 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 		View rowView = convertView;
 		ViewHolder2 viewHolder=null;
 		int sectionPos=getSectionForPosition(position);
-		StoreMenuItem storeMenuItem=sectionsList.get(sectionPos).getMenuItem();
-		Log.e("header",""+"header called"+sectionsList.get(sectionPos).getMenuItem().getShortDescription()+sectionPos+" pos"+position);
 		if (rowView == null)
 		{
 			rowView = View.inflate(getContext(), R.layout.menu_item_group2, null);
@@ -233,7 +272,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 			 viewHolder = (ViewHolder2) rowView.getTag();
 		}
 		
-		viewHolder.txtGroupName.setText(storeMenuItem.getShortDescription());
+		viewHolder.txtGroupName.setText(sectionsList.get(sectionPos).getName());
 		
 		SimpleSpinnerAdapter simpleAdapter=new SimpleSpinnerAdapter(mContext,R.layout.row_spinner_submenu,getSectionsHeaders());
         viewHolder.spinner.setAdapter(new NothingSelectedSpinnerAdapter(simpleAdapter,R.layout.row_simple_list, mContext));
@@ -262,11 +301,61 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 
 	@Override
 	public long getHeaderId(int position) {
-		int pos=getSectionForPosition(position);
-		/*Log.e("position",""+position); 
-		Log.e("sec_position",""+pos);
-		Log.e("MSG",""+getPositionForSection(pos));*/
-		return getPositionForSection(pos);
+		return getSectionForPosition(position);
 	}
 
+	
+	private  class GetMoreMenuItemAndStatsForMenu extends AsyncTask<Void,Void, Void>
+	{
+		@Override
+		protected Void doInBackground(Void... params) {
+			 try { 
+				 Log.e("params", "store id: "+AsaanUtility.selectedStore.getId()+" Root Menu Id: "+menuPOSId);
+				int isections = getSectionForPosition(firstRequestPos);
+				menuItemAndStatsCollection = SplashActivity.mStoreendpoint
+						.getMenuItemAndStatsForMenu(firstRequestPos+isections+1,
+								MAX_RESULT, menuPOSId,AsaanUtility.selectedStore.getId()).execute();
+			if(menuItemAndStatsCollection!=null && menuItemAndStatsCollection.getItems()!=null)
+			{
+				Log.e("MenuItemAndStatsForMenu", "Item Array Size: "+menuItemAndStatsCollection.getItems().size());
+			}
+			else
+			{
+				Log.e("MenuItemAndStatsForMenu", "No items return. ");
+			}
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			int startAddPos =0;
+			
+			try{ 
+			if(menuItemAndStatsCollection !=null && (menuItemAndStatsCollection.getItems() != null))
+			{
+				for(int i=0;  i<menuItemAndStatsCollection.getItems().size(); i++)
+				{
+					if(menuItemAndStatsCollection.getItems().get(i).getMenuItem().getLevel()==2)
+					{
+						menuItemAndStats.set(firstRequestPos+startAddPos, menuItemAndStatsCollection.getItems().get(i));
+						startAddPos++;
+					}
+				}
+				notifyDataSetChanged();
+			}
+			
+			}
+			catch(Exception e)
+			{
+				Log.e("GetMoreMenuItemAndStatsForMenu", "onPostExecute failed.");
+			}
+			
+			bLoading = false;
+		}
+	}
 }

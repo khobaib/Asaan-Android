@@ -48,14 +48,16 @@ public class HTMLFaxOrder {
 	private void setUpBeginingString()
 	{
 		String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
-		String to=AsaanUtility.selectedStore.getName();
+		String to= "none";
+		if(AsaanUtility.selectedStore!=null)
+			to =AsaanUtility.selectedStore.getName();
 		String phone="phone";
 		if(ParseUser.getCurrentUser().get("phone")!=null)
 		   phone=ParseUser.getCurrentUser().get("phone").toString();
-		String order="ORDER ID";
+		String order="ORDER_ID";
 		String email=ParseUser.getCurrentUser().getEmail();
 		String orderType="TEMP";
-		String address="";
+		String address="none";
 		if(ParseUser.getCurrentUser().get("address")!=null)
 			address=ParseUser.getCurrentUser().get("address").toString();
 		long mili=System.currentTimeMillis();
@@ -73,10 +75,16 @@ public class HTMLFaxOrder {
 		for(i=0;i<size;i++)
 		{
 			String options="";
+			try{
 		   if(orderList.get(i).getMod_items()!=null && orderList.get(i).getMod_items().size()>0)
 			   options=orderList.get(i).getMod_items().get(0).getName();
-		   
-			String row=String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+			}
+			catch(Exception e){}
+			String row ="";
+			try{
+			row =String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+			}
+			catch(Exception e){}
 			beginingString+=row;
 		}
 		

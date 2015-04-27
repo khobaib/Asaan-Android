@@ -35,8 +35,8 @@ public class LocationActivity extends BaseActivity {
 	private void setUpMap()
 	{
 		Store store=AsaanUtility.selectedStore;
-		double lat=store.getLat();
-		double lng=store.getLng();
+		double lat=store.getLat()*180/3.1415927;
+		double lng=store.getLng()*180/3.1415927;
 		CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(lat, lng)).zoom(15)
 				.build();
 	

@@ -115,7 +115,7 @@ protected void onDestroy() {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(SignUpActivity.this);
 
 		// Setting Dialog Title
-		alertDialog.setTitle("Asaan");
+		alertDialog.setTitle("Savoir");
 
 		// Setting Dialog Message
 		alertDialog.setMessage(msg);

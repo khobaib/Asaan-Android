@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,6 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
@@ -25,17 +29,24 @@ import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAn
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.MenuItemAndStatsCollection;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuHierarchy;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreMenuItem;
+
+//import com.google.android.gms.internal.ml;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.MenuActivityNew;
+import com.techfiesta.asaan.activity.MenuItemDetailsActivity;
 import com.techfiesta.asaan.activity.OrderItemActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
 import com.techfiesta.asaan.adapter.MenuItemsAdapter;
 import com.techfiesta.asaan.interfaces.ScrollToIndexListener;
+
+import com.techfiesta.asaan.lazylist.ImageLoader;
+import com.techfiesta.asaan.utility.AmountConversionUtils;
+import com.techfiesta.asaan.utility.AsaanMenuHolder;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
 @SuppressLint("NewApi")
-public class MenuItemsFragment extends Fragment implements ScrollToIndexListener{
+public class MenuItemsFragment extends Fragment implements ScrollToIndexListener, OnScrollListener {
 	private static final Logger logger = Logger.getLogger(MenuItemsFragment.class.getName());
 
 	public static final String BUNDLE_KEY_MENU_ID = "BUNDLE_KEY_MENU_ID";
@@ -66,7 +77,8 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			View v=inflater.inflate(R.layout.menuitems_fragment,null,false);
 			mListView=(StickyListHeadersListView)v.findViewById(R.id.sticky_list);
-			
+			mListView.setOnScrollListener(this);
+
 			return v;
 		}
 			
@@ -135,7 +147,8 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		protected Void doInBackground(Void... params) {
 			 try { 
 				 Log.e("params", ""+AsaanUtility.selectedStore.getId()+" "+menuPOSId);
-			menuItemAndStatsCollection=SplashActivity.mStoreendpoint.getMenuItemAndStatsForMenu(0,MAX_RESULT, menuPOSId,AsaanUtility.selectedStore.getId()).execute();
+				menuItemAndStatsCollection = SplashActivity.mStoreendpoint
+						.getMenuItemAndStatsForMenu(0,MAX_RESULT, menuPOSId,AsaanUtility.selectedStore.getId()).execute();
 			Log.e("SIZE", "jjj"+menuItemAndStatsCollection.getItems().size());
 			
 			} catch (IOException e) {
@@ -153,6 +166,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 	}
 	private void generateList()
 	{
+<<<<<<< HEAD
 		allItems = new ArrayList<MenuItemAndStats>();
 		List<MenuItemAndStats> allsections=new ArrayList<MenuItemAndStats>();
 		ArrayList<Integer> indexList=new ArrayList<Integer>();
@@ -176,6 +190,11 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		if(getActivity()!=null)
 		{
 		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(),allItems,allsections,indexList,order_type,this);
+=======
+		AsaanMenuHolder menuHoder = MenuActivityNew.menuMap.get(menuPOSId);
+		MenuActivityNew.currentMenuItemAndStats = menuHoder.menuItemHolder.menuItemAndStats;
+		MenuItemsAdapter adapter=new MenuItemsAdapter(getActivity(), menuPOSId, menuHoder.menuItemHolder.menuItemAndStats, order_type,this);
+>>>>>>> origin/savoir_vincent
 		adapter.notifyDataSetChanged();
 		mListView.setAdapter(adapter);
 		mListView.invalidate();
@@ -204,6 +223,22 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 				}
 			}
 		});
+		}
+		
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		if((firstVisibleItem+visibleItemCount)>(totalItemCount+5))
+		{
+			//if you have more data, please load
 		}
 		
 	}

@@ -47,6 +47,30 @@ public class LoginChooserActivity extends BaseActivity {
 
 	}
 
+	/*
+	 * private void buildStoreEndpoint() { Storeendpoint.Builder
+	 * storeEndpointBuilder; storeEndpointBuilder = new
+	 * Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new
+	 * JacksonFactory(), new HttpRequestInitializer() {
+	 * 
+	 * @Override public void initialize(HttpRequest arg0) throws IOException {
+	 * // TODO Auto-generated method stub
+	 * 
+	 * } }); storeEndpointBuilder.setApplicationName("Savoir"); mStoreendpoint =
+	 * CloudEndpointUtils.updateBuilder(storeEndpointBuilder).build(); }
+	 * 
+	 * private void buildUserEndpoint() { Userendpoint.Builder
+	 * userEndpointBuilder; userEndpointBuilder = new
+	 * Userendpoint.Builder(AndroidHttp.newCompatibleTransport(), new
+	 * JacksonFactory(), new HttpRequestInitializer() {
+	 * 
+	 * @Override public void initialize(HttpRequest arg0) throws IOException {
+	 * // TODO Auto-generated method stub
+	 * 
+	 * } }); userEndpointBuilder.setApplicationName("Savoir"); mUserendpoint =
+	 * CloudEndpointUtils.updateBuilder(userEndpointBuilder).build(); }
+	 */
+
 	private void launchActivity(Class<?> launchingClass) {
 		Intent intent = new Intent(this, launchingClass);
 		startActivity(intent);

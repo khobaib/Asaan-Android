@@ -32,7 +32,6 @@ import asaan.dao.DStoreDao;
 import asaan.dao.DaoMaster;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
-import asaan.dao.ModItem;
 import asaan.dao.ModItemDao;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
@@ -60,8 +59,6 @@ public class MyCartActivity extends BaseActivity {
 	private DaoMaster daoMaster;
 	private DaoSession daoSession;
 	private AddItemDao addItemDao;
-	private AddItem addItem;
-	private ModItem modItem;
 	private ModItemDao modItemDao;
 	private DStoreDao dStoreDao;
 	 
@@ -352,8 +349,17 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setSubTotal((long)subtotalAmount);
 			long tax=0;
 			storeOrder.setTax(tax);
-			double gratuity =  (subtotalAmount * 0.15) / 100;
-			storeOrder.setDeliveryFee((long)dStore.getDeliveryFee());
+			double gratuity =  subtotalAmount * 0.15;
+			long lDeliveryFee =0;
+			try{
+				lDeliveryFee = (long)dStore.getDeliveryFee();
+				storeOrder.setDeliveryFee(lDeliveryFee);
+			}
+			catch(Exception e)
+			{	
+				Log.e("order info failed","dStore.getDeliveryFee() failed.");
+			}
+			
 			storeOrder.setServiceCharge((long)gratuity);
 			long total=subtotalAmount+(long)gratuity+tax;
 			storeOrder.setFinalTotal(total);
@@ -368,6 +374,8 @@ public class MyCartActivity extends BaseActivity {
 			//may need to change
 			String strOrder="";
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
+
+			/*
 			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
 		    if(AsaanUtility.selectedStore.getProvidesPosIntegration()==false)
@@ -377,11 +385,20 @@ public class MyCartActivity extends BaseActivity {
 		    }
 		    else
 		    	strOrder=xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4());
+			*/
+				
+			String temStr = "";
+			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			storeOrder.setOrderHTML(temStr);
+			
+			XMLPosOrder xmlPosOrder=new XMLPosOrder();
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			
 		
 			orderArguments.setStrOrder(strOrder);
 			orderArguments.setOrder(storeOrder);
+			orderArguments.setStrOrder(temStr);
 			try {
 				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
 				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();
@@ -454,8 +471,17 @@ public class MyCartActivity extends BaseActivity {
 	}
 	
 	private void deleteFromDatabase() {
-		addItemDao.deleteAll();
-		modItemDao.deleteAll();
+		try {			
+			initDatabase();
+			addItemDao.deleteAll();
+			modItemDao.deleteAll();
+			closeDatabase();		
+		}
+		catch(Exception e)
+		{
+			 Log.e("Database Error","Failed to delete old orders");
+		}
+		
 		AsaanUtility.setCurrentOrderdStoreId(MyCartActivity.this, -1);
 		adapter.notifyDataSetChanged();
 	}

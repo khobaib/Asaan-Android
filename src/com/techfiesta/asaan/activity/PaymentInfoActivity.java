@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.SaveUserCard;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCard;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -96,15 +97,17 @@ public class PaymentInfoActivity extends BaseActivity {
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
 					zip = Zip.getText().toString();
-					expMonth = Integer.parseInt(etMonth.getText().toString());
-					expYear = Integer.parseInt(etYear.getText().toString());
+					if(etMonth.getText().toString().length()>0)
+						expMonth = Integer.parseInt(etMonth.getText().toString());
+					if(etYear.getText().toString().length()>0)
+						expYear = Integer.parseInt(etYear.getText().toString());
 					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
 					saveDefaultTips();
 					saveCreditCard();
 				} else {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
 				}
-
+				pDialog.hide();
 			}
 		});
 
@@ -164,8 +167,7 @@ public class PaymentInfoActivity extends BaseActivity {
 					handleError(error.getLocalizedMessage());
 					// finishProgress();
 				}
-				
-			});
+			});		
 		} else if (!card.validateNumber()) {
 			handleError("The card number that you entered is invalid");
 		} else if (!card.validateExpiryDate()) {
@@ -194,6 +196,7 @@ public class PaymentInfoActivity extends BaseActivity {
 		userCard.setName(card.getName());
 		userCard.setState(card.getAddressState());
 		userCard.setZip(card.getAddressZip());
+		userCard.setCardId(card.getId());
 
 		new PostCardInfo().execute();
 
@@ -221,10 +224,7 @@ public class PaymentInfoActivity extends BaseActivity {
 				//pDialog.dismiss();
 				if(responseUserCard.getId() != null)
 				{
-					/*Intent intent=new Intent(PaymentInfoActivity.this,StoreListActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
-					finish();*/
+					AsaanUtility.defCard=userCard;
 				}
 				else
 				{

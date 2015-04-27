@@ -28,9 +28,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
     <uses-feature android:name="android.hardware.camera" android:required="false"></uses-feature>
-    
-
+	
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.VIBRATE" />
@@ -45,7 +45,6 @@
 	<uses-permission android:name="com.techfiesta.asaan.permission.C2D_MESSAGE" />
 	<uses-permission android:name="android.permission.CALL_PHONE"/>
 	    
-
     <application
         android:name="com.techfiesta.asaan.utility.AsaanApplication"
         android:allowBackup="true"
