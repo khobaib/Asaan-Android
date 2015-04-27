@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -270,7 +269,14 @@ public class MyCartActivity extends BaseActivity {
 	}
 
 	public void onClickPlaceOrder(View v){
-		showAlert(ALERT_TYPE_PLACE_ORDER);
+		if(AsaanUtility.defCard==null)
+		{
+			Intent intent=new Intent(MyCartActivity.this,PaymentInfoActivity.class);
+			intent.putExtra(Constants.KEY_FROM_ACTIVITY,MYCART_ACTIVITY_INDENTIFIER);
+			startActivityForResult(intent,REQUEST_CODE);
+		}
+		else
+		   new RemotePlaceOrderTask().execute();
 	}
 
 	public void onClickCancelOrder(View v) {
@@ -368,25 +374,11 @@ public class MyCartActivity extends BaseActivity {
 			if(AsaanUtility.defCard!=null)
 			{
 				orderArguments.setUserId(AsaanUtility.defCard.getUserId());
-				orderArguments.setCardid(""+AsaanUtility.defCard.getId());
+				orderArguments.setCardid(""+AsaanUtility.defCard.getCardId());
 				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
 			}
 			//may need to change
-			String strOrder="";
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
-
-			/*
-			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
-			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-		    if(AsaanUtility.selectedStore.getProvidesPosIntegration()==false)
-		    {
-		    	strOrder=storeOrder.getOrderHTML();
-		    	storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
-		    }
-		    else
-		    	strOrder=xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4());
-			*/
-				
 			String temStr = "";
 			temStr =  htmlFaxOrder.getOrderHTML(orderList);
 			storeOrder.setOrderHTML(temStr);
@@ -394,9 +386,6 @@ public class MyCartActivity extends BaseActivity {
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
 			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
-			
-		
-			orderArguments.setStrOrder(strOrder);
 			orderArguments.setOrder(storeOrder);
 			orderArguments.setStrOrder(temStr);
 			try {

@@ -31,9 +31,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.google.android.gms.internal.eb;
 import com.google.android.gms.internal.fa;
-import com.google.android.gms.internal.ph;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
