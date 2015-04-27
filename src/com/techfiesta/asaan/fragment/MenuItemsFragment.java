@@ -182,7 +182,7 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 				else
 				{
 					//go to orderItem activity.
-					StoreMenuItem sItem=allItems.get(position).getMenuItem();
+					StoreMenuItem sItem=MenuActivityNew.currentMenuItemAndStats.get(position).getMenuItem();
 					Intent intent=new Intent(getActivity(),OrderItemActivity.class);
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_POS_ID, sItem.getMenuItemPOSId());
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_PRICE,sItem.getPrice());
