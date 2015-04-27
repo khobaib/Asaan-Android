@@ -130,7 +130,7 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 		
 		if(item.getItemId()==R.id.action_review)
 		{
-			Intent intent=new Intent(OrderHistoryDetailsActivity.this,MyCartActivity.class);
+			Intent intent=new Intent(OrderHistoryDetailsActivity.this,OrderReviewActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 			

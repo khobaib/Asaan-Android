@@ -184,6 +184,8 @@
 		<activity android:name=".activity.ChatListActivity"></activity>
 		<activity android:name=".activity.ChatMessagesActivity"></activity>
 		<activity android:name=".activity.OrderHistoryDetailsActivity"></activity>
+		<activity android:name=".activity.OrderReviewActivity"></activity>
+		<activity android:name=".activity.ReviewItemActivity"></activity>
     </application>
 
 </manifest>

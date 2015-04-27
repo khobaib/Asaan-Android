@@ -44,7 +44,9 @@ public class Constants {
 	public static final String BUNDLE_KEY_HAS_STATS = "BUNDLE_KEY_HAS_STATS";
 	public static final String BUNDLE_KEY_IMAGE_URL = "BUNDLE_KEY_IMAGE_URL";
 	public static final String BUNDLE_KEY_CURRENT_MENU_POSID = "BUNDLE_KEY_CURRENT_MENU_POSID";
-
+	public static final String ORDER_EXPERIENCE = "order_experience";
+	public static final String ORDER_FOOD_LIKE = "order_food_like";
+	public static final String ORDER_SERVICE_LIKE = "order_service_like";
 
 	public static final int MY_CART_ACTIVITY = 1;
 	public static final int EDIT_CART_ACTIVITY = 2;
