@@ -65,7 +65,7 @@ public class OrderItemActivity extends BaseActivity {
 	private ModItem modItem;
 	private ModItemDao modItemDao;
 
-	private boolean menuItemHasModifiers;
+	private boolean menuItemHasModifiers = false;
 
 	private static final Logger logger = Logger.getLogger(OrderItemActivity.class.getName());
 	public static final int SELECTED_MODIFIERS_RESULT_CODE = 9600;
@@ -243,7 +243,8 @@ public class OrderItemActivity extends BaseActivity {
 					addItemDao.insert(addItem);
 					
 					
-					// to do
+					// to do modifier pick
+					/*
 					if (menuItemHasModifiers) {
 						ArrayList<ModItem> list = mAdapter.getSelecteedModifiersList((int)getMaxID()+1);
 						if (list != null) {
@@ -251,14 +252,14 @@ public class OrderItemActivity extends BaseActivity {
 								modItemDao.insert(list.get(i));
 							}
 						}
-					}
+					}*/
 					toast("Order saved");
 					AsaanUtility.setCurrentOrderdStoreId(OrderItemActivity.this, AsaanUtility.selectedStore.getId()
 							.intValue());
 					finish();
 				} else
 					alert(OrderItemActivity.this,
-							"Already have saved order from other restaurant.Delete previous entries?");
+							"Already have saved order from other restaurant. Delete previous entries?");
 
 				// code for adding sub items;
 

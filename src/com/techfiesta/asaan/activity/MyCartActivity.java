@@ -384,7 +384,7 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",0,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
 			orderArguments.setStrOrder(temStr);
@@ -395,9 +395,8 @@ public class MyCartActivity extends BaseActivity {
 				StoreOrder order=placeOrder.execute();
 				if(order!=null)
 				   Log.e("order Rresponse",order.toPrettyString());
-			} catch (IOException e) {
-			
-				e.printStackTrace();
+			} catch (IOException e) {			
+				Log.d("order Rresponse", e.getMessage());
 				error=true;
 			}
 
