@@ -29,6 +29,7 @@
         android:layout_alignBaseline="@+id/tv_discount"
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/tv_discount"
+        android:inputType="text"
         android:textColor="@color/black"
         android:background="@color/white"/>
     

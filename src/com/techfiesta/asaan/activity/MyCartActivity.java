@@ -69,13 +69,17 @@ public class MyCartActivity extends BaseActivity {
 
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount;
 	private int subtotalAmount;
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
 	private int RESULT_CODE=2;
 	private long one_hour_in_mili=1000*60*60;
+	private int REQUEST_CODE_DISCOUNT=99;
+	private int RESULT_CODE_DISCOUNT=100;
+	
+	
 	
 	
 	
@@ -98,6 +102,7 @@ public class MyCartActivity extends BaseActivity {
 		tvDeliveryTime=(TextView)findViewById(R.id.tv_delivery_time);
 		 btnPlaceOrde=(Button)findViewById(R.id.b_place_order);
 		 btnCancelOrder=(Button)findViewById(R.id.b_calcel_order);
+		 tvDiscount=(TextView)findViewById(R.id.tv_discount_title);
 
 		pDialog = new ProgressDialog(this);
 		
@@ -152,7 +157,7 @@ public class MyCartActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(MyCartActivity.this,DiscountActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent,REQUEST_CODE_DISCOUNT);
 				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				
 			}
@@ -505,6 +510,14 @@ public class MyCartActivity extends BaseActivity {
 		{
 			new RemotePlaceOrderTask().execute();
 		}
+		else
+			if(requestCode==REQUEST_CODE_DISCOUNT && resultCode==RESULT_CODE_DISCOUNT)
+			{
+				String discount=data.getStringExtra("discount");
+				if(discount!=null)
+					tvDiscount.setText(""+discount);
+				
+			}
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
