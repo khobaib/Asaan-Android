@@ -34,6 +34,7 @@ import com.techfiesta.asaan.adapter.OrderHistoryItemAdapter;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.NestedListView;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -53,12 +54,16 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 	private NestedListView nestedListView;
 	private ProgressDialog pdDialog;
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
-	boolean shouldReviewActionShow=false;
+	private ActionBar actionBar;
+	boolean isReviewGiven=true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_history_order_details);
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		tvStoreName = (TextView) findViewById(R.id.tv_store_name);
 		tvSubtotal = (TextView) findViewById(R.id.tv_subtotal_amount);
 		tvGratuity = (TextView) findViewById(R.id.tv_gratuity_amount);
@@ -136,7 +141,7 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		
-		if(shouldReviewActionShow)
+		if(!isReviewGiven)
 			getMenuInflater().inflate(R.menu.activity_review, menu);
 			
 		else
@@ -153,6 +158,12 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 			startActivity(intent);
 			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 			
+		}
+		else
+		if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
 		}
 		return true;
 	}
@@ -194,15 +205,31 @@ public class OrderHistoryDetailsActivity extends BaseActivity{
 				AsaanUtility.simpleAlert(OrderHistoryDetailsActivity.this,
 						getResources().getString(R.string.error_alert));
 			else {
-				OrderReview orderReview= orderReviewAndItemReviews.getOrderReview();
-				if(orderReview==null)
 				{
-				  shouldReviewActionShow=true;
+				  isReviewGiven=isReviewGiven(orderReviewAndItemReviews);
 				  invalidateOptionsMenu();
 				}
 			}
 			super.onPostExecute(result);
 		}
+		private boolean isReviewGiven(OrderReviewAndItemReviews orderReviewAndItemReviews)
+		{
+			if(orderReviewAndItemReviews==null || orderReviewAndItemReviews.getOrderReview()==null)
+				return false;
+			if((orderReviewAndItemReviews.getItemReviews()==null || orderReviewAndItemReviews.getItemReviews().size()==0) 
+					&&( orderReviewAndItemReviews.getOrderReview().getFoodLike()==0 && orderReviewAndItemReviews.getOrderReview().getFoodLike()==0
+					&& orderReviewAndItemReviews.getOrderReview().getComments()==null))
+			 return false;
+			
+			return true;
+			
+			
+					
+				
+		}
 
 	}
+	
+	
+	
 }

@@ -157,7 +157,8 @@ public class MenuItemsFragment extends Fragment implements ScrollToIndexListener
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			generateList();
+			if(getActivity()!=null)
+				generateList();
 			
 		}
 	}

@@ -265,7 +265,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 	@Override
 	public void onBackPressed() {
 		int count=getFragmentManager().getBackStackEntryCount();
-		if(count==0)
+		if(count<=1)
 			finish();
 		else
 			getFragmentManager().popBackStack();

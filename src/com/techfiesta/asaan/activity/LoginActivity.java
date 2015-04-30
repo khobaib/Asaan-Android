@@ -146,6 +146,8 @@ public class LoginActivity extends BaseActivity {
 				startActivity(i);
 				finish();
 				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+				i=new Intent(getResources().getString(R.string.intent_filter_finish));
+				sendBroadcast(i);
 			}
 		}
 	}
