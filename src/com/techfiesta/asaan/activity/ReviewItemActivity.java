@@ -30,6 +30,7 @@ import com.techfiesta.asaan.fragment.ReviewFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -50,11 +51,14 @@ public class ReviewItemActivity extends BaseActivity {
 	ArrayList<ItemReview> list = new ArrayList<>();
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	private ProgressDialog pdDialog;
-
+	private ActionBar actionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_item_review);
+		actionBar=getActionBar();
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		lvOrderItems = (ListView) findViewById(R.id.lvItems);
 		tvName = (TextView) findViewById(R.id.tvName);
 		tvName.setText(AsaanUtility.selectedStoreOrder.getStoreName());
@@ -225,6 +229,12 @@ public class ReviewItemActivity extends BaseActivity {
 			new PostOrderReviewInServer().execute();
 
 		}
+		else
+			if(item.getItemId()==android.R.id.home)
+			{
+				finish();
+				overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+			}
 		return true;
 	}
 
