@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for MenuItemModifiersAndGroups.
+ * Model definition for TableGroupsAndOrders.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,58 +29,70 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenuItemModifiersAndGroups extends com.google.api.client.json.GenericJson {
+public final class TableGroupsAndOrders extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifierGroup> modifierGroups;
+  private java.util.List<StoreTableGroup> groups;
+
+  static {
+    // hack to force ProGuard to consider StoreTableGroup used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(StoreTableGroup.class);
+  }
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifier> modifiers;
+  private java.util.List<StoreOrder> orders;
+
+  static {
+    // hack to force ProGuard to consider StoreOrder used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(StoreOrder.class);
+  }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuItemModifierGroup> getModifierGroups() {
-    return modifierGroups;
+  public java.util.List<StoreTableGroup> getGroups() {
+    return groups;
   }
 
   /**
-   * @param modifierGroups modifierGroups or {@code null} for none
+   * @param groups groups or {@code null} for none
    */
-  public MenuItemModifiersAndGroups setModifierGroups(java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
-    this.modifierGroups = modifierGroups;
+  public TableGroupsAndOrders setGroups(java.util.List<StoreTableGroup> groups) {
+    this.groups = groups;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuItemModifier> getModifiers() {
-    return modifiers;
+  public java.util.List<StoreOrder> getOrders() {
+    return orders;
   }
 
   /**
-   * @param modifiers modifiers or {@code null} for none
+   * @param orders orders or {@code null} for none
    */
-  public MenuItemModifiersAndGroups setModifiers(java.util.List<StoreMenuItemModifier> modifiers) {
-    this.modifiers = modifiers;
+  public TableGroupsAndOrders setOrders(java.util.List<StoreOrder> orders) {
+    this.orders = orders;
     return this;
   }
 
   @Override
-  public MenuItemModifiersAndGroups set(String fieldName, Object value) {
-    return (MenuItemModifiersAndGroups) super.set(fieldName, value);
+  public TableGroupsAndOrders set(String fieldName, Object value) {
+    return (TableGroupsAndOrders) super.set(fieldName, value);
   }
 
   @Override
-  public MenuItemModifiersAndGroups clone() {
-    return (MenuItemModifiersAndGroups) super.clone();
+  public TableGroupsAndOrders clone() {
+    return (TableGroupsAndOrders) super.clone();
   }
 
 }

@@ -19,7 +19,7 @@
 package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
 
 /**
- * Model definition for MenuItemModifiersAndGroups.
+ * Model definition for StoreAndStatsAndCount.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the storeendpoint. For a detailed explanation see:
@@ -29,58 +29,58 @@ package com.asaan.server.com.asaan.server.endpoint.storeendpoint.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class MenuItemModifiersAndGroups extends com.google.api.client.json.GenericJson {
+public final class StoreAndStatsAndCount extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifierGroup> modifierGroups;
+  private java.util.List<StoreAndStats> storeAndStatsList;
 
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key
-  private java.util.List<StoreMenuItemModifier> modifiers;
+  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
+  private java.lang.Long storeCount;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuItemModifierGroup> getModifierGroups() {
-    return modifierGroups;
+  public java.util.List<StoreAndStats> getStoreAndStatsList() {
+    return storeAndStatsList;
   }
 
   /**
-   * @param modifierGroups modifierGroups or {@code null} for none
+   * @param storeAndStatsList storeAndStatsList or {@code null} for none
    */
-  public MenuItemModifiersAndGroups setModifierGroups(java.util.List<StoreMenuItemModifierGroup> modifierGroups) {
-    this.modifierGroups = modifierGroups;
+  public StoreAndStatsAndCount setStoreAndStatsList(java.util.List<StoreAndStats> storeAndStatsList) {
+    this.storeAndStatsList = storeAndStatsList;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<StoreMenuItemModifier> getModifiers() {
-    return modifiers;
+  public java.lang.Long getStoreCount() {
+    return storeCount;
   }
 
   /**
-   * @param modifiers modifiers or {@code null} for none
+   * @param storeCount storeCount or {@code null} for none
    */
-  public MenuItemModifiersAndGroups setModifiers(java.util.List<StoreMenuItemModifier> modifiers) {
-    this.modifiers = modifiers;
+  public StoreAndStatsAndCount setStoreCount(java.lang.Long storeCount) {
+    this.storeCount = storeCount;
     return this;
   }
 
   @Override
-  public MenuItemModifiersAndGroups set(String fieldName, Object value) {
-    return (MenuItemModifiersAndGroups) super.set(fieldName, value);
+  public StoreAndStatsAndCount set(String fieldName, Object value) {
+    return (StoreAndStatsAndCount) super.set(fieldName, value);
   }
 
   @Override
-  public MenuItemModifiersAndGroups clone() {
-    return (MenuItemModifiersAndGroups) super.clone();
+  public StoreAndStatsAndCount clone() {
+    return (StoreAndStatsAndCount) super.clone();
   }
 
 }
