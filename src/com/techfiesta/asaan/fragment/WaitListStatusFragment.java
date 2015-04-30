@@ -40,6 +40,11 @@ public class WaitListStatusFragment extends Fragment{
 	private ProgressDialog pdDialog;
 	private StoreWaitListQueueAndPosition storeWaitListQueueAndPosition;
 	private int FLAG_CANCEL_ENTRY=3;
+	 int WAITING = 0;
+	 int TABLE_IS_READY = 1;
+	 int CLOSED_SEATED = 2;
+	 int CLOSED_CANCELLED_BY_CUSTOMER = 3;
+	 int CLOSED_CANCELLED_BY_STORE = 4;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v=inflater.inflate(R.layout.fragment_wait_list_status,null,false);
@@ -104,25 +109,46 @@ public class WaitListStatusFragment extends Fragment{
 			}
 			super.onPostExecute(result);
 		}
-		private void updateUI()
-		{
-			StoreWaitListQueue storeWaitListQueue=storeWaitListQueueAndPosition.getQueueEntry();
-			if(storeWaitListQueue==null)
-			{
+
+		private void updateUI() {
+			StoreWaitListQueue storeWaitListQueue = storeWaitListQueueAndPosition.getQueueEntry();
+			if (storeWaitListQueue == null) {
 				tvStatus.setText("Your Wait-list Status");
 				tvPartyAhead.setText("You have not joined any wait-lists.");
 				tvEstTime.setVisibility(View.INVISIBLE);
 				tvStatus2.setVisibility(View.INVISIBLE);
 				tvLeaveLine.setVisibility(View.INVISIBLE);
-			}
-			else
-			{
-				if(storeWaitListQueue.getEstTimeMax()==null)
-					tvEstTime.setVisibility(View.INVISIBLE);
-				else
-					tvEstTime.setText("Estimated Wait Time: "+storeWaitListQueue.getEstTimeMax());
-				if(storeWaitListQueueAndPosition.getPartiesBeforeEntry()!=null)
-					  tvPartyAhead.setText("Parties Ahead of You :"+storeWaitListQueueAndPosition.getPartiesBeforeEntry());
+			} else {
+				if (storeWaitListQueue.getStatus() == TABLE_IS_READY) {
+					String status = "Status: Table is ready. Please checkin with the host at "
+							+ storeWaitListQueue.getStoreName() + " to be seated.";
+					tvStatus.setText(status);
+					tvEstTime.setText("Estimated Wait Time: " + 0 + " min.");
+					tvPartyAhead.setText("Parties Ahead of You 0.");
+					tvStatus2.setVisibility(View.INVISIBLE);
+					return;
+				} else if (storeWaitListQueue.getStatus() == WAITING) {
+					String status = "Status: Waiting ...";
+					tvStatus.setText(status);
+
+				} else if (storeWaitListQueue.getStatus() == CLOSED_SEATED
+						|| storeWaitListQueue.getStatus() == CLOSED_CANCELLED_BY_CUSTOMER
+						|| storeWaitListQueue.getStatus() == CLOSED_CANCELLED_BY_STORE) {
+					String status = "tatus: Closed. Please contact " + storeWaitListQueue.getStoreName()
+							+ " directly for immediate assistance.";
+					tvStatus.setText(status);
+					tvEstTime.setText("Estimated Wait Time: " + 0 + " min.");
+					tvPartyAhead.setText("Parties Ahead of You 0.");
+					tvStatus2.setVisibility(View.INVISIBLE);
+					return;
+				}
+				if (storeWaitListQueueAndPosition.getPartiesBeforeEntry() != null)
+					tvPartyAhead.setText("Parties Ahead of You :"
+							+ storeWaitListQueueAndPosition.getPartiesBeforeEntry());
+				long createValue=storeWaitListQueue.getCreatedDate();
+				long diff=createValue - System.currentTimeMillis();
+				long min=diff/(1000*60);
+				tvEstTime.setText("Elapsed Time : " + min + " min.");
 			}
 		}
 
@@ -165,15 +191,25 @@ public class WaitListStatusFragment extends Fragment{
 			if (error)
 				AsaanUtility.simpleAlert(getActivity(), getResources().getString(R.string.error_alert));
 			else {
+				clrearbakStack();
 				StoreListFragment strFragment = new StoreListFragment();
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.replace(R.id.frame_container, strFragment);
-				// ft.addToBackStack(null);
+				 ft.addToBackStack(null);
 				ft.commit();
 
 			}
+			
     	
     }
+		private void clrearbakStack()
+		{
+			int count=getActivity().getFragmentManager().getBackStackEntryCount();
+			for(int i=0;i<count;i++)
+			{
+				getActivity().getFragmentManager().popBackStack();
+			}
+		}
 		
 	}
 	private void showAlert() {
