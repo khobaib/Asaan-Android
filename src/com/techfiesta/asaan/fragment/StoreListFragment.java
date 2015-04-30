@@ -173,6 +173,7 @@ public class StoreListFragment extends Fragment {
 			store.setProvidesChat(dStore.getProvidesChat());
 			store.setProvidesDelivery(dStore.getProvidesDelivery());
 			store.setProvidesPreOrder(dStore.getProvidesPreOrder());
+			store.setProvidesDineInAndPay(dStore.getProvidesDineInAndPay());
 			store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
 			store.setProvidesReservation(dStore.getProvidesReservation());
 			store.setProvidesWaitlist(dStore.getProvidesWaitlist());
@@ -184,6 +185,7 @@ public class StoreListFragment extends Fragment {
 			store.setState(dStore.getState());
 			store.setSubType(dStore.getSubType());
 			store.setTwitterUrl(dStore.getTwitterUrl());
+			store.setTaxPercent(dStore.getTaxPercent());
 			store.setType(dStore.getType());
 			store.setWebSiteUrl(dStore.getWebSiteUrl());
 			store.setZip(dStore.getZip());
@@ -273,6 +275,7 @@ public class StoreListFragment extends Fragment {
 				dStore.setProvidesChat(store.getProvidesChat());
 				dStore.setProvidesDelivery(store.getProvidesDelivery());
 				dStore.setProvidesPreOrder(store.getProvidesPreOrder());
+				dStore.setProvidesDineInAndPay(store.getProvidesDineInAndPay());
 				dStore.setProvidesPosIntegration(store.getProvidesPosIntegration());
 				dStore.setProvidesReservation(store.getProvidesReservation());
 				dStore.setProvidesWaitlist(store.getProvidesWaitlist());
@@ -282,6 +285,7 @@ public class StoreListFragment extends Fragment {
 				dStore.setSinLng(store.getSineLng());
 				dStore.setSsid(store.getSsid());
 				dStore.setState(store.getState());
+				dStore.setTaxPercent(store.getTaxPercent());
 				dStore.setSubType(store.getSubType());
 				dStore.setTwitterUrl(store.getTwitterUrl());
 				dStore.setType(store.getType());

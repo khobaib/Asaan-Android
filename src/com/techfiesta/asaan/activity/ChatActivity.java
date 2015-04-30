@@ -288,6 +288,7 @@ public class ChatActivity extends BaseActivity{
 			Collections.reverse(chatList);
 			adapter = new ChatMessageAdapter(ChatActivity.this, chatList, userHashMap);
 			lvChat.setAdapter(adapter);
+			lvChat.setSelection(chatList.size()-1);
 			lvChat.smoothScrollToPosition(chatList.size() - 1);
 
 		}

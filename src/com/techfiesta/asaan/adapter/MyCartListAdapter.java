@@ -125,7 +125,7 @@ public class MyCartListAdapter extends ArrayAdapter<AddItem> {
 		AddItemDao addItemDao = daoSession.getAddItemDao();
 		addItemDao.delete(item);
 
-		((EditCartActivity) mContext).updateCartInfo();
+		((EditCartActivity) mContext).onResume();
 	}
 
 }

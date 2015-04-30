@@ -90,13 +90,15 @@ public class PendingOrderFragment extends Fragment{
 
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrder,btnCancelOrder,btnPlus;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount;
 	private int subtotalAmount;
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
 	private int RESULT_CODE=2;
 	private long one_hour_in_mili=1000*60*60;
+	private int REQUEST_CODE_DISCOUNT=99;
+	private int RESULT_CODE_DISCOUNT=100;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -112,6 +114,7 @@ public class PendingOrderFragment extends Fragment{
 		tvDeliveryTime=(TextView)v.findViewById(R.id.tv_delivery_time);
 		btnCancelOrder=(Button)v.findViewById(R.id.b_calcel_order);
 		btnPlaceOrder=(Button)v.findViewById(R.id.b_place_order);
+		 tvDiscount=(TextView)v.findViewById(R.id.tv_discount_title);
 		pDialog = new ProgressDialog(getActivity());
 		
 
@@ -143,29 +146,14 @@ public class PendingOrderFragment extends Fragment{
 				
 			}
 		});
-		btnPlaceOrder.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onClickPlaceOrder(v);
-				
-			}
-		});
-		btnCancelOrder.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onClickCancelOrder(v);
-				
-			}
-		});
+		
 		rlDiscount=(RelativeLayout)v.findViewById(R.id.rl_discount);
 		rlDiscount.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(getActivity(),DiscountActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent,REQUEST_CODE_DISCOUNT);
 				getActivity().overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				
 			}
@@ -282,11 +270,25 @@ public void onResume() {
 	}
 
 	private void setSelectedStore(AddItem addItem)
+	{DStore dStore=getStoreFromDatabase(addItem.getStore_id());
+	Store store=new Store();
+	store.setId((long)addItem.getStore_id());
+	store.setName(addItem.getStore_name());
+	if(dStore!=null)
 	{
-		Store store=new Store();
-		store.setId((long)addItem.getStore_id());
-		store.setName(addItem.getStore_name());
-		AsaanUtility.selectedStore=store;
+		store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
+		store.setTaxPercent(dStore.getTaxPercent());
+	}
+	AsaanUtility.selectedStore=store;
+	}
+	private DStore getStoreFromDatabase(long Id)
+	{
+		List<DStore> dstList = dStoreDao.queryBuilder().list();
+		for (int i = 0; i < dstList.size(); i++) {
+			if(dstList.get(i).getId()==Id)
+				return dstList.get(i);
+		}
+		return null;
 	}
 
 
@@ -303,7 +305,7 @@ public void onResume() {
 	}
 	private void closeDatabase()
 	{
-		daoSession.getDatabase().close();
+		daoMaster.getDatabase().close();
 	}
 
 	public void onClickPlaceOrder(View v){
@@ -361,7 +363,7 @@ public void onResume() {
 	}
 	private class RemotePlaceOrderTask extends AsyncTask<String, Void, Void> {
 
-		private boolean error=false;
+private boolean error=false;
 		
 		@Override
 		protected void onPreExecute() {
@@ -384,10 +386,19 @@ public void onResume() {
 			storeOrder.setStoreId(id);
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
 			storeOrder.setSubTotal((long)subtotalAmount);
-			long tax=0;
+			long tax=AsaanUtility.selectedStore.getTaxPercent();
 			storeOrder.setTax(tax);
-			double gratuity =  (subtotalAmount * 0.15) / 100;
-			storeOrder.setDeliveryFee((long)dStore.getDeliveryFee());
+			double gratuity =  subtotalAmount * 0.15;
+			long lDeliveryFee =0;
+			try{
+				lDeliveryFee = (long)dStore.getDeliveryFee();
+				storeOrder.setDeliveryFee(lDeliveryFee);
+			}
+			catch(Exception e)
+			{	
+				Log.e("order info failed","dStore.getDeliveryFee() failed.");
+			}
+			
 			storeOrder.setServiceCharge((long)gratuity);
 			long total=subtotalAmount+(long)gratuity+tax;
 			storeOrder.setFinalTotal(total);
@@ -396,32 +407,29 @@ public void onResume() {
 			if(AsaanUtility.defCard!=null)
 			{
 				orderArguments.setUserId(AsaanUtility.defCard.getUserId());
-				orderArguments.setCardid(""+AsaanUtility.defCard.getId());
-				
-				Log.e("cardID",AsaanUtility.defCard.getId()+"  "+AsaanUtility.defCard.getCardId());
+				orderArguments.setCardid(""+AsaanUtility.defCard.getCardId());
 				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
 			}
 			//may need to change
-			
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
-			storeOrder.setOrderHTML(htmlFaxOrder.getOrderHTML(orderList));
+			String temStr = "";
+			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMlPOSOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,dStore.getDeliveryFee(),(long)total, orderList,"",-1,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",0,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
+			orderArguments.setStrOrder(temStr);
 			try {
-				
 				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
-				Log.e("order",placeOrder.toString()+orderArguments.toPrettyString());
 				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();
 				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
 				StoreOrder order=placeOrder.execute();
 				if(order!=null)
 				   Log.e("order Rresponse",order.toPrettyString());
-			} catch (IOException e) {
-			
-				e.printStackTrace();
+			} catch (IOException e) {			
+				Log.d("order Rresponse", e.getMessage());
 				error=true;
 			}
 
@@ -521,6 +529,14 @@ public void onResume() {
 		{
 			new RemotePlaceOrderTask().execute();
 		}
+		else
+			if(requestCode==REQUEST_CODE_DISCOUNT && resultCode==RESULT_CODE_DISCOUNT)
+			{
+				String discount=data.getStringExtra("discount");
+				if(discount!=null)
+					tvDiscount.setText(""+discount);
+				
+			}
 	}
 	
 

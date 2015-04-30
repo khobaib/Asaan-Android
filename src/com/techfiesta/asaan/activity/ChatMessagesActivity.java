@@ -80,7 +80,7 @@ public class ChatMessagesActivity extends BaseActivity {
 	PushNotificationReceiver pushNotificationReceiver = new PushNotificationReceiver() {
 		public void onReceive(android.content.Context context, android.content.Intent intent) {
 
-		
+			Log.e("push received","push message");
 			new GetChatMessagesForRoomFromServer().execute();
 		};
 	};

@@ -189,7 +189,7 @@ public class MyCartActivity extends BaseActivity {
 		double gratuity = ((double) subtotalAmount * 0.15) / 100;
 		tvGratuity.setText("$" + String.format("%.2f", gratuity));
 
-		double tax = 0.00;
+		double tax = AsaanUtility.selectedStore.getTaxPercent();
 		tvTax.setText("$" + String.format("%.2f", tax));
 
 		double total = ((double) subtotalAmount / 100) + gratuity + tax;
@@ -243,7 +243,10 @@ public class MyCartActivity extends BaseActivity {
 		store.setId((long)addItem.getStore_id());
 		store.setName(addItem.getStore_name());
 		if(dStore!=null)
+		{
 			store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
+			store.setTaxPercent(dStore.getTaxPercent());
+		}
 		AsaanUtility.selectedStore=store;
 	}
 	private DStore getStoreFromDatabase(long Id)
@@ -270,7 +273,7 @@ public class MyCartActivity extends BaseActivity {
 	}
 	private void closeDatabase()
 	{
-		daoSession.getDatabase().close();
+		daoMaster.getDatabase().close();
 	}
 
 	public void onClickPlaceOrder(View v){
@@ -281,7 +284,7 @@ public class MyCartActivity extends BaseActivity {
 			startActivityForResult(intent,REQUEST_CODE);
 		}
 		else
-		   new RemotePlaceOrderTask().execute();
+		   showAlert(ALERT_TYPE_PLACE_ORDER);
 	}
 
 	public void onClickCancelOrder(View v) {
@@ -358,7 +361,7 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setStoreId(id);
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
 			storeOrder.setSubTotal((long)subtotalAmount);
-			long tax=0;
+			long tax=AsaanUtility.selectedStore.getTaxPercent();
 			storeOrder.setTax(tax);
 			double gratuity =  subtotalAmount * 0.15;
 			long lDeliveryFee =0;
