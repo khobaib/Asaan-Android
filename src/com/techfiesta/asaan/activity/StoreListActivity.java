@@ -160,7 +160,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		StoreListFragment strFragment=new StoreListFragment();
 		FragmentTransaction  ft=getFragmentManager().beginTransaction();
 		ft.replace(R.id.frame_container,strFragment);
-		//ft.addToBackStack(null);
+		ft.addToBackStack(null);
 		ft.commit();
 		
 	}
@@ -261,5 +261,13 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 	protected void onDestroy() {
 		unregisterReceiver(broadcastReceiver);
 		super.onDestroy();
+	}
+	@Override
+	public void onBackPressed() {
+		int count=getFragmentManager().getBackStackEntryCount();
+		if(count==0)
+			finish();
+		else
+			getFragmentManager().popBackStack();
 	}
 }
