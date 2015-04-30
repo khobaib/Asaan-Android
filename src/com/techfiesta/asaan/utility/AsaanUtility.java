@@ -28,6 +28,7 @@ public class AsaanUtility {
 	public static Location mLocation = null;
 	private static GPSTracker mGps = null;
 	public static Store selectedStore = null;
+	public static Store realCurrentStore = null;
 	public static UserCard defCard=null;
 	public static  long USER_ID = 0;
 	public static ChatMessage selectedChatMessage=null;

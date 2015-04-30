@@ -33,6 +33,7 @@ import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 import asaan.dao.ModItemDao;
 
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetStore;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.PlaceOrder;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.PlaceOrderArguments;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.Store;
@@ -61,7 +62,7 @@ public class MyCartActivity extends BaseActivity {
 	private ModItemDao modItemDao;
 	private DStoreDao dStoreDao;
 	 
-	 private ActionBar actionBar;
+	private ActionBar actionBar;
 
 	private NestedListView lvOrder;
 	private MyCartListAdapter adapter;
@@ -71,11 +72,14 @@ public class MyCartActivity extends BaseActivity {
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime;
 	private int subtotalAmount;
+	private double gratuity;
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
 	private int RESULT_CODE=2;
 	private long one_hour_in_mili=1000*60*60;
+	
+	private double taxRate = 0;
 	
 	
 	
@@ -158,6 +162,15 @@ public class MyCartActivity extends BaseActivity {
 			}
 		});
     
+		//check if tax information available (i.e real store info) or not
+		if(AsaanUtility.selectedStore!=null && AsaanUtility.realCurrentStore==null )
+		{
+			new GetStoreFromServer().execute();
+		}
+		else if(AsaanUtility.realCurrentStore != null)
+		{
+			taxRate = AsaanUtility.realCurrentStore.getTaxPercent();
+		}
 	}
 	
 	@Override
@@ -173,6 +186,7 @@ public class MyCartActivity extends BaseActivity {
 		       return;
 		}
 		setSelectedStore(orderList.get(0));
+	
         setStorName();
 		subtotalAmount = 0;
 		for (AddItem item : orderList) {
@@ -181,10 +195,10 @@ public class MyCartActivity extends BaseActivity {
 		String subtotal = "$" + String.format("%.2f", ((double) subtotalAmount / 100));
 		tvSubtotal.setText(subtotal);
 
-		double gratuity = ((double) subtotalAmount * 0.15) / 100;
+		gratuity = ((double) subtotalAmount * 0.15) / 100;
 		tvGratuity.setText("$" + String.format("%.2f", gratuity));
 
-		double tax = 0.00;
+		double tax = (subtotalAmount/100)*(taxRate/10000);
 		tvTax.setText("$" + String.format("%.2f", tax));
 
 		double total = ((double) subtotalAmount / 100) + gratuity + tax;
@@ -240,6 +254,22 @@ public class MyCartActivity extends BaseActivity {
 		if(dStore!=null)
 			store.setProvidesPosIntegration(dStore.getProvidesPosIntegration());
 		AsaanUtility.selectedStore=store;
+
+		try
+		{
+			if(AsaanUtility.realCurrentStore==null || (AsaanUtility.realCurrentStore.getId() != addItem.getStore_id()))
+			{
+				new GetStoreFromServer().execute();
+			}
+			else
+			{
+				taxRate = AsaanUtility.realCurrentStore.getTaxPercent();
+			}
+		}
+		catch(Exception e)
+		{
+			Log.d("Set Tax", "Fail to get Tax Rate.");
+		}
 	}
 	private DStore getStoreFromDatabase(long Id)
 	{
@@ -354,6 +384,9 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
 			storeOrder.setSubTotal((long)subtotalAmount);
 			long tax=0;
+	
+			if(AsaanUtility.realCurrentStore != null)
+				tax = subtotalAmount * AsaanUtility.realCurrentStore.getTaxPercent();
 			storeOrder.setTax(tax);
 			double gratuity =  subtotalAmount * 0.15;
 			long lDeliveryFee =0;
@@ -520,5 +553,44 @@ public class MyCartActivity extends BaseActivity {
 		return true;
 	}
 
-	
+	private class GetStoreFromServer extends AsyncTask<Void, Void, Void> {
+		private boolean error = false;
+		Store store = null;
+		
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				GetStore  getstore= SplashActivity.mStoreendpoint.getStore(AsaanUtility.selectedStore.getId());
+				HttpHeaders httpHeaders = getstore.getRequestHeaders();
+				httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+				store = getstore.execute();
+			} catch (IOException e) {
+				error = true;
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if (error)
+				AsaanUtility.simpleAlert(MyCartActivity.this, "An error has occured!.");
+			else {
+				taxRate = store.getTaxPercent();
+				AsaanUtility.realCurrentStore = store;
+				
+				//recalculate the tax and total part
+				double tax = (subtotalAmount/100) * (taxRate/10000);			
+				tvTax.setText("$" + String.format("%.2f", tax));
+
+				double total = ((double) subtotalAmount / 100) + gratuity + tax;
+				tvTotal.setText("$" + String.format("%.2f", total));
+				tvAmountDue.setText("$" + String.format("%.2f", total));
+				
+						
+			}
+		}
+	}
+
 }
