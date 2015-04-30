@@ -2,6 +2,7 @@ package com.techfiesta.asaan.activity;
 
 import java.io.IOException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,10 +34,15 @@ public class WaitListConfirmActivity extends BaseActivity implements OnClickList
 	private ProgressDialog pDialog;
 	private int FLAG_GET_WAIT_LIST_QUEUE=1;
 	private int FLAG_SAVE_QUEUE_IN_SERVER=2;
+	private ActionBar actionBar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_waitlist4);
+		actionBar=getActionBar();
+		actionBar.setTitle("Back");
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 		pDialog=new ProgressDialog(WaitListConfirmActivity.this);
 		pDialog.setMessage("Please wait...");
 		pDialog.setCancelable(false);
@@ -253,6 +260,15 @@ public class WaitListConfirmActivity extends BaseActivity implements OnClickList
 		else
 			internetAvailabilityAlert(WaitListConfirmActivity.this, getResources().getString(R.string.internet_alert),FLAG_SAVE_QUEUE_IN_SERVER);
 
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 	
 

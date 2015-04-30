@@ -159,6 +159,7 @@ public class ProfileActivity extends BaseActivity {
 //					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
 					Intent intent = new Intent(ProfileActivity.this, StoreListActivity.class);
 					startActivity(intent);
+					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
 					sendBroadcast(intent);
 				} else {

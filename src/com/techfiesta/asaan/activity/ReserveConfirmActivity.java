@@ -5,12 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,11 +42,16 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	private long roomId=-1;
 	private ProgressDialog pdDialog;
+	private ActionBar actionBar;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reserve4);
+		actionBar=getActionBar();
+		actionBar.setTitle("Back");
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeButtonEnabled(true);
 		tvName=(TextView)findViewById(R.id.txtViewResName);
 		tvPeople=(TextView)findViewById(R.id.txtViewPeople);
 		tvDay=(TextView)findViewById(R.id.txtViewDay);
@@ -386,6 +393,15 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM d,yyyy");
 		String sDate = sdf.format(new Date(rawTime));
 		return sDate;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		 if(item.getItemId()==android.R.id.home)
+		{
+			finish();
+			overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+		}
+		return true;
 	}
 
 

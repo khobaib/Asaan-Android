@@ -41,6 +41,7 @@ public class ReserveActivity extends BaseActivity {
 				{
 				Intent intent=new Intent(ReserveActivity.this,ReserveConfirmActivity.class);
 				startActivity(intent);
+				overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 				}
 			}
 		});
@@ -52,6 +53,7 @@ public class ReserveActivity extends BaseActivity {
 						{
 						Intent intent=new Intent(ReserveActivity.this,WaitListConfirmActivity.class);
 						startActivity(intent);
+						overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 						}
 					}
 				});
