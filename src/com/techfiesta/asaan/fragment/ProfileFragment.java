@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -31,17 +32,24 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetUserCards;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
 import com.google.android.gms.internal.fa;
+import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.activity.LoginActivity;
 import com.techfiesta.asaan.activity.PaymentInfoActivity;
+import com.techfiesta.asaan.activity.SplashActivity;
+import com.techfiesta.asaan.activity.StoreListActivity;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.model.UserPicture;
 import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.Constants;
 
 public class ProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;
@@ -75,6 +83,7 @@ public class ProfileFragment extends Fragment{
 		tvPayment=(TextView)v.findViewById(R.id.txtViewPayInfo);
 		pdDialog=new ProgressDialog(getActivity());
 		
+		sbTips.setMax(50);
 		return v;
 	}
 
@@ -244,6 +253,15 @@ public class ProfileFragment extends Fragment{
 		  Log.e("MSG",user.getString("tip")+"");
 		  imageLoader.DisplayImage(user.getString("profilePhotoUrl"), ivProfilePic);
 		  
+		  if(AsaanUtility.defCard != null)
+			{
+			  tvPayment.setText("Last 4 digits of the credit card: " + AsaanUtility.defCard.getLast4());
+			}
+			else
+			{
+				new GetUserCardsFromServerInProfile().execute();
+			}
+		  
 	  }
 	 @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -324,5 +342,53 @@ public class ProfileFragment extends Fragment{
 				}
 			});
 			
+		}
+	 
+	 private class GetUserCardsFromServerInProfile extends AsyncTask<Void,Void,Void>
+		{
+			
+			@Override
+			protected void onPreExecute() {
+				
+				super.onPreExecute();
+			}
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				GetUserCards getUserCards;
+				try {
+					getUserCards=SplashActivity.mUserendpoint.getUserCards();
+					HttpHeaders httpHeaders = getUserCards.getRequestHeaders();
+					httpHeaders.put(Constants.USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+					UserCardCollection userCardCollection= getUserCards.execute();
+					if(userCardCollection!=null)
+					{
+						Log.e("Response",userCardCollection.toPrettyString());
+						if(userCardCollection.getItems()!= null && userCardCollection.getItems().size()>=0)
+						{
+							AsaanUtility.defCard=userCardCollection.getItems().get(0);
+						}
+						else
+							AsaanUtility.defCard=null;
+					}
+					else
+						AsaanUtility.defCard=null;
+						
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+			@Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				
+				if(AsaanUtility.defCard != null)
+				{
+					tvPayment.setText("Last 4 digits of the credit card: " + AsaanUtility.defCard.getLast4());
+				}
+				
+			}
 		}
 }

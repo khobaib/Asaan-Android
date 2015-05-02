@@ -23,7 +23,7 @@ public class Constants {
 
 	public static final long STORE_ID = 1L;
 	
-	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
+	public static final String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
 	public static final String ORDER_TYPE = "order_type";
 	public static final String ESTIMATED_TIME = "estimated_time";
 	public static final String PARTY_SIZE = "party_size";

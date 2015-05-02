@@ -73,6 +73,7 @@ public class MyCartActivity extends BaseActivity {
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount;
 	private int subtotalAmount;
 	private double gratuity;
+	private int tipRate = 0;
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
@@ -176,6 +177,19 @@ public class MyCartActivity extends BaseActivity {
 		{
 			taxRate = AsaanUtility.realCurrentStore.getTaxPercent();
 		}
+
+		try {
+			ParseUser user=ParseUser.getCurrentUser();
+			String strTip = user.getString("tip");
+			if(strTip != null)
+			{
+				tipRate = Integer.parseInt(strTip);
+			}
+		}
+		catch(Exception e)
+		{
+			Log.d("GetCurrentUser", "Failed to get tip.");
+		}
 	}
 	
 	@Override
@@ -200,7 +214,7 @@ public class MyCartActivity extends BaseActivity {
 		String subtotal = "$" + String.format("%.2f", ((double) subtotalAmount / 100));
 		tvSubtotal.setText(subtotal);
 
-		gratuity = ((double) subtotalAmount * 0.15) / 100;
+		gratuity = ((double) subtotalAmount * tipRate/100) / 100;
 		tvGratuity.setText("$" + String.format("%.2f", gratuity));
 
 		double tax = (subtotalAmount/100)*(taxRate/10000);
@@ -398,7 +412,7 @@ public class MyCartActivity extends BaseActivity {
 			if(AsaanUtility.realCurrentStore != null)
 				tax = subtotalAmount * AsaanUtility.realCurrentStore.getTaxPercent();
 			storeOrder.setTax(tax);
-			double gratuity =  subtotalAmount * 0.15;
+			double gratuity =  subtotalAmount * tipRate/100;
 			long lDeliveryFee =0;
 			try{
 				lDeliveryFee = (long)dStore.getDeliveryFee();

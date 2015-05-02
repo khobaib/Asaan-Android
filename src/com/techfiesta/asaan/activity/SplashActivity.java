@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
+import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetCurrentUser;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetUserCards;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -33,6 +34,7 @@ public class SplashActivity extends Activity {
 	public static final long STORE_ID = 1;
 	public static Storeendpoint mStoreendpoint;
 	public static Userendpoint mUserendpoint;
+	public static GetCurrentUser currentAsaanUser;
 	Context mContext;
 	ParseUser currentUser;
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
@@ -46,7 +48,6 @@ public class SplashActivity extends Activity {
 		buildStoreEndpoint();
 		buildUserEndpoint();
 		trytoLoadMainScreen(mContext);
-
 	}
 
 	private void trytoLoadMainScreen(Context context) {
