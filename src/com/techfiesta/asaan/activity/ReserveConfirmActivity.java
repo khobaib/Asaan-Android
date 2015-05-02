@@ -35,7 +35,7 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 	private TextView tvName,tvPeople,tvDay,tvDate,tvTime;
 	private Button btnPeoplePlus,btnPeopleMinus,btnDayPlus,btnDayMinus,btnTimePlus,btnTimeMinus,btnReserve;
 	private long one_day=1000*60*60*24;
-	private long fifteen_min=15*60*1000;
+	private long interval_time=10*60*1000;
 	private long one_hour=60*60*1000;
 	private int curDay=-1;
 	private long curTime=-1;  
@@ -90,7 +90,12 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 		curDay=time.weekDay;
 		tvDay.setText(getDay(curDay));
 		
-		curTime=System.currentTimeMillis();
+		long now = System.currentTimeMillis();
+		if(now%interval_time >0)
+			curTime = (now/interval_time +1)*interval_time;
+		else
+			curTime = now;
+		
 		tvDate.setText(getFormattedDate(curTime));
 		curTime=curTime+2*one_hour;
 		tvTime.setText(getFormattedTime(curTime));
@@ -135,18 +140,18 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 		}
 		else if(v.getId()==R.id.btnIncTime)
 		{
-			curTime+= fifteen_min;
+			curTime+= interval_time;
 			tvTime.setText(getFormattedTime(curTime));
 		}
 		else
 			if(v.getId()==R.id.btnDecTime)
 			{
-				if(curTime-fifteen_min<(System.currentTimeMillis()+2*one_hour))
+				if(curTime-interval_time<(System.currentTimeMillis()+2*one_hour))
 				{
 					//do nothing
 				}
 				else{
-				curTime-=fifteen_min;
+				curTime-=interval_time;
 				tvTime.setText(getFormattedTime(curTime));
 				}
 			}

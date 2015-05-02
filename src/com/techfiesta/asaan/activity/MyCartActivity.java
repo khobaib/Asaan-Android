@@ -70,7 +70,7 @@ public class MyCartActivity extends BaseActivity {
 
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle;
 	private int subtotalAmount;
 	private double gratuity;
 	private int tipRate = 0;
@@ -108,6 +108,7 @@ public class MyCartActivity extends BaseActivity {
 		 btnPlaceOrde=(Button)findViewById(R.id.b_place_order);
 		 btnCancelOrder=(Button)findViewById(R.id.b_calcel_order);
 		 tvDiscount=(TextView)findViewById(R.id.tv_discount_title);
+		 tvGratuityTitle = (TextView)findViewById(R.id.tv_gratuity_title);
 
 		pDialog = new ProgressDialog(this);
 		
@@ -184,6 +185,7 @@ public class MyCartActivity extends BaseActivity {
 			if(strTip != null)
 			{
 				tipRate = Integer.parseInt(strTip);
+				tvGratuityTitle.setText("Gratuity(" + strTip +"%)");
 			}
 		}
 		catch(Exception e)
