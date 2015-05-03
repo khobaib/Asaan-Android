@@ -238,44 +238,10 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/viewBar7"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/linLay6"
-            android:background="@color/white" />
-
-        <LinearLayout
-            android:id="@+id/linLay7"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/viewBar7"
-            android:layout_centerHorizontal="true" >
-
-            <TextView
-                android:id="@+id/txtViewLblFbProf"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical"
-                android:text="Facebook Profile"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/etViewFbProf"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="2"
-                android:hint="Facebook Profile"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <View
             android:id="@+id/viewBar8"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/linLay7"
+            android:layout_below="@+id/linLay6"
             android:background="@color/white" />
     </RelativeLayout>
 

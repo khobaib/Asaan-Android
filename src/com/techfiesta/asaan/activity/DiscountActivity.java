@@ -3,19 +3,17 @@ package com.techfiesta.asaan.activity;
 import java.io.IOException;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.StoreDiscountCollection;
 import com.techfiesta.asaan.R;
@@ -26,7 +24,10 @@ public class DiscountActivity extends BaseActivity{
 	private ActionBar actionBar;
 	private ProgressDialog pdDialog;
 	private EditText edtDiscountCode;
+	
+	private Button btnVerify;
 	private int RESULT_CODE_DISCOUNT=100;
+	private StoreDiscountCollection storeDiscountCollection;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,21 +40,40 @@ public class DiscountActivity extends BaseActivity{
 		pdDialog.setMessage("Please wait...");
 		
 		edtDiscountCode=(EditText)findViewById(R.id.et_code);
-		edtDiscountCode.setOnEditorActionListener(new OnEditorActionListener() {
-			
+		
+		
+		btnVerify = (Button) findViewById(R.id.bt_verify);
+		btnVerify.setOnClickListener(new OnClickListener() {		
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if(actionId==event.KEYCODE_ENTER || (actionId == EditorInfo.IME_ACTION_DONE) || (actionId ==event.ACTION_DOWN)) 
+			public void onClick(View v) {			
+				String strDiscount = edtDiscountCode.getText().toString();
+				if(storeDiscountCollection.getItems()!=null)
 				{
-					new GetDisCountCodes().execute();
+					int size=storeDiscountCollection.getItems().size(); 
+					for(int i=0;i<size;i++)
+					{
+						String code=storeDiscountCollection.getItems().get(i).getCode();
+						if(code.equalsIgnoreCase(strDiscount))
+						{				
+							Intent intent=new Intent();
+							intent.putExtra("discountTitle",storeDiscountCollection.getItems().get(i).getTitle());
+							intent.putExtra("discountValue",storeDiscountCollection.getItems().get(i).getValue());
+							intent.putExtra("discountType",storeDiscountCollection.getItems().get(i).getPercentOrAmount());
+							setResult(RESULT_CODE_DISCOUNT,intent);
+							finish();
+							overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
+							return;
+						}
+					}				
+					AsaanUtility.simpleAlert(DiscountActivity.this, getResources().getString(R.string.alert_discount_code_mismatch));
 				}
-				return false;
 			}
 		});
+		
+		new GetDisCountCodes().execute();
 	}
 	private class GetDisCountCodes extends AsyncTask<Void,Void,Void>
 	{
-		private StoreDiscountCollection storeDiscountCollection;
 		private boolean error=false;
 
 		@Override
@@ -79,35 +99,8 @@ public class DiscountActivity extends BaseActivity{
 				pdDialog.dismiss();
 			if (error)
 				AsaanUtility.simpleAlert(DiscountActivity.this, getResources().getString(R.string.error_alert));
-			else {
-				if(storeDiscountCollection.getItems()!=null)
-				{
-				int size=storeDiscountCollection.getItems().size(); 
-				for(int i=0;i<size;i++)
-				{
-					String code=storeDiscountCollection.getItems().get(i).getCode();
-					if(code.equalsIgnoreCase(edtDiscountCode.getText().toString()))
-					{
-						
-						Intent intent=new Intent();
-						intent.putExtra("discount",storeDiscountCollection.getItems().get(i).getTitle()+" "+ storeDiscountCollection.getItems().get(i).getValue());
-						setResult(RESULT_CODE_DISCOUNT,intent);
-						finish();
-						overridePendingTransition(R.anim.prev_slide_in, R.anim.prev_slide_out);
-						
-					}
-					else
-					{
-						AsaanUtility.simpleAlert(DiscountActivity.this, getResources().getString(R.string.alert_discount_code_mismatch));
-					}
-				}
-				}
-			}
-				
 			super.onPostExecute(result);
-		}
-		
-		
+		}	
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,7 +108,6 @@ public class DiscountActivity extends BaseActivity{
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 

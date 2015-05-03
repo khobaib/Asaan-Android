@@ -34,17 +34,14 @@ import android.widget.TextView;
 
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetUserCards;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.model.UserCardCollection;
-import com.google.android.gms.internal.fa;
 import com.google.api.client.http.HttpHeaders;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.activity.LoginActivity;
 import com.techfiesta.asaan.activity.PaymentInfoActivity;
 import com.techfiesta.asaan.activity.SplashActivity;
-import com.techfiesta.asaan.activity.StoreListActivity;
 import com.techfiesta.asaan.adapter.SimpleListAdapter;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.model.UserPicture;
@@ -55,7 +52,7 @@ public class ProfileFragment extends Fragment{
 	private static final int SELECT_PICTURE = 1;
 	private static final int CAMERA_REQUEST=2;
 	private TextView tvSave,tvPayment,tvTips;
-	private EditText etFirstName,etLastName,etEmail,etPhone,etPaymentInfo,etFacebookProfile;
+	private EditText etFirstName,etLastName,etEmail,etPhone;
 	private SeekBar sbTips;
 	private ProgressDialog pdDialog;
 	private ImageView ivProfilePic;
@@ -78,7 +75,6 @@ public class ProfileFragment extends Fragment{
 		etPhone=(EditText)v.findViewById(R.id.etViewPhone);
 		tvTips=(TextView)v.findViewById(R.id.txtViewLblTip);
 		sbTips=(SeekBar)v.findViewById(R.id.seekBarTips);
-		etFacebookProfile=(EditText)v.findViewById(R.id.etViewFbProf);
 		ivProfilePic=(ImageView)v.findViewById(R.id.imgViewProfPic);
 		tvPayment=(TextView)v.findViewById(R.id.txtViewPayInfo);
 		pdDialog=new ProgressDialog(getActivity());
@@ -145,10 +141,10 @@ public class ProfileFragment extends Fragment{
 			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if(progress<15)
+				if(progress<5)
 				{
-					sbTips.setProgress(15);
-					tvTips.setText("Tips(15%)");
+					sbTips.setProgress(5);
+					tvTips.setText("Tips(5%)");
 				}
 				else
 				 tvTips.setText("Tips("+progress+")");
@@ -240,15 +236,15 @@ public class ProfileFragment extends Fragment{
 			  tips=15;
 		  else	  
 		    tips=Integer.valueOf(user.getString("tip"));
-		  if(tips>15)
+		  if(tips>5)
 		  {
 		     sbTips.setProgress(tips);
-		     tvTips.setText("Tips("+tips+")");
+		     tvTips.setText("Tips("+tips+"%)");
 		  }
 		  else
 		  {
-			  tvTips.setText("Tips(15%)");
-			  sbTips.setProgress(15);
+			  tvTips.setText("Tips(5%)");
+			  sbTips.setProgress(5);
 		  }
 		  Log.e("MSG",user.getString("tip")+"");
 		  imageLoader.DisplayImage(user.getString("profilePhotoUrl"), ivProfilePic);

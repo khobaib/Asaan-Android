@@ -32,6 +32,18 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:background="@color/white"/>
-    
+
+    <Button
+        android:id="@+id/bt_verify"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/et_code"
+        android:layout_alignBottom="@+id/et_code"
+        android:layout_toRightOf="@+id/et_code"
+        android:text="Verify"
+        android:textColor="@color/text_golden_color"
+        android:background="@android:color/transparent"
+        android:textStyle="bold" />
 
 </RelativeLayout>

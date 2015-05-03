@@ -70,10 +70,18 @@ public class MyCartActivity extends BaseActivity {
 
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle, tvSave, tvPayment;
 	private int subtotalAmount;
 	private double gratuity;
 	private int tipRate = 0;
+	private double taxRate = 0;
+	private double tax = 0, total=0, due=0, dDiscountAmt=0; 
+	private boolean bDiscountType;
+	private long lDiscountValue = 0;
+	private String strDiscountTitle;
+	
+	
+	
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
@@ -84,7 +92,7 @@ public class MyCartActivity extends BaseActivity {
 	
 	
 	
-	private double taxRate = 0;
+	
 	
 	
 	
@@ -109,6 +117,8 @@ public class MyCartActivity extends BaseActivity {
 		 btnCancelOrder=(Button)findViewById(R.id.b_calcel_order);
 		 tvDiscount=(TextView)findViewById(R.id.tv_discount_title);
 		 tvGratuityTitle = (TextView)findViewById(R.id.tv_gratuity_title);
+		 tvSave = (TextView)findViewById(R.id.tv_save_amount);
+		 tvPayment = (TextView)findViewById(R.id.tv_payment_mode);
 
 		pDialog = new ProgressDialog(this);
 		
@@ -219,16 +229,40 @@ public class MyCartActivity extends BaseActivity {
 		gratuity = ((double) subtotalAmount * tipRate/100) / 100;
 		tvGratuity.setText("$" + String.format("%.2f", gratuity));
 
-		double tax = (subtotalAmount/100)*(taxRate/10000);
+		tax = (subtotalAmount/100)*(taxRate/10000);
 
 		tvTax.setText("$" + String.format("%.2f", tax));
 
-		double total = ((double) subtotalAmount / 100) + gratuity + tax;
+		total = ((double) subtotalAmount / 100) + gratuity + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
 
-		tvAmountDue.setText("$" + String.format("%.2f", total));
+		due = total;
+		dDiscountAmt = 0;
+		
+		if(lDiscountValue >0)
+		{
+			if(bDiscountType==true)  //percentage off
+			{
+				dDiscountAmt = subtotalAmount * lDiscountValue/10000;
+			}
+			else //absolute dollar off
+			{
+				dDiscountAmt = ((double)lDiscountValue)/100;
+			}
+		}
+		
+		tvSave.setText("$" + String.format("%.2f", dDiscountAmt));
+		
+		due = total - dDiscountAmt;
+		tvAmountDue.setText("$" + String.format("%.2f", due));
 		long estimatedtime=getEstimatedTime();
 		tvDeliveryTime.setText(getFormattedTime(estimatedtime));
+		
+		if(AsaanUtility.defCard != null)
+		{
+			tvPayment.setText("Payment Mode: Last 4 digits of the credit card are " + AsaanUtility.defCard.getLast4());
+		}
+		
 
 		adapter = new MyCartListAdapter(MyCartActivity.this, orderList, Constants.MY_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
@@ -248,10 +282,7 @@ public class MyCartActivity extends BaseActivity {
 				intent.putExtra(Constants.ORDER_TYPE,getOrderType());
 				intent.putExtra(Constants.ESTIMATED_TIME,estimatedtime);
 				intent.putExtra(Constants.KEY_FROM_ACTIVITY,1);
-				intent.putExtra(Constants.KEY_QUANTITY,addItem.getQuantity());
-				
-				
-				
+				intent.putExtra(Constants.KEY_QUANTITY,addItem.getQuantity());				
 				startActivity(intent);
 			}
 		});
@@ -407,14 +438,9 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setOrderMode(getOrderType());
 			storeOrder.setStoreId(id);
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
+			
 			storeOrder.setSubTotal((long)subtotalAmount);
-
-			long tax=0;
-	
-			if(AsaanUtility.realCurrentStore != null)
-				tax = subtotalAmount * AsaanUtility.realCurrentStore.getTaxPercent();
-			storeOrder.setTax(tax);
-			double gratuity =  subtotalAmount * tipRate/100;
+			storeOrder.setTax((long)(tax*100));
 			long lDeliveryFee =0;
 			try{
 				lDeliveryFee = (long)dStore.getDeliveryFee();
@@ -423,11 +449,15 @@ public class MyCartActivity extends BaseActivity {
 			catch(Exception e)
 			{	
 				Log.e("order info failed","dStore.getDeliveryFee() failed.");
-			}
+			}	
 			
-			storeOrder.setServiceCharge((long)gratuity);
-			long total=subtotalAmount+(long)gratuity+tax;
-			storeOrder.setFinalTotal(total);
+			storeOrder.setServiceCharge((long) (gratuity*100));	
+			storeOrder.setFinalTotal((long) (due*100));
+			if(lDiscountValue>0)
+			{
+				storeOrder.setDiscount((long) (dDiscountAmt*100));
+				storeOrder.setDiscountDescription(strDiscountTitle);
+			}
 			
 			PlaceOrderArguments orderArguments=new PlaceOrderArguments();
 			if(AsaanUtility.defCard!=null)
@@ -443,7 +473,7 @@ public class MyCartActivity extends BaseActivity {
 			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",0,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100), orderList,strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
 			orderArguments.setStrOrder(temStr);
@@ -560,18 +590,14 @@ public class MyCartActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if(requestCode==REQUEST_CODE && resultCode==RESULT_CODE)
+		if(resultCode==RESULT_CODE_DISCOUNT)
 		{
-			new RemotePlaceOrderTask().execute();
+			strDiscountTitle = data.getStringExtra("discountTitle");
+			bDiscountType = data.getBooleanExtra("discountType", true);
+			lDiscountValue = data.getLongExtra("discountValue", 0);
+			if(lDiscountValue >0)
+				tvDiscount.setText("Discount: " + strDiscountTitle);	
 		}
-		else
-			if(requestCode==REQUEST_CODE_DISCOUNT && resultCode==RESULT_CODE_DISCOUNT)
-			{
-				String discount=data.getStringExtra("discount");
-				if(discount!=null)
-					tvDiscount.setText(""+discount);
-				
-			}
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -615,14 +641,35 @@ public class MyCartActivity extends BaseActivity {
 				AsaanUtility.realCurrentStore = store;
 				
 				//recalculate the tax and total part
-				double tax = (subtotalAmount/100) * (taxRate/10000);			
+				gratuity = ((double) subtotalAmount * tipRate/100) / 100;
+				tvGratuity.setText("$" + String.format("%.2f", gratuity));
+
+				tax = (subtotalAmount/100)*(taxRate/10000);
+
 				tvTax.setText("$" + String.format("%.2f", tax));
 
-				double total = ((double) subtotalAmount / 100) + gratuity + tax;
+				total = ((double) subtotalAmount / 100) + gratuity + tax;
 				tvTotal.setText("$" + String.format("%.2f", total));
-				tvAmountDue.setText("$" + String.format("%.2f", total));
+
+				due = total;
+				dDiscountAmt = 0;
 				
-						
+				if(lDiscountValue >0)
+				{
+					if(bDiscountType==true)  //percentage off
+					{
+						dDiscountAmt = subtotalAmount * lDiscountValue/10000;
+					}
+					else //absolute dollar off
+					{
+						dDiscountAmt = ((double)lDiscountValue)/100;
+					}
+				}
+				
+				tvSave.setText("$" + String.format("%.2f", dDiscountAmt));
+				
+				due = total - dDiscountAmt;
+				tvAmountDue.setText("$" + String.format("%.2f", due));				
 			}
 		}
 	}
