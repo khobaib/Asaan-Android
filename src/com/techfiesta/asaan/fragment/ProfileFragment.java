@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment{
 					tvTips.setText("Tips(5%)");
 				}
 				else
-				 tvTips.setText("Tips("+progress+")");
+				 tvTips.setText("Tips("+progress+"%)");
 			}
 		});
 		setUpUI();
