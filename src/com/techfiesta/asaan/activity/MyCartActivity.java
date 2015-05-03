@@ -78,7 +78,7 @@ public class MyCartActivity extends BaseActivity {
 	private double tax = 0, total=0, due=0, dDiscountAmt=0; 
 	private boolean bDiscountType;
 	private long lDiscountValue = 0;
-	private String strDiscountTitle;
+	private String strDiscountTitle="";
 	
 	
 	
