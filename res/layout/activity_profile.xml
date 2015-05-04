@@ -123,6 +123,16 @@
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+            <EditText
+                android:id="@+id/et_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_phone"
+                android:layout_alignLeft="@+id/tv_phone"
+                android:layout_toRightOf="@+id/tv_recommend" 
+                android:imeOptions="actionDone"
+                android:hint="Recommended by"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
     </RelativeLayout>
 
