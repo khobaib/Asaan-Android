@@ -236,13 +236,21 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		
 	}
 	private void showContactsDialog() {
-		Dialog dialog = new Dialog(StoreListActivity.this);
+		final Dialog dialog = new Dialog(StoreListActivity.this);
 		dialog.setContentView(R.layout.fragment_store_list);
 		dialog.setTitle("Recommend Friends");
 		ArrayList<Contact> contactList=getContacts();
 		ListView lv=(ListView)dialog.findViewById(R.id.lvRestaurantList);
 		ContactsAdapter adapter=new ContactsAdapter(StoreListActivity.this,contactList);
 		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				dialog.dismiss();
+				
+			}
+		});
 		dialog.show();
 	}
 

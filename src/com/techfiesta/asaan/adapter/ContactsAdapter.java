@@ -43,7 +43,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact>{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
 		LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-		if (convertView == null) {
+		//if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.row_contacts, null);
 
 			holder = new ViewHolder();
@@ -51,8 +51,8 @@ public class ContactsAdapter extends ArrayAdapter<Contact>{
 			holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
 			holder.tvPhone = (TextView) convertView.findViewById(R.id.tv_phone);
 			convertView.setTag(holder);
-		}
-		else holder = (ViewHolder) convertView.getTag();
+		//}
+		//else holder = (ViewHolder) convertView.getTag();
 		Contact contact=getItem(position);
 		Bitmap bmp=getContactPhoto(contact.getId());
 		if(bmp!=null)
