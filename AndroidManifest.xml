@@ -44,6 +44,7 @@
 	    android:name="com.techfiesta.asaan.permission.C2D_MESSAGE" />
 	<uses-permission android:name="com.techfiesta.asaan.permission.C2D_MESSAGE" />
 	<uses-permission android:name="android.permission.CALL_PHONE"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
 	    
     <application
         android:name="com.techfiesta.asaan.utility.AsaanApplication"
@@ -186,6 +187,7 @@
 		<activity android:name=".activity.OrderHistoryDetailsActivity"></activity>
 		<activity android:name=".activity.OrderReviewActivity"></activity>
 		<activity android:name=".activity.ReviewItemActivity"></activity>
+		<activity android:name=".activity.WebMenuActivity"></activity>
     </application>
 
 </manifest>
