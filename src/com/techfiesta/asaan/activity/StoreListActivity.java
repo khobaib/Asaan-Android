@@ -1,16 +1,23 @@
 package com.techfiesta.asaan.activity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -26,11 +33,14 @@ import android.widget.ListView;
 import asaan.dao.AddItem;
 import asaan.dao.AddItemDao;
 import asaan.dao.DaoMaster;
+import asaan.dao.ModItemDao;
 import asaan.dao.DaoMaster.OpenHelper;
 import asaan.dao.DaoSession;
 
+import com.google.android.gms.internal.di;
 import com.parse.ParseUser;
 import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.ContactsAdapter;
 import com.techfiesta.asaan.adapter.NavDrawerAdapter;
 import com.techfiesta.asaan.fragment.AllHistoryFragment;
 import com.techfiesta.asaan.fragment.ChatHistoryFragment;
@@ -38,8 +48,10 @@ import com.techfiesta.asaan.fragment.PendingOrderFragment;
 import com.techfiesta.asaan.fragment.ProfileFragment;
 import com.techfiesta.asaan.fragment.StoreListFragment;
 import com.techfiesta.asaan.fragment.WaitListStatusFragment;
+import com.techfiesta.asaan.model.Contact;
 import com.techfiesta.asaan.model.NavMenuItem;
 import com.techfiesta.asaan.utility.AsaanApplication;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class StoreListActivity extends FragmentActivity {
 	
@@ -58,6 +70,7 @@ public class StoreListActivity extends FragmentActivity {
 	private AddItemDao addItemDao;
 	private AddItem addItem;
 	
+	
 	AsaanApplication appInstance;
 BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		
@@ -65,6 +78,13 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		public void onReceive(Context context, Intent intent) {
 			finish();
 			
+		}
+	};
+	private Comparator<Contact> contactComparator=new Comparator<Contact>() {
+		
+		@Override
+		public int compare(Contact contact1, Contact contact2) {
+			return contact1.getName().compareTo(contact2.getName());
 		}
 	};
 
@@ -93,6 +113,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				boolean closeDrawer=true;
+				boolean loadNewFragment=true;
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				if (position == 0) {
 					StoreListFragment strFragment = new StoreListFragment();
@@ -121,7 +142,13 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 					AllHistoryFragment allHistoryFragment=new AllHistoryFragment();
 					ft.replace(R.id.frame_container, allHistoryFragment);
 
-				} else if (position == 6) {
+				}
+				else if (position == 6) {
+					//recommendation
+					loadNewFragment=false;
+					showContactsDialog();
+				}
+				else if (position == 7) {
 
 					ParseUser.logOut();
 					Intent intent = new Intent(StoreListActivity.this, LoginChooserActivity.class);
@@ -130,8 +157,11 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
 					sendBroadcast(intent);
 				}
-				ft.addToBackStack(null);
-				ft.commit();
+				if(loadNewFragment)
+				{
+					ft.addToBackStack(null);
+					ft.commit();
+				}
 				if(closeDrawer)
 				   mDrawerLayout.closeDrawer(Gravity.LEFT);
 			}
@@ -193,6 +223,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		drawerItemList.add(new NavMenuItem("Wait List Status",R.drawable.tableseated));
 		drawerItemList.add(new NavMenuItem("Pending Orders",R.drawable.pendingorders));
 		drawerItemList.add(new NavMenuItem("Order History",R.drawable.orderhistory));
+		drawerItemList.add(new NavMenuItem("Recommend Friends",R.drawable.recommend_friend));
 		drawerItemList.add(new NavMenuItem("Logout",R.drawable.logout));
 		
 	}
@@ -203,6 +234,40 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 		daoSession = daoMaster.newSession();
 		addItemDao = daoSession.getAddItemDao();
 		
+	}
+	private void showContactsDialog() {
+		Dialog dialog = new Dialog(StoreListActivity.this);
+		dialog.setContentView(R.layout.fragment_store_list);
+		dialog.setTitle("Recommend Friends");
+		ArrayList<Contact> contactList=getContacts();
+		ListView lv=(ListView)dialog.findViewById(R.id.lvRestaurantList);
+		ContactsAdapter adapter=new ContactsAdapter(StoreListActivity.this,contactList);
+		lv.setAdapter(adapter);
+		dialog.show();
+	}
+
+	public ArrayList<Contact> getContacts() {
+
+		ArrayList<Contact> contactList = new ArrayList<Contact>();
+		Cursor phones = getContentResolver().query(
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null,
+				null, null);
+		while (phones.moveToNext()) {
+	
+			String name = phones
+					.getString(phones
+							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+			String phoneNumber = phones
+					.getString(phones
+							.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+			long contactId = phones.getLong(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+			Contact contact = new Contact(name,phoneNumber,contactId);
+			contactList.add(contact);
+
+		}
+		phones.close();
+		Collections.sort(contactList,contactComparator);
+		return contactList;
 	}
 	private void closeDatabase()
 	{

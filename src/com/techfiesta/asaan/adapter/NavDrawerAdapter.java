@@ -5,6 +5,7 @@ import java.util.List;
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetReviewForCurrentUserAndOrder;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.model.NavMenuItem;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,6 +34,20 @@ public class NavDrawerAdapter extends ArrayAdapter<NavMenuItem>{
 		mContext=context;
 		
 	}
+	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		String name = getItem(position).getName();
+		if (name.equals("Stores"))
+			return 0;
+		else
+			return 1;
+
+	}
 	private class ViewHolder{
 		TextView tvName;
 		ImageView ivIcon;
@@ -42,7 +57,8 @@ public class NavDrawerAdapter extends ArrayAdapter<NavMenuItem>{
             ViewHolder holder=null;
             LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     		if (convertView == null) {
-    			if(position==0)
+    			int  id=getItemViewType(position);
+    			if(id==0)
     			    convertView = mInflater.inflate(R.layout.nav_menu_row_1, null);
     			else
     				 convertView = mInflater.inflate(R.layout.nav_menu_row, null);
