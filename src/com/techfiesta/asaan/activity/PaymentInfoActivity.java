@@ -43,7 +43,6 @@ public class PaymentInfoActivity extends BaseActivity {
 	EditText CVC;
 	EditText Zip;
 	private Button btnSave;
-	private Button btnSkip;
 	EditText etMonth;
 	// Button SaveTip;
 	Spinner defaultTipSpinner;
@@ -80,9 +79,6 @@ public class PaymentInfoActivity extends BaseActivity {
 		pDialog = new ProgressDialog(PaymentInfoActivity.this);
 		pDialog.setMessage("Please Wait...");
 		
-		defaultTipSpinner = (Spinner) findViewById(R.id.s_tip_selector);
-		createDefaultTipSpinner();
-
 		// updateMonth_YearSpinners();
 
 		btnSave.setOnClickListener(new OnClickListener() {
@@ -127,20 +123,7 @@ public class PaymentInfoActivity extends BaseActivity {
 			}
 		});
 	}
-
-	private void createDefaultTipSpinner() {
-		ArrayList<Integer> list = new ArrayList<>();
-		for (int i = 3; i < 21; i++) {
-			list.add(i * 5);
-		}
-		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
-			//	android.R.layout.simple_spinner_dropdown_item, list);
-		DefaultTipsSpinnerAdapter adapter=new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item, list);
-		defaultTipSpinner.setAdapter(adapter);
-		
-		
-	}
-
+	
 	public void saveCreditCard() {
 		
 		

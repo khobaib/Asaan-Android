@@ -141,10 +141,10 @@ public class ProfileFragment extends Fragment{
 			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if(progress<5)
+				if(progress<15)
 				{
-					sbTips.setProgress(5);
-					tvTips.setText("Tips(5%)");
+					sbTips.setProgress(15);
+					tvTips.setText("Tips(15%)");
 				}
 				else
 				 tvTips.setText("Tips("+progress+"%)");
@@ -236,15 +236,15 @@ public class ProfileFragment extends Fragment{
 			  tips=15;
 		  else	  
 		    tips=Integer.valueOf(user.getString("tip"));
-		  if(tips>5)
+		  if(tips>15)
 		  {
 		     sbTips.setProgress(tips);
 		     tvTips.setText("Tips("+tips+"%)");
 		  }
 		  else
 		  {
-			  tvTips.setText("Tips(5%)");
-			  sbTips.setProgress(5);
+			  tvTips.setText("Tips(15%)");
+			  sbTips.setProgress(15);
 		  }
 		  Log.e("MSG",user.getString("tip")+"");
 		  imageLoader.DisplayImage(user.getString("profilePhotoUrl"), ivProfilePic);
