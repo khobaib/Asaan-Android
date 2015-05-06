@@ -70,7 +70,7 @@ public class MyCartActivity extends BaseActivity {
 
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
-	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle, tvSave, tvPayment;
+	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle, tvSave, tvPayment, tvDeliveryFee;
 	private int subtotalAmount;
 	private double gratuity;
 	private int tipRate = 0;
@@ -79,6 +79,7 @@ public class MyCartActivity extends BaseActivity {
 	private boolean bDiscountType;
 	private long lDiscountValue = 0;
 	private String strDiscountTitle="";
+	private long lDeliveryFee =0;
 	
 	
 	
@@ -119,6 +120,7 @@ public class MyCartActivity extends BaseActivity {
 		 tvGratuityTitle = (TextView)findViewById(R.id.tv_gratuity_title);
 		 tvSave = (TextView)findViewById(R.id.tv_save_amount);
 		 tvPayment = (TextView)findViewById(R.id.tv_payment_mode);
+		 tvDeliveryFee =(TextView)findViewById(R.id.tv_delivery_fee_amount);
 
 		pDialog = new ProgressDialog(this);
 		
@@ -232,8 +234,24 @@ public class MyCartActivity extends BaseActivity {
 		tax = (subtotalAmount/100)*(taxRate/10000);
 
 		tvTax.setText("$" + String.format("%.2f", tax));
+		
+		lDeliveryFee = 0;
+		if(getOrderType()==1)
+		{
+			try
+			{
+				long id=getOrderedStoreId();
+				DStore dStore=getOrderedStoreFromDatabase(id);
+				lDeliveryFee = (long)dStore.getDeliveryFee();
+			}
+			catch(Exception e)
+			{
+				Log.d("Get Delivery Fee", "Failed!");
+			}
+		}
+		tvDeliveryFee.setText("$" + String.format("%.2f", ((double)lDeliveryFee/100)));
 
-		total = ((double) subtotalAmount / 100) + gratuity + tax;
+		total = ((double) subtotalAmount / 100) + gratuity + ((double)lDeliveryFee/100) + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
 
 		due = total;
@@ -346,8 +364,6 @@ public class MyCartActivity extends BaseActivity {
 		addItemDao = daoSession.getAddItemDao();
 		modItemDao = daoSession.getModItemDao();
 		dStoreDao=daoSession.getDStoreDao();
-		
-		
 	}
 	private void closeDatabase()
 	{
@@ -441,15 +457,9 @@ public class MyCartActivity extends BaseActivity {
 			
 			storeOrder.setSubTotal((long)subtotalAmount);
 			storeOrder.setTax((long)(tax*100));
-			long lDeliveryFee =0;
-			try{
-				lDeliveryFee = (long)dStore.getDeliveryFee();
+			
+			if(lDeliveryFee>0)
 				storeOrder.setDeliveryFee(lDeliveryFee);
-			}
-			catch(Exception e)
-			{	
-				Log.e("order info failed","dStore.getDeliveryFee() failed.");
-			}	
 			
 			storeOrder.setServiceCharge((long) (gratuity*100));	
 			storeOrder.setFinalTotal((long) (due*100));
@@ -466,10 +476,11 @@ public class MyCartActivity extends BaseActivity {
 				orderArguments.setCardid(""+AsaanUtility.defCard.getCardId());
 				orderArguments.setCustomerId(AsaanUtility.defCard.getProviderCustomerId());
 			}
+			
 			//may need to change
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
 			String temStr = "";
-			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			temStr =  htmlFaxOrder.getOrderHTML(orderList, guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100),strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4(), getOrderType(), getEstimatedTime());
 			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();

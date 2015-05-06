@@ -82,6 +82,14 @@ public class EditCartActivity extends BaseActivity {
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	
 	private int subtotalAmount;
+	private double gratuity;
+	private int tipRate = 0;
+	private double taxRate = 0;
+	private double tax = 0, total=0, due=0, dDiscountAmt=0; 
+	private boolean bDiscountType;
+	private long lDiscountValue = 0;
+	private String strDiscountTitle="";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -356,10 +364,9 @@ public class EditCartActivity extends BaseActivity {
 			storeOrder.setOrderMode(getOrderType());
 			storeOrder.setStoreId(id);
 			storeOrder.setStoreName(orderList.get(0).getStore_name());
+			
 			storeOrder.setSubTotal((long)subtotalAmount);
-			long tax=AsaanUtility.selectedStore.getTaxPercent();
-			storeOrder.setTax(tax);
-			double gratuity =  subtotalAmount * 0.15;
+			storeOrder.setTax((long)(tax*100));
 			long lDeliveryFee =0;
 			try{
 				lDeliveryFee = (long)dStore.getDeliveryFee();
@@ -368,11 +375,15 @@ public class EditCartActivity extends BaseActivity {
 			catch(Exception e)
 			{	
 				Log.e("order info failed","dStore.getDeliveryFee() failed.");
-			}
+			}	
 			
-			storeOrder.setServiceCharge((long)gratuity);
-			long total=subtotalAmount+(long)gratuity+tax;
-			storeOrder.setFinalTotal(total);
+			storeOrder.setServiceCharge((long) (gratuity*100));	
+			storeOrder.setFinalTotal((long) (due*100));
+			if(lDiscountValue>0)
+			{
+				storeOrder.setDiscount((long) (dDiscountAmt*100));
+				storeOrder.setDiscountDescription(strDiscountTitle);
+			}
 			
 			PlaceOrderArguments orderArguments=new PlaceOrderArguments();
 			if(AsaanUtility.defCard!=null)
@@ -384,11 +395,11 @@ public class EditCartActivity extends BaseActivity {
 			//may need to change
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
 			String temStr = "";
-			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			temStr =  htmlFaxOrder.getOrderHTML(orderList, guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100),strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4(), getOrderType(), getEstimatedTime());
 			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",0,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100), orderList,strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
 			orderArguments.setStrOrder(temStr);

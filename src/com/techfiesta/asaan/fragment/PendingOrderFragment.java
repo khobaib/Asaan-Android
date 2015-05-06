@@ -6,7 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+
 import android.app.ActionBar;
+
+
+
 //import com.google.android.gms.internal.om;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.activity.EditCartActivity;
@@ -91,7 +97,6 @@ public class PendingOrderFragment extends Fragment{
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrder,btnCancelOrder,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount;
-	private int subtotalAmount;
 	private RelativeLayout rlDiscount;
 	private int MYCART_ACTIVITY_INDENTIFIER=100;
 	private int REQUEST_CODE=1;
@@ -99,6 +104,15 @@ public class PendingOrderFragment extends Fragment{
 	private long one_hour_in_mili=1000*60*60;
 	private int REQUEST_CODE_DISCOUNT=99;
 	private int RESULT_CODE_DISCOUNT=100;
+	
+	private int subtotalAmount;
+	private double gratuity;
+	private int tipRate = 0;
+	private double taxRate = 0;
+	private double tax = 0, total=0, due=0, dDiscountAmt=0; 
+	private boolean bDiscountType;
+	private long lDiscountValue = 0;
+	private String strDiscountTitle="";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -210,8 +224,9 @@ public void onResume() {
 		       //finish();
 		       return;
 		}
+		
 		setSelectedStore(orderList.get(0));
-        setStorName();
+		setStorName();
 		subtotalAmount = 0;
 		for (AddItem item : orderList) {
 			subtotalAmount += item.getPrice();
@@ -219,18 +234,38 @@ public void onResume() {
 		String subtotal = "$" + String.format("%.2f", ((double) subtotalAmount / 100));
 		tvSubtotal.setText(subtotal);
 
-		double gratuity = ((double) subtotalAmount * 0.15) / 100;
+		gratuity = ((double) subtotalAmount * tipRate/100) / 100;
 		tvGratuity.setText("$" + String.format("%.2f", gratuity));
 
-		double tax = 0.00;
+		tax = (subtotalAmount/100)*(taxRate/10000);
+
 		tvTax.setText("$" + String.format("%.2f", tax));
 
-		double total = ((double) subtotalAmount / 100) + gratuity + tax;
+		total = ((double) subtotalAmount / 100) + gratuity + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
 
-		tvAmountDue.setText("$" + String.format("%.2f", total));
+		due = total;
+		dDiscountAmt = 0;
+		
+		if(lDiscountValue >0)
+		{
+			if(bDiscountType==true)  //percentage off
+			{
+				dDiscountAmt = subtotalAmount * lDiscountValue/10000;
+			}
+			else //absolute dollar off
+			{
+				dDiscountAmt = ((double)lDiscountValue)/100;
+			}
+		}
+		
+		//tvSave.setText("$" + String.format("%.2f", dDiscountAmt));
+		
+		due = total - dDiscountAmt;
+		tvAmountDue.setText("$" + String.format("%.2f", due));
 		long estimatedtime=getEstimatedTime();
 		tvDeliveryTime.setText(getFormattedTime(estimatedtime));
+
 
 		adapter = new MyCartListAdapter(getActivity(), orderList, Constants.MY_CART_ACTIVITY);
 		lvOrder.setAdapter(adapter);
@@ -413,14 +448,15 @@ private boolean error=false;
 			//may need to change
 			HTMLFaxOrder htmlFaxOrder=new HTMLFaxOrder();
 			String temStr = "";
-			temStr =  htmlFaxOrder.getOrderHTML(orderList);
+			temStr =  htmlFaxOrder.getOrderHTML(orderList, guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100),strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4(), getOrderType(), getEstimatedTime());
 			storeOrder.setOrderHTML(temStr);
 			
 			XMLPosOrder xmlPosOrder=new XMLPosOrder();
-			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) tax,(long)gratuity,lDeliveryFee,(long)total, orderList,"",0,AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
+			storeOrder.setOrderDetails(xmlPosOrder.getXMLFaxOrder(guestSize, (long)subtotalAmount,(long) (tax*100),(long)(gratuity*100),lDeliveryFee,(long)(due*100), orderList,strDiscountTitle,(int)(dDiscountAmt*100),AsaanUtility.defCard.getProvider(),AsaanUtility.defCard.getLast4()));
 			
 			orderArguments.setOrder(storeOrder);
 			orderArguments.setStrOrder(temStr);
+			
 			try {
 				PlaceOrder placeOrder=SplashActivity.mStoreendpoint.placeOrder(orderArguments);
 				HttpHeaders httpHeaders = placeOrder.getRequestHeaders();

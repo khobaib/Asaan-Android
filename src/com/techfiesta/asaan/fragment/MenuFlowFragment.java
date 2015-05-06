@@ -31,6 +31,7 @@ public class MenuFlowFragment extends Fragment{
 	long numOrders;
 	int menuItemPosId;
 	int orderType=-1;
+	long timeEstimatedDelivery;
 	boolean hasModifiers;
 	
 	@Override
@@ -119,6 +120,7 @@ public class MenuFlowFragment extends Fragment{
 		tvShortDes.setText(menuItemShortDesc);
 		tvLongDes.setText(menuItemLongDesc);
 		orderType=bundle.getInt(Constants.ORDER_TYPE,-1);
+		timeEstimatedDelivery = bundle.getLong(Constants.ESTIMATED_TIME,-1);
 		if(orderType==-1)
 		{
 			tvAddOrder.setVisibility(View.INVISIBLE);
@@ -137,6 +139,8 @@ public class MenuFlowFragment extends Fragment{
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_HAS_MODIFIERS, hasModifiers);
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_SHORT_DESCRIPTION,menuItemShortDesc);
 					intent.putExtra(Constants.BUNDLE_KEY_MENUITEM_LONG_DESCRIPTION,menuItemLongDesc);
+					intent.putExtra(Constants.ORDER_TYPE,orderType);
+					intent.putExtra(Constants.ESTIMATED_TIME,timeEstimatedDelivery);
 					startActivity(intent);
 				}
 			});
