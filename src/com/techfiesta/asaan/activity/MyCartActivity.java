@@ -71,6 +71,7 @@ public class MyCartActivity extends BaseActivity {
 	private ProgressDialog pDialog;
 	private Button bEdit,btnPlaceOrde,btnCancelOrder,btnPlus;
 	private TextView tvStoreName, tvSubtotal, tvGratuity, tvTax, tvTotal, tvAmountDue,tvDeliveryTime,tvDiscount, tvGratuityTitle, tvSave, tvPayment, tvDeliveryFee;
+	private RelativeLayout rlDeliveryFee;
 	private int subtotalAmount;
 	private double gratuity;
 	private int tipRate = 0;
@@ -90,11 +91,6 @@ public class MyCartActivity extends BaseActivity {
 	private long one_hour_in_mili=1000*60*60;
 	private int REQUEST_CODE_DISCOUNT=99;
 	private int RESULT_CODE_DISCOUNT=100;
-	
-	
-	
-	
-	
 	
 	
 	@Override
@@ -121,6 +117,8 @@ public class MyCartActivity extends BaseActivity {
 		 tvSave = (TextView)findViewById(R.id.tv_save_amount);
 		 tvPayment = (TextView)findViewById(R.id.tv_payment_mode);
 		 tvDeliveryFee =(TextView)findViewById(R.id.tv_delivery_fee_amount);
+		 
+		 rlDeliveryFee = (RelativeLayout)findViewById(R.id.rl_delivery_fee);
 
 		pDialog = new ProgressDialog(this);
 		
@@ -249,7 +247,18 @@ public class MyCartActivity extends BaseActivity {
 				Log.d("Get Delivery Fee", "Failed!");
 			}
 		}
-		tvDeliveryFee.setText("$" + String.format("%.2f", ((double)lDeliveryFee/100)));
+		
+		if(lDeliveryFee==0)
+		{
+			rlDeliveryFee.setVisibility(View.GONE);
+			((View)findViewById(R.id.v31)).setVisibility(View.GONE);
+		}
+		else
+		{
+			((View)findViewById(R.id.v31)).setVisibility(View.VISIBLE);
+			rlDeliveryFee.setVisibility(View.VISIBLE);
+			tvDeliveryFee.setText("$" + String.format("%.2f", ((double)lDeliveryFee/100)));
+		}
 
 		total = ((double) subtotalAmount / 100) + gratuity + ((double)lDeliveryFee/100) + tax;
 		tvTotal.setText("$" + String.format("%.2f", total));
@@ -267,14 +276,19 @@ public class MyCartActivity extends BaseActivity {
 			{
 				dDiscountAmt = ((double)lDiscountValue)/100;
 			}
+			tvSave.setText("$" + String.format("%.2f", dDiscountAmt));
+			((RelativeLayout)findViewById(R.id.rl_save)).setVisibility(View.VISIBLE);
+			((View)findViewById(R.id.v5)).setVisibility(View.VISIBLE);
 		}
-		
-		tvSave.setText("$" + String.format("%.2f", dDiscountAmt));
-		
+		else
+		{
+			((RelativeLayout)findViewById(R.id.rl_save)).setVisibility(View.GONE);
+			((View)findViewById(R.id.v5)).setVisibility(View.GONE);
+		}
 		due = total - dDiscountAmt;
 		tvAmountDue.setText("$" + String.format("%.2f", due));
 		long estimatedtime=getEstimatedTime();
-		tvDeliveryTime.setText(getFormattedTime(estimatedtime));
+		tvDeliveryTime.setText("Est. Delivery Time  " + getFormattedTime(estimatedtime));
 		
 		if(AsaanUtility.defCard != null)
 		{
