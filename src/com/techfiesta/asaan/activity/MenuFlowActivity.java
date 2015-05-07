@@ -187,7 +187,8 @@ public class MenuFlowActivity extends Activity implements ForwardBackWardClickLi
 	        	 new GetMoreMenuItemAndStatsForMenuFlow().execute();
 	         }
          }
-        
+         bundle.putInt(Constants.ORDER_TYPE,getOrderType());
+         bundle.putLong(Constants.ESTIMATED_TIME, getEstimatedTime());
          setActionBarHeader(position);
          menuFlowFragment.setArguments(bundle);
          ft.replace(R.id.frame_container,menuFlowFragment);
