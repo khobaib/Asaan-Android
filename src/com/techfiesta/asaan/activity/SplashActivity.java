@@ -66,8 +66,12 @@ public class SplashActivity extends Activity {
 		@Override
 		protected Boolean doInBackground(Void... params) {
 
-			currentUser = ParseUser.getCurrentUser();
-			// for testing
+			try
+			{
+				currentUser = ParseUser.getCurrentUser();
+			}
+			catch(Exception e)
+			{}
 
 			return true;
 		}
@@ -129,7 +133,15 @@ public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
-		if(ParseUser.getCurrentUser() != null)
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		if(user != null)
 		{
 			Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
 			startActivity(i);

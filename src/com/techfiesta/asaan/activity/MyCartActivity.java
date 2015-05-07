@@ -190,8 +190,17 @@ public class MyCartActivity extends BaseActivity {
 		}
 
 		try {
-			ParseUser user=ParseUser.getCurrentUser();
-			String strTip = user.getString("tip");
+			ParseUser user = null;
+			try {
+				user = ParseUser.getCurrentUser();
+			}
+			catch(Exception e)
+			{
+				Log.e("Parse", "Fail to get user.");
+			}
+			String strTip=null;
+			if(user != null)
+				strTip = user.getString("tip");
 			if(strTip != null)
 			{
 				tipRate = Integer.parseInt(strTip);

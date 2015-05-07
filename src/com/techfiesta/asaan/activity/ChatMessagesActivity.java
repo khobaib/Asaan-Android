@@ -319,36 +319,41 @@ public class ChatMessagesActivity extends BaseActivity {
 	}
 	private void sendPush(ChatMessage message)
 	{
-		ParseQuery pushQuery=ParseInstallation.getQuery();
-		
-		int size=userList.size();
-		ArrayList<String> objectIdList=new ArrayList<>();
-		String curnt_user_object_id=ParseUser.getCurrentUser().getObjectId().toString();
-		for(int i=0;i<size;i++)
-		{
-			if(!curnt_user_object_id.equals(userList.get(i).getObjectId()))
-			{
-				Log.e("object Id",userList.get(i).getObjectId());
-				objectIdList.add(userList.get(i).getObjectId());
-			}
-		}
-		pushQuery.whereContainedIn("objectId",objectIdList);
-		ParsePush parsePush=new ParsePush();
-		parsePush.setQuery(pushQuery);
-		parsePush.setMessage(message.getTxtMessage());
-		parsePush.sendInBackground(new SendCallback() {
+		try {
+			ParseQuery pushQuery=ParseInstallation.getQuery();
 			
-			@Override
-			public void done(ParseException e) {
-				if(e==null)
+			int size=userList.size();
+			ArrayList<String> objectIdList=new ArrayList<>();
+			String curnt_user_object_id=ParseUser.getCurrentUser().getObjectId().toString();
+			for(int i=0;i<size;i++)
+			{
+				if(!curnt_user_object_id.equals(userList.get(i).getObjectId()))
 				{
-					Log.e("PUSH","successfull");
+					Log.e("object Id",userList.get(i).getObjectId());
+					objectIdList.add(userList.get(i).getObjectId());
 				}
-				else
-					e.printStackTrace();
-				
 			}
-		});
+			pushQuery.whereContainedIn("objectId",objectIdList);
+			ParsePush parsePush=new ParsePush();
+			parsePush.setQuery(pushQuery);
+			parsePush.setMessage(message.getTxtMessage());
+			parsePush.sendInBackground(new SendCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					if(e==null)
+					{
+						Log.e("PUSH","successfull");
+					}
+					else
+						e.printStackTrace();
+					
+				}
+			});
+		}catch(Exception e)
+		{
+			Log.e("PUSH", "Send Push failed.");
+		}
 		
 	}
 	@Override

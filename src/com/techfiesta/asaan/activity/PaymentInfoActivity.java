@@ -86,10 +86,17 @@ public class PaymentInfoActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
                  pDialog.show();
-				if (ParseUser.getCurrentUser() != null) {
+                 ParseUser user = null;
+     			try {
+     				user = ParseUser.getCurrentUser();
+     			}
+     			catch(Exception e)
+     			{
+     				Log.e("Parse", "Fail to get user.");
+     			}
+				if (user != null) {
 					
-
-					Log.e("MSG", "SIGNED UP" + ParseUser.getCurrentUser().getString("authToken"));
+					Log.e("MSG", "SIGNED UP" + user.getString("authToken"));
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
 					zip = Zip.getText().toString();
@@ -110,18 +117,28 @@ public class PaymentInfoActivity extends BaseActivity {
 	}
 
 	private void saveDefaultTips() {
-		ParseUser user = ParseUser.getCurrentUser();
-		user.put("tip",""+ tips);
-		user.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				if (e == null) {
-					Log.e("MSG", "Default Tips Updated");
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		if(user != null)
+		{
+			user.put("tip",""+ tips);
+			user.saveInBackground(new SaveCallback() {
+	
+				@Override
+				public void done(ParseException e) {
+					if (e == null) {
+						Log.e("MSG", "Default Tips Updated");
+					}
+	
 				}
-
-			}
-		});
+			});
+		}
 	}
 	
 	public void saveCreditCard() {

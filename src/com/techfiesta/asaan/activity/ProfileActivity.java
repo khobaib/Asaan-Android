@@ -122,16 +122,33 @@ public class ProfileActivity extends BaseActivity {
 	}
   private void setUpUI()
   {
-	  ParseUser user=ParseUser.getCurrentUser();
-	  FirstName.setText(user.getString("firstName"));
-	  LastName.setText(user.getString("lastName"));
+	  ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+
+	  if(user != null)
+	  {
+		  FirstName.setText(user.getString("firstName"));
+		  LastName.setText(user.getString("lastName"));
+	  }
 	  
   }
 	private void saveUserData() {
-		ParseUser user = ParseUser.getCurrentUser();
-		user.put("firstName", firstName);
-		user.put("lastName", lastName);
-		user.put("phone", phoneNumber);
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+
+	  
 		//
 		if (selectedImagePath != null) {
 			File picFile = new File(selectedImagePath);
@@ -150,26 +167,32 @@ public class ProfileActivity extends BaseActivity {
 			}
 		}
 		pdialog.show();
-		user.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				pdialog.dismiss();
-				if (e == null) {
-//					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
-					Intent intent = new Intent(ProfileActivity.this, StoreListActivity.class);
-					startActivity(intent);
-					overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
-					sendBroadcast(intent);
-				} else {
-					Log.e("error", "updating user failed" + e.toString());
-					AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
+		
+		if(user != null)
+        {
+			user.put("firstName", firstName);
+			user.put("lastName", lastName);
+			user.put("phone", phoneNumber);	  
+			user.saveInBackground(new SaveCallback() {
+	
+				@Override
+				public void done(ParseException e) {
+					pdialog.dismiss();
+					if (e == null) {
+	//					AsaanUtility.simpleAlert(ProfileActivity.this, "Profile Updated");
+						Intent intent = new Intent(ProfileActivity.this, StoreListActivity.class);
+						startActivity(intent);
+						overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+						intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+						sendBroadcast(intent);
+					} else {
+						Log.e("error", "updating user failed" + e.toString());
+						AsaanUtility.simpleAlert(ProfileActivity.this, "Error In Updating profile");
+					}
+	
 				}
-
-			}
-		});
-
+			});
+		}
 	}
 	void prepareCamera()
 	{

@@ -292,14 +292,25 @@ public class ReserveConfirmActivity extends BaseActivity implements OnClickListe
 	}
 	private String getReservationMessage()
 	{
-		ParseUser user=ParseUser.getCurrentUser();
-		String firstName=user.getString("firstName");
-		String lastName=user.getString("lastName");
-		String phone=user.getString("phone");
-		String partySize=tvPeople.getText().toString();
-		String date=tvDate.getText().toString();
-		String time=tvTime.getText().toString();
-		String reservationString="New Reservation Request:"+"Name: "+firstName+" "+lastName+"Phone: "+phone+" Party Size: "+partySize+"Date: "+date+"Time: "+time;
+		String reservationString = null;
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		if(user != null)
+		{
+			String firstName=user.getString("firstName");
+			String lastName=user.getString("lastName");
+			String phone=user.getString("phone");
+			String partySize=tvPeople.getText().toString();
+			String date=tvDate.getText().toString();
+			String time=tvTime.getText().toString();
+			reservationString="New Reservation Request:"+"Name: "+firstName+" "+lastName+"Phone: "+phone+" Party Size: "+partySize+"Date: "+date+"Time: "+time;
+		}
 		return reservationString;
 	}
 	private class SaveChatMessageInServer extends AsyncTask<Void,Void,Void>

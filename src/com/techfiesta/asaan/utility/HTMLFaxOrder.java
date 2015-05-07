@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import android.util.Log;
 import asaan.dao.AddItem;
 
 import com.parse.ParseUser;
@@ -54,23 +55,37 @@ public class HTMLFaxOrder {
 	private long timeEstimated;
 	private void setUpBeginingString()
 	{
-		String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		
+		String userName = "NA";
+		String phone="phone";
+		String email = "NA";
+		String address="none";
+		if(user != null)
+		{
+			userName=user.get("firstName")+" "+ user.get("lastName");
+			if(user.get("phone")!=null)
+				phone=user.get("phone").toString();
+			email = user.getEmail();
+			if(user.get("address")!=null)
+				address=user.get("address").toString();
+		}
 		String to= "none";
 		if(AsaanUtility.selectedStore!=null)
 			to =AsaanUtility.selectedStore.getName();
-		String phone="phone";
-		if(ParseUser.getCurrentUser().get("phone")!=null)
-		   phone=ParseUser.getCurrentUser().get("phone").toString();
-		String order="ORDER_ID";
-		String email=ParseUser.getCurrentUser().getEmail();
+		String order="ORDER_ID";		
 		String orderType;
 		if(iOrderType==2)
 			orderType = "Carryout Order";
 		else
-			orderType = "Delivery Order";
-		String address="none";
-		if(ParseUser.getCurrentUser().get("address")!=null)
-			address=ParseUser.getCurrentUser().get("address").toString();
+			orderType = "Delivery Order";	
 		long mili=System.currentTimeMillis();
 		String placed=getFormattedDate(mili)+" at "+getFormattedTime(mili);
 		String prepaid="YES";
