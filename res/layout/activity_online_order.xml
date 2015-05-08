@@ -181,12 +181,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_carry_out_next"
-                android:text="Start your carryout order"
+                android:text="Start carryout order"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@id/tv_carry_out_next"
+                android:id="@+id/tv_carry_out_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -222,12 +221,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/tv_delivery_next"
-                android:text="Start your delivery order"
+                android:text="Start delivery order"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
-                android:id="@id/tv_delivery_next"
+                android:id="@+id/tv_delivery_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
