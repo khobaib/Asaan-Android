@@ -29,7 +29,6 @@ import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.adapter.DefaultTipsSpinnerAdapter;
 import com.techfiesta.asaan.fragment.ErrorDialogFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
@@ -45,7 +44,6 @@ public class PaymentInfoActivity extends BaseActivity {
 	private Button btnSave;
 	EditText etMonth;
 	// Button SaveTip;
-	Spinner defaultTipSpinner;
 	EditText etYear;
 
 	ImageView NEXT2;
@@ -56,7 +54,6 @@ public class PaymentInfoActivity extends BaseActivity {
 	String zip;
 //	int month;
 //	int year;
-	int tips;
 	private ProgressDialog pDialog;
 	private int RESPONSE_CODE=2;
 	
@@ -104,8 +101,6 @@ public class PaymentInfoActivity extends BaseActivity {
 						expMonth = Integer.parseInt(etMonth.getText().toString());
 					if(etYear.getText().toString().length()>0)
 						expYear = Integer.parseInt(etYear.getText().toString());
-					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
-					saveDefaultTips();
 					saveCreditCard();
 				} else {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
@@ -114,31 +109,6 @@ public class PaymentInfoActivity extends BaseActivity {
 			}
 		});
 
-	}
-
-	private void saveDefaultTips() {
-		ParseUser user = null;
-		try {
-			user = ParseUser.getCurrentUser();
-		}
-		catch(Exception e)
-		{
-			Log.e("Parse", "Fail to get user.");
-		}
-		if(user != null)
-		{
-			user.put("tip",""+ tips);
-			user.saveInBackground(new SaveCallback() {
-	
-				@Override
-				public void done(ParseException e) {
-					if (e == null) {
-						Log.e("MSG", "Default Tips Updated");
-					}
-	
-				}
-			});
-		}
 	}
 	
 	public void saveCreditCard() {
@@ -250,10 +220,9 @@ public class PaymentInfoActivity extends BaseActivity {
 				AsaanUtility.simpleAlert(PaymentInfoActivity.this, "An error occured.");
 			}
 			else{
-				Intent i=getIntent();
-				
-				int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
-				if(code!=-1)
+				//Intent i=getIntent();
+				//int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
+				//if(code!=-1)
 				{
 					setResult(RESPONSE_CODE);
 					finish();
