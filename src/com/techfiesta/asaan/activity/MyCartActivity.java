@@ -74,7 +74,7 @@ public class MyCartActivity extends BaseActivity {
 	private RelativeLayout rlDeliveryFee;
 	private int subtotalAmount;
 	private double gratuity;
-	private int tipRate = 0;
+	private int tipRate = 15;
 	private double taxRate = 0;
 	private double tax = 0, total=0, due=0, dDiscountAmt=0; 
 	private boolean bDiscountType;
