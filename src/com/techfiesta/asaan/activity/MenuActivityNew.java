@@ -153,6 +153,8 @@ public class MenuActivityNew  extends BaseActivity{
 
 		@Override
 		protected void onPostExecute(Void result) {
+			
+			try {
 			if(menusAndMenuItems.getMenusAndSubmenus()==null)
 			{
 				Log.e("MSG","menu and submenu null");
@@ -230,6 +232,13 @@ public class MenuActivityNew  extends BaseActivity{
 						}
 					}
 				}
+			}
+			}
+			catch(Exception e)
+			{
+				if(pdDialog.isShowing())
+					   pdDialog.dismiss();
+				Log.e("menu", "error in getting menu.");
 			}
 			super.onPostExecute(result);
 		}

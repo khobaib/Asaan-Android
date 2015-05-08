@@ -121,23 +121,6 @@
         android:layout_alignRight="@+id/rl_card_info"
         android:layout_below="@+id/rl_card_info"
         android:layout_marginTop="15dp" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/money" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="Default tip: " />
-
-        <Spinner
-            android:id="@+id/s_tip_selector"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </LinearLayout>
 
 </RelativeLayout>

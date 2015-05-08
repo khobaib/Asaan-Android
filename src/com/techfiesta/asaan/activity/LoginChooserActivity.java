@@ -118,7 +118,14 @@ public class LoginChooserActivity extends BaseActivity {
 					Log.d("SUCESS", "Already existing user for facebook login");
 
 					// setUserDataforFB();
-					currentUser = ParseUser.getCurrentUser();
+					ParseUser currentUser = null;
+					try {
+						currentUser = ParseUser.getCurrentUser();
+					}
+					catch(Exception ex)
+					{
+						Log.e("Parse", "Fail to get user.");
+					}
 					if (currentUser != null) {
 						launchActivity(StoreListActivity.class);
 						finish();
@@ -139,8 +146,14 @@ public class LoginChooserActivity extends BaseActivity {
 			makeMeRequest();
 
 		}
-
-		currentUser = ParseUser.getCurrentUser();
+		ParseUser currentUser = null;
+		try {
+			currentUser = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
 		if (currentUser != null) {
 			launchActivity(StoreListActivity.class);
 			finish();
@@ -166,14 +179,24 @@ public class LoginChooserActivity extends BaseActivity {
 						// userObj.getJSONObject("picture").getJSONObject("data").getString("url");
 
 						// Save the user profile info in a user property
-						ParseUser localcurrentUser = ParseUser.getCurrentUser();
-						localcurrentUser.put("firstName", firstName);
-						localcurrentUser.put("lastName", lastName);
-						localcurrentUser.put("email", email);
-						localcurrentUser.put("profilePhotoUrl", profilePhotoUrl.toString());
-						localcurrentUser.saveInBackground();
-						Log.d("SUCESS", "Data set success");
-
+						ParseUser localcurrentUser = null;
+						try {
+							localcurrentUser = ParseUser.getCurrentUser();
+						}
+						catch(Exception e)
+						{
+							Log.e("Parse", "Fail to get user.");
+						}
+						
+						if(localcurrentUser != null)
+						{
+							localcurrentUser.put("firstName", firstName);
+							localcurrentUser.put("lastName", lastName);
+							localcurrentUser.put("email", email);
+							localcurrentUser.put("profilePhotoUrl", profilePhotoUrl.toString());
+							localcurrentUser.saveInBackground();
+							Log.d("SUCESS", "Data set success");
+						}							
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

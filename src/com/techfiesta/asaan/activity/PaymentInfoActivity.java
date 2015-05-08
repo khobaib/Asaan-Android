@@ -29,7 +29,6 @@ import com.stripe.android.TokenCallback;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.adapter.DefaultTipsSpinnerAdapter;
 import com.techfiesta.asaan.fragment.ErrorDialogFragment;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.Constants;
@@ -43,10 +42,8 @@ public class PaymentInfoActivity extends BaseActivity {
 	EditText CVC;
 	EditText Zip;
 	private Button btnSave;
-	private Button btnSkip;
 	EditText etMonth;
 	// Button SaveTip;
-	Spinner defaultTipSpinner;
 	EditText etYear;
 
 	ImageView NEXT2;
@@ -57,7 +54,6 @@ public class PaymentInfoActivity extends BaseActivity {
 	String zip;
 //	int month;
 //	int year;
-	int tips;
 	private ProgressDialog pDialog;
 	private int RESPONSE_CODE=2;
 	
@@ -80,9 +76,6 @@ public class PaymentInfoActivity extends BaseActivity {
 		pDialog = new ProgressDialog(PaymentInfoActivity.this);
 		pDialog.setMessage("Please Wait...");
 		
-		defaultTipSpinner = (Spinner) findViewById(R.id.s_tip_selector);
-		createDefaultTipSpinner();
-
 		// updateMonth_YearSpinners();
 
 		btnSave.setOnClickListener(new OnClickListener() {
@@ -90,10 +83,17 @@ public class PaymentInfoActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
                  pDialog.show();
-				if (ParseUser.getCurrentUser() != null) {
+                 ParseUser user = null;
+     			try {
+     				user = ParseUser.getCurrentUser();
+     			}
+     			catch(Exception e)
+     			{
+     				Log.e("Parse", "Fail to get user.");
+     			}
+				if (user != null) {
 					
-
-					Log.e("MSG", "SIGNED UP" + ParseUser.getCurrentUser().getString("authToken"));
+					Log.e("MSG", "SIGNED UP" + user.getString("authToken"));
 					cardNumber = CardNumber.getText().toString();
 					cardCVC = CVC.getText().toString();
 					zip = Zip.getText().toString();
@@ -101,8 +101,6 @@ public class PaymentInfoActivity extends BaseActivity {
 						expMonth = Integer.parseInt(etMonth.getText().toString());
 					if(etYear.getText().toString().length()>0)
 						expYear = Integer.parseInt(etYear.getText().toString());
-					tips = Integer.parseInt(defaultTipSpinner.getSelectedItem().toString());
-					saveDefaultTips();
 					saveCreditCard();
 				} else {
 					AsaanUtility.simpleAlert(PaymentInfoActivity.this, "User not logged in.");
@@ -112,35 +110,7 @@ public class PaymentInfoActivity extends BaseActivity {
 		});
 
 	}
-
-	private void saveDefaultTips() {
-		ParseUser user = ParseUser.getCurrentUser();
-		user.put("tip",""+ tips);
-		user.saveInBackground(new SaveCallback() {
-
-			@Override
-			public void done(ParseException e) {
-				if (e == null) {
-					Log.e("MSG", "Default Tips Updated");
-				}
-
-			}
-		});
-	}
-
-	private void createDefaultTipSpinner() {
-		ArrayList<Integer> list = new ArrayList<>();
-		for (int i = 3; i < 21; i++) {
-			list.add(i * 5);
-		}
-		//ArrayAdapter<Integer> adapter = new ArrayAdapter<>(PaymentInfoActivity.this,
-			//	android.R.layout.simple_spinner_dropdown_item, list);
-		DefaultTipsSpinnerAdapter adapter=new DefaultTipsSpinnerAdapter(PaymentInfoActivity.this,android.R.layout.simple_spinner_dropdown_item, list);
-		defaultTipSpinner.setAdapter(adapter);
-		
-		
-	}
-
+	
 	public void saveCreditCard() {
 		
 		
@@ -250,10 +220,9 @@ public class PaymentInfoActivity extends BaseActivity {
 				AsaanUtility.simpleAlert(PaymentInfoActivity.this, "An error occured.");
 			}
 			else{
-				Intent i=getIntent();
-				
-				int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
-				if(code!=-1)
+				//Intent i=getIntent();
+				//int code=i.getIntExtra(Constants.KEY_FROM_ACTIVITY,-1);
+				//if(code!=-1)
 				{
 					setResult(RESPONSE_CODE);
 					finish();

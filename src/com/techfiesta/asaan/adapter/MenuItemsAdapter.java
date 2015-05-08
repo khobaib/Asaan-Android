@@ -48,6 +48,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	ArrayList<Integer> sectionIndexList;
 	ImageLoader imageLoader;
 	private int orderType;
+	private long tEstimateDelivery;
 	ScrollToIndexListener scrollToIndexListener=null;
 	AsaanMenuHolder menuHolder;
 	ArrayList<String> strHeadings;
@@ -56,7 +57,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	private int MAX_RESULT = 50;
 	MenuItemAndStatsCollection menuItemAndStatsCollection=null;
 	boolean bLoading = false;
-	public MenuItemsAdapter(Context context,int menuPOSId, List<MenuItemAndStats> objects, int order_type,MenuItemsFragment menuItemsFragment)
+	public MenuItemsAdapter(Context context,int menuPOSId, List<MenuItemAndStats> objects, int order_type, long timeEstimatedDelivery, MenuItemsFragment menuItemsFragment)
 	{		
 	   super(context, R.layout.menu_item2, objects);
 	   menuHolder = MenuActivityNew.menuMap.get(menuPOSId);
@@ -81,6 +82,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 	   Log.e("indexlist",""+sectionIndexList.size());
 	   imageLoader=new ImageLoader((Activity)context);
 	   this.orderType=order_type;
+	   tEstimateDelivery = timeEstimatedDelivery;
 	   scrollToIndexListener=menuItemsFragment;
 	   
 	   strHeadings = new ArrayList<String>();
@@ -246,6 +248,7 @@ public class MenuItemsAdapter extends ArrayAdapter<MenuItemAndStats> implements 
 					i.putExtra(Constants.BUNDLE_KEY_ITEM_POSITION,position);
 					i.putExtra(Constants.BUNDLE_KEY_CURRENT_MENU_POSID, menuPOSId);
 					i.putExtra(Constants.ORDER_TYPE,orderType);
+					i.putExtra(Constants.ESTIMATED_TIME, tEstimateDelivery);
 					mContext.startActivity(i);
 					
 

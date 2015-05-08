@@ -141,10 +141,10 @@ public class ProfileFragment extends Fragment{
 			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if(progress<5)
+				if(progress<15)
 				{
-					sbTips.setProgress(5);
-					tvTips.setText("Tips(5%)");
+					sbTips.setProgress(15);
+					tvTips.setText("Tips(15%)");
 				}
 				else
 				 tvTips.setText("Tips("+progress+"%)");
@@ -154,57 +154,81 @@ public class ProfileFragment extends Fragment{
 	}
 	private void saveImageInParse(byte[] bytes)
 	{
-		
-		String filename=ParseUser.getCurrentUser().getObjectId()+System.currentTimeMillis()+"-picture.jpg";
-		final ParseFile parseFile=new ParseFile(filename,bytes);
-		parseFile.saveInBackground(new SaveCallback() {
-			
-			@Override
-			public void done(ParseException e) {
-				if(e==null)
-				{
-					Log.e("PIC URL",parseFile.getUrl());
-					saveUserInParse(parseFile.getUrl());
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		String filename= null;
+		if(user != null)
+		{
+			filename = user.getObjectId()+System.currentTimeMillis()+"-picture.jpg";
+		}
+		if(filename !=null)
+		{
+			final ParseFile parseFile=new ParseFile(filename,bytes);
+			parseFile.saveInBackground(new SaveCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					if(e==null)
+					{
+						Log.e("PIC URL",parseFile.getUrl());
+						saveUserInParse(parseFile.getUrl());
+						
+					}
+					else
+					{
+						Log.e("PIC URL Error","error");
+					}
 					
 				}
-				else
-				{
-					Log.e("PIC URL Error","error");
-				}
-				
-			}
-		});
+			});
+		}
 	}
 	private void saveUserInParse(String url)
 	{
-		ParseUser user=ParseUser.getCurrentUser();
-		String firstName=etFirstName.getText().toString();
-		user.put("firstName",firstName);
-		String lastName=etLastName.getText().toString();
-		user.put("lastName",lastName);
-		String phone=etPhone.getText().toString();
-		user.put("phone",phone);
-		int tips=sbTips.getProgress();
-		user.put("tip",""+tips);
-		if(!url.equals(""))
-			user.put("profilePhotoUrl",url);
-		
-		user.saveInBackground(new SaveCallback() {
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+
+		if(user != null)
+		{
+			String firstName=etFirstName.getText().toString();
+			user.put("firstName",firstName);
+			String lastName=etLastName.getText().toString();
+			user.put("lastName",lastName);
+			String phone=etPhone.getText().toString();
+			user.put("phone",phone);
+			int tips=sbTips.getProgress();
+			user.put("tip",""+tips);
+			if(!url.equals(""))
+				user.put("profilePhotoUrl",url);
 			
-			@Override
-			public void done(ParseException e) {
-				if(e==null)
-				{
-					Log.e("response","user updated");
-					AsaanUtility.simpleAlert(getActivity(),"Your profile is updated.");
+			user.saveInBackground(new SaveCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					if(e==null)
+					{
+						Log.e("response","user updated");
+						AsaanUtility.simpleAlert(getActivity(),"Your profile is updated.");
+					}
+					else
+						Log.e("response",e.toString());
+					if(pdDialog.isShowing())
+						pdDialog.dismiss();
 				}
-				else
-					Log.e("response",e.toString());
-				if(pdDialog.isShowing())
-					pdDialog.dismiss();
-			}
-		});
-		
+			});
+		}
 	}
 	void prepareCamera()
 	{
@@ -226,7 +250,16 @@ public class ProfileFragment extends Fragment{
 	}
 	 private void setUpUI()
 	  {
-		  ParseUser user=ParseUser.getCurrentUser();
+		 ParseUser user = null;
+			try {
+				user = ParseUser.getCurrentUser();
+			}
+			catch(Exception e)
+			{
+				Log.e("Parse", "Fail to get user.");
+			}
+		if(user != null)
+		{
 		  etFirstName.setText(user.getString("firstName"));
 		  etLastName.setText(user.getString("lastName"));
 		  etEmail.setText(user.getEmail());
@@ -236,15 +269,15 @@ public class ProfileFragment extends Fragment{
 			  tips=15;
 		  else	  
 		    tips=Integer.valueOf(user.getString("tip"));
-		  if(tips>5)
+		  if(tips>15)
 		  {
 		     sbTips.setProgress(tips);
 		     tvTips.setText("Tips("+tips+"%)");
 		  }
 		  else
 		  {
-			  tvTips.setText("Tips(5%)");
-			  sbTips.setProgress(5);
+			  tvTips.setText("Tips(15%)");
+			  sbTips.setProgress(15);
 		  }
 		  Log.e("MSG",user.getString("tip")+"");
 		  imageLoader.DisplayImage(user.getString("profilePhotoUrl"), ivProfilePic);
@@ -257,7 +290,7 @@ public class ProfileFragment extends Fragment{
 			{
 				new GetUserCardsFromServerInProfile().execute();
 			}
-		  
+		} 
 	  }
 	 @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

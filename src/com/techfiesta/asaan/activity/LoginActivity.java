@@ -78,10 +78,8 @@ public class LoginActivity extends BaseActivity {
 			public void done(ParseUser user, ParseException e) {
 				if (pDialog.isShowing())
 					pDialog.dismiss();
-				if (user != null) {
-
-					currentUser = ParseUser.getCurrentUser();
-					Log.d(">>", "login success" + currentUser.getEmail());				
+				if (user != null) {				
+					Log.d(">>", "login success" + user.getEmail());				
 					new GetUserCardsFromServerInLoginActivity().execute();
 				} else {
 					Log.d("login failed", e.getMessage());				
@@ -140,7 +138,15 @@ public class LoginActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			if(ParseUser.getCurrentUser() != null)
+			ParseUser user = null;
+			try {
+				user = ParseUser.getCurrentUser();
+			}
+			catch(Exception e)
+			{
+				Log.e("Parse", "Fail to get user.");
+			}
+			if(user != null)
 			{
 				Intent i = new Intent(LoginActivity.this,StoreListActivity.class);
 				startActivity(i);

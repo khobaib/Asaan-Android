@@ -107,6 +107,7 @@ public class MenuFlowActivity extends Activity implements ForwardBackWardClickLi
 	         }
          }
          bundle.putInt(Constants.ORDER_TYPE,getOrderType());
+         bundle.putLong(Constants.ESTIMATED_TIME, getEstimatedTime());
          setActionBarHeader(position);
          menuFlowFragment.setArguments(bundle);
          ft.replace(R.id.frame_container,menuFlowFragment);
@@ -119,11 +120,20 @@ public class MenuFlowActivity extends Activity implements ForwardBackWardClickLi
 		int oType=-1;
 		Intent intent=getIntent();
 		if(intent!=null)
-		{
-			
+		{			
 			oType=intent.getIntExtra(Constants.ORDER_TYPE,-1);
 		}
 		return oType;
+	}
+	private long getEstimatedTime()
+	{
+		long ltime=-1;
+		Intent intent=getIntent();
+		if(intent!=null)
+		{			
+			ltime=intent.getLongExtra(Constants.ESTIMATED_TIME,-1);
+		}
+		return ltime;
 	}
 	@Override
 	public void moveBackward(int position) {	
@@ -177,7 +187,8 @@ public class MenuFlowActivity extends Activity implements ForwardBackWardClickLi
 	        	 new GetMoreMenuItemAndStatsForMenuFlow().execute();
 	         }
          }
-        
+         bundle.putInt(Constants.ORDER_TYPE,getOrderType());
+         bundle.putLong(Constants.ESTIMATED_TIME, getEstimatedTime());
          setActionBarHeader(position);
          menuFlowFragment.setArguments(bundle);
          ft.replace(R.id.frame_container,menuFlowFragment);

@@ -39,31 +39,57 @@ public class HTMLFaxOrder {
 			"<tr> <td style=\"font-family: Arial, sans-serif; font-size: 14px;\"> <table border=\"1\" cellpadding=\"10px\" cellspacing=\"0\" width=\"100%%\">" +
 			" <tr> <th width=\"35%%\" valign=\"top\">Product</th> <th width=\"20%%\" valign=\"top\">Options</th> <th width=\"20%%\" valign=\"top\">Notes</th> <th width=\"10%%\" valign=\"top\">Quantity</th> <th width=\"15%%\" valign=\"top\">Total</th> </tr>";
 	private String table_row="<tr> <td width=\"35%%\" valign=\"top\"><b></b><br>%s</td>" +
-			" <td width=\"20%%\" valign=\"top\">%s</td> " +
-			"<td width=\"20%%\" valign=\"top\">%s</td>" +
-			" <td width=\"10%%\" valign=\"top\" align=\"right\">%s</td> " +
-			"<td width=\"15%%\" valign=\"top\" align=\"right\">%s</td> </tr>";
-	private String endString="</table> </td> </tr> </table> </body> </html>";
+								   "<td width=\"20%%\" valign=\"top\">%s</td> " +
+								   "<td width=\"20%%\" valign=\"top\">%s</td>" +
+								   "<td width=\"10%%\" valign=\"top\" align=\"right\">%s</td> " +
+								   "<td width=\"15%%\" valign=\"top\" align=\"right\">%s</td> </tr>";
 	
+	private String table_row1="<tr> <td width=\"35%%\" valign=\"top\"><br><b>%s</b></td>" +
+								   "<td width=\"20%%\" valign=\"top\"></td> " +
+								   "<td width=\"20%%\" valign=\"top\"></td>" +
+								   "<td width=\"10%%\" valign=\"top\" align=\"right\"></td> " +
+								   "<td width=\"15%%\" valign=\"top\" align=\"right\">%s</td> </tr>";
+
+	private String endString="</table> </td> </tr> </table> </body> </html>";
+	private int iOrderType = 1;
+	private long timeEstimated;
 	private void setUpBeginingString()
 	{
-		String userName=ParseUser.getCurrentUser().get("firstName")+" "+ ParseUser.getCurrentUser().get("lastName");
+		ParseUser user = null;
+		try {
+			user = ParseUser.getCurrentUser();
+		}
+		catch(Exception e)
+		{
+			Log.e("Parse", "Fail to get user.");
+		}
+		
+		String userName = "NA";
+		String phone="phone";
+		String email = "NA";
+		String address="none";
+		if(user != null)
+		{
+			userName=user.get("firstName")+" "+ user.get("lastName");
+			if(user.get("phone")!=null)
+				phone=user.get("phone").toString();
+			email = user.getEmail();
+			if(user.get("address")!=null)
+				address=user.get("address").toString();
+		}
 		String to= "none";
 		if(AsaanUtility.selectedStore!=null)
 			to =AsaanUtility.selectedStore.getName();
-		String phone="phone";
-		if(ParseUser.getCurrentUser().get("phone")!=null)
-		   phone=ParseUser.getCurrentUser().get("phone").toString();
-		String order="ORDER_ID";
-		String email=ParseUser.getCurrentUser().getEmail();
-		String orderType="TEMP";
-		String address="none";
-		if(ParseUser.getCurrentUser().get("address")!=null)
-			address=ParseUser.getCurrentUser().get("address").toString();
+		String order="ORDER_ID";		
+		String orderType;
+		if(iOrderType==2)
+			orderType = "Carryout Order";
+		else
+			orderType = "Delivery Order";	
 		long mili=System.currentTimeMillis();
 		String placed=getFormattedDate(mili)+" at "+getFormattedTime(mili);
 		String prepaid="YES";
-		String expctedTime="PLACEHOLDER";
+		String expctedTime= getFormattedTime(timeEstimated);
 		//Log.e("STRING",userName+to+phone+order+email+orderType+address+placed+expctedTime);
 		
 		beginingString=String.format(beginingString,userName,to,phone,order,email,orderType,address,placed,prepaid,expctedTime);
@@ -82,19 +108,32 @@ public class HTMLFaxOrder {
 			catch(Exception e){}
 			String row ="";
 			try{
-			row =String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+			//row =String.format(table_row,orderList.get(i).getItem_name(),options,orderList.get(i).getNotes(),orderList.get(i).getQuantity(),orderList.get(i).getPrice());
+				row = getRowWithNumber(orderList.get(i).getItem_name(), options, orderList.get(i).getNotes(), orderList.get(i).getQuantity(), orderList.get(i).getPrice());
 			}
 			catch(Exception e){}
 			beginingString+=row;
 		}
 		
 	}
-	public String getOrderHTML(List<AddItem> orderList)
+	public String getOrderHTML(List<AddItem> orderList, int guestCount, long subTotal, long tax, long serviceCharge, long deliveryCharge,
+			long Total, String discountTitle, int discountAmount, String brand, String last4, int iOType, long timeEstimated)
 	{
+		iOrderType = iOType;
+		this.timeEstimated = timeEstimated;
 		setUpBeginingString();
 		createRowsStrings(orderList);
-		return beginingString+endString;
+		
+		String midStr = getRow1WithNumber("SubTotal", subTotal);
+		midStr += getRow1WithNumber("Tax", tax);
+		midStr += getRow1WithNumber("Gratuity", serviceCharge);
+		midStr += getRow1WithNumber("Delivery Fee", deliveryCharge);
+		midStr += getRow1WithNumber(discountTitle, discountAmount);
+		midStr += getRow1WithNumber("Total", Total);
+		
+		return beginingString+ midStr+ endString;
 	}
+	
 	private String getFormattedTime(Long rawTime) {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 		String sTime = sdf.format(new Date(rawTime));
@@ -105,6 +144,27 @@ public class HTMLFaxOrder {
 		String sDate = sdf.format(new Date(rawTime));
 		return sDate;
 	}
-
-
+	
+	private String getRowWithNumber(String strDesc, String strOpts, String strNotes, int iQuantity, long iValue)
+	{
+		String strTemp = "", strValue = "";
+		if(strDesc==null || strDesc.length()==0 || iQuantity==0)
+			return strTemp;
+		
+		strValue =String.format("$%.2f", ((double)iValue)/100 );
+		String strQty = String.format("%d", iQuantity);
+		strTemp = String.format(table_row, strDesc, strOpts, strNotes, strQty, strValue);
+		return strTemp;
+	}
+	
+	private String getRow1WithNumber(String strDesc, long iValue)
+	{
+		String strTemp = "", strValue = "";
+		if(strDesc==null || strDesc.length()==0 || iValue==0)
+			return strTemp;
+		
+		strValue =String.format("$%.2f", ((double)iValue)/100 );
+		strTemp = String.format(table_row1, strDesc, strValue);
+		return strTemp;
+	}
 }

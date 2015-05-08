@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Start your carryout order"
+                android:text="Start carryout order"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
@@ -221,7 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Start your delivery order"
+                android:text="Start delivery order"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Button
