@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ClientVersionMatch;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetCurrentUser;
 import com.asaan.server.com.asaan.server.endpoint.userendpoint.Userendpoint.GetUserCards;
@@ -21,10 +22,7 @@ import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.parse.ParseException;
-import com.parse.ParsePush;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.techfiesta.asaan.R;
 import com.techfiesta.asaan.utility.AsaanUtility;
 import com.techfiesta.asaan.utility.CloudEndpointUtils;
@@ -38,6 +36,7 @@ public class SplashActivity extends Activity {
 	Context mContext;
 	ParseUser currentUser;
 	private static String USER_AUTH_TOKEN_HEADER_NAME = "asaan-auth-token";
+	double dwVersion = 1.2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,10 +89,12 @@ public class SplashActivity extends Activity {
 				} else {
 					//i = new Intent(SplashActivity.this,StoreListActivity.class);
 					new GetUserCardsFromServer().execute();
+					new GetClientVersion().execute();
 				}
 			}
 		}
 	}
+	
 public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 {
 	
@@ -133,6 +134,40 @@ public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 	@Override
 	protected void onPostExecute(Void result) {
 		super.onPostExecute(result);
+	}
+}
+
+public class GetClientVersion extends AsyncTask<Void,Void,Void>
+{	
+	@Override
+	protected void onPreExecute() {
+		
+		super.onPreExecute();
+	}
+
+	@Override
+	protected Void doInBackground(Void... params) {
+		com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetClientVersion clientversion;
+		try {
+			clientversion= SplashActivity.mStoreendpoint.getClientVersion();
+			HttpHeaders httpHeaders = clientversion.getRequestHeaders();
+			httpHeaders.put(USER_AUTH_TOKEN_HEADER_NAME, ParseUser.getCurrentUser().getString("authToken"));
+			ClientVersionMatch vMatch = clientversion.execute();
+			if(vMatch!=null)
+			{
+				Log.e("Response",vMatch.toPrettyString());
+				if(vMatch.getApprovedAndroidClientVersion() != null)
+					dwVersion = Double.parseDouble(vMatch.getApprovedAndroidClientVersion());
+			}				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	protected void onPostExecute(Void result) {
+		super.onPostExecute(result);
 		ParseUser user = null;
 		try {
 			user = ParseUser.getCurrentUser();
@@ -141,15 +176,45 @@ public class GetUserCardsFromServer extends AsyncTask<Void,Void,Void>
 		{
 			Log.e("Parse", "Fail to get user.");
 		}
-		if(user != null)
+		if(user != null && dwVersion<=1.0)
 		{
 			Intent i = new Intent(SplashActivity.this,StoreListActivity.class);
 			startActivity(i);
 			finish();
 			overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 		}
+		else if(dwVersion > 1.0)
+		{
+			AlertDialog alertDialog = new AlertDialog.Builder(SplashActivity.this).create();
+			alertDialog.setTitle("Savoir");
+			alertDialog.setMessage("The clien version is older than server version. Please download new verion.");
+			alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+			    new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int which) {
+			            dialog.dismiss();
+			            finish();
+			        }
+			    });
+			alertDialog.show();			
+		}
+		else
+		{
+			AlertDialog alertDialog = new AlertDialog.Builder(SplashActivity.this).create();
+			alertDialog.setTitle("Savoir");
+			alertDialog.setMessage("You have a login problem.");
+			alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+			    new DialogInterface.OnClickListener() {
+			        public void onClick(DialogInterface dialog, int which) {
+			            dialog.dismiss();
+			            finish();
+			        }
+			    });
+			alertDialog.show();
+			
+		}
 	}
 }
+
 	private void buildStoreEndpoint() {
 		Storeendpoint.Builder storeEndpointBuilder;
 		storeEndpointBuilder = new Storeendpoint.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
