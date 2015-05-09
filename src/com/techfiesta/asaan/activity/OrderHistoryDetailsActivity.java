@@ -5,37 +5,18 @@ import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.CharacterData;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetReviewForCurrentUserAndOrder;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.SaveStoreItemReviews;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ItemReview;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ItemReviewsArray;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderAndReviews;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderReview;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderReviewAndItemReviews;
-import com.google.android.gms.internal.lv;
-import com.google.api.client.http.HttpHeaders;
-import com.parse.ParseUser;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.adapter.OrderHistoryItemAdapter;
-import com.techfiesta.asaan.utility.AsaanUtility;
-import com.techfiesta.asaan.utility.NestedListView;
-
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -45,6 +26,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import asaan.dao.AddItem;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.Storeendpoint.GetReviewForCurrentUserAndOrder;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.OrderReviewAndItemReviews;
+import com.google.api.client.http.HttpHeaders;
+import com.parse.ParseUser;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.adapter.OrderHistoryItemAdapter;
+import com.techfiesta.asaan.utility.AsaanUtility;
+import com.techfiesta.asaan.utility.NestedListView;
 
 public class OrderHistoryDetailsActivity extends BaseActivity{
 	

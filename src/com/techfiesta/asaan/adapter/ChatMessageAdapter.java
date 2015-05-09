@@ -5,15 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
-import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUser;
-import com.google.android.gms.internal.hl;
-import com.google.android.gms.internal.lv;
-import com.techfiesta.asaan.R;
-import com.techfiesta.asaan.lazylist.ImageLoader;
-import com.techfiesta.asaan.utility.AsaanUtility;
-import com.techfiesta.asaan.utility.Constants;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -23,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatMessage;
+import com.asaan.server.com.asaan.server.endpoint.storeendpoint.model.ChatUser;
+import com.techfiesta.asaan.R;
+import com.techfiesta.asaan.lazylist.ImageLoader;
+import com.techfiesta.asaan.utility.AsaanUtility;
 
 public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
 
