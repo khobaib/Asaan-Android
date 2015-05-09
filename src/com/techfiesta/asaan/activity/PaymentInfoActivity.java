@@ -37,7 +37,7 @@ public class PaymentInfoActivity extends BaseActivity {
 
 	UserCard userCard;
 	//public static final String PUBLISHABLE_KEY = "pk_test_hlpADPUOWaxn6uN0aATgLivW";
-	public static final String PUBLISHABLE_KEY = "pk_test_4Ns4Xp8GtdBUxhiUKDi4RMTa";
+	public static final String PUBLISHABLE_KEY = "pk_live_4Ns4PhSHMwuwXpCI1nfAdFrZ";
 	EditText CardNumber;
 	EditText CVC;
 	EditText Zip;
