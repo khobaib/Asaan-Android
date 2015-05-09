@@ -113,8 +113,10 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 				} else if (position == 4) {
 					closeDrawer = checkPendingOrders();
 					if (closeDrawer) {
-						PendingOrderFragment pFragment = new PendingOrderFragment();
-						ft.replace(R.id.frame_container, pFragment);
+						Intent intent = new Intent(StoreListActivity.this,  MyCartActivity.class);					
+						startActivity(intent);
+						//intent=new Intent(getResources().getString(R.string.intent_filter_finish));
+						//sendBroadcast(intent);
 					}
 
 				}else if (position == 5) {

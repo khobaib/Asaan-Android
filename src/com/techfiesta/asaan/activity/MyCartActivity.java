@@ -124,6 +124,7 @@ public class MyCartActivity extends BaseActivity {
 		
 
 		bEdit = (Button) findViewById(R.id.b_edit);
+		bEdit.setVisibility(View.GONE);
 		bEdit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -139,16 +140,12 @@ public class MyCartActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent=new Intent(MyCartActivity.this,MenuActivityNew.class);
-				long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);
-				Store store=new Store();
-				store.setId(id);
-				
+				long id=AsaanUtility.getCurrentOrderedStoredId(MyCartActivity.this);				
 				int order_type=getOrderType();
 				intent.putExtra(Constants.ORDER_TYPE,order_type);
-				
-				AsaanUtility.selectedStore=store;
-				startActivity(intent);
-				
+				long estimatedtime=getEstimatedTime();
+				intent.putExtra(Constants.ESTIMATED_TIME,estimatedtime);
+				startActivity(intent);			
 			}
 		});
 		btnPlaceOrde.setOnClickListener(new OnClickListener() {
@@ -673,7 +670,7 @@ public class MyCartActivity extends BaseActivity {
 			else {
 				taxRate = store.getTaxPercent();
 				AsaanUtility.realCurrentStore = store;
-				
+				AsaanUtility.selectedStore = store;
 				//recalculate the tax and total part
 				gratuity = ((double) subtotalAmount * tipRate/100) / 100;
 				tvGratuity.setText("$" + String.format("%.2f", gratuity));
