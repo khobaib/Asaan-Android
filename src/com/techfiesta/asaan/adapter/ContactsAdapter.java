@@ -60,7 +60,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact>{
 			holder.ivImage.setImageBitmap(bmp);
 		}
 		else
-			holder.ivImage.setBackgroundResource(R.drawable.recommend_friend);
+			holder.ivImage.setBackgroundResource(R.drawable.contact);
 		holder.tvName.setText(contact.getName());
 		holder.tvPhone.setText(contact.getPhone());
 			

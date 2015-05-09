@@ -93,6 +93,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				boolean closeDrawer=true;
+				boolean loadNewFragment=true;
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				if (position == 0) {
 					StoreListFragment strFragment = new StoreListFragment();
@@ -113,6 +114,7 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 				} else if (position == 4) {
 					closeDrawer = checkPendingOrders();
 					if (closeDrawer) {
+						loadNewFragment=false;
 						Intent intent = new Intent(StoreListActivity.this,  MyCartActivity.class);					
 						startActivity(intent);
 						//intent=new Intent(getResources().getString(R.string.intent_filter_finish));
@@ -132,8 +134,11 @@ BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
 					intent=new Intent(getResources().getString(R.string.intent_filter_finish));
 					sendBroadcast(intent);
 				}
-				ft.addToBackStack(null);
-				ft.commit();
+				if(loadNewFragment)
+				{
+					ft.addToBackStack(null);
+					ft.commit();
+				}
 				if(closeDrawer)
 				   mDrawerLayout.closeDrawer(Gravity.LEFT);
 			}

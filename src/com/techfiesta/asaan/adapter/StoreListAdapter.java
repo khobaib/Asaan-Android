@@ -35,6 +35,7 @@ import com.techfiesta.asaan.activity.MenuActivityNew;
 import com.techfiesta.asaan.activity.OnlineOrderActivity;
 import com.techfiesta.asaan.activity.ReserveActivity;
 import com.techfiesta.asaan.activity.StoreListActivity;
+import com.techfiesta.asaan.activity.WebMenuActivity;
 import com.techfiesta.asaan.lazylist.ImageLoader;
 import com.techfiesta.asaan.utility.AsaanUtility;
 
@@ -125,33 +126,16 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		if(store.getClaimed()!=null && store.getClaimed())
 		{
 			holder.btnChat.setVisibility(View.VISIBLE);
-			holder.btnMenu.setVisibility(View.VISIBLE);
+			//holder.btnMenu.setVisibility(View.VISIBLE);
 			holder.btnorder.setVisibility(View.VISIBLE);
 			
 			holder.btnChat.setText("Chat");
-			holder.btnMenu.setText("Menu");
+			//holder.btnMenu.setText("Menu");
 			holder.btnorder.setText("Online\nOrder");
 			holder.btnReserve.setText("Reserve");
 			
 
-			holder.btnMenu.setOnClickListener(new OnClickListener() {
-	
-				@Override
-				public void onClick(View arg0) {
-					Log.e("MSG>>>", "btn menu clicked");
-					Store selectedStore = getItem(position);
-					if (AsaanUtility.getCurrentOrderedStoredId(mContext) == selectedStore.getId().intValue()
-							|| AsaanUtility.getCurrentOrderedStoredId(mContext) == -1) {
-						AsaanUtility.selectedStore = selectedStore;
-						Intent intent = new Intent(mContext, MenuActivityNew.class);
-						mContext.startActivity(intent);
-						((StoreListActivity)mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-					} else {
-						alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
-					}
-	
-				}
-			});
+			
 			holder.btnorder.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -227,7 +211,7 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 		else
 		{
 			holder.btnChat.setText("");
-			holder.btnMenu.setText("");
+			//holder.btnMenu.setText("");
 			holder.btnorder.setText("");
 			holder.btnReserve.setText("Claim\nStore");
 			holder.btnReserve.setOnClickListener(new OnClickListener() {
@@ -252,6 +236,34 @@ public class StoreListAdapter extends ArrayAdapter<Store> {
 					callIntent.setData(Uri.parse("tel:" + store.getPhone()));
 					mContext.startActivity(callIntent);
 				}
+			}
+		});
+		holder.btnMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Log.e("MSG>>>", "btn menu clicked");
+				Store selectedStore = getItem(position);
+				if (selectedStore.getClaimed() != null && selectedStore.getClaimed()) {
+					if (AsaanUtility.getCurrentOrderedStoredId(mContext) == selectedStore.getId().intValue()
+							|| AsaanUtility.getCurrentOrderedStoredId(mContext) == -1) {
+						AsaanUtility.selectedStore = selectedStore;
+						Intent intent = new Intent(mContext, MenuActivityNew.class);
+						mContext.startActivity(intent);
+						((StoreListActivity) mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					} else {
+						alert(mContext, "Already have saved order from other restaurant.Delete all orders?");
+					}
+
+				}
+				else 
+					if (selectedStore.getClaimed() != null && !selectedStore.getClaimed()) 
+					{
+						AsaanUtility.selectedStore = selectedStore;
+						Intent intent = new Intent(mContext, WebMenuActivity.class);
+						mContext.startActivity(intent);
+						((StoreListActivity) mContext).overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+					}
 			}
 		});
 		StoreStats storeStats=getStats(store.getId());

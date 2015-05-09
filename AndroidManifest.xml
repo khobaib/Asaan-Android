@@ -186,6 +186,7 @@
 		<activity android:name=".activity.OrderHistoryDetailsActivity"></activity>
 		<activity android:name=".activity.OrderReviewActivity"></activity>
 		<activity android:name=".activity.ReviewItemActivity"></activity>
+		<activity android:name=".activity.WebMenuActivity"></activity>
     </application>
 
 </manifest>
